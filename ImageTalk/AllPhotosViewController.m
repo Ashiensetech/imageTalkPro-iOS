@@ -171,19 +171,12 @@
     {
         static NSString *CellIdentifier = @"cameraCell";
         CustomCollectionViewCell *cameraCell = [cv dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-       
         
-        NSLog(@"Camera cell");
-        
-        
-      
-        //[cameraCell.image.layer addSublayer:overlayLayer1];
-        
+        //live camera view layer
         AVCaptureSession *session = [[AVCaptureSession alloc] init];
         session.sessionPreset = AVCaptureSessionPresetHigh;
         
         AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-        
         NSError *error = nil;
         AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
         [session addInput:input];
@@ -193,13 +186,10 @@
         newCaptureVideoPreviewLayer.bounds=bounds;
         newCaptureVideoPreviewLayer.position=CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
         [cameraCell.image.layer addSublayer:newCaptureVideoPreviewLayer];
-       // [cameraCell.image.layer insertSublayer:newCaptureVideoPreviewLayer atIndex:0];
-        
-        
-        //cameraCell.image.image = [UIImage imageNamed:@"camera"];
         cameraCell.image.contentMode = UIViewContentModeCenter;
        
       
+        //camera icon layer
         UIImage *animationImage = [UIImage imageNamed:@"camera"];
         CALayer *overlayLayer1 = [CALayer layer];
         [overlayLayer1 setContents:(id)[animationImage CGImage]];
@@ -207,7 +197,7 @@
         overlayLayer1.frame = CGRectMake(25,25, 50.0, 50.0);
         [overlayLayer1 setMasksToBounds:YES];
         [cameraCell.image.layer insertSublayer:overlayLayer1 atIndex:(int)[cameraCell.image.layer.sublayers count]];
-        // [cameraCell.image insertSubview:newCaptureVideoPreviewLayer atIndex:2];
+       
         
         [session startRunning];
        
