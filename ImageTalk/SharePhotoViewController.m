@@ -38,6 +38,8 @@
 -(void) viewDidAppear:(BOOL)animated
 {
     
+    NSLog(@"%@",[self imageToString:self.image]);
+    
     [[ApiAccess getSharedInstance] setDelegate:self];
     
     if(self.place)
@@ -123,14 +125,14 @@
     int maxFileSize = 250*1024;
     
     NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
-    
     while ([imageData length] > maxFileSize && compression > maxCompression)
     {
         compression -= 0.1;
         imageData = UIImageJPEGRepresentation(image, compression);
+
     }
     
-    return [imageData base64Encoding];
+    return [imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
 }
 
 #pragma mark - ApiAccessDelegate

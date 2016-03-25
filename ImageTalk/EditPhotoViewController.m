@@ -165,12 +165,14 @@
     else
     {
        [self.loading startAnimating];
-        NSDictionary *inventory = @{@"photo" : [self imageToString:self.image]};
+       NSDictionary *inventory = @{@"photo" : [self imageToString:[self.cropperImage processedImage]]};
+//        NSLog(@"%@",[self imageToString:[self.cropperImage processedImage]]);
         [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/profile/change/picture" params:inventory tag:@"changePicture"];
     }
 }
 
 -(NSString*) imageToString : (UIImage*) image{
+    
     CGFloat compression = 0.9f;
     CGFloat maxCompression = 0.1f;
     int maxFileSize = 250*1024;
@@ -210,7 +212,8 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.view addSubview:self.loading];
+    //[self.view addSubview:self.loading];
+
     [self.loading startAnimating];
   
     
@@ -218,54 +221,206 @@
     
         switch (indexPath.row) {
             case 0:
-               // [self.body setImage:self.image];
-                [self.cropperImage setOriginalImage:self.image];
+                if (self.isAspect)
+                {
+                    self.image = self.imageHolder;
+                    [self.cropperImage setOriginalImage:[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)]];
+                }
+                else
+                {
+                    self.image = self.imageHolder;
+                    [self.cropperImage setOriginalImage:self.image];
+                }
                 break;
             case 1:
-                [self.cropperImage setOriginalImage:[self.image e1]];
+                if (self.isAspect)
+                {
+                    self.image = [self.image e1];
+                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e1]];
+                }
+                else
+                {
+                    self.image = [self.image e1];
+                    [self.cropperImage setOriginalImage:[self.image e1]];
+                    
+                }
+    
                 break;
             case 2:
-                 [self.cropperImage setOriginalImage:[self.image e2]];
+                if (self.isAspect)
+                {
+                    self.image = [self.image e2];
+                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e2]];
+                }
+                else
+                {
+                    self.image = [self.image e2];
+                    [self.cropperImage setOriginalImage:[self.image e2]];
+                    
+                }
+                
                 break;
             case 3:
-                [self.cropperImage setOriginalImage:[self.image e3]];
+                if (self.isAspect)
+                {
+                    self.image = [self.image e3];
+                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e3]];
+                }
+                else
+                {
+                    self.image = [self.image e3];
+                    [self.cropperImage setOriginalImage:[self.image e3]];
+                    
+                }
+                
                 break;
             case 4:
-                [self.cropperImage setOriginalImage:[self.image e4]];
+                if (self.isAspect)
+                {
+                    self.image = [self.image e4];
+                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e4]];
+                }
+                else
+                {
+                    self.image = [self.image e4];
+                    [self.cropperImage setOriginalImage:[self.image e4]];
+                    
+                }
+                
                 break;
             case 5:
-                [self.cropperImage setOriginalImage:[self.image e5]];
-
+                if (self.isAspect)
+                {
+                    self.image = [self.image e5];
+                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e5]];
+                }
+                else
+                {
+                    self.image = [self.image e5];
+                    [self.cropperImage setOriginalImage:[self.image e5]];
+                    
+                }
+                
                 break;
             case 6:
-                [self.cropperImage setOriginalImage:[self.image e6]];
+                if (self.isAspect)
+                {
+                    self.image = [self.image e6];
+                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e6]];
+                }
+                else
+                {
+                    self.image = [self.image e6];
+                    [self.cropperImage setOriginalImage:[self.image e6]];
+                    
+                }
+                
                 break;
             case 7:
-                [self.cropperImage setOriginalImage:[self.image e7]];
+                if (self.isAspect)
+                {
+                    self.image = [self.image e7];
+                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e7]];
+                }
+                else
+                {
+                    self.image = [self.image e7];
+                    [self.cropperImage setOriginalImage:[self.image e7]];
+                    
+                }
+                
                 break;
             case 8:
-               [self.cropperImage setOriginalImage:[self.image e8]];
+                if (self.isAspect)
+                {
+                    self.image = [self.image e8];
+                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e8]];
+                }
+                else
+                {
+                    self.image = [self.image e8];
+                    [self.cropperImage setOriginalImage:[self.image e8]];
+                    
+                }
+                
                 break;
             case 9:
-                [self.cropperImage setOriginalImage:[self.image e9]];
+                if (self.isAspect)
+                {
+                    self.image = [self.image e9];
+                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e9]];
+                }
+                else
+                {
+                    self.image = [self.image e9];
+                    [self.cropperImage setOriginalImage:[self.image e9]];
+                    
+                }
+                
                 break;
             case 10:
-                [self.cropperImage setOriginalImage:[self.image e10]];
-
+                if (self.isAspect)
+                {
+                    self.image = [self.image e10];
+                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e10]];
+                }
+                else
+                {
+                    self.image = [self.image e10];
+                    [self.cropperImage setOriginalImage:[self.image e10]];
+                    
+                }
+                
                 break;
             case 11:
-                [self.cropperImage setOriginalImage:[self.image e11]];
-
-                break;
+                 if (self.isAspect)
+                 {
+                     self.image = [self.image e11];
+                     [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e11]];
+                 }
+                 else
+                 {
+                     self.image = [self.image e11];
+                     [self.cropperImage setOriginalImage:[self.image e11]];
+                     
+                 }
+                 
+                 break;
             case 12:
-                [self.cropperImage setOriginalImage:[self.image e12]];
+                if (self.isAspect)
+                {
+                    self.image = [self.image e12];
+                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e12]];
+                }
+                else
+                {
+                    self.image = [self.image e12];
+                    [self.cropperImage setOriginalImage:[self.image e12]];
+                    
+                }
+                
                 break;
             case 13:
-                [self.cropperImage setOriginalImage:[self.image e13]];
+                if (self.isAspect)
+                {
+                    self.image = [self.image e13];
+                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e13]];
+                }
+                else
+                {
+                    self.image = [self.image e13];
+                    [self.cropperImage setOriginalImage:[self.image e13]];
+                    
+                }
+                
+                
+                
                 break;
             default:
                 break;
+                
         }
+        [self.loading stopAnimating];
     }
     
     if (self.type == 3) {
@@ -351,11 +506,14 @@
     self.isAspect = !self.isAspect;
     NSLog(@"Hello");
     
-    if (self.isAspect) {
+    if (self.isAspect)
+    {
        [self.cropperImage setOriginalImage:[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)]];
     }
     else
     {
+      //  [self.cropperImage setOriginalImage:[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.height)]];
+
        [self.cropperImage setOriginalImage:self.image];
         
     }
@@ -397,7 +555,8 @@
        
         SharePhotoViewController *data = [segue destinationViewController];
       //  data.image = self.body.image;
-        data.image = [self.cropperImage processedImage];
+        
+        data.image = (!self.isAspect) ? [self.cropperImage processedImage] : self.image;
 
     }
     
@@ -405,7 +564,8 @@
     {
         UINavigationController *navController = [segue destinationViewController];
         ProfileViewController *data = (ProfileViewController *)([navController viewControllers][0]);
-        data.pic = self.body.image;
+        //data.pic = self.body.image;
+        data.pic = (!self.isAspect) ? [self.cropperImage processedImage] : self.image;
     }
 }
 

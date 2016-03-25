@@ -249,7 +249,7 @@
     }
     else
     {
-        cell.image.contentMode = UIViewContentModeScaleToFill;
+        cell.image.contentMode = UIViewContentModeScaleAspectFit;
         cell.image.clipsToBounds =YES;
         cell.favBtn.hidden = false;
         cell.downloadBtn.hidden = false;

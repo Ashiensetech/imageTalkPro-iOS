@@ -3756,7 +3756,7 @@ invite 2 friends</string>
                                     <constraint firstItem="Mrs-jt-k43" firstAttribute="width" secondItem="ipR-bu-3ia" secondAttribute="width" id="yxQ-Q8-EIg"/>
                                 </constraints>
                             </view>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="zTH-XR-D1g">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="zTH-XR-D1g">
                                 <rect key="frame" x="0.0" y="378" width="600" height="158"/>
                                 <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
