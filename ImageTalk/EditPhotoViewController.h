@@ -40,5 +40,6 @@
 @property (nonatomic,strong) UIImage *imageHolder;
 @property (strong, nonatomic) IBOutlet UIButton *adjustFitBtn;
 @property (strong, nonatomic) IBOutlet UIView *cropView;
+@property(nonatomic,assign) BOOL stickered;
 
 @end

@@ -13,5 +13,6 @@
 -(UIImage*)scaleToSize:(CGSize)size;
 -(UIImage *)crop:(CGRect) cropRect;
 - (UIImage *)scaleImageToSize:(CGSize)newSize;
+-(UIImage*) positionToRect:(CGRect)rect ;
 
 @end

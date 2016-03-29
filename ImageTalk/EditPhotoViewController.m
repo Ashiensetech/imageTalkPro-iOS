@@ -17,11 +17,11 @@
 #import "UIImage+FiltrrCompositions.h"
 #import "UIImage+Scale.h"
 #import "UIImage+Border.h"
+#import "ZDStickerView.h"
 
 
 
-
-@interface EditPhotoViewController ()
+@interface EditPhotoViewController ()<ZDStickerViewDelegate>
 
 
 
@@ -85,6 +85,7 @@
 - (IBAction)smily:(id)sender {
     self.type = 2;
     [self changeType];
+  
     
 }
 
@@ -145,7 +146,12 @@
                          nil];
     
     self.lipsObject = [[NSMutableArray alloc]init];
-    self.smilyObject = [[NSMutableArray alloc]init];
+    self.smilyObject =[[NSMutableArray alloc]initWithObjects:
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Glass",@"title",[UIImage imageNamed:@"glass"],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Sleepy",@"title",[UIImage imageNamed:@"sleepy"],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Wink",@"title",[UIImage imageNamed:@"WINK"],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Wink 2",@"title",[UIImage imageNamed:@"wink2"],@"image", nil],
+                       nil];
     
     [self.collectionData reloadData];
 
@@ -412,15 +418,36 @@
                     [self.cropperImage setOriginalImage:[self.image e13]];
                     
                 }
-                
-                
-                
                 break;
             default:
                 break;
                 
         }
+       
         [self.loading stopAnimating];
+    }
+    if(self.type ==2){
+        switch (indexPath.row) {
+            case 0:
+               [ self setSticker:[UIImage imageNamed:@"glass"]];
+                self.stickered = YES;
+                break;
+            case 1:
+                [ self setSticker:[UIImage imageNamed:@"sleepy"]];
+                self.stickered = YES;
+                break;
+            case 2:
+                [ self setSticker:[UIImage imageNamed:@"WINK"]];
+                self.stickered = YES;
+                break;
+            case 3:
+                [ self setSticker:[UIImage imageNamed:@"wink2"]];
+                self.stickered = YES;
+                break;
+            default:
+                break;
+        }
+        
     }
     
     if (self.type == 3) {
@@ -471,6 +498,29 @@
     }
     [self.loading stopAnimating];
 }
+-(void) setSticker:(UIImage *)sticker{
+    UIImageView *stickerView = [[UIImageView alloc]
+                               initWithImage: sticker];
+    CGRect stickerFrame = CGRectMake(50, 50, 140, 140);
+    
+    UIView* contentView = [[UIView alloc] initWithFrame:stickerFrame];
+    
+    [contentView addSubview:stickerView];
+    
+    ZDStickerView *userResizableView1 = [[ZDStickerView alloc] initWithFrame:stickerFrame];
+    userResizableView1.tag = 0;
+    userResizableView1.stickerViewDelegate = self;
+    userResizableView1.contentView = contentView;//contentView;
+    userResizableView1.preventsPositionOutsideSuperview = YES;
+    userResizableView1.translucencySticker = NO;
+     userResizableView1.preventsCustomButton = NO;
+    [userResizableView1 setButton:ZDSTICKERVIEW_BUTTON_CUSTOM
+                           image:[UIImage imageNamed:@"plus"]];
+  
+    [userResizableView1 showEditingHandles];
+    [self.cropView addSubview:userResizableView1];
+}
+
 
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -490,8 +540,8 @@
         cell.title.text = [[self.effectObject objectAtIndex:indexPath.row] valueForKey:@"title"];
     }
     else if (self.type == 2) {
-        cell.image.image = [[self.effectObject objectAtIndex:indexPath.row] valueForKey:@"image"];
-        cell.title.text = [[self.effectObject objectAtIndex:indexPath.row] valueForKey:@"title"];
+        cell.image.image = [[self.smilyObject objectAtIndex:indexPath.row] valueForKey:@"image"];
+        cell.title.text = [[self.smilyObject objectAtIndex:indexPath.row] valueForKey:@"title"];
     }
     
     else{
@@ -569,5 +619,38 @@
     }
 }
 
+#pragma mark - delegate functions
+
+- (void)stickerViewDidLongPressed:(ZDStickerView *)sticker
+{
+    NSLog(@"%s [%zd]",__func__, sticker.tag);
+}
+
+- (void)stickerViewDidClose:(ZDStickerView *)sticker
+{
+    NSLog(@"%s [%zd]",__func__, sticker.tag);
+}
+
+- (void)stickerViewDidCustomButtonTap:(ZDStickerView *)sticker
+{
+    NSLog(@"%s [%zd]",__func__, sticker.tag);
+    [((UITextView*)sticker.contentView) becomeFirstResponder];
+    UIImage *bottomImage = [self.cropperImage processedImage]; //background image
+    UIImage *image       = [UIImage imageNamed:@"glass"];
+    CGSize newSize = CGSizeMake(bottomImage.size.width, bottomImage.size.height);
+    UIGraphicsBeginImageContext( newSize );
+    
+    // Use existing opacity as is
+    [bottomImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    
+    // Apply supplied opacity if applicable
+    [image drawInRect:CGRectMake(sticker.contentView.frame.origin.x, sticker.contentView.frame.origin.y, sticker.contentView.frame.size.width, sticker.contentView.frame.size.height)
+            blendMode:kCGBlendModeNormal alpha:1.0];
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    [self.cropperImage setOriginalImage:newImage];
+}
 
 @end
