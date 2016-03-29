@@ -25,6 +25,7 @@
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.tabBarController.tabBar.hidden=YES;
     
+    NSLog(@"%@",self.myObjectSelection);
     defaults = [NSUserDefaults standardUserDefaults];
     baseurl = [defaults objectForKey:@"baseurl"];
     
@@ -33,12 +34,14 @@
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     [self.view addGestureRecognizer:singleTap];
     
+    
+    
 }
 
 -(void) viewDidAppear:(BOOL)animated
 {
-    
-    NSLog(@"%@",[self imageToString:self.image]);
+    NSLog(@"%@",self.myObjectSelection);
+    //NSLog(@"%@",[self imageToString:self.image]);
     
     [[ApiAccess getSharedInstance] setDelegate:self];
     
@@ -86,6 +89,8 @@
     [self.upload setEnabled:false];
    
     NSString *taglist= @"";
+    
+    NSLog(@"TagList size: %d",self.myObjectSelection.count);
     
     if(self.myObjectSelection.count>0)
     {

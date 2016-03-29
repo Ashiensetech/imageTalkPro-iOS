@@ -30,10 +30,12 @@
 @property (strong, nonatomic) IBOutlet UIButton *detailsBtn;
 @property (strong, nonatomic) IBOutlet UIButton *likesBtn;
 @property (strong, nonatomic) IBOutlet UIButton *profileBtn;
-@property (strong, nonatomic) IBOutlet UIImageView *tagImg;
-@property (strong, nonatomic) IBOutlet UIButton *tagBtn;
+
 @property (strong, nonatomic) IBOutlet UIButton *loc;
 
+@property (weak, nonatomic) IBOutlet UIButton *tagBtn;
+
+@property (weak, nonatomic) IBOutlet UIImageView *tagIcon;
 
 
 
