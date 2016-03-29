@@ -42,4 +42,5 @@
 @property (strong, nonatomic) IBOutlet UIView *cropView;
 @property(nonatomic,assign) BOOL stickered;
 
+
 @end

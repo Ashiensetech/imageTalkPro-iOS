@@ -429,19 +429,19 @@
     if(self.type ==2){
         switch (indexPath.row) {
             case 0:
-               [ self setSticker:[UIImage imageNamed:@"glass"]];
+                [ self setSticker:[UIImage imageNamed:@"glass"] IndexRow:indexPath.row];
                 self.stickered = YES;
                 break;
             case 1:
-                [ self setSticker:[UIImage imageNamed:@"sleepy"]];
+                [ self setSticker:[UIImage imageNamed:@"sleepy"]IndexRow:indexPath.row];
                 self.stickered = YES;
                 break;
             case 2:
-                [ self setSticker:[UIImage imageNamed:@"WINK"]];
+                [ self setSticker:[UIImage imageNamed:@"WINK"]IndexRow:indexPath.row];
                 self.stickered = YES;
                 break;
             case 3:
-                [ self setSticker:[UIImage imageNamed:@"wink2"]];
+                [ self setSticker:[UIImage imageNamed:@"wink2"]IndexRow:indexPath.row];
                 self.stickered = YES;
                 break;
             default:
@@ -498,7 +498,7 @@
     }
     [self.loading stopAnimating];
 }
--(void) setSticker:(UIImage *)sticker{
+-(void) setSticker:(UIImage *)sticker  IndexRow: (int) row{
     UIImageView *stickerView = [[UIImageView alloc]
                                initWithImage: sticker];
     CGRect stickerFrame = CGRectMake(50, 50, 140, 140);
@@ -508,7 +508,7 @@
     [contentView addSubview:stickerView];
     
     ZDStickerView *userResizableView1 = [[ZDStickerView alloc] initWithFrame:stickerFrame];
-    userResizableView1.tag = 0;
+    userResizableView1.tag = row;
     userResizableView1.stickerViewDelegate = self;
     userResizableView1.contentView = contentView;//contentView;
     userResizableView1.preventsPositionOutsideSuperview = YES;
@@ -597,6 +597,36 @@
 }
 
 
+- (UIImage *)imageRotatedByDegrees:(CGFloat)degrees Image:(UIImage *) image
+    {
+        // calculate the size of the rotated view's containing box for our drawing space
+        UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,image.size.width, image.size.height)];
+        CGAffineTransform t = CGAffineTransformMakeRotation(degrees);
+        rotatedViewBox.transform = t;
+        CGSize rotatedSize = rotatedViewBox.frame.size;
+        
+        // Create the bitmap context
+        UIGraphicsBeginImageContext(rotatedSize);
+        CGContextRef bitmap = UIGraphicsGetCurrentContext();
+        
+        // Move the origin to the middle of the image so we will rotate and scale around the center.
+        CGContextTranslateCTM(bitmap, rotatedSize.width/2, rotatedSize.height/2);
+        
+        //   // Rotate the image context
+        CGContextRotateCTM(bitmap, degrees);
+        
+        // Now, draw the rotated/scaled image into the context
+        CGContextScaleCTM(bitmap, 1.0, -1.0);
+        CGContextDrawImage(bitmap, CGRectMake(-image.size.width / 2, -image.size.height / 2, image.size.width, image.size.height), [image CGImage]);
+        
+        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        return newImage;
+        
+    }
+
+    
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
@@ -633,24 +663,53 @@
 
 - (void)stickerViewDidCustomButtonTap:(ZDStickerView *)sticker
 {
-    NSLog(@"%s [%zd]",__func__, sticker.tag);
-    [((UITextView*)sticker.contentView) becomeFirstResponder];
+    CGFloat radians = atan2f(sticker.transform.b, sticker.transform.a);
+    [sticker setHidden:YES];
+    [((UIImageView*)sticker.contentView) becomeFirstResponder];
     UIImage *bottomImage = [self.cropperImage processedImage]; //background image
-    UIImage *image       = [UIImage imageNamed:@"glass"];
+    UIImage *image       = NULL;
+    switch (sticker.tag) {
+        case 0:
+            image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"glass"]];
+            break;
+        case 1:
+           image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"sleepy"]];
+            
+            break;
+        case 2:
+              image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"WINK"]];
+            break;
+        case 3:
+           image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"wink2"]];
+            
+            break;
+            
+        default:
+            break;
+    }
+    
     CGSize newSize = CGSizeMake(bottomImage.size.width, bottomImage.size.height);
+   
     UIGraphicsBeginImageContext( newSize );
     
-    // Use existing opacity as is
     [bottomImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
-    
-    // Apply supplied opacity if applicable
-    [image drawInRect:CGRectMake(sticker.contentView.frame.origin.x, sticker.contentView.frame.origin.y, sticker.contentView.frame.size.width, sticker.contentView.frame.size.height)
+   
+    [image drawInRect:CGRectMake(sticker.frame.origin.x, sticker.frame.origin.y, sticker.frame.size.width, sticker.frame.size.height)
             blendMode:kCGBlendModeNormal alpha:1.0];
-    
+  
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     
     UIGraphicsEndImageContext();
     [self.cropperImage setOriginalImage:newImage];
+}
+
+- (void)stickerViewDidBeginEditing:(ZDStickerView *)sticker{
+    NSLog(@"begin : %f",sticker.contentView.frame.size.width);
+}
+
+- (void)stickerViewDidEndEditing:(ZDStickerView *)sticker{
+      NSLog(@"end : %f",sticker.contentView.frame.size.width);
+    NSLog(@"%@",sticker.subviews);
 }
 
 @end
