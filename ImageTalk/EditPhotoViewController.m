@@ -644,7 +644,7 @@
     [bottomImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
     
     // Apply supplied opacity if applicable
-    [image drawInRect:CGRectMake(sticker.contentView.bounds.origin.x, sticker.contentView.bounds.origin.y, sticker.contentView.bounds.size.width, sticker.contentView.bounds.size.height)
+    [image drawInRect:CGRectMake(sticker.contentView.frame.origin.x, sticker.contentView.frame.origin.y, sticker.contentView.frame.size.width, sticker.contentView.frame.size.height)
             blendMode:kCGBlendModeNormal alpha:1.0];
     
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
