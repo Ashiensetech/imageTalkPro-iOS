@@ -1763,44 +1763,46 @@ they like to be shared.</string>
                                                                 <constraint firstItem="3o6-4B-zvI" firstAttribute="leading" secondItem="51A-1q-j8K" secondAttribute="trailing" id="zAl-Lk-hNB"/>
                                                             </constraints>
                                                         </view>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tag" translatesAutoresizingMaskIntoConstraints="NO" id="NrP-E7-Um6">
-                                                            <rect key="frame" x="20" y="325" width="25" height="25"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="25" id="0x7-hT-7Ry"/>
-                                                                <constraint firstAttribute="height" constant="25" id="m5L-k7-r9M"/>
-                                                            </constraints>
-                                                        </imageView>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MB5-8Y-ZSE">
-                                                            <rect key="frame" x="20" y="325" width="30" height="25"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="25" id="5Hh-5h-w1c"/>
-                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="25" id="7Ja-A4-rjv"/>
-                                                            </constraints>
-                                                        </button>
                                                         <imageView userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="body" translatesAutoresizingMaskIntoConstraints="NO" id="lyq-Z1-EIe">
                                                             <rect key="frame" x="0.0" y="70" width="604" height="300"/>
                                                         </imageView>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tag" translatesAutoresizingMaskIntoConstraints="NO" id="kwa-dg-zoh">
+                                                            <rect key="frame" x="21" y="332" width="25" height="25"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="25" id="1g8-QN-DAu"/>
+                                                                <constraint firstAttribute="width" constant="25" id="9tR-Zv-xST"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j8d-jy-EiX">
+                                                            <rect key="frame" x="21" y="332" width="30" height="25"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="25" id="HFw-ci-08z"/>
+                                                                <constraint firstAttribute="height" constant="25" id="wT5-Ok-uF1"/>
+                                                            </constraints>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="mY0-wa-ScC" secondAttribute="trailing" id="0HR-42-fFG"/>
+                                                        <constraint firstItem="kwa-dg-zoh" firstAttribute="bottom" secondItem="j8d-jy-EiX" secondAttribute="bottom" id="3pA-tw-3S0"/>
                                                         <constraint firstItem="mBj-zL-1Ni" firstAttribute="leading" secondItem="PEJ-IO-77m" secondAttribute="leading" id="4jn-Pr-bEA"/>
                                                         <constraint firstItem="jDT-ij-kaV" firstAttribute="leading" secondItem="PEJ-IO-77m" secondAttribute="leading" id="645-7k-e5p"/>
-                                                        <constraint firstItem="O8n-dk-hjO" firstAttribute="top" secondItem="MB5-8Y-ZSE" secondAttribute="bottom" constant="20" id="8S8-Uo-89h"/>
                                                         <constraint firstItem="mY0-wa-ScC" firstAttribute="top" secondItem="PEJ-IO-77m" secondAttribute="top" id="A7M-q5-ksW"/>
                                                         <constraint firstItem="lyq-Z1-EIe" firstAttribute="top" secondItem="mBj-zL-1Ni" secondAttribute="bottom" id="AxR-7I-cag"/>
                                                         <constraint firstItem="lyq-Z1-EIe" firstAttribute="leading" secondItem="PEJ-IO-77m" secondAttribute="leading" id="BRc-PQ-Rgm"/>
-                                                        <constraint firstItem="MB5-8Y-ZSE" firstAttribute="leading" secondItem="PEJ-IO-77m" secondAttribute="leading" constant="20" id="Caf-yO-94u"/>
                                                         <constraint firstAttribute="bottom" secondItem="jDT-ij-kaV" secondAttribute="bottom" id="Fwe-Vn-LZp"/>
                                                         <constraint firstItem="O8n-dk-hjO" firstAttribute="leading" secondItem="PEJ-IO-77m" secondAttribute="leading" id="GA2-yb-xf6"/>
-                                                        <constraint firstItem="NrP-E7-Um6" firstAttribute="leading" secondItem="PEJ-IO-77m" secondAttribute="leading" constant="20" id="HIW-Sa-258"/>
                                                         <constraint firstItem="mY0-wa-ScC" firstAttribute="leading" secondItem="PEJ-IO-77m" secondAttribute="leading" id="PKx-s3-bE1"/>
-                                                        <constraint firstItem="O8n-dk-hjO" firstAttribute="top" secondItem="NrP-E7-Um6" secondAttribute="bottom" constant="20" id="V6W-Ah-ORj"/>
+                                                        <constraint firstItem="j8d-jy-EiX" firstAttribute="leading" secondItem="PEJ-IO-77m" secondAttribute="leading" constant="21" id="Ryz-RM-BgT"/>
+                                                        <constraint firstItem="kwa-dg-zoh" firstAttribute="leading" secondItem="j8d-jy-EiX" secondAttribute="leading" id="TqD-UM-50Y"/>
                                                         <constraint firstItem="mBj-zL-1Ni" firstAttribute="top" secondItem="mY0-wa-ScC" secondAttribute="bottom" id="WbV-w3-kGf"/>
                                                         <constraint firstItem="O8n-dk-hjO" firstAttribute="top" secondItem="lyq-Z1-EIe" secondAttribute="bottom" id="YPU-5g-5Mh"/>
                                                         <constraint firstAttribute="trailing" secondItem="mBj-zL-1Ni" secondAttribute="trailing" id="cMk-PI-trg"/>
                                                         <constraint firstAttribute="trailing" secondItem="O8n-dk-hjO" secondAttribute="trailing" id="fAy-75-CJk"/>
                                                         <constraint firstAttribute="trailing" secondItem="lyq-Z1-EIe" secondAttribute="trailing" id="fce-QG-Azh"/>
+                                                        <constraint firstAttribute="trailing" secondItem="j8d-jy-EiX" secondAttribute="trailing" constant="553" id="hIm-wp-XpS"/>
+                                                        <constraint firstItem="kwa-dg-zoh" firstAttribute="leading" secondItem="PEJ-IO-77m" secondAttribute="leadingMargin" constant="13" id="kSp-gM-vLL"/>
+                                                        <constraint firstItem="O8n-dk-hjO" firstAttribute="top" secondItem="kwa-dg-zoh" secondAttribute="bottom" constant="13" id="tln-eO-jqG"/>
                                                         <constraint firstItem="jDT-ij-kaV" firstAttribute="top" secondItem="O8n-dk-hjO" secondAttribute="bottom" id="wWp-W2-dY6"/>
                                                         <constraint firstAttribute="trailing" secondItem="jDT-ij-kaV" secondAttribute="trailing" id="wWw-ck-Szf"/>
                                                     </constraints>
@@ -1835,8 +1837,6 @@ they like to be shared.</string>
                                             <outlet property="name" destination="iSe-nj-TSK" id="e0X-Ia-iib"/>
                                             <outlet property="profileBtn" destination="sxd-hX-Z8R" id="HAe-yb-cVt"/>
                                             <outlet property="profilePic" destination="lcT-kx-1cC" id="J3k-h3-Obw"/>
-                                            <outlet property="tagBtn" destination="MB5-8Y-ZSE" id="28R-6y-r5b"/>
-                                            <outlet property="tagImg" destination="NrP-E7-Um6" id="YvV-60-3c7"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
