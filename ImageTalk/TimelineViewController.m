@@ -26,6 +26,8 @@
 
 @interface TimelineViewController ()
 
+@property (strong,nonatomic)UIImage *img;
+
 @end
 
 @implementation TimelineViewController
@@ -173,8 +175,9 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
+    
+    
     WallPost *data = self.myObject[indexPath.row];
-  
     
     CGFloat height;
     
@@ -188,8 +191,20 @@
     }
     else
     {
-        height = self.view.frame.size.width + 115;
+        NSString *filePath = [NSString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.picPath];
+        self.img = [UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:filePath]]];
+      
+        
+        if (self.img.size.width > CGRectGetWidth(self.view.bounds)) {
+            CGFloat ratio = self.img.size.height / self.img.size.width;
+            return CGRectGetWidth(self.view.bounds) * ratio+120;
+        } else {
+            return self.img.size.height+110;
+        }
        
+        //height = self.view.frame.size.width + 100;
+        
+        
     }
     
     
@@ -214,10 +229,13 @@
 }
 
 
-
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
     TimelineTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    
+    
     WallPost *data = self.myObject[indexPath.row];
    
     cell.image.userInteractionEnabled = YES;
@@ -249,8 +267,11 @@
     }
     else
     {
-        cell.image.contentMode = UIViewContentModeScaleAspectFit;
-        cell.image.clipsToBounds =YES;
+        if(cell.image.image.size.height<cell.image.frame.size.height)
+        {
+            cell.image.frame = CGRectMake(cell.image.frame.origin.x, cell.image.frame.origin.y,cell.image.frame.size.width, cell.image.frame.size.height);
+        }
+        cell.image.contentMode = UIViewContentModeScaleToFill;
         cell.favBtn.hidden = false;
         cell.downloadBtn.hidden = false;
         cell.favImg.hidden = false;

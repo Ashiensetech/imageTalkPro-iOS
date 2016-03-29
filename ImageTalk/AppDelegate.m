@@ -75,8 +75,8 @@
   //  [defaults setValue:@"159.203.253.167" forKey:@"socketurl"];
   //  [defaults setValue:@"9025" forKey:@"port"];
     
-     [defaults setValue:@"http://27.147.149.178:9020/" forKey:@"baseurl"];
-     [defaults setValue:@"27.147.149.178" forKey:@"socketurl"];
+     [defaults setValue:@"http://163.53.151.2:9020/" forKey:@"baseurl"];
+     [defaults setValue:@"163.53.151.2" forKey:@"socketurl"];
      [defaults setValue:@"9025" forKey:@"port"];
     
 
