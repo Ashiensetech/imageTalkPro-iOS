@@ -170,10 +170,10 @@
 
 - (IBAction)done:(id)sender {
     
-    
+   
     if(self.type == 0)
     {
-        SharePhotoViewController *data = self.navigationController.viewControllers[4];
+        SharePhotoViewController *data = self.navigationController.viewControllers[3];
         data.myObjectSelection = self.myObjectSelection;
     }
     
@@ -232,7 +232,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    NSLog(@"section1");
     if(self.selected)
     {
     BOOL shouoldAdd = YES;
@@ -251,6 +251,7 @@
     
       if(shouoldAdd)
       {
+          NSLog(@"section2");
       [self.myObjectSelection addObject:self.myObject[indexPath.row]];
       }
       else

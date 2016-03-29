@@ -245,7 +245,15 @@
     tapped.numberOfTapsRequired = 1;
     [cell.image addGestureRecognizer:tapped];
     
-    NSLog(@"tag count :%d",data.tagCount);
+    NSLog(@"tag count :%d,%@",data.tagCount,data.description);
+    
+    
+   if(data.tagCount<1)
+   {
+       cell.tagIcon.hidden = true;
+      cell.tagBtn.hidden = true;
+   }
+    
     
     if(data.type == 2)
     {
@@ -363,7 +371,7 @@
     
     cell.commentBtn.tag = indexPath.row;
     
-    cell.commentLabel.text = [NSString stringWithFormat:@"%d comments",data.comments.count];
+    cell.commentLabel.text = [NSString stringWithFormat:@"%lu comments",(unsigned long)data.comments.count];
     
     cell.profileBtn.tag = indexPath.row;
     cell.loc.tag = indexPath.row;
@@ -390,7 +398,7 @@
     UITapGestureRecognizer *gesture = (UITapGestureRecognizer *) sender;
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:gesture.view.tag inSection:0];
     WallPost *data = self.myObject[indexPath.row];
-    NSLog(@"Tag = %d", data.likeCount);
+    NSLog(@"Tag = %d", data.tagCount);
 }
 
 -(NSString*) AgoStringFromTime : (NSDate*) dateTime
