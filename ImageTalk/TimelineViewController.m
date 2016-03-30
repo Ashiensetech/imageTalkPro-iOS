@@ -250,9 +250,10 @@
     
    if(data.tagCount<1)
    {
-       cell.tagIcon.hidden = true;
+      cell.tagIcon.hidden = true;
       cell.tagBtn.hidden = true;
    }
+
     
     
     if(data.type == 2)
@@ -399,6 +400,23 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:gesture.view.tag inSection:0];
     WallPost *data = self.myObject[indexPath.row];
     NSLog(@"Tag = %d", data.tagCount);
+    UIView *view = [sender view];
+    
+    for(int i = 0;i<data.tagCount;i++)
+    {
+        
+       // NSLog(@"%@",[[data.tagList objectAtIndex:i ]U]);
+        AppCredential *appcredential =  [data.tagList objectAtIndex:i] ;
+        NSLog(@"%@",appcredential.user.firstName);
+        
+        UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(25,i,100,20)]; //or whatever size you need
+        myLabel.text = [NSString stringWithFormat:@"%@",appcredential.user.firstName] ;
+
+        [view addSubview:myLabel];
+        
+    }
+    
+    
 }
 
 -(NSString*) AgoStringFromTime : (NSDate*) dateTime
