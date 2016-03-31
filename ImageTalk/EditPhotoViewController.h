@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "ApiAccess.h"
 #import "HIPImageCropperView.h"
+#import "BJImageCropper.h"
 
 @interface EditPhotoViewController : UIViewController <UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,ApiAccessDelegate>
 {
@@ -42,6 +43,9 @@
 @property (strong, nonatomic) IBOutlet UIView *cropView;
 @property(nonatomic,assign) BOOL stickered;
 
+//BJImageCropper items
+@property (nonatomic, strong) BJImageCropper *imageCropper;
 
+@property (nonatomic, strong) UIImageView *preview;
 
 @end
