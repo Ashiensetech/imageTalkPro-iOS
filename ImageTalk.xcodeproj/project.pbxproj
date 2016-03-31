@@ -121,6 +121,10 @@
 		FD8FA96B1BCBC18600E20746 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8FA96A1BCBC18600E20746 /* AddressBook.framework */; };
 		FD8FA96D1BCBC19000E20746 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8FA96C1BCBC19000E20746 /* AddressBookUI.framework */; };
 		FD9076F51BF0C9AA00FCE2E4 /* HorizontalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9076F41BF0C9AA00FCE2E4 /* HorizontalTableViewCell.m */; };
+		FD9303B11CACF96C00EF1B71 /* BJImageCropper.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9303B01CACF96C00EF1B71 /* BJImageCropper.m */; };
+		FD9303B31CACFFF300EF1B71 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD9303B21CACFFF300EF1B71 /* Foundation.framework */; };
+		FD9303B51CAD000300EF1B71 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD9303B41CAD000300EF1B71 /* UIKit.framework */; };
+		FD9303B71CAD03F400EF1B71 /* tactile_noise.png in Resources */ = {isa = PBXBuildFile; fileRef = FD9303B61CAD03F400EF1B71 /* tactile_noise.png */; };
 		FD953AC21BC634E5009538AA /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FD953A841BC634E5009538AA /* JSONModel.m */; };
 		FD953AC31BC634E5009538AA /* JSONModelArray.m in Sources */ = {isa = PBXBuildFile; fileRef = FD953A861BC634E5009538AA /* JSONModelArray.m */; };
 		FD953AC41BC634E5009538AA /* JSONModelClassProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = FD953A881BC634E5009538AA /* JSONModelClassProperty.m */; };
@@ -506,6 +510,11 @@
 		FD8FA96C1BCBC19000E20746 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		FD9076F31BF0C9AA00FCE2E4 /* HorizontalTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HorizontalTableViewCell.h; sourceTree = "<group>"; };
 		FD9076F41BF0C9AA00FCE2E4 /* HorizontalTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HorizontalTableViewCell.m; sourceTree = "<group>"; };
+		FD9303AF1CACF96C00EF1B71 /* BJImageCropper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BJImageCropper.h; path = "../../../../Downloads/BJImageCropper-master/BJImageCropper/BJImageCropper.h"; sourceTree = "<group>"; };
+		FD9303B01CACF96C00EF1B71 /* BJImageCropper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BJImageCropper.m; path = "../../../../Downloads/BJImageCropper-master/BJImageCropper/BJImageCropper.m"; sourceTree = "<group>"; };
+		FD9303B21CACFFF300EF1B71 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FD9303B41CAD000300EF1B71 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		FD9303B61CAD03F400EF1B71 /* tactile_noise.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tactile_noise.png; path = ../../../tactile_noise.png; sourceTree = "<group>"; };
 		FD953A831BC634E5009538AA /* JSONModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModel.h; sourceTree = "<group>"; };
 		FD953A841BC634E5009538AA /* JSONModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONModel.m; sourceTree = "<group>"; };
 		FD953A851BC634E5009538AA /* JSONModelArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModelArray.h; sourceTree = "<group>"; };
@@ -819,6 +828,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD9303B51CAD000300EF1B71 /* UIKit.framework in Frameworks */,
+				FD9303B31CACFFF300EF1B71 /* Foundation.framework in Frameworks */,
 				FD7815E61CA913900045D7AA /* CoreImage.framework in Frameworks */,
 				FD7815E41CA913750045D7AA /* Accelerate.framework in Frameworks */,
 				FDC74D3D1C0593FA00EDC6BB /* CoreGraphics.framework in Frameworks */,
@@ -853,6 +864,8 @@
 		7D8EDC49BD2D1C21FB9C07A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FD9303B41CAD000300EF1B71 /* UIKit.framework */,
+				FD9303B21CACFFF300EF1B71 /* Foundation.framework */,
 				FD7815E51CA913900045D7AA /* CoreImage.framework */,
 				FD7815E31CA913750045D7AA /* Accelerate.framework */,
 				FDC74D3C1C0593FA00EDC6BB /* CoreGraphics.framework */,
@@ -1069,6 +1082,15 @@
 				FD7815ED1CA9404E0045D7AA /* ZDStickerView.m */,
 			);
 			path = ZDStickerView;
+			sourceTree = "<group>";
+		};
+		FD9303AE1CACF93400EF1B71 /* BJImageCropper */ = {
+			isa = PBXGroup;
+			children = (
+				FD9303AF1CACF96C00EF1B71 /* BJImageCropper.h */,
+				FD9303B01CACF96C00EF1B71 /* BJImageCropper.m */,
+			);
+			name = BJImageCropper;
 			sourceTree = "<group>";
 		};
 		FD953A811BC634E5009538AA /* JSONModel */ = {
@@ -1446,6 +1468,7 @@
 		FDE9181B1BBE5B5C001FBCB1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FD9303B61CAD03F400EF1B71 /* tactile_noise.png */,
 				FD640F161CA16E7000A3A665 /* Main.storyboard */,
 				FD5CA7EB1C0C1218004E2800 /* Frame */,
 				FD1B26DB1C02CB1A007162ED /* image_loader.gif */,
@@ -1615,6 +1638,7 @@
 		FDE9181E1BBE5B77001FBCB1 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				FD9303AE1CACF93400EF1B71 /* BJImageCropper */,
 				FD7815E81CA9404E0045D7AA /* ZDStickerView */,
 				FDD3208C1C44E3A20048A43D /* Thrift */,
 				FDD4B4731C22AEC5000BB068 /* AudioController */,
@@ -1910,6 +1934,7 @@
 				FD1B26DC1C02CB1A007162ED /* image_loader.gif in Resources */,
 				FDEECE2F1B9D69BF00887F4A /* LaunchScreen.xib in Resources */,
 				FDEECE2C1B9D69BF00887F4A /* Images.xcassets in Resources */,
+				FD9303B71CAD03F400EF1B71 /* tactile_noise.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2093,6 +2118,7 @@
 				FDFC70B41BE34BAA001782F0 /* ContactResponse.m in Sources */,
 				FD953ACF1BC634E5009538AA /* LocationArrayModel.m in Sources */,
 				FD58E04D1BC2717B00F5D98C /* Country.m in Sources */,
+				FD9303B11CACF96C00EF1B71 /* BJImageCropper.m in Sources */,
 				FDD320CF1C44E3D80048A43D /* TBinaryProtocol.m in Sources */,
 				FDCBCDB41BF3572300259737 /* ChatHistoryResponse.m in Sources */,
 				FDC711451BF1E4A600FBC374 /* StickerCategoryResponse.m in Sources */,

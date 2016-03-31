@@ -18,8 +18,27 @@
 #import "UIImage+Scale.h"
 #import "UIImage+Border.h"
 #import "ZDStickerView.h"
+#import <QuartzCore/QuartzCore.h>
+
+#define SHOW_PREVIEW NO
 
 
+
+#ifndef CGWidth
+#define CGWidth(rect)                   rect.size.width
+#endif
+
+#ifndef CGHeight
+#define CGHeight(rect)                  rect.size.height
+#endif
+
+#ifndef CGOriginX
+#define CGOriginX(rect)                 rect.origin.x
+#endif
+
+#ifndef CGOriginY
+#define CGOriginY(rect)                 rect.origin.y
+#endif
 
 @interface EditPhotoViewController ()<ZDStickerViewDelegate>
 
@@ -28,7 +47,8 @@
 @end
 
 @implementation EditPhotoViewController
-
+@synthesize imageCropper;
+@synthesize preview;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -60,16 +80,26 @@
                          initWithFrame:self.cropView.bounds
                          cropAreaSize:CGSizeMake(self.view.frame.size.width,self.view.frame.size.width-20)
                          position:HIPImageCropperViewPositionTop];
-    [self.cropView addSubview:self.cropperImage];
     
+    [self.cropView addSubview:self.cropperImage];
     [self.cropperImage setOriginalImage:self.image];
     [self.view sendSubviewToBack:self.cropView];
     [self.cropView addSubview:self.adjustFitBtn];
     
+    
+    
+   
+   
+    
 }
 
 - (IBAction)effect:(id)sender {
-    
+    if(self.type ==1){
+        [self.imageCropper removeFromSuperview];
+        [self.cropView addSubview:self.cropperImage];
+        [self.cropView addSubview:self.adjustFitBtn];
+        [self.cropView bringSubviewToFront:self.adjustFitBtn];
+    }
     self.type = 0;
     [self changeType];
 }
@@ -78,17 +108,26 @@
     
     self.type = 1;
     [self changeType];
+    [self callBJImageCropper];
 }
 
 - (IBAction)smily:(id)sender {
+    if(self.type ==1){
+        [self.imageCropper removeFromSuperview];
+        [self.cropView addSubview:self.cropperImage];
+        [self.cropView addSubview:self.adjustFitBtn];
+        [self.cropView bringSubviewToFront:self.adjustFitBtn];
+
+        
+    }
     self.type = 2;
     [self changeType];
 }
 
-- (IBAction)frame:(id)sender {
-    self.type = 3;
-    [self changeType];
-}
+//- (IBAction)frame:(id)sender {
+//    self.type = 3;
+//    [self changeType];
+//}
 
 -(void)changeType
 {
@@ -127,13 +166,7 @@
     
     self.borderObject = [[NSMutableArray alloc]init];
     
-    self.lipsObject = [[NSMutableArray alloc]initWithObjects:
-                       [NSDictionary dictionaryWithObjectsAndKeys:[UIImage imageNamed:@"scale-1"],@"image", nil],
-                       [NSDictionary dictionaryWithObjectsAndKeys:[UIImage imageNamed:@"scale-1"],@"image", nil],
-                       [NSDictionary dictionaryWithObjectsAndKeys:[UIImage imageNamed:@"scale-1"],@"image", nil],
-                       [NSDictionary dictionaryWithObjectsAndKeys:[UIImage imageNamed:@"scale-1"],@"image", nil],
-                       nil];
-    
+    self.lipsObject = [[NSMutableArray alloc]init];
     self.smilyObject =[[NSMutableArray alloc]initWithObjects:
                        [NSDictionary dictionaryWithObjectsAndKeys:@"Glass",@"title",[UIImage imageNamed:@"glass"],@"image", nil],
                        [NSDictionary dictionaryWithObjectsAndKeys:@"Sleepy",@"title",[UIImage imageNamed:@"sleepy"],@"image", nil],
@@ -629,8 +662,12 @@
        
         SharePhotoViewController *data = [segue destinationViewController];
       //  data.image = self.body.image;
-        
-        data.image = (!self.isAspect) ? [self.cropperImage processedImage] : self.image;
+        if(self.type==1){
+            data.image = [self.imageCropper getCroppedImage];
+        }else{
+             data.image = (!self.isAspect) ? [self.cropperImage processedImage] : self.image;
+        }
+       
 
     }
     
@@ -638,8 +675,12 @@
     {
         UINavigationController *navController = [segue destinationViewController];
         ProfileViewController *data = (ProfileViewController *)([navController viewControllers][0]);
-        //data.pic = self.body.image;
-        data.pic = (!self.isAspect) ? [self.cropperImage processedImage] : self.image;
+        
+        if(self.type==1){
+            data.pic = [self.imageCropper getCroppedImage];
+        }else{
+            data.pic = (!self.isAspect) ? [self.cropperImage processedImage] : self.image;
+        }
     }
 }
 
@@ -706,5 +747,65 @@
       NSLog(@"end : %f",sticker.contentView.frame.size.width);
     NSLog(@"%@",sticker.subviews);
 }
+
+#pragma mark - BJImageCropper
+
+- (void)updateDisplay {
+//    self.boundsText.text = [NSString stringWithFormat:@"(%f, %f) (%f, %f)", CGOriginX(self.imageCropper.crop), CGOriginY(self.imageCropper.crop), CGWidth(self.imageCropper.crop), CGHeight(self.imageCropper.crop)];
+    
+    if (SHOW_PREVIEW) {
+        self.preview.image = [self.imageCropper getCroppedImage];
+        self.preview.frame = CGRectMake(10,10,self.imageCropper.crop.size.width * 0.1, self.imageCropper.crop.size.height * 0.1);
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([object isEqual:self.imageCropper] && [keyPath isEqualToString:@"crop"]) {
+        [self updateDisplay];
+    }
+}
+-(void) callBJImageCropper{
+    
+    self.cropView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tactile_noise.png"]];
+    if(self.imageCropper ==NULL){
+        self.imageCropper = [[BJImageCropper alloc] initWithImage:self.image andMaxSize:CGSizeMake(750,350)];
+       
+        self.imageCropper.center = self.cropView.center;
+        self.imageCropper.imageView.layer.shadowColor = [[UIColor blackColor] CGColor];
+        self.imageCropper.imageView.layer.shadowRadius = 3.0f;
+        self.imageCropper.imageView.layer.shadowOpacity = 0.8f;
+        self.imageCropper.imageView.layer.shadowOffset = CGSizeMake(1, 1);
+        
+        [self.imageCropper addObserver:self forKeyPath:@"crop" options:NSKeyValueObservingOptionNew context:nil];
+        
+        if (SHOW_PREVIEW) {
+            self.preview = [[UIImageView alloc] initWithFrame:CGRectMake(10,10,self.imageCropper.crop.size.width * 0.1, self.imageCropper.crop.size.height * 0.1)];
+            self.preview.image = [self.imageCropper getCroppedImage];
+            self.preview.clipsToBounds = YES;
+            self.preview.layer.borderColor = [[UIColor whiteColor] CGColor];
+            self.preview.layer.borderWidth = 2.0;
+            [self.cropView addSubview:self.preview];
+        }
+    }
+   
+    [self.view sendSubviewToBack:self.cropView];
+    [self.cropperImage removeFromSuperview];
+    [self.cropView addSubview:self.imageCropper];
+  
+    
+}
+
+- (void)viewDidUnload
+{
+    [self setImageCropper:nil];
+        [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+- (void)dealloc {
+    [self.imageCropper removeObserver:self forKeyPath:@"crop"];
+}
+
+
 
 @end

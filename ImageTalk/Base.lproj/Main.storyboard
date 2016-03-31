@@ -3636,6 +3636,11 @@ invite 2 friends</string>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                             <inset key="sectionInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
+                                        <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" id="zTH-XR-D1g">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="158"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </activityIndicatorView>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="4AC-uo-DRc" customClass="EffectsCollectionViewCell">
                                                 <rect key="frame" x="20" y="24" width="90" height="110"/>
@@ -3694,7 +3699,10 @@ invite 2 friends</string>
                                 <rect key="frame" x="0.0" y="323" width="600" height="55"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="akE-XV-QhE">
-                                        <rect key="frame" x="0.0" y="0.0" width="150" height="55"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="180" height="55"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="180" id="N8H-1N-syE"/>
+                                        </constraints>
                                         <color key="tintColor" red="0.91764705879999997" green="0.42352941179999998" blue="0.050980392159999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="FilterIcon">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -3721,45 +3729,50 @@ invite 2 friends</string>
                                         </state>
                                         <state key="highlighted" image="F4F6337E-6BF5-41D5-9705-3A143ED92C4E"/>
                                         <connections>
-                                            <action selector="frame:" destination="QIE-dp-jpL" eventType="touchUpInside" id="rAh-as-c7E"/>
+                                            <action selector="lips:" destination="QIE-dp-jpL" eventType="touchUpInside" id="5cN-hW-K3x"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ipR-bu-3ia">
-                                        <rect key="frame" x="150" y="0.0" width="150" height="55"/>
-                                        <state key="normal" image="ResizeIcon">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mrs-jt-k43">
+                                        <rect key="frame" x="414" y="0.0" width="180" height="55"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="180" id="tLT-gz-HQE"/>
+                                        </constraints>
+                                        <state key="normal" image="EmoIcon">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="highlighted" image="2a"/>
+                                        <state key="highlighted" image="3a"/>
                                         <connections>
-                                            <action selector="lips:" destination="QIE-dp-jpL" eventType="touchUpInside" id="5cN-hW-K3x"/>
+                                            <action selector="smily:" destination="QIE-dp-jpL" eventType="touchUpInside" id="Wjh-XZ-ibb"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.098039215686274508" green="0.098039215686274508" blue="0.098039215686274508" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="Mrs-jt-k43" firstAttribute="leading" secondItem="ipR-bu-3ia" secondAttribute="trailing" constant="24" id="0a1-bO-pG1"/>
                                     <constraint firstItem="akE-XV-QhE" firstAttribute="top" secondItem="Y9F-a5-AOS" secondAttribute="top" id="11X-oS-D1a"/>
-                                    <constraint firstItem="OSJ-LB-AxT" firstAttribute="leading" secondItem="Mrs-jt-k43" secondAttribute="trailing" id="En0-v6-cVP"/>
-                                    <constraint firstItem="OSJ-LB-AxT" firstAttribute="top" secondItem="Y9F-a5-AOS" secondAttribute="top" id="Eoe-M8-QSd"/>
                                     <constraint firstAttribute="bottom" secondItem="ipR-bu-3ia" secondAttribute="bottom" id="GJR-BY-3t3"/>
-                                    <constraint firstItem="Mrs-jt-k43" firstAttribute="leading" secondItem="ipR-bu-3ia" secondAttribute="trailing" id="HUa-zx-EWT"/>
-                                    <constraint firstAttribute="trailing" secondItem="OSJ-LB-AxT" secondAttribute="trailing" id="Rqc-9i-pxJ"/>
+                                    <constraint firstItem="Mrs-jt-k43" firstAttribute="leading" secondItem="ipR-bu-3ia" secondAttribute="trailing" constant="10" id="HUa-zx-EWT"/>
+                                    <constraint firstAttribute="trailing" secondItem="Mrs-jt-k43" secondAttribute="trailing" constant="6" id="KfA-Kj-K3l"/>
+                                    <constraint firstItem="akE-XV-QhE" firstAttribute="leading" secondItem="Y9F-a5-AOS" secondAttribute="leading" id="VC6-Y1-415"/>
                                     <constraint firstItem="Mrs-jt-k43" firstAttribute="top" secondItem="Y9F-a5-AOS" secondAttribute="top" id="asA-6E-Jak"/>
+                                    <constraint firstItem="ipR-bu-3ia" firstAttribute="leading" secondItem="akE-XV-QhE" secondAttribute="trailing" constant="10" id="bAJ-7t-zal"/>
                                     <constraint firstItem="Mrs-jt-k43" firstAttribute="width" secondItem="akE-XV-QhE" secondAttribute="width" id="bEZ-ub-qzw"/>
+                                    <constraint firstItem="ipR-bu-3ia" firstAttribute="leading" secondItem="akE-XV-QhE" secondAttribute="trailing" constant="10" id="bcV-vn-pmy"/>
                                     <constraint firstItem="ipR-bu-3ia" firstAttribute="top" secondItem="Y9F-a5-AOS" secondAttribute="top" id="eX1-CN-cJk"/>
-                                    <constraint firstItem="ipR-bu-3ia" firstAttribute="leading" secondItem="akE-XV-QhE" secondAttribute="trailing" id="eXQ-rn-5S8"/>
+                                    <constraint firstItem="ipR-bu-3ia" firstAttribute="leading" secondItem="akE-XV-QhE" secondAttribute="trailing" constant="10" id="eXQ-rn-5S8"/>
                                     <constraint firstAttribute="height" constant="55" id="ggF-Mr-caQ"/>
-                                    <constraint firstItem="Mrs-jt-k43" firstAttribute="width" secondItem="OSJ-LB-AxT" secondAttribute="width" id="kBO-u3-9bl"/>
+                                    <constraint firstItem="Mrs-jt-k43" firstAttribute="leading" secondItem="ipR-bu-3ia" secondAttribute="trailing" constant="24" id="nbP-qq-mAc"/>
                                     <constraint firstAttribute="bottom" secondItem="Mrs-jt-k43" secondAttribute="bottom" id="ruu-vu-njX"/>
-                                    <constraint firstAttribute="bottom" secondItem="OSJ-LB-AxT" secondAttribute="bottom" id="sU5-3x-zU2"/>
                                     <constraint firstAttribute="bottom" secondItem="akE-XV-QhE" secondAttribute="bottom" id="uvs-s0-6Vt"/>
                                     <constraint firstItem="akE-XV-QhE" firstAttribute="leading" secondItem="Y9F-a5-AOS" secondAttribute="leading" id="yod-w8-gls"/>
-                                    <constraint firstItem="Mrs-jt-k43" firstAttribute="width" secondItem="ipR-bu-3ia" secondAttribute="width" id="yxQ-Q8-EIg"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="bcV-vn-pmy"/>
+                                        <exclude reference="HUa-zx-EWT"/>
+                                    </mask>
+                                </variation>
                             </view>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="zTH-XR-D1g">
-                                <rect key="frame" x="0.0" y="378" width="600" height="158"/>
-                                <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </activityIndicatorView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oCE-sS-1ri">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="323"/>
                                 <subviews>
@@ -3788,20 +3801,16 @@ invite 2 friends</string>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="Y9F-a5-AOS" secondAttribute="trailing" constant="-20" id="0An-TO-iB5"/>
-                            <constraint firstItem="zTH-XR-D1g" firstAttribute="leading" secondItem="mJy-eM-Pob" secondAttribute="leadingMargin" constant="-20" id="5tw-Hz-ZmG"/>
                             <constraint firstItem="oCE-sS-1ri" firstAttribute="top" secondItem="skP-tC-yEN" secondAttribute="bottom" id="8nv-sX-dbP"/>
                             <constraint firstItem="Y9F-a5-AOS" firstAttribute="leading" secondItem="mJy-eM-Pob" secondAttribute="leadingMargin" constant="-20" id="DLY-tg-HBk"/>
                             <constraint firstAttribute="trailingMargin" secondItem="rck-Nu-tbd" secondAttribute="trailing" constant="-20" id="FUB-nG-Art"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="zTH-XR-D1g" secondAttribute="bottom" id="GC5-6g-WJb"/>
                             <constraint firstAttribute="trailingMargin" secondItem="oCE-sS-1ri" secondAttribute="trailing" constant="-20" id="LPi-aC-Hhd"/>
                             <constraint firstAttribute="bottom" secondItem="oCE-sS-1ri" secondAttribute="bottom" constant="213" id="O2y-N7-xVl"/>
                             <constraint firstItem="rck-Nu-tbd" firstAttribute="leading" secondItem="mJy-eM-Pob" secondAttribute="leadingMargin" constant="-20" id="ORx-Vt-yUM"/>
-                            <constraint firstItem="zTH-XR-D1g" firstAttribute="top" secondItem="Y9F-a5-AOS" secondAttribute="bottom" id="SVX-g3-dHx"/>
                             <constraint firstItem="Nn3-sb-Y1O" firstAttribute="top" secondItem="rck-Nu-tbd" secondAttribute="bottom" id="W17-0c-dO2"/>
                             <constraint firstItem="rck-Nu-tbd" firstAttribute="top" secondItem="Y9F-a5-AOS" secondAttribute="bottom" id="hNY-bU-pGc"/>
                             <constraint firstItem="oCE-sS-1ri" firstAttribute="leading" secondItem="mJy-eM-Pob" secondAttribute="leadingMargin" constant="-20" id="oKV-os-bRZ"/>
                             <constraint firstItem="Y9F-a5-AOS" firstAttribute="top" secondItem="oCE-sS-1ri" secondAttribute="bottom" id="sel-ch-3fI"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="zTH-XR-D1g" secondAttribute="trailing" constant="-20" id="zmg-Eo-6Bd"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Photo" id="yam-ZH-3YF">
@@ -3829,7 +3838,6 @@ invite 2 friends</string>
                         <outlet property="collectionData" destination="5XQ-gG-kIT" id="hKE-mO-cgD"/>
                         <outlet property="cropView" destination="oCE-sS-1ri" id="8Ul-r5-Z6e"/>
                         <outlet property="effectBtn" destination="akE-XV-QhE" id="L8g-U8-yhE"/>
-                        <outlet property="frameBtn" destination="OSJ-LB-AxT" id="yQ4-SQ-VXM"/>
                         <outlet property="lipsBtn" destination="ipR-bu-3ia" id="3Jo-FO-DSV"/>
                         <outlet property="loading" destination="zTH-XR-D1g" id="5R4-DL-gth"/>
                         <outlet property="smilyBtn" destination="Mrs-jt-k43" id="b5p-5G-Wpi"/>
