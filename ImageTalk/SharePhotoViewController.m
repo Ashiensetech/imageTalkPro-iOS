@@ -30,7 +30,7 @@
     baseurl = [defaults objectForKey:@"baseurl"];
     
      self.mainImage.image = self.image;
-    
+     self.mainImage.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tabOnImage:)];
     tapped.numberOfTapsRequired = 1;
     [self.mainImage addGestureRecognizer:tapped];
@@ -44,16 +44,36 @@
 }
 -(void)tabOnImage :(id) sender
 {
+    NSLog(@"here");
     UIImageView *fullImage =[[UIImageView alloc] initWithFrame:CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height)];
     fullImage.image=self.image;
     fullImage.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
     [self.view addSubview:fullImage];
+    [self.view bringSubviewToFront:fullImage];
+    fullImage.userInteractionEnabled = YES;
     
+    UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tabOnFullImage:)];
+    tapped.numberOfTapsRequired = 1;
+    [fullImage addGestureRecognizer:tapped];
+
+
     
     
 }
 
-
+-(void)tabOnFullImage :(id) sender
+{
+    
+    
+    for (id child in [self.view subviews])
+    {
+        if ([child isMemberOfClass:[UIImageView class]])
+        {
+            [child removeFromSuperview];
+        }
+    }
+    
+}
 
 
 -(void) viewDidAppear:(BOOL)animated
