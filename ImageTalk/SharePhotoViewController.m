@@ -31,12 +31,30 @@
     
      self.mainImage.image = self.image;
     
+    UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tabOnImage:)];
+    tapped.numberOfTapsRequired = 1;
+    [self.mainImage addGestureRecognizer:tapped];
+    
+    
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     [self.view addGestureRecognizer:singleTap];
     
     
     
 }
+-(void)tabOnImage :(id) sender
+{
+    UIImageView *fullImage =[[UIImageView alloc] initWithFrame:CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height)];
+    fullImage.image=self.image;
+    fullImage.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
+    [self.view addSubview:fullImage];
+    
+    
+    
+}
+
+
+
 
 -(void) viewDidAppear:(BOOL)animated
 {
