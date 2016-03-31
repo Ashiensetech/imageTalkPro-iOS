@@ -27,6 +27,7 @@
 @interface TimelineViewController ()
 
 @property (strong,nonatomic)UIImage *img;
+@property int counter;
 
 @end
 
@@ -37,6 +38,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    self.counter = 0;
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.tabBarController.tabBar.hidden= NO;
     
@@ -234,7 +237,7 @@
     
     
     TimelineTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    
+    self.counter = 0;
     
     WallPost *data = self.myObject[indexPath.row];
    
@@ -252,6 +255,11 @@
    {
       cell.tagIcon.hidden = true;
       cell.tagBtn.hidden = true;
+   }
+   else
+   {
+       cell.tagIcon.hidden = false;
+       cell.tagBtn.hidden = false;
    }
 
     
@@ -396,12 +404,22 @@
 
 -(void)tabOnImage :(id) sender
 {
+    //TimelineTableViewCell *cell =
+    
     UITapGestureRecognizer *gesture = (UITapGestureRecognizer *) sender;
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:gesture.view.tag inSection:0];
     WallPost *data = self.myObject[indexPath.row];
     NSLog(@"Tag = %d", data.tagCount);
-    UIView *view = [sender view];
+    NSLog(@"%ld",(long)indexPath.row);
+    TimelineTableViewCell *cell = [self.tableData cellForRowAtIndexPath:indexPath];
+    UIView *view = cell.imageView;
     
+    int value = 150;
+    int value2 = 25;
+    if(self.counter==0)
+    {
+        cell.tagBtn.hidden = false;
+        cell.tagIcon.hidden = false;
     for(int i = 0;i<data.tagCount;i++)
     {
         
@@ -409,14 +427,37 @@
         AppCredential *appcredential =  [data.tagList objectAtIndex:i] ;
         NSLog(@"%@",appcredential.user.firstName);
         
-        UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(25,i,100,20)]; //or whatever size you need
-        myLabel.text = [NSString stringWithFormat:@"%@",appcredential.user.firstName] ;
+        UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(value2,value,120,20)]; //or whatever size you need
+        value+=25;
+        value2+=50;
+       // myLabel.backgroundColor = [UIColor blackColor];
+       [myLabel setFont:[UIFont systemFontOfSize:12]];
+        
+        myLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
+        myLabel.textColor = [UIColor whiteColor];
+        myLabel.textAlignment = NSTextAlignmentCenter;
+        myLabel.text = [NSString stringWithFormat:@"%@  %@",appcredential.user.firstName,appcredential.user.lastName] ;
 
         [view addSubview:myLabel];
-        
+        self.counter = 1;
     }
     
-    
+    }
+    else{
+        
+        self.counter = 0;
+        
+        cell.tagBtn.hidden = true;
+        cell.tagIcon.hidden = true;
+        for (id child in [view subviews])
+        {
+            if ([child isMemberOfClass:[UILabel class]])
+            {
+                [child removeFromSuperview];
+            }
+        }
+        
+    }
 }
 
 -(NSString*) AgoStringFromTime : (NSDate*) dateTime
