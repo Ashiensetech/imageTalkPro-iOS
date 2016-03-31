@@ -72,27 +72,22 @@
     
     self.type = 0;
     [self changeType];
-   
 }
 
 - (IBAction)lips:(id)sender {
     
     self.type = 1;
     [self changeType];
-  
 }
 
 - (IBAction)smily:(id)sender {
     self.type = 2;
     [self changeType];
-  
-    
 }
 
 - (IBAction)frame:(id)sender {
     self.type = 3;
     [self changeType];
-    
 }
 
 -(void)changeType
@@ -101,7 +96,7 @@
     [self.effectBtn setImage:((self.type == 0) ? [UIImage imageNamed:@"FilterIconSelected"] : [UIImage imageNamed:@"FilterIcon"]) forState:UIControlStateNormal];
     [self.lipsBtn setImage:((self.type == 1) ? [UIImage imageNamed:@"ResizeIconSelected"] : [UIImage imageNamed:@"ResizeIcon"]) forState:UIControlStateNormal];
     [self.smilyBtn setImage:((self.type == 2) ? [UIImage imageNamed:@"EmoIconSelected"] : [UIImage imageNamed:@"EmoIcon"]) forState:UIControlStateNormal];
-    [self.frameBtn setImage:((self.type == 3) ? [UIImage imageNamed:@"4a"] : [UIImage imageNamed:@"4"]) forState:UIControlStateNormal];
+    //[self.frameBtn setImage:((self.type == 3) ? [UIImage imageNamed:@"4a"] : [UIImage imageNamed:@"4"]) forState:UIControlStateNormal];
    
     
     [self.collectionData reloadData];
@@ -130,22 +125,15 @@
                          [NSDictionary dictionaryWithObjectsAndKeys:@"Clarendon",@"title",[self.thumbImage e13],@"image", nil],
                          nil];
     
-    self.borderObject = [[NSMutableArray alloc] initWithObjects:
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"No Frame",@"title",self.thumbImage,@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Blue",@"title",[self.thumbImage imageWithColoredBorder:10 borderColor:[UIColor blueColor] withShadow:YES],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Green",@"title",[self.thumbImage imageWithColoredBorder:10 borderColor:[UIColor greenColor] withShadow:YES],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Black",@"title",[self.thumbImage imageWithColoredBorder:10 borderColor:[UIColor blackColor] withShadow:YES],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"White",@"title",[self.thumbImage imageWithColoredBorder:10 borderColor:[UIColor whiteColor] withShadow:YES],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Cyan",@"title",[self.thumbImage imageWithColoredBorder:10 borderColor:[UIColor cyanColor] withShadow:YES],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Yellow",@"title",[self.thumbImage imageWithColoredBorder:10 borderColor:[UIColor yellowColor] withShadow:YES],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Purple",@"title",[self.thumbImage imageWithColoredBorder:10 borderColor:[UIColor purpleColor] withShadow:YES],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Orange",@"title",[self.thumbImage imageWithColoredBorder:10 borderColor:[UIColor orangeColor] withShadow:YES],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Gray",@"title",[self.thumbImage imageWithColoredBorder:10 borderColor:[UIColor grayColor] withShadow:YES],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Red",@"title",[self.thumbImage imageWithColoredBorder:10 borderColor:[UIColor redColor] withShadow:YES],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Magenta",@"title",[self.thumbImage imageWithColoredBorder:10 borderColor:[UIColor magentaColor] withShadow:YES],@"image", nil],
-                         nil];
+    self.borderObject = [[NSMutableArray alloc]init];
     
-    self.lipsObject = [[NSMutableArray alloc]init];
+    self.lipsObject = [[NSMutableArray alloc]initWithObjects:
+                       [NSDictionary dictionaryWithObjectsAndKeys:[UIImage imageNamed:@"scale-1"],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:[UIImage imageNamed:@"scale-1"],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:[UIImage imageNamed:@"scale-1"],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:[UIImage imageNamed:@"scale-1"],@"image", nil],
+                       nil];
+    
     self.smilyObject =[[NSMutableArray alloc]initWithObjects:
                        [NSDictionary dictionaryWithObjectsAndKeys:@"Glass",@"title",[UIImage imageNamed:@"glass"],@"image", nil],
                        [NSDictionary dictionaryWithObjectsAndKeys:@"Sleepy",@"title",[UIImage imageNamed:@"sleepy"],@"image", nil],
@@ -209,7 +197,8 @@
     }
     
     else{
-         return self.borderObject.count;
+        return self.effectObject.count;
+       //  return self.borderObject.count;
     }
    
 }
@@ -424,24 +413,28 @@
                 
         }
        
-        [self.loading stopAnimating];
+        
+    }
+    if(self.type ==1){
+        self.cropView.center = CGPointMake(100.0, 100.0);
+        self.cropView.transform = CGAffineTransformMakeRotation(M_PI_2);
     }
     if(self.type ==2){
         switch (indexPath.row) {
             case 0:
-                [ self setSticker:[UIImage imageNamed:@"glass"] IndexRow:indexPath.row];
+                [ self setSticker:[UIImage imageNamed:@"glass"] IndexRow:(int)indexPath.row];
                 self.stickered = YES;
                 break;
             case 1:
-                [ self setSticker:[UIImage imageNamed:@"sleepy"]IndexRow:indexPath.row];
+                [ self setSticker:[UIImage imageNamed:@"sleepy"]IndexRow:(int)indexPath.row];
                 self.stickered = YES;
                 break;
             case 2:
-                [ self setSticker:[UIImage imageNamed:@"WINK"]IndexRow:indexPath.row];
+                [ self setSticker:[UIImage imageNamed:@"WINK"]IndexRow:(int)indexPath.row];
                 self.stickered = YES;
                 break;
             case 3:
-                [ self setSticker:[UIImage imageNamed:@"wink2"]IndexRow:indexPath.row];
+                [ self setSticker:[UIImage imageNamed:@"wink2"]IndexRow:(int)indexPath.row];
                 self.stickered = YES;
                 break;
             default:
@@ -454,47 +447,47 @@
         
 
         
-        switch (indexPath.row) {
-            case 0:
-                [self.body setImage:self.image];
-                break;
-            case 1:
-                //[self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor blueColor] withShadow:YES]];
-                [self.body setImage:[self.image imageWithImageBorder:[[UIImage imageNamed:@"frame1"] scaleToSize:CGSizeMake(self.image.size.width*2,self.image.size.height*2)]]];
-                break;
-            case 2:
-                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor greenColor] withShadow:YES]];
-                break;
-            case 3:
-                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor blackColor] withShadow:YES]];
-                break;
-            case 4:
-                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor whiteColor] withShadow:YES]];
-                break;
-            case 5:
-                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor cyanColor] withShadow:YES]];
-                break;
-            case 6:
-                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor yellowColor] withShadow:YES]];
-                break;
-            case 7:
-                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor purpleColor] withShadow:YES]];
-                break;
-            case 8:
-                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor orangeColor] withShadow:YES]];
-                break;
-            case 9:
-                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor grayColor] withShadow:YES]];
-                break;
-            case 10:
-                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor redColor] withShadow:YES]];
-                break;
-            case 11:
-                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor magentaColor] withShadow:YES]];
-                break;
-            default:
-                break;
-        }
+//        switch (indexPath.row) {
+//            case 0:
+//                [self.body setImage:self.image];
+//                break;
+//            case 1:
+//                //[self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor blueColor] withShadow:YES]];
+//                [self.body setImage:[self.image imageWithImageBorder:[[UIImage imageNamed:@"frame1"] scaleToSize:CGSizeMake(self.image.size.width*2,self.image.size.height*2)]]];
+//                break;
+//            case 2:
+//                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor greenColor] withShadow:YES]];
+//                break;
+//            case 3:
+//                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor blackColor] withShadow:YES]];
+//                break;
+//            case 4:
+//                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor whiteColor] withShadow:YES]];
+//                break;
+//            case 5:
+//                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor cyanColor] withShadow:YES]];
+//                break;
+//            case 6:
+//                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor yellowColor] withShadow:YES]];
+//                break;
+//            case 7:
+//                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor purpleColor] withShadow:YES]];
+//                break;
+//            case 8:
+//                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor orangeColor] withShadow:YES]];
+//                break;
+//            case 9:
+//                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor grayColor] withShadow:YES]];
+//                break;
+//            case 10:
+//                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor redColor] withShadow:YES]];
+//                break;
+//            case 11:
+//                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor magentaColor] withShadow:YES]];
+//                break;
+//            default:
+//                break;
+//        }
     }
     [self.loading stopAnimating];
 }
@@ -527,7 +520,7 @@
     
     static NSString *CellIdentifier = @"photoCell";
     
-    NSLog(@"ihdifgs");
+    NSLog(@"%d",self.type);
     
     EffectsCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
     
@@ -536,8 +529,9 @@
         cell.title.text = [[self.effectObject objectAtIndex:indexPath.row] valueForKey:@"title"];
     }
     else if (self.type == 1) {
-        cell.image.image = [[self.effectObject objectAtIndex:indexPath.row] valueForKey:@"image"];
-        cell.title.text = [[self.effectObject objectAtIndex:indexPath.row] valueForKey:@"title"];
+        cell.image.image = [[self.lipsObject objectAtIndex:indexPath.row] valueForKey:@"image"];
+        cell.image.layoutMargins = UIEdgeInsetsMake(0.0, 0.0,10,0);
+       cell.title.text = @"";
     }
     else if (self.type == 2) {
         cell.image.image = [[self.smilyObject objectAtIndex:indexPath.row] valueForKey:@"image"];
@@ -700,7 +694,8 @@
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     
     UIGraphicsEndImageContext();
-    [self.cropperImage setOriginalImage:newImage];
+    self.image = newImage;
+    [self.cropperImage setOriginalImage:self.image];
 }
 
 - (void)stickerViewDidBeginEditing:(ZDStickerView *)sticker{

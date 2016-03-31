@@ -43,4 +43,5 @@
 @property(nonatomic,assign) BOOL stickered;
 
 
+
 @end
