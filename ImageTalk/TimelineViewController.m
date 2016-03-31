@@ -405,7 +405,6 @@
 -(void)tabOnImage :(id) sender
 {
     //TimelineTableViewCell *cell =
-    
     UITapGestureRecognizer *gesture = (UITapGestureRecognizer *) sender;
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:gesture.view.tag inSection:0];
     WallPost *data = self.myObject[indexPath.row];
@@ -418,8 +417,8 @@
     int value2 = 25;
     if(self.counter==0)
     {
-        cell.tagBtn.hidden = false;
-        cell.tagIcon.hidden = false;
+        
+        NSLog(@"%d",self.counter);
     for(int i = 0;i<data.tagCount;i++)
     {
         
@@ -439,16 +438,18 @@
         myLabel.text = [NSString stringWithFormat:@"%@  %@",appcredential.user.firstName,appcredential.user.lastName] ;
 
         [view addSubview:myLabel];
-        self.counter = 1;
+       
     }
     
+         self.counter = 1;
+        
+        
     }
     else{
         
+        NSLog(@"%d",self.counter);
         self.counter = 0;
-        
-        cell.tagBtn.hidden = true;
-        cell.tagIcon.hidden = true;
+ 
         for (id child in [view subviews])
         {
             if ([child isMemberOfClass:[UILabel class]])
@@ -603,6 +604,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGPoint offset = scrollView.contentOffset;
+    self.counter = 0;
     CGRect bounds = scrollView.bounds;
     CGSize size = scrollView.contentSize;
     UIEdgeInsets inset = scrollView.contentInset;
