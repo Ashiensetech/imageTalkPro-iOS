@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		B316667F22022A715CABD5C0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D7FCA199E8600363E6C7EE0 /* libPods.a */; };
-		DA4B97751CAD4739002D44AF /* BJImageCropper.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4B97741CAD4739002D44AF /* BJImageCropper.m */; };
-		DA4B97771CAD4832002D44AF /* tactile_noise.png in Resources */ = {isa = PBXBuildFile; fileRef = DA4B97761CAD4832002D44AF /* tactile_noise.png */; };
 		FD01EBD61BE746340083249B /* ApiAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = FD01EBD51BE746340083249B /* ApiAccess.m */; };
 		FD01EBDC1BE777EC0083249B /* Job.m in Sources */ = {isa = PBXBuildFile; fileRef = FD01EBDB1BE777EC0083249B /* Job.m */; };
 		FD08B7051BF9D06900000D98 /* SenderImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD08B7041BF9D06900000D98 /* SenderImageTableViewCell.m */; };
@@ -125,6 +123,8 @@
 		FD9076F51BF0C9AA00FCE2E4 /* HorizontalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9076F41BF0C9AA00FCE2E4 /* HorizontalTableViewCell.m */; };
 		FD9303B31CACFFF300EF1B71 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD9303B21CACFFF300EF1B71 /* Foundation.framework */; };
 		FD9303B51CAD000300EF1B71 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD9303B41CAD000300EF1B71 /* UIKit.framework */; };
+		FD9303BA1CAD568200EF1B71 /* BJImageCropper.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9303B91CAD568200EF1B71 /* BJImageCropper.m */; };
+		FD9303BC1CAD56DC00EF1B71 /* tactile_noise.png in Resources */ = {isa = PBXBuildFile; fileRef = FD9303BB1CAD56DC00EF1B71 /* tactile_noise.png */; };
 		FD953AC21BC634E5009538AA /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FD953A841BC634E5009538AA /* JSONModel.m */; };
 		FD953AC31BC634E5009538AA /* JSONModelArray.m in Sources */ = {isa = PBXBuildFile; fileRef = FD953A861BC634E5009538AA /* JSONModelArray.m */; };
 		FD953AC41BC634E5009538AA /* JSONModelClassProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = FD953A881BC634E5009538AA /* JSONModelClassProperty.m */; };
@@ -291,9 +291,6 @@
 /* Begin PBXFileReference section */
 		275BCDFFD20DFEDEAB3332CE /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		8D7FCA199E8600363E6C7EE0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		DA4B97731CAD4739002D44AF /* BJImageCropper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BJImageCropper.h; path = "../../../../Users/workspaceinfotech/Downloads/BJImageCropper-master/BJImageCropper/BJImageCropper.h"; sourceTree = "<group>"; };
-		DA4B97741CAD4739002D44AF /* BJImageCropper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BJImageCropper.m; path = "../../../../Users/workspaceinfotech/Downloads/BJImageCropper-master/BJImageCropper/BJImageCropper.m"; sourceTree = "<group>"; };
-		DA4B97761CAD4832002D44AF /* tactile_noise.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tactile_noise.png; path = "../../../../Users/workspaceinfotech/Downloads/BJImageCropper-master/CropTest/CropTest/tactile_noise.png"; sourceTree = "<group>"; };
 		DC8043D51BBD1B4399BB615F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		FD01EBD41BE746340083249B /* ApiAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiAccess.h; sourceTree = "<group>"; };
 		FD01EBD51BE746340083249B /* ApiAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApiAccess.m; sourceTree = "<group>"; };
@@ -515,6 +512,9 @@
 		FD9076F41BF0C9AA00FCE2E4 /* HorizontalTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HorizontalTableViewCell.m; sourceTree = "<group>"; };
 		FD9303B21CACFFF300EF1B71 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FD9303B41CAD000300EF1B71 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		FD9303B81CAD568200EF1B71 /* BJImageCropper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BJImageCropper.h; path = "../../../../Downloads/BJImageCropper-master/BJImageCropper/BJImageCropper.h"; sourceTree = "<group>"; };
+		FD9303B91CAD568200EF1B71 /* BJImageCropper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BJImageCropper.m; path = "../../../../Downloads/BJImageCropper-master/BJImageCropper/BJImageCropper.m"; sourceTree = "<group>"; };
+		FD9303BB1CAD56DC00EF1B71 /* tactile_noise.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tactile_noise.png; path = "../../../../Downloads/BJImageCropper-master/CropTest/CropTest/tactile_noise.png"; sourceTree = "<group>"; };
 		FD953A831BC634E5009538AA /* JSONModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModel.h; sourceTree = "<group>"; };
 		FD953A841BC634E5009538AA /* JSONModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONModel.m; sourceTree = "<group>"; };
 		FD953A851BC634E5009538AA /* JSONModelArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModelArray.h; sourceTree = "<group>"; };
@@ -1087,8 +1087,8 @@
 		FD9303AE1CACF93400EF1B71 /* BJImageCropper */ = {
 			isa = PBXGroup;
 			children = (
-				DA4B97731CAD4739002D44AF /* BJImageCropper.h */,
-				DA4B97741CAD4739002D44AF /* BJImageCropper.m */,
+				FD9303B81CAD568200EF1B71 /* BJImageCropper.h */,
+				FD9303B91CAD568200EF1B71 /* BJImageCropper.m */,
 			);
 			name = BJImageCropper;
 			sourceTree = "<group>";
@@ -1468,7 +1468,7 @@
 		FDE9181B1BBE5B5C001FBCB1 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				DA4B97761CAD4832002D44AF /* tactile_noise.png */,
+				FD9303BB1CAD56DC00EF1B71 /* tactile_noise.png */,
 				FD640F161CA16E7000A3A665 /* Main.storyboard */,
 				FD5CA7EB1C0C1218004E2800 /* Frame */,
 				FD1B26DB1C02CB1A007162ED /* image_loader.gif */,
@@ -1931,10 +1931,10 @@
 				FD640F181CA16E7000A3A665 /* Main.storyboard in Resources */,
 				FDF4B5861BDF6185006716DF /* Eight_One.otf in Resources */,
 				FD41A0511C23DD8800893A33 /* sound.wav in Resources */,
-				DA4B97771CAD4832002D44AF /* tactile_noise.png in Resources */,
 				FD1B26DC1C02CB1A007162ED /* image_loader.gif in Resources */,
 				FDEECE2F1B9D69BF00887F4A /* LaunchScreen.xib in Resources */,
 				FDEECE2C1B9D69BF00887F4A /* Images.xcassets in Resources */,
+				FD9303BC1CAD56DC00EF1B71 /* tactile_noise.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2108,7 +2108,6 @@
 				FD4816561C0DA0A2000C52B0 /* SocketLocationResponse.m in Sources */,
 				FD08B7051BF9D06900000D98 /* SenderImageTableViewCell.m in Sources */,
 				FD01EBDC1BE777EC0083249B /* Job.m in Sources */,
-				DA4B97751CAD4739002D44AF /* BJImageCropper.m in Sources */,
 				FD58E05C1BC2750B00F5D98C /* WallPost.m in Sources */,
 				FD4816531C0D7B0C000C52B0 /* ChatLocation.m in Sources */,
 				FD4816501C0D6BD5000C52B0 /* ReceiverContactsTableViewCell.m in Sources */,
@@ -2119,6 +2118,7 @@
 				FDFC70B41BE34BAA001782F0 /* ContactResponse.m in Sources */,
 				FD953ACF1BC634E5009538AA /* LocationArrayModel.m in Sources */,
 				FD58E04D1BC2717B00F5D98C /* Country.m in Sources */,
+				FD9303BA1CAD568200EF1B71 /* BJImageCropper.m in Sources */,
 				FDD320CF1C44E3D80048A43D /* TBinaryProtocol.m in Sources */,
 				FDCBCDB41BF3572300259737 /* ChatHistoryResponse.m in Sources */,
 				FDC711451BF1E4A600FBC374 /* StickerCategoryResponse.m in Sources */,

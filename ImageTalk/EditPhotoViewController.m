@@ -97,9 +97,12 @@
     if(self.type ==1){
         [self.imageCropper removeFromSuperview];
         [self.cropView addSubview:self.cropperImage];
-        [self.cropView addSubview:self.adjustFitBtn];
-        [self.cropView bringSubviewToFront:self.adjustFitBtn];
+        
     }
+    [self.cropView addSubview:self.adjustFitBtn];
+    [self.cropView bringSubviewToFront:self.adjustFitBtn];
+    [self.adjustFitBtn setHidden:NO];
+
     self.type = 0;
     [self changeType];
 }
@@ -113,21 +116,18 @@
 
 - (IBAction)smily:(id)sender {
     if(self.type ==1){
+        
         [self.imageCropper removeFromSuperview];
         [self.cropView addSubview:self.cropperImage];
-        [self.cropView addSubview:self.adjustFitBtn];
-        [self.cropView bringSubviewToFront:self.adjustFitBtn];
-
+        
         
     }
+    [self.adjustFitBtn setHidden:YES];
     self.type = 2;
     [self changeType];
 }
 
-//- (IBAction)frame:(id)sender {
-//    self.type = 3;
-//    [self changeType];
-//}
+
 
 -(void)changeType
 {
@@ -135,9 +135,6 @@
     [self.effectBtn setImage:((self.type == 0) ? [UIImage imageNamed:@"FilterIconSelected"] : [UIImage imageNamed:@"FilterIcon"]) forState:UIControlStateNormal];
     [self.lipsBtn setImage:((self.type == 1) ? [UIImage imageNamed:@"ResizeIconSelected"] : [UIImage imageNamed:@"ResizeIcon"]) forState:UIControlStateNormal];
     [self.smilyBtn setImage:((self.type == 2) ? [UIImage imageNamed:@"EmoIconSelected"] : [UIImage imageNamed:@"EmoIcon"]) forState:UIControlStateNormal];
-    //[self.frameBtn setImage:((self.type == 3) ? [UIImage imageNamed:@"4a"] : [UIImage imageNamed:@"4"]) forState:UIControlStateNormal];
-   
-    
     [self.collectionData reloadData];
 }
 
@@ -478,49 +475,6 @@
     
     if (self.type == 3) {
         
-
-        
-//        switch (indexPath.row) {
-//            case 0:
-//                [self.body setImage:self.image];
-//                break;
-//            case 1:
-//                //[self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor blueColor] withShadow:YES]];
-//                [self.body setImage:[self.image imageWithImageBorder:[[UIImage imageNamed:@"frame1"] scaleToSize:CGSizeMake(self.image.size.width*2,self.image.size.height*2)]]];
-//                break;
-//            case 2:
-//                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor greenColor] withShadow:YES]];
-//                break;
-//            case 3:
-//                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor blackColor] withShadow:YES]];
-//                break;
-//            case 4:
-//                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor whiteColor] withShadow:YES]];
-//                break;
-//            case 5:
-//                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor cyanColor] withShadow:YES]];
-//                break;
-//            case 6:
-//                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor yellowColor] withShadow:YES]];
-//                break;
-//            case 7:
-//                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor purpleColor] withShadow:YES]];
-//                break;
-//            case 8:
-//                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor orangeColor] withShadow:YES]];
-//                break;
-//            case 9:
-//                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor grayColor] withShadow:YES]];
-//                break;
-//            case 10:
-//                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor redColor] withShadow:YES]];
-//                break;
-//            case 11:
-//                [self.body setImage:[self.image imageWithColoredBorder:20 borderColor:[UIColor magentaColor] withShadow:YES]];
-//                break;
-//            default:
-//                break;
-//        }
     }
     [self.loading stopAnimating];
 }
@@ -729,7 +683,7 @@
     
     [bottomImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
    
-    [image drawInRect:CGRectMake(sticker.frame.origin.x, sticker.frame.origin.y, sticker.frame.size.width, sticker.frame.size.height)
+    [image drawInRect:CGRectMake(sticker.frame.origin.x, sticker.frame.origin.y, sticker.frame.size.width-20, sticker.frame.size.height-20)
             blendMode:kCGBlendModeNormal alpha:1.0];
   
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -751,8 +705,6 @@
 #pragma mark - BJImageCropper
 
 - (void)updateDisplay {
-//    self.boundsText.text = [NSString stringWithFormat:@"(%f, %f) (%f, %f)", CGOriginX(self.imageCropper.crop), CGOriginY(self.imageCropper.crop), CGWidth(self.imageCropper.crop), CGHeight(self.imageCropper.crop)];
-    
     if (SHOW_PREVIEW) {
         self.preview.image = [self.imageCropper getCroppedImage];
         self.preview.frame = CGRectMake(10,10,self.imageCropper.crop.size.width * 0.1, self.imageCropper.crop.size.height * 0.1);
@@ -787,7 +739,7 @@
             [self.cropView addSubview:self.preview];
         }
     }
-   
+    [self.adjustFitBtn setHidden:YES];
     [self.view sendSubviewToBack:self.cropView];
     [self.cropperImage removeFromSuperview];
     [self.cropView addSubview:self.imageCropper];
