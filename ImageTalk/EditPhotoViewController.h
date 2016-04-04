@@ -47,5 +47,7 @@
 @property (nonatomic, strong) BJImageCropper *imageCropper;
 
 @property (nonatomic, strong) UIImageView *preview;
+@property (strong, nonatomic) IBOutlet UIScrollView *scroller;
+@property (strong, nonatomic) IBOutlet UIImageView *scaleImage;
 
 @end

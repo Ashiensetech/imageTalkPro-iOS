@@ -87,9 +87,12 @@
     [self.cropView addSubview:self.adjustFitBtn];
     
     
+    //Scroll Scale
     
-   
-   
+    
+    
+    
+  
     
 }
 
@@ -97,26 +100,47 @@
     if(self.type ==1){
         [self.imageCropper removeFromSuperview];
         [self.cropView addSubview:self.cropperImage];
-        
+        [self.scroller setHidden:YES];
     }
     [self.cropView addSubview:self.adjustFitBtn];
     [self.cropView bringSubviewToFront:self.adjustFitBtn];
     [self.adjustFitBtn setHidden:NO];
-
+    
     self.type = 0;
     [self changeType];
 }
 
 - (IBAction)lips:(id)sender {
     
+    if(self.type !=1){
+        UIImageView *tempImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"scale-3.png"]] ;
+        tempImageView.frame = self.scroller.bounds;
+        self.scaleImage = tempImageView;
+        
+        CGSize scrollableSize = CGSizeMake(self.scaleImage.image.size.width-350, self.scaleImage.image.size.height/2);
+        [_scroller setShowsHorizontalScrollIndicator:NO];
+        [_scroller setShowsVerticalScrollIndicator:NO];
+        [_scroller setContentSize:scrollableSize];
+        _scroller.backgroundColor = [UIColor blackColor];
+        _scroller.minimumZoomScale = 1.0  ;
+        _scroller.maximumZoomScale = self.scaleImage.image.size.width / _scroller.frame.size.width;
+        _scroller.zoomScale = 1.0;
+        _scroller.delegate = self;
+        
+        [_scroller addSubview:self.scaleImage];
+        [self.scroller.superview addSubview:self.scroller];
+        [self.view bringSubviewToFront:self.scroller];
+        [self.scroller setHidden:NO];
+    }
     self.type = 1;
     [self changeType];
+   
     [self callBJImageCropper];
 }
 
 - (IBAction)smily:(id)sender {
     if(self.type ==1){
-        
+        [self.scroller setHidden:YES];
         [self.imageCropper removeFromSuperview];
         [self.cropView addSubview:self.cropperImage];
         

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Hxb-wn-Odv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Hxb-wn-Odv">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -1389,7 +1390,7 @@
                                         <color key="textColor" red="0.60392156862745094" green="0.40392156862745099" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Dj-2N-U5n">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Dj-2N-U5n">
                                         <rect key="frame" x="194" y="212" width="212" height="42"/>
                                         <string key="text">Stickers have feelings too,
                                             they like to be shared.</string>
@@ -2056,7 +2057,7 @@
                                     <constraint firstAttribute="width" constant="120" id="YCg-OM-c5I"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dyY-KZ-YGR">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dyY-KZ-YGR">
                                 <rect key="frame" x="168" y="320" width="264" height="33"/>
                                 <string key="text">Whenever a friend comment on your post
                                     it will be shown here</string>
@@ -2471,7 +2472,7 @@
                                     <constraint firstAttribute="height" constant="120" id="W8f-Kv-fI8"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKP-hd-vW5">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKP-hd-vW5">
                                 <rect key="frame" x="194" y="288" width="213" height="33"/>
                                 <string key="text">Whenever a friend likes your post
                                     it will be shown here</string>
@@ -2764,7 +2765,7 @@
                                             <constraint firstAttribute="height" constant="100" id="vYX-E1-x1n"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xoE-ES-f1B">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xoE-ES-f1B">
                                         <rect key="frame" x="193" y="140" width="215" height="33"/>
                                         <string key="text">Or you can get them for free if you
                                             invite 2 friends</string>
@@ -3626,6 +3627,24 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rck-Nu-tbd">
                                 <rect key="frame" x="0.0" y="378" width="600" height="158"/>
                                 <subviews>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eVY-Pi-O0w">
+                                        <rect key="frame" x="75" y="17" width="450" height="125"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oUQ-1n-PLb">
+                                                <rect key="frame" x="105" y="16" width="230" height="93"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="230" id="0EE-Hi-hHA"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="oUQ-1n-PLb" secondAttribute="bottom" constant="16" id="0Yc-Gc-Z37"/>
+                                            <constraint firstAttribute="trailing" secondItem="oUQ-1n-PLb" secondAttribute="trailing" constant="115" id="6lJ-hF-BgW"/>
+                                            <constraint firstItem="oUQ-1n-PLb" firstAttribute="centerY" secondItem="eVY-Pi-O0w" secondAttribute="centerY" id="RjB-1i-lHy"/>
+                                            <constraint firstItem="oUQ-1n-PLb" firstAttribute="top" secondItem="eVY-Pi-O0w" secondAttribute="top" constant="16" id="fcJ-q2-5ac"/>
+                                            <constraint firstItem="oUQ-1n-PLb" firstAttribute="leading" secondItem="eVY-Pi-O0w" secondAttribute="leading" constant="105" id="usX-hd-Tlm"/>
+                                        </constraints>
+                                    </scrollView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" indicatorStyle="black" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="5XQ-gG-kIT">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="158"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -3635,11 +3654,6 @@
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                             <inset key="sectionInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
-                                        <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" id="zTH-XR-D1g">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="158"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </activityIndicatorView>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="4AC-uo-DRc" customClass="EffectsCollectionViewCell">
                                                 <rect key="frame" x="20" y="24" width="90" height="110"/>
@@ -3688,8 +3702,12 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.054901960784313725" green="0.054901960784313725" blue="0.054901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="eVY-Pi-O0w" firstAttribute="top" secondItem="rck-Nu-tbd" secondAttribute="top" constant="17" id="4sy-eO-w5a"/>
+                                    <constraint firstItem="eVY-Pi-O0w" firstAttribute="centerX" secondItem="5XQ-gG-kIT" secondAttribute="centerX" id="68e-8L-uSU"/>
+                                    <constraint firstItem="eVY-Pi-O0w" firstAttribute="leading" secondItem="rck-Nu-tbd" secondAttribute="leading" constant="75" id="AEl-ES-x2T"/>
                                     <constraint firstItem="5XQ-gG-kIT" firstAttribute="leading" secondItem="rck-Nu-tbd" secondAttribute="leading" id="C50-eT-8dU"/>
                                     <constraint firstItem="5XQ-gG-kIT" firstAttribute="top" secondItem="rck-Nu-tbd" secondAttribute="top" id="OC5-uU-L6p"/>
+                                    <constraint firstItem="eVY-Pi-O0w" firstAttribute="centerY" secondItem="5XQ-gG-kIT" secondAttribute="centerY" id="ecF-9W-JNS"/>
                                     <constraint firstAttribute="bottom" secondItem="5XQ-gG-kIT" secondAttribute="bottom" id="tQZ-8d-YcL"/>
                                     <constraint firstAttribute="trailing" secondItem="5XQ-gG-kIT" secondAttribute="trailing" id="zbg-YP-sNJ"/>
                                 </constraints>
@@ -3831,7 +3849,8 @@
                         <outlet property="cropView" destination="oCE-sS-1ri" id="8Ul-r5-Z6e"/>
                         <outlet property="effectBtn" destination="akE-XV-QhE" id="L8g-U8-yhE"/>
                         <outlet property="lipsBtn" destination="ipR-bu-3ia" id="3Jo-FO-DSV"/>
-                        <outlet property="loading" destination="zTH-XR-D1g" id="5R4-DL-gth"/>
+                        <outlet property="scaleImage" destination="oUQ-1n-PLb" id="SDg-Es-45f"/>
+                        <outlet property="scroller" destination="eVY-Pi-O0w" id="gdU-jz-twa"/>
                         <outlet property="smilyBtn" destination="Mrs-jt-k43" id="b5p-5G-Wpi"/>
                         <segue destination="96Y-9F-luJ" kind="show" identifier="profileShow" id="TmO-XD-ODI"/>
                         <segue destination="lOl-H7-K62" kind="show" identifier="sharePhoto" id="e4R-8S-hoh"/>
@@ -4177,7 +4196,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y4M-P0-E8G">
                                 <rect key="frame" x="0.0" y="64" width="600" height="387"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TGz-rQ-bwt">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TGz-rQ-bwt">
                                         <rect key="frame" x="197" y="50" width="206" height="42"/>
                                         <string key="text">Did you get an SMS PIN?
                                             Enter it below</string>
@@ -6496,7 +6515,7 @@
                                         <color key="textColor" red="0.92549019607843142" green="0.40784313725490196" blue="0.054901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jy4-IO-4PZ">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jy4-IO-4PZ">
                                         <rect key="frame" x="183" y="212" width="234" height="42"/>
                                         <string key="text">How about starting your first
                                             chat with your friends?</string>
