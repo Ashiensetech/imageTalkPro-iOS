@@ -88,11 +88,27 @@
     
     
     //Scroll Scale
+    UIImageView *tempImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"scale-3.png"]] ;
+    tempImageView.frame = CGRectMake(self.scroller.bounds.origin.x, self.scroller.bounds.origin.y, tempImageView.image.size.width, tempImageView.image.size.height);//self.scroller.bounds;
+    self.scaleImage = tempImageView;
+   
+    [_scroller setShowsHorizontalScrollIndicator:NO];
+    [_scroller setShowsVerticalScrollIndicator:NO];
+    _scroller.backgroundColor = [UIColor blackColor];
+    _scroller.minimumZoomScale = 1.0  ;
+    _scroller.maximumZoomScale = self.scaleImage.image.size.width / _scroller.frame.size.width;
+    _scroller.zoomScale = 1.0;
+    _scroller.delegate = self;
     
+    [_scroller addSubview:self.scaleImage];
+ 
+     [self.scroller setHidden:YES];
     
+     self.pointer= [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lg-color.png"]] ;
+    _pointer.frame = CGRectMake(self.view.center.x, self.view.center.y+79 , 2.5, _pointer.image.size.height);
     
-    
-  
+    [self.view addSubview:_pointer];
+    [_pointer setHidden:YES];
     
 }
 
@@ -100,8 +116,10 @@
     if(self.type ==1){
         [self.imageCropper removeFromSuperview];
         [self.cropView addSubview:self.cropperImage];
-        [self.scroller setHidden:YES];
+       
     }
+    [_pointer setHidden:YES];
+    [self.scroller setHidden:YES];
     [self.cropView addSubview:self.adjustFitBtn];
     [self.cropView bringSubviewToFront:self.adjustFitBtn];
     [self.adjustFitBtn setHidden:NO];
@@ -112,44 +130,55 @@
 
 - (IBAction)lips:(id)sender {
     
-    if(self.type !=1){
-        UIImageView *tempImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"scale-3.png"]] ;
-        tempImageView.frame = self.scroller.bounds;
-        self.scaleImage = tempImageView;
-        
-        CGSize scrollableSize = CGSizeMake(self.scaleImage.image.size.width-350, self.scaleImage.image.size.height/2);
-        [_scroller setShowsHorizontalScrollIndicator:NO];
-        [_scroller setShowsVerticalScrollIndicator:NO];
-        [_scroller setContentSize:scrollableSize];
-        _scroller.backgroundColor = [UIColor blackColor];
-        _scroller.minimumZoomScale = 1.0  ;
-        _scroller.maximumZoomScale = self.scaleImage.image.size.width / _scroller.frame.size.width;
-        _scroller.zoomScale = 1.0;
-        _scroller.delegate = self;
-        
-        [_scroller addSubview:self.scaleImage];
-        [self.scroller.superview addSubview:self.scroller];
-        [self.view bringSubviewToFront:self.scroller];
-        [self.scroller setHidden:NO];
-    }
-    self.type = 1;
+    [self.scroller.superview addSubview:self.scroller];
+    CGSize scrollableSize = CGSizeMake(self.scaleImage.image.size.width+121, self.scaleImage.image.size.height/2);
+    [_scroller setContentSize:scrollableSize];
+    [self.scroller setHidden:NO];
+    [_pointer setHidden:NO];
+     self.type = 1;
     [self changeType];
-   
+    
     [self callBJImageCropper];
 }
 
 - (IBAction)smily:(id)sender {
     if(self.type ==1){
-        [self.scroller setHidden:YES];
         [self.imageCropper removeFromSuperview];
         [self.cropView addSubview:self.cropperImage];
-        
-        
     }
+    [_pointer setHidden:YES];
+    [self.scroller setHidden:YES];
     [self.adjustFitBtn setHidden:YES];
     self.type = 2;
     [self changeType];
 }
+typedef enum ScrollDirection {
+    ScrollDirectionNone,
+    ScrollDirectionRight,
+    ScrollDirectionLeft,
+    ScrollDirectionCrazy,
+} ScrollDirection;
+
+
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if([scrollView isEqual: self.scroller]&&self.type==1){
+        ScrollDirection scrollDirection;
+        if (self.lastContentOffset > scrollView.contentOffset.x)
+            scrollDirection = ScrollDirectionRight;
+        else if (self.lastContentOffset < scrollView.contentOffset.x)
+            scrollDirection = ScrollDirectionLeft;
+        
+        self.lastContentOffset = scrollView.contentOffset.x;
+        
+        
+      
+       
+    }
+}
+
+
 
 
 

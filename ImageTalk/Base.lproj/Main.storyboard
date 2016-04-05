@@ -2765,8 +2765,8 @@
                                             <constraint firstAttribute="height" constant="100" id="vYX-E1-x1n"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xoE-ES-f1B">
-                                        <rect key="frame" x="193" y="140" width="215" height="33"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xoE-ES-f1B">
+                                        <rect key="frame" x="169" y="140" width="263" height="33"/>
                                         <string key="text">Or you can get them for free if you
                                             invite 2 friends</string>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
@@ -3628,21 +3628,21 @@
                                 <rect key="frame" x="0.0" y="378" width="600" height="158"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eVY-Pi-O0w">
-                                        <rect key="frame" x="75" y="17" width="450" height="125"/>
+                                        <rect key="frame" x="40" y="17" width="520" height="125"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oUQ-1n-PLb">
-                                                <rect key="frame" x="105" y="16" width="230" height="93"/>
+                                            <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oUQ-1n-PLb">
+                                                <rect key="frame" x="-36" y="16" width="594" height="93"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="230" id="0EE-Hi-hHA"/>
+                                                    <constraint firstAttribute="width" constant="594" id="0EE-Hi-hHA"/>
                                                 </constraints>
                                             </imageView>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="oUQ-1n-PLb" secondAttribute="bottom" constant="16" id="0Yc-Gc-Z37"/>
-                                            <constraint firstAttribute="trailing" secondItem="oUQ-1n-PLb" secondAttribute="trailing" constant="115" id="6lJ-hF-BgW"/>
+                                            <constraint firstAttribute="trailing" secondItem="oUQ-1n-PLb" secondAttribute="trailing" constant="-38" id="6lJ-hF-BgW"/>
                                             <constraint firstItem="oUQ-1n-PLb" firstAttribute="centerY" secondItem="eVY-Pi-O0w" secondAttribute="centerY" id="RjB-1i-lHy"/>
                                             <constraint firstItem="oUQ-1n-PLb" firstAttribute="top" secondItem="eVY-Pi-O0w" secondAttribute="top" constant="16" id="fcJ-q2-5ac"/>
-                                            <constraint firstItem="oUQ-1n-PLb" firstAttribute="leading" secondItem="eVY-Pi-O0w" secondAttribute="leading" constant="105" id="usX-hd-Tlm"/>
+                                            <constraint firstItem="oUQ-1n-PLb" firstAttribute="leading" secondItem="eVY-Pi-O0w" secondAttribute="leading" constant="-36" id="usX-hd-Tlm"/>
                                         </constraints>
                                     </scrollView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" indicatorStyle="black" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="5XQ-gG-kIT">
@@ -3704,7 +3704,7 @@
                                 <constraints>
                                     <constraint firstItem="eVY-Pi-O0w" firstAttribute="top" secondItem="rck-Nu-tbd" secondAttribute="top" constant="17" id="4sy-eO-w5a"/>
                                     <constraint firstItem="eVY-Pi-O0w" firstAttribute="centerX" secondItem="5XQ-gG-kIT" secondAttribute="centerX" id="68e-8L-uSU"/>
-                                    <constraint firstItem="eVY-Pi-O0w" firstAttribute="leading" secondItem="rck-Nu-tbd" secondAttribute="leading" constant="75" id="AEl-ES-x2T"/>
+                                    <constraint firstItem="eVY-Pi-O0w" firstAttribute="leading" secondItem="rck-Nu-tbd" secondAttribute="leading" constant="40" id="AEl-ES-x2T"/>
                                     <constraint firstItem="5XQ-gG-kIT" firstAttribute="leading" secondItem="rck-Nu-tbd" secondAttribute="leading" id="C50-eT-8dU"/>
                                     <constraint firstItem="5XQ-gG-kIT" firstAttribute="top" secondItem="rck-Nu-tbd" secondAttribute="top" id="OC5-uU-L6p"/>
                                     <constraint firstItem="eVY-Pi-O0w" firstAttribute="centerY" secondItem="5XQ-gG-kIT" secondAttribute="centerY" id="ecF-9W-JNS"/>
