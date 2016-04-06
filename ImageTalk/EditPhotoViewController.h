@@ -25,23 +25,23 @@
 @property (strong, nonatomic) IBOutlet UIImageView *body;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *bodyHeight;
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionData;
-@property (strong, nonatomic)  HIPImageCropperView *cropperImage;
-@property (strong, nonatomic)  AppDelegate *app;
+@property (strong, nonatomic) HIPImageCropperView *cropperImage;
+@property (strong, nonatomic) AppDelegate *app;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loading;
-@property (strong,nonatomic) ChangePhotoResponse *response;
-@property (strong,nonatomic) UIImage *image;
-@property (strong,nonatomic) UIImage *thumbImage;
-@property (strong,nonatomic) NSMutableArray *effectObject;
-@property (strong,nonatomic) NSMutableArray *borderObject;
-@property (strong,nonatomic) NSMutableArray *lipsObject;
-@property (strong,nonatomic) NSMutableArray *smilyObject;
+@property (strong,nonatomic)  ChangePhotoResponse *response;
+@property (strong,nonatomic)  UIImage *image;
+@property (strong,nonatomic)  UIImage *thumbImage;
+@property (strong,nonatomic)  NSMutableArray *effectObject;
+@property (strong,nonatomic)  NSMutableArray *borderObject;
+@property (strong,nonatomic)  NSMutableArray *lipsObject;
+@property (strong,nonatomic)  NSMutableArray *smilyObject;
 @property (nonatomic, assign) BOOL isTimeline;
 @property (nonatomic, assign) int type;
 @property (nonatomic, assign) BOOL isAspect;
-@property (nonatomic,strong) UIImage *imageHolder;
+@property (nonatomic,strong)  UIImage *imageHolder;
 @property (strong, nonatomic) IBOutlet UIButton *adjustFitBtn;
 @property (strong, nonatomic) IBOutlet UIView *cropView;
-@property(nonatomic,assign) BOOL stickered;
+@property(nonatomic,assign)   BOOL stickered;
 
 //BJImageCropper items
 @property (nonatomic, strong) BJImageCropper *imageCropper;
@@ -49,5 +49,8 @@
 @property (nonatomic, strong) UIImageView *preview;
 @property (strong, nonatomic) IBOutlet UIScrollView *scroller;
 @property (strong, nonatomic) IBOutlet UIImageView *scaleImage;
+@property (strong ,nonatomic)  UIImageView * pointer;
+
+@property (nonatomic,assign) CGFloat lastContentOffset;
 
 @end
