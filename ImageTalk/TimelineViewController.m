@@ -8,6 +8,7 @@
 
 #import "TimelineViewController.h"
 #import "UIImageView+WebCache.h"
+#import "SDWebImageManager.h"
 #import "UIImage+GIF.h"
 #import "UIImageView+RJLoader.h"
 #import "AllPhotosViewController.h"
@@ -28,6 +29,7 @@
 
 @property (strong,nonatomic)UIImage *img;
 @property int counter;
+
 
 @end
 
@@ -85,6 +87,11 @@
 
     
     [[SocektAccess getSharedInstance]setItem:[self.tabBarController.tabBar.items objectAtIndex:1]];
+    
+    
+   
+    
+    
 }
 
 
@@ -187,25 +194,34 @@
     if(data.type == 2)
     {
         height = 260.00;
+        
     }
     else if(data.type == 1)
     {
-        height = self.view.frame.size.width/2 + 115;
+        height = self.view.frame.size.width/2 + 100;
+        
+        
     }
     else
     {
-        NSString *filePath = [NSString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.picPath];
-        self.img = [UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:filePath]]];
+        NSURL *filePath = [NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.picPath]];
+//        self.img = [UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:filePath]]];
       
+        NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:filePath];
+        UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:key];
+        
+        self.img = image;
+        
         
         if (self.img.size.width > CGRectGetWidth(self.view.bounds)) {
             CGFloat ratio = self.img.size.height / self.img.size.width;
-            return CGRectGetWidth(self.view.bounds) * ratio+120;
+            return CGRectGetWidth(self.view.bounds) * ratio+140;
         } else {
-            return self.img.size.height+110;
+            
+            height =  self.img.size.height+180;
         }
        
-        //height = self.view.frame.size.width + 100;
+        
         
         
     }
@@ -284,10 +300,12 @@
     }
     else
     {
-        if(cell.image.image.size.height<cell.image.frame.size.height)
-        {
-            cell.image.frame = CGRectMake(cell.image.frame.origin.x, cell.image.frame.origin.y,cell.image.frame.size.width, cell.image.frame.size.height);
-        }
+        
+//       if(cell.image.image.size.height<cell.image.frame.size.height)
+//       {
+//           cell.image.frame = CGRectMake(cell.image.frame.origin.x, cell.image.frame.origin.y,cell.image.frame.size.width, cell.image.frame.size.height);
+//       }
+        
         cell.image.contentMode = UIViewContentModeScaleToFill;
         cell.favBtn.hidden = false;
         cell.downloadBtn.hidden = false;
@@ -301,6 +319,7 @@
     
     if([data.description isEqual:@""])
     {
+        
         cell.detailsHeight.constant = 0;
         
     }
@@ -359,16 +378,23 @@
     
    // cell.date.text = [NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:date]];
     
+   
+        
+    
     
     [cell.profilePic sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.owner.user.picPath.original.path]]
                        placeholderImage:nil];
-
+    
+    
+    
+    
+//    BOOL isCached =  [[SDWebImageManager sharedManager] diskImageExistsForURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.picPath]]];
+    
+    
     
     [cell.image sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.picPath]]
                  placeholderImage:[UIImage sd_animatedGIFNamed:@"image_loader.gif"]];
-   
     
-   // [cell.image setImageWithProgressIndicatorAndURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.picPath]]];
     
     
     if (data.places) {
