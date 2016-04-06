@@ -101,6 +101,7 @@
     _scroller.delegate = self;
     
     [_scroller addSubview:self.scaleImage];
+    _scroller.decelerationRate = UIScrollViewDecelerationRateFast;
  
      [self.scroller setHidden:YES];
     
@@ -109,6 +110,10 @@
     
     [self.view addSubview:_pointer];
     [_pointer setHidden:YES];
+    
+    //Rotated Image
+    
+    self.rotatedImage = self.image;
     
 }
 
@@ -152,30 +157,90 @@
     self.type = 2;
     [self changeType];
 }
-typedef enum ScrollDirection {
-    ScrollDirectionNone,
-    ScrollDirectionRight,
-    ScrollDirectionLeft,
-    ScrollDirectionCrazy,
-} ScrollDirection;
-
-
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if([scrollView isEqual: self.scroller]&&self.type==1){
-        ScrollDirection scrollDirection;
+       
         if (self.lastContentOffset > scrollView.contentOffset.x)
-            scrollDirection = ScrollDirectionRight;
+            self.scrollDirection = 1; //Right
         else if (self.lastContentOffset < scrollView.contentOffset.x)
-            scrollDirection = ScrollDirectionLeft;
+            self.scrollDirection = 2;//Left
+        else if(self.lastContentOffset == scrollView.contentOffset.x)
+            self.scrollDirection = 0;
         
         self.lastContentOffset = scrollView.contentOffset.x;
         
-        
+       
       
        
     }
+}
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    if([scrollView isEqual: self.scroller] && self.type ==1){
+               if (!decelerate) {
+            [self stoppedScrolling];
+        }
+    }
+}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    
+    [self stoppedScrolling];
+}
+
+
+
+- (void)stoppedScrolling
+{
+ 
+    NSLog(@"%f",self.lastContentOffset/12696);
+    NSLog(@"%d",self.scrollDirection);
+//    if(self.scrollDirection == 1)
+//        self.rotatedImage = [self imageRotatedByDegrees:self.lastContentOffset/12696 Image:self.rotatedImage];
+//    else if(self.scrollDirection ==2)
+//        self.rotatedImage = [self imageRotatedByDegrees:-self.lastContentOffset/12696 Image:self.rotatedImage];
+//    else if (self.lastContentOffset == 0.000000)
+//        self.rotatedImage = self.image;
+    CGFloat radians =0.0;
+ 
+    if(_scrollDirection ==1){
+              radians = -self.lastContentOffset/11500;
+        
+    }else if(_scrollDirection==2){
+        radians = self.lastContentOffset/11500;
+    }
+    
+    UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.image.size.width, self.image.size.height)];
+    CGAffineTransform t = CGAffineTransformMakeRotation(radians);
+    rotatedViewBox.transform = t;
+    CGSize rotatedSize = rotatedViewBox.frame.size;
+    
+    // Create the bitmap context
+    UIGraphicsBeginImageContext(rotatedSize);
+    CGContextRef bitmap = UIGraphicsGetCurrentContext();
+    
+    // Move the origin to the middle of the image so we will rotate and scale around the center.
+    CGContextTranslateCTM(bitmap, rotatedSize.width/2, rotatedSize.height/2);
+    
+    //   // Rotate the image context
+    CGContextRotateCTM(bitmap, radians);
+    
+    // Now, draw the rotated/scaled image into the context
+    CGContextScaleCTM(bitmap, 1.0, -1.0);
+    if(_scrollDirection ==1){
+    CGContextDrawImage(bitmap, CGRectMake(-self.rotatedImage.size.width / 2, -self.rotatedImage.size.height / 2, self.rotatedImage.size.width+5, self.rotatedImage.size.height+5), [self.rotatedImage CGImage]);
+    }else if (_scrollDirection==2){
+        CGContextDrawImage(bitmap, CGRectMake(-self.rotatedImage.size.width / 2, -self.rotatedImage.size.height / 2, self.rotatedImage.size.width-5, self.rotatedImage.size.height-5), [self.rotatedImage CGImage]);
+    }
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    self.rotatedImage = newImage;
+    UIGraphicsEndImageContext();
+    
+    [self.imageCropper setImage:self.rotatedImage];
+    
+   
+  
 }
 
 
@@ -612,7 +677,6 @@ typedef enum ScrollDirection {
     
     if ([tag isEqualToString:@"changePicture"])
     {
-        
         NSError* error = nil;
         self.response = [[ChangePhotoResponse alloc] initWithDictionary:data error:&error];
         if(self.response.responseStat.status){

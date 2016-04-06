@@ -51,6 +51,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *scaleImage;
 @property (strong ,nonatomic)  UIImageView * pointer;
 
+@property (strong,nonatomic)  UIImage *rotatedImage;
 @property (nonatomic,assign) CGFloat lastContentOffset;
-
+@property (nonatomic,assign) int scrollDirection;
 @end
