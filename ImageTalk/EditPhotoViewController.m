@@ -119,8 +119,10 @@
 
 - (IBAction)effect:(id)sender {
     if(self.type ==1){
+        self.image = [self.imageCropper getCroppedImage];
         [self.imageCropper removeFromSuperview];
         [self.cropView addSubview:self.cropperImage];
+        [self.cropperImage setOriginalImage:self.image];
        
     }
     [_pointer setHidden:YES];
@@ -136,7 +138,7 @@
 - (IBAction)lips:(id)sender {
     
     [self.scroller.superview addSubview:self.scroller];
-    CGSize scrollableSize = CGSizeMake(self.scaleImage.image.size.width+121, self.scaleImage.image.size.height/2);
+    CGSize scrollableSize = CGSizeMake(self.scaleImage.image.size.width, self.scaleImage.image.size.height/2);
     [_scroller setContentSize:scrollableSize];
     [self.scroller setHidden:NO];
     [_pointer setHidden:NO];
@@ -148,8 +150,10 @@
 
 - (IBAction)smily:(id)sender {
     if(self.type ==1){
+         self.image = [self.imageCropper getCroppedImage];
         [self.imageCropper removeFromSuperview];
         [self.cropView addSubview:self.cropperImage];
+        [self.cropperImage setOriginalImage:self.image];
     }
     [_pointer setHidden:YES];
     [self.scroller setHidden:YES];
@@ -195,19 +199,13 @@
  
     NSLog(@"%f",self.lastContentOffset/12696);
     NSLog(@"%d",self.scrollDirection);
-//    if(self.scrollDirection == 1)
-//        self.rotatedImage = [self imageRotatedByDegrees:self.lastContentOffset/12696 Image:self.rotatedImage];
-//    else if(self.scrollDirection ==2)
-//        self.rotatedImage = [self imageRotatedByDegrees:-self.lastContentOffset/12696 Image:self.rotatedImage];
-//    else if (self.lastContentOffset == 0.000000)
-//        self.rotatedImage = self.image;
     CGFloat radians =0.0;
  
     if(_scrollDirection ==1){
-              radians = -self.lastContentOffset/11500;
+              radians = -self.lastContentOffset/12500;
         
     }else if(_scrollDirection==2){
-        radians = self.lastContentOffset/11500;
+        radians = self.lastContentOffset/12500;
     }
     
     UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.image.size.width, self.image.size.height)];
@@ -228,9 +226,10 @@
     // Now, draw the rotated/scaled image into the context
     CGContextScaleCTM(bitmap, 1.0, -1.0);
     if(_scrollDirection ==1){
-    CGContextDrawImage(bitmap, CGRectMake(-self.rotatedImage.size.width / 2, -self.rotatedImage.size.height / 2, self.rotatedImage.size.width+5, self.rotatedImage.size.height+5), [self.rotatedImage CGImage]);
+        CGContextDrawImage(bitmap, CGRectMake(-self.rotatedImage.size.width / 2, -self.rotatedImage.size.height / 2, self.rotatedImage.size.width-10, self.rotatedImage.size.height-10), [self.rotatedImage CGImage]);
+
     }else if (_scrollDirection==2){
-        CGContextDrawImage(bitmap, CGRectMake(-self.rotatedImage.size.width / 2, -self.rotatedImage.size.height / 2, self.rotatedImage.size.width-5, self.rotatedImage.size.height-5), [self.rotatedImage CGImage]);
+            CGContextDrawImage(bitmap, CGRectMake(-self.rotatedImage.size.width / 2, -self.rotatedImage.size.height / 2, self.rotatedImage.size.width+10, self.rotatedImage.size.height+10), [self.rotatedImage CGImage]);
     }
     
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -613,7 +612,7 @@
     userResizableView1.translucencySticker = NO;
      userResizableView1.preventsCustomButton = NO;
     [userResizableView1 setButton:ZDSTICKERVIEW_BUTTON_CUSTOM
-                           image:[UIImage imageNamed:@"plus"]];
+                           image:[UIImage imageNamed:@"tick-icon.png"]];
   
     [userResizableView1 showEditingHandles];
     [self.cropView addSubview:userResizableView1];

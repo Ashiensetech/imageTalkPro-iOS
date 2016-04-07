@@ -215,7 +215,7 @@
     self.deleteControl = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0,
                                                                       kZDStickerViewControlSize, kZDStickerViewControlSize)];
     self.deleteControl.backgroundColor = [UIColor clearColor];
-    self.deleteControl.image = [UIImage imageNamed:@"ZDStickerView.bundle/ZDBtn3.png"];
+    self.deleteControl.image = [UIImage imageNamed:@"cross-icon.png"];//ZDStickerView.bundle/ZDBtn3.png
     self.deleteControl.userInteractionEnabled = YES;
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]
                                          initWithTarget:self
@@ -228,7 +228,7 @@
                                                                         kZDStickerViewControlSize, kZDStickerViewControlSize)];
     self.resizingControl.backgroundColor = [UIColor clearColor];
     self.resizingControl.userInteractionEnabled = YES;
-    self.resizingControl.image = [UIImage imageNamed:@"ZDStickerView.bundle/ZDBtn2.png.png"];
+    self.resizingControl.image = [UIImage imageNamed:@"enlarge.png"];//ZDStickerView.bundle/ZDBtn2.png.png
     UIPanGestureRecognizer*panResizeGesture = [[UIPanGestureRecognizer alloc]
                                                initWithTarget:self
                                                        action:@selector(resizeTranslate:)];
