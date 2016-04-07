@@ -172,7 +172,9 @@
     cropView.layer.borderColor = [[UIColor whiteColor] CGColor];
     cropView.layer.borderWidth = 2.0;
     cropView.backgroundColor = [UIColor clearColor];
-    cropView.alpha = 0.4;   
+    cropView.alpha = 0.4;
+    cropView.layer.masksToBounds = TRUE;
+    cropView.clipsToBounds =TRUE;
     
 #ifdef ARC
     return cropView;

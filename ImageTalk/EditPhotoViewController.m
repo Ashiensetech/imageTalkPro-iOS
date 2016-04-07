@@ -140,12 +140,14 @@
     [self.scroller.superview addSubview:self.scroller];
     CGSize scrollableSize = CGSizeMake(self.scaleImage.image.size.width, self.scaleImage.image.size.height/2);
     [_scroller setContentSize:scrollableSize];
+    [_scroller setContentOffset:CGPointMake(self.scaleImage.image.size.width/4, 0)];
     [self.scroller setHidden:NO];
     [_pointer setHidden:NO];
      self.type = 1;
     [self changeType];
     
     [self callBJImageCropper];
+    
 }
 
 - (IBAction)smily:(id)sender {
@@ -226,10 +228,10 @@
     // Now, draw the rotated/scaled image into the context
     CGContextScaleCTM(bitmap, 1.0, -1.0);
     if(_scrollDirection ==1){
-        CGContextDrawImage(bitmap, CGRectMake(-self.rotatedImage.size.width / 2, -self.rotatedImage.size.height / 2, self.rotatedImage.size.width-10, self.rotatedImage.size.height-10), [self.rotatedImage CGImage]);
+        CGContextDrawImage(bitmap, CGRectMake(-self.rotatedImage.size.width / 2, -self.rotatedImage.size.height / 2, self.rotatedImage.size.width-15, self.rotatedImage.size.height-15), [self.rotatedImage CGImage]);
 
     }else if (_scrollDirection==2){
-            CGContextDrawImage(bitmap, CGRectMake(-self.rotatedImage.size.width / 2, -self.rotatedImage.size.height / 2, self.rotatedImage.size.width+10, self.rotatedImage.size.height+10), [self.rotatedImage CGImage]);
+            CGContextDrawImage(bitmap, CGRectMake(-self.rotatedImage.size.width / 2, -self.rotatedImage.size.height / 2, self.rotatedImage.size.width+15, self.rotatedImage.size.height+15), [self.rotatedImage CGImage]);
     }
     
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
