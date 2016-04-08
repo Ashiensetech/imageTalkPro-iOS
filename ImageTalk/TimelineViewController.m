@@ -218,7 +218,7 @@
             return CGRectGetWidth(self.view.bounds) * ratio+140;
         } else {
             
-            height =  self.img.size.height+180;
+            return self.img.size.height+180;
         }
        
         
@@ -301,10 +301,10 @@
     else
     {
         
-//       if(cell.image.image.size.height<cell.image.frame.size.height)
-//       {
-//           cell.image.frame = CGRectMake(cell.image.frame.origin.x, cell.image.frame.origin.y,cell.image.frame.size.width, cell.image.frame.size.height);
-//       }
+       if(cell.image.image.size.height<cell.image.frame.size.height)
+     {
+          cell.image.frame = CGRectMake(cell.image.frame.origin.x, cell.image.frame.origin.y,cell.image.frame.size.width, cell.image.frame.size.height);
+     }
         
         cell.image.contentMode = UIViewContentModeScaleToFill;
         cell.favBtn.hidden = false;
