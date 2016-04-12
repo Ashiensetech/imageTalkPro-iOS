@@ -204,13 +204,34 @@
     }
     else
     {
+        
         NSURL *filePath = [NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.picPath]];
-//        self.img = [UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:filePath]]];
-      
+   
         NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:filePath];
         UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:key];
         
+        if(image != NULL)
+        {
         self.img = image;
+        }
+        else
+        {
+            SDWebImageDownloader *downloader = [SDWebImageDownloader sharedDownloader];
+            [downloader downloadImageWithURL:filePath
+                                     options:0
+                                    progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                        // progression tracking code
+                                    }
+                                   completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+                                       if (image && finished) {
+                                           // do something with image
+                                           
+                                           self.img = image;
+                                           
+                                       }
+                                   }];
+            
+        }
         
         
         if (self.img.size.width > CGRectGetWidth(self.view.bounds)) {
@@ -301,10 +322,10 @@
     else
     {
         
-       if(cell.image.image.size.height<cell.image.frame.size.height)
-     {
-          cell.image.frame = CGRectMake(cell.image.frame.origin.x, cell.image.frame.origin.y,cell.image.frame.size.width, cell.image.frame.size.height);
-     }
+//       if(cell.image.image.size.height<cell.image.frame.size.height)
+//     {
+//          cell.image.frame = CGRectMake(cell.image.frame.origin.x, cell.image.frame.origin.y,cell.image.frame.size.width, cell.image.frame.size.height);
+//     }
         
         cell.image.contentMode = UIViewContentModeScaleToFill;
         cell.favBtn.hidden = false;
@@ -385,16 +406,10 @@
     [cell.profilePic sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.owner.user.picPath.original.path]]
                        placeholderImage:nil];
     
-    
-    
-    
-//    BOOL isCached =  [[SDWebImageManager sharedManager] diskImageExistsForURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.picPath]]];
-    
-    
-    
+ 
+   
     [cell.image sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.picPath]]
-                 placeholderImage:[UIImage sd_animatedGIFNamed:@"image_loader.gif"]];
-    
+                 ];
     
     
     if (data.places) {
