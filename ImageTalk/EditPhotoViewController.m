@@ -190,8 +190,9 @@
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    
-    [self stoppedScrolling];
+     if([scrollView isEqual: self.scroller] && self.type ==1){
+         [self stoppedScrolling];
+     }
 }
 
 
