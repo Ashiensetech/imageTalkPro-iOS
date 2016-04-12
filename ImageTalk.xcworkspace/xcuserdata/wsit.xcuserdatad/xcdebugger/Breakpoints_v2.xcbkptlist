@@ -410,12 +410,12 @@
                   moduleName = "ImageTalk"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/DiskPart%201/codes/imagetalk/ImageTalk/SocketTestViewController.h"
-                  timestampString = "482133647.063002"
+                  timestampString = "482154288.053817"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "25"
                   endingLineNumber = "25"
-                  offsetFromSymbolStart = "12">
+                  offsetFromSymbolStart = "16">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -425,12 +425,12 @@
                   moduleName = "ImageTalk"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/DiskPart%201/codes/imagetalk/ImageTalk/SocketTestViewController.h"
-                  timestampString = "482133647.063092"
+                  timestampString = "482154288.054033"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "25"
                   endingLineNumber = "25"
-                  offsetFromSymbolStart = "49">
+                  offsetFromSymbolStart = "40">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -456,12 +456,12 @@
                   moduleName = "ImageTalk"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/DiskPart%201/codes/imagetalk/ImageTalk/SocketTestViewController.h"
-                  timestampString = "482133647.063674"
+                  timestampString = "482154288.055624"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "23"
                   endingLineNumber = "23"
-                  offsetFromSymbolStart = "12">
+                  offsetFromSymbolStart = "16">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -471,12 +471,12 @@
                   moduleName = "ImageTalk"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/DiskPart%201/codes/imagetalk/ImageTalk/SocketTestViewController.h"
-                  timestampString = "482133647.063773"
+                  timestampString = "482154288.05578"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "23"
                   endingLineNumber = "23"
-                  offsetFromSymbolStart = "49">
+                  offsetFromSymbolStart = "40">
                </Location>
             </Locations>
          </BreakpointContent>

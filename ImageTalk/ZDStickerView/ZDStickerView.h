@@ -30,7 +30,7 @@ typedef enum {
 @property (nonatomic) BOOL translucencySticker;                // default = YES
 @property (nonatomic) CGFloat minWidth;
 @property (nonatomic) CGFloat minHeight;
-
+@property (nonatomic) int index;
 @property (weak, nonatomic) id <ZDStickerViewDelegate> stickerViewDelegate;
 
 - (void)hideDelHandle;
