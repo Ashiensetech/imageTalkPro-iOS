@@ -172,34 +172,50 @@
         static NSString *CellIdentifier = @"cameraCell";
         CustomCollectionViewCell *cameraCell = [cv dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
         
-        //live camera view layer
-        AVCaptureSession *session = [[AVCaptureSession alloc] init];
-        session.sessionPreset = AVCaptureSessionPresetHigh;
+        if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+        {
+            
+            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                  message:@"Device has no camera"
+                                                                 delegate:nil
+                                                        cancelButtonTitle:@"OK"
+                                                        otherButtonTitles: nil];
+            
+            [myAlertView show];
+            cameraCell.image.image =[UIImage imageNamed:@"camera"];
+            
+        }else{
+            //live camera view layer
+            AVCaptureSession *session = [[AVCaptureSession alloc] init];
+            session.sessionPreset = AVCaptureSessionPresetHigh;
+            
+            AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+            NSError *error = nil;
+            AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
+            [session addInput:input];
+            AVCaptureVideoPreviewLayer *newCaptureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:session];
+            CGRect bounds=cameraCell.image.bounds;
+            newCaptureVideoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+            newCaptureVideoPreviewLayer.bounds=bounds;
+            newCaptureVideoPreviewLayer.position=CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
+            [cameraCell.image.layer addSublayer:newCaptureVideoPreviewLayer];
+            cameraCell.image.contentMode = UIViewContentModeCenter;
+            
+            
+            //camera icon layer
+            UIImage *animationImage = [UIImage imageNamed:@"camera"];
+            CALayer *overlayLayer1 = [CALayer layer];
+            [overlayLayer1 setContents:(id)[animationImage CGImage]];
+            
+            overlayLayer1.frame = CGRectMake(25,25, 50.0, 50.0);
+            [overlayLayer1 setMasksToBounds:YES];
+            [cameraCell.image.layer insertSublayer:overlayLayer1 atIndex:(int)[cameraCell.image.layer.sublayers count]];
+            
+            
+            [session startRunning];
+        }
         
-        AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-        NSError *error = nil;
-        AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
-        [session addInput:input];
-        AVCaptureVideoPreviewLayer *newCaptureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:session];
-        CGRect bounds=cameraCell.image.bounds;
-        newCaptureVideoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-        newCaptureVideoPreviewLayer.bounds=bounds;
-        newCaptureVideoPreviewLayer.position=CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
-        [cameraCell.image.layer addSublayer:newCaptureVideoPreviewLayer];
-        cameraCell.image.contentMode = UIViewContentModeCenter;
-       
-      
-        //camera icon layer
-        UIImage *animationImage = [UIImage imageNamed:@"camera"];
-        CALayer *overlayLayer1 = [CALayer layer];
-        [overlayLayer1 setContents:(id)[animationImage CGImage]];
         
-        overlayLayer1.frame = CGRectMake(25,25, 50.0, 50.0);
-        [overlayLayer1 setMasksToBounds:YES];
-        [cameraCell.image.layer insertSublayer:overlayLayer1 atIndex:(int)[cameraCell.image.layer.sublayers count]];
-       
-        
-        [session startRunning];
        
         return cameraCell;
         
