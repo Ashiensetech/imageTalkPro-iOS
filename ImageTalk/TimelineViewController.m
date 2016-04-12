@@ -209,8 +209,29 @@
    
         NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:filePath];
         UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:key];
-        self.img = image;
         
+        if(image != NULL)
+        {
+        self.img = image;
+        }
+        else
+        {
+            SDWebImageDownloader *downloader = [SDWebImageDownloader sharedDownloader];
+            [downloader downloadImageWithURL:filePath
+                                     options:0
+                                    progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                        // progression tracking code
+                                    }
+                                   completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+                                       if (image && finished) {
+                                           // do something with image
+                                           
+                                           self.img = image;
+                                           
+                                       }
+                                   }];
+            
+        }
         
         
         if (self.img.size.width > CGRectGetWidth(self.view.bounds)) {
