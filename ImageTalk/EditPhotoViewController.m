@@ -115,6 +115,9 @@
     
     self.rotatedImage = self.image;
     
+    //sticker
+    stickerArray = [[NSMutableArray alloc] initWithCapacity:10];
+    
 }
 
 - (IBAction)effect:(id)sender {
@@ -301,6 +304,8 @@
 }
 
 - (IBAction)save:(id)sender {
+
+    
     
     if(self.isTimeline)
     {
@@ -609,16 +614,18 @@
     
     ZDStickerView *userResizableView1 = [[ZDStickerView alloc] initWithFrame:stickerFrame];
     userResizableView1.tag = row;
+    userResizableView1.index = stickerArray.count;
     userResizableView1.stickerViewDelegate = self;
     userResizableView1.contentView = contentView;//contentView;
     userResizableView1.preventsPositionOutsideSuperview = YES;
     userResizableView1.translucencySticker = NO;
      userResizableView1.preventsCustomButton = NO;
-    [userResizableView1 setButton:ZDSTICKERVIEW_BUTTON_CUSTOM
-                           image:[UIImage imageNamed:@"tick-icon.png"]];
+//    [userResizableView1 setButton:ZDSTICKERVIEW_BUTTON_CUSTOM
+//                           image:[UIImage imageNamed:@"tick-icon.png"]];
   
     [userResizableView1 showEditingHandles];
     [self.cropView addSubview:userResizableView1];
+    [stickerArray addObject:userResizableView1];
 }
 
 
@@ -729,6 +736,47 @@
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+   
+    if(stickerArray.count>0){
+        UIImage *stickeredImage =(!self.isAspect) ? [self.cropperImage processedImage] : self.image;
+        for(int i=0 ; i<stickerArray.count ;i++){
+            ZDStickerView *sticker = stickerArray[i];
+            CGFloat radians = atan2f(sticker.transform.b, sticker.transform.a);
+            [sticker setHidden:YES];
+            [((UIImageView*)sticker.contentView) becomeFirstResponder];
+            UIImage *bottomImage =  stickeredImage;//background image
+            UIImage *image       = NULL;
+            
+            if(sticker.tag ==0){
+                image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"glass"]];
+            }else if(sticker.tag ==1){
+                image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"sleepy"]];
+            }else if(sticker.tag ==2){
+                image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"WINK"]];
+            }else if(sticker.tag ==3){
+                image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"wink2"]];
+            }
+            
+            
+            CGSize newSize = CGSizeMake(bottomImage.size.width, bottomImage.size.height);
+            
+            UIGraphicsBeginImageContext( newSize );
+            
+            [bottomImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+            
+            [image drawInRect:CGRectMake(sticker.frame.origin.x+5, sticker.frame.origin.y+5, sticker.frame.size.width-20, sticker.frame.size.height-20)
+                    blendMode:kCGBlendModeNormal alpha:1.0];
+            
+            UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+            
+            UIGraphicsEndImageContext();
+            stickeredImage= newImage;
+            
+        }
+        self.image = stickeredImage;
+//        self.cropperImage.im =
+//       // [self.cropperImage setOriginalImage:self.image];
+    }
     
     if ([segue.identifier isEqualToString:@"sharePhoto"])
     {
@@ -738,7 +786,8 @@
         if(self.type==1){
             data.image = [self.imageCropper getCroppedImage];
         }else{
-             data.image = (!self.isAspect) ? [self.cropperImage processedImage] : self.image;
+            data.image = self.image;
+            // data.image = (!self.isAspect) ? [self.cropperImage processedImage] : self.image;
         }
        
 
@@ -752,7 +801,7 @@
         if(self.type==1){
             data.pic = [self.imageCropper getCroppedImage];
         }else{
-            data.pic = (!self.isAspect) ? [self.cropperImage processedImage] : self.image;
+            data.pic =  self.image;
         }
     }
 }
@@ -767,49 +816,51 @@
 - (void)stickerViewDidClose:(ZDStickerView *)sticker
 {
     NSLog(@"%s [%zd]",__func__, sticker.tag);
+    NSLog(@"closed");
+    [stickerArray removeObjectAtIndex:sticker.index];
 }
 
 - (void)stickerViewDidCustomButtonTap:(ZDStickerView *)sticker
 {
-    CGFloat radians = atan2f(sticker.transform.b, sticker.transform.a);
-    [sticker setHidden:YES];
-    [((UIImageView*)sticker.contentView) becomeFirstResponder];
-    UIImage *bottomImage = [self.cropperImage processedImage]; //background image
-    UIImage *image       = NULL;
-    switch (sticker.tag) {
-        case 0:
-            image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"glass"]];
-            break;
-        case 1:
-           image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"sleepy"]];
-            
-            break;
-        case 2:
-              image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"WINK"]];
-            break;
-        case 3:
-           image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"wink2"]];
-            
-            break;
-            
-        default:
-            break;
-    }
-    
-    CGSize newSize = CGSizeMake(bottomImage.size.width, bottomImage.size.height);
-   
-    UIGraphicsBeginImageContext( newSize );
-    
-    [bottomImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
-   
-    [image drawInRect:CGRectMake(sticker.frame.origin.x, sticker.frame.origin.y, sticker.frame.size.width-20, sticker.frame.size.height-20)
-            blendMode:kCGBlendModeNormal alpha:1.0];
-  
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    UIGraphicsEndImageContext();
-    self.image = newImage;
-    [self.cropperImage setOriginalImage:self.image];
+//    CGFloat radians = atan2f(sticker.transform.b, sticker.transform.a);
+//    [sticker setHidden:YES];
+//    [((UIImageView*)sticker.contentView) becomeFirstResponder];
+//    UIImage *bottomImage = [self.cropperImage processedImage]; //background image
+//    UIImage *image       = NULL;
+//    switch (sticker.tag) {
+//        case 0:
+//            image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"glass"]];
+//            break;
+//        case 1:
+//           image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"sleepy"]];
+//            
+//            break;
+//        case 2:
+//              image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"WINK"]];
+//            break;
+//        case 3:
+//           image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"wink2"]];
+//            
+//            break;
+//            
+//        default:
+//            break;
+//    }
+//    
+//    CGSize newSize = CGSizeMake(bottomImage.size.width, bottomImage.size.height);
+//   
+//    UIGraphicsBeginImageContext( newSize );
+//    
+//    [bottomImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+//   
+//    [image drawInRect:CGRectMake(sticker.frame.origin.x+5, sticker.frame.origin.y+5, sticker.frame.size.width-20, sticker.frame.size.height-20)
+//            blendMode:kCGBlendModeNormal alpha:1.0];
+//  
+//    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+//    
+//    UIGraphicsEndImageContext();
+//    self.image = newImage;
+//    [self.cropperImage setOriginalImage:self.image];
 }
 
 - (void)stickerViewDidBeginEditing:(ZDStickerView *)sticker{

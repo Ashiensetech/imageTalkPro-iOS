@@ -17,6 +17,7 @@
 {
     NSUserDefaults *defaults;
     NSString *baseurl;
+    NSMutableArray *stickerArray;
 }
 @property (strong, nonatomic) IBOutlet UIButton *effectBtn;
 @property (strong, nonatomic) IBOutlet UIButton *lipsBtn;
@@ -54,4 +55,5 @@
 @property (strong,nonatomic)  UIImage *rotatedImage;
 @property (nonatomic,assign) CGFloat lastContentOffset;
 @property (nonatomic,assign) int scrollDirection;
+
 @end
