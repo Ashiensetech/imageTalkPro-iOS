@@ -71,7 +71,19 @@
          
          NSLog(@"first    %@",self.assets);
          
-         self.assetsR=[[[self.assets reverseObjectEnumerator] allObjects] mutableCopy];
+        self.assetsR=[[[self.assets reverseObjectEnumerator] allObjects] mutableCopy];
+       //  self.assetsR = self.assets;
+         
+//         
+//         for (ALAsset *asset in self.assets) {
+//             
+//             NSDate * date = [asset valueForProperty:ALAssetPropertyDate];
+//             
+//             
+//             
+//         }
+         
+         
          [self.collectionData reloadData];
          
          
@@ -91,6 +103,9 @@
 
     
 }
+
+
+
 
 -(void)viewDidAppear:(BOOL)animated
 {
