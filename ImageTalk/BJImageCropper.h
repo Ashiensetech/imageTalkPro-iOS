@@ -42,7 +42,9 @@
     NSInteger currentTouches;
     CGPoint panTouch;
     CGFloat scaleDistance;
-    UIView *currentDragView; // Weak reference 
+    UIView *currentDragView; // Weak reference
+    
+    
 }
 
 @property (nonatomic, assign) CGRect crop;

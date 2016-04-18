@@ -266,7 +266,7 @@
    
     CGFloat radians =0.0;
     radians = (self.lastContentOffset-237)/302;
-    UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.image.size.width/2, self.image.size.height/2)];
+    UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.image.size.width/1.5, self.image.size.height/1.5)];
     CGAffineTransform t = CGAffineTransformMakeRotation(radians);//radians
     rotatedViewBox.transform = t;
     CGSize rotatedSize = rotatedViewBox.frame.size;
@@ -290,7 +290,7 @@
     UIGraphicsEndImageContext();
     
     [self.imageCropper setImage:self.rotatedImage];
-    
+    [self.imageCropper setCrop:CGRectMake(0,0 , self.rotatedImage.size.width, self.rotatedImage.size.width)];
    
   
 }
@@ -934,16 +934,17 @@
     }
 }
 -(void) callBJImageCropper{
-    
-    self.cropView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tactile_noise.png"]];
+   
+    self.cropView.backgroundColor = [UIColor whiteColor];//colorWithPatternImage:[UIImage imageNamed:@"tactile_noise.png"]
     if(self.imageCropper ==NULL){
         self.imageCropper = [[BJImageCropper alloc] initWithImage:self.image andMaxSize:CGSizeMake(750,350)];
-       
+        
         self.imageCropper.center = self.cropView.center;
         self.imageCropper.imageView.layer.shadowColor = [[UIColor blackColor] CGColor];
         self.imageCropper.imageView.layer.shadowRadius = 3.0f;
-        self.imageCropper.imageView.layer.shadowOpacity = 0.8f;
+        self.imageCropper.imageView.layer.shadowOpacity = 1.5f;
         self.imageCropper.imageView.layer.shadowOffset = CGSizeMake(1, 1);
+        [self.imageCropper setCrop:CGRectMake(0,0 , self.image.size.width, self.image.size.width)];
         
         [self.imageCropper addObserver:self forKeyPath:@"crop" options:NSKeyValueObservingOptionNew context:nil];
         
