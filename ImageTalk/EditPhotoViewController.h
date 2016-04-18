@@ -36,6 +36,7 @@
 @property (strong,nonatomic)  NSMutableArray *borderObject;
 @property (strong,nonatomic)  NSMutableArray *lipsObject;
 @property (strong,nonatomic)  NSMutableArray *smilyObject;
+@property (strong, nonatomic) IBOutlet UIButton *orientationBtn;
 @property (nonatomic, assign) BOOL isTimeline;
 @property (nonatomic, assign) int type;
 @property (nonatomic, assign) BOOL isAspect;
@@ -54,6 +55,8 @@
 
 @property (strong,nonatomic)  UIImage *rotatedImage;
 @property (nonatomic,assign) CGFloat lastContentOffset;
-@property (nonatomic,assign) int scrollDirection;
+@property (nonatomic,assign) int currentScrollDirection;
+@property (nonatomic,assign) int lastScrollDirection;
+
 
 @end

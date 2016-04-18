@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Hxb-wn-Odv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Hxb-wn-Odv">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -3699,16 +3699,31 @@
                                             <outlet property="delegate" destination="QIE-dp-jpL" id="HNO-3Q-01n"/>
                                         </connections>
                                     </collectionView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rJP-ur-IaU">
+                                        <rect key="frame" x="8" y="98" width="24" height="37"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="37" id="K4m-hV-bvT"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="24" id="fPQ-ve-Mkb"/>
+                                            <constraint firstAttribute="width" constant="24" id="o7m-Ka-4fQ"/>
+                                        </constraints>
+                                        <state key="normal" image="potrait.png"/>
+                                        <connections>
+                                            <action selector="orientationChangeAction:" destination="QIE-dp-jpL" eventType="touchUpInside" id="Bca-Qv-9pS"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.054901960784313725" green="0.054901960784313725" blue="0.054901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="eVY-Pi-O0w" firstAttribute="top" secondItem="rck-Nu-tbd" secondAttribute="top" constant="17" id="4sy-eO-w5a"/>
                                     <constraint firstItem="eVY-Pi-O0w" firstAttribute="centerX" secondItem="5XQ-gG-kIT" secondAttribute="centerX" id="68e-8L-uSU"/>
+                                    <constraint firstAttribute="trailing" secondItem="rJP-ur-IaU" secondAttribute="trailing" constant="568" id="8qu-qT-0s6"/>
                                     <constraint firstItem="eVY-Pi-O0w" firstAttribute="leading" secondItem="rck-Nu-tbd" secondAttribute="leading" constant="40" id="AEl-ES-x2T"/>
                                     <constraint firstItem="5XQ-gG-kIT" firstAttribute="leading" secondItem="rck-Nu-tbd" secondAttribute="leading" id="C50-eT-8dU"/>
                                     <constraint firstItem="5XQ-gG-kIT" firstAttribute="top" secondItem="rck-Nu-tbd" secondAttribute="top" id="OC5-uU-L6p"/>
                                     <constraint firstItem="eVY-Pi-O0w" firstAttribute="centerY" secondItem="5XQ-gG-kIT" secondAttribute="centerY" id="ecF-9W-JNS"/>
+                                    <constraint firstItem="rJP-ur-IaU" firstAttribute="leading" secondItem="rck-Nu-tbd" secondAttribute="leading" constant="8" id="hh9-5z-bbr"/>
                                     <constraint firstAttribute="bottom" secondItem="5XQ-gG-kIT" secondAttribute="bottom" id="tQZ-8d-YcL"/>
+                                    <constraint firstAttribute="bottom" secondItem="rJP-ur-IaU" secondAttribute="bottom" constant="23" id="uE0-80-1E5"/>
                                     <constraint firstAttribute="trailing" secondItem="5XQ-gG-kIT" secondAttribute="trailing" id="zbg-YP-sNJ"/>
                                 </constraints>
                             </view>
@@ -3849,6 +3864,7 @@
                         <outlet property="cropView" destination="oCE-sS-1ri" id="8Ul-r5-Z6e"/>
                         <outlet property="effectBtn" destination="akE-XV-QhE" id="L8g-U8-yhE"/>
                         <outlet property="lipsBtn" destination="ipR-bu-3ia" id="3Jo-FO-DSV"/>
+                        <outlet property="orientationBtn" destination="rJP-ur-IaU" id="GNR-q4-roH"/>
                         <outlet property="scaleImage" destination="oUQ-1n-PLb" id="SDg-Es-45f"/>
                         <outlet property="scroller" destination="eVY-Pi-O0w" id="gdU-jz-twa"/>
                         <outlet property="smilyBtn" destination="Mrs-jt-k43" id="b5p-5G-Wpi"/>
@@ -7926,6 +7942,7 @@
         <image name="play" width="46" height="46"/>
         <image name="plus" width="32" height="32"/>
         <image name="plus-1" width="32" height="32"/>
+        <image name="potrait.png" width="24" height="45"/>
         <image name="profile-1" width="56" height="56"/>
         <image name="profile-2" width="26" height="32"/>
         <image name="profile-3" width="26" height="26"/>
