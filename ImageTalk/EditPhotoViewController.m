@@ -263,7 +263,7 @@
 - (void)stoppedScrolling
 {
  //   NSLog(@"last : %d ,Current : %d",self.lastScrollDirection,self.currentScrollDirection);
-   
+   [self.imageCropper setCropViewPosition:50 y:30 width:250 height:250];
     CGFloat radians =0.0;
     radians = (self.lastContentOffset-237)/302;
     UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.image.size.width/1.5, self.image.size.height/1.5)];
@@ -821,8 +821,7 @@
             
         }
         self.image = stickeredImage;
-//        self.cropperImage.im =
-//       // [self.cropperImage setOriginalImage:self.image];
+
     }
     
     if ([segue.identifier isEqualToString:@"sharePhoto"])
@@ -832,9 +831,12 @@
       //  data.image = self.body.image;
         if(self.type==1){
             data.image = [self.imageCropper getCroppedImage];
-        }else{
+        }else if(stickerArray.count>0){
             data.image = self.image;
-            // data.image = (!self.isAspect) ? [self.cropperImage processedImage] : self.image;
+            
+        }
+        else{
+             data.image = (!self.isAspect) ? [self.cropperImage processedImage] : self.image;
         }
        
 
@@ -847,8 +849,12 @@
         
         if(self.type==1){
             data.pic = [self.imageCropper getCroppedImage];
-        }else{
-            data.pic =  self.image;
+        }else if(stickerArray.count>0){
+            data.pic = self.image;
+            
+        }
+        else{
+            data.pic = (!self.isAspect) ? [self.cropperImage processedImage] : self.image;
         }
     }
 }
@@ -934,28 +940,18 @@
     }
 }
 -(void) callBJImageCropper{
-   
-    self.cropView.backgroundColor = [UIColor whiteColor];//colorWithPatternImage:[UIImage imageNamed:@"tactile_noise.png"]
+    self.cropView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tactile_noise.png"]];
     if(self.imageCropper ==NULL){
-        self.imageCropper = [[BJImageCropper alloc] initWithImage:self.image andMaxSize:CGSizeMake(750,350)];
-        
+        UIImage * original = [self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.height)] ;
+        self.imageCropper = [[BFCropInterface alloc]initWithFrame:self.cropView.bounds andImage:original nodeRadius:50];
+        self.imageCropper.shadowColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.60];
+        self.imageCropper.borderColor = [UIColor whiteColor];
+        self.imageCropper.borderWidth = 3.0;
+        self.imageCropper.showNodes = YES;
         self.imageCropper.center = self.cropView.center;
-        self.imageCropper.imageView.layer.shadowColor = [[UIColor blackColor] CGColor];
-        self.imageCropper.imageView.layer.shadowRadius = 3.0f;
-        self.imageCropper.imageView.layer.shadowOpacity = 1.5f;
-        self.imageCropper.imageView.layer.shadowOffset = CGSizeMake(1, 1);
-        [self.imageCropper setCrop:CGRectMake(0,0 , self.image.size.width, self.image.size.width)];
-        
-        [self.imageCropper addObserver:self forKeyPath:@"crop" options:NSKeyValueObservingOptionNew context:nil];
-        
-        if (SHOW_PREVIEW) {
-            self.preview = [[UIImageView alloc] initWithFrame:CGRectMake(10,10,self.imageCropper.crop.size.width * 0.1, self.imageCropper.crop.size.height * 0.1)];
-            self.preview.image = [self.imageCropper getCroppedImage];
-            self.preview.clipsToBounds = YES;
-            self.preview.layer.borderColor = [[UIColor whiteColor] CGColor];
-            self.preview.layer.borderWidth = 2.0;
-            [self.cropView addSubview:self.preview];
-        }
+        CGRect imagePosition  = [self imagePositionInImageView: self.imageCropper];
+        [self.imageCropper setCropViewPosition:imagePosition.origin.x y:imagePosition.origin.y width:imagePosition.size.width height:imagePosition.size.height];
+
     }
     [self.adjustFitBtn setHidden:YES];
     [self.view sendSubviewToBack:self.cropView];
@@ -964,6 +960,92 @@
   
     
 }
+- (CGRect) imagePositionInImageView:(UIImageView*)imageView
+{
+    float x = 0.0f;
+    float y = 0.0f;
+    float w = 0.0f;
+    float h = 0.0f;
+    CGFloat ratio = 0.0f;
+    CGFloat horizontalRatio = imageView.frame.size.width / imageView.image.size.width;
+    CGFloat verticalRatio = imageView.frame.size.height / imageView.image.size.height;
+    
+    switch (imageView.contentMode) {
+        case UIViewContentModeScaleToFill:
+            w = imageView.frame.size.width;
+            h = imageView.frame.size.height;
+            break;
+        case UIViewContentModeScaleAspectFit:
+            // contents scaled to fit with fixed aspect. remainder is transparent
+            ratio = MIN(horizontalRatio, verticalRatio);
+            w = imageView.image.size.width*ratio;
+            h = imageView.image.size.height*ratio;
+            x = (horizontalRatio == ratio ? 0 : ((imageView.frame.size.width - w)/2));
+            y = (verticalRatio == ratio ? 0 : ((imageView.frame.size.height - h)/2));
+            break;
+        case UIViewContentModeScaleAspectFill:
+            // contents scaled to fill with fixed aspect. some portion of content may be clipped.
+            ratio = MAX(horizontalRatio, verticalRatio);
+            w = imageView.image.size.width*ratio;
+            h = imageView.image.size.height*ratio;
+            x = (horizontalRatio == ratio ? 0 : ((imageView.frame.size.width - w)/2));
+            y = (verticalRatio == ratio ? 0 : ((imageView.frame.size.height - h)/2));
+            break;
+        case UIViewContentModeCenter:
+            // contents remain same size. positioned adjusted.
+            w = imageView.image.size.width;
+            h = imageView.image.size.height;
+            x = (imageView.frame.size.width - w)/2;
+            y = (imageView.frame.size.height - h)/2;
+            break;
+        case UIViewContentModeTop:
+            w = imageView.image.size.width;
+            h = imageView.image.size.height;
+            x = (imageView.frame.size.width - w)/2;
+            break;
+        case UIViewContentModeBottom:
+            w = imageView.image.size.width;
+            h = imageView.image.size.height;
+            y = (imageView.frame.size.height - h);
+            x = (imageView.frame.size.width - w)/2;
+            break;
+        case UIViewContentModeLeft:
+            w = imageView.image.size.width;
+            h = imageView.image.size.height;
+            y = (imageView.frame.size.height - h)/2;
+            break;
+        case UIViewContentModeRight:
+            w = imageView.image.size.width;
+            h = imageView.image.size.height;
+            y = (imageView.frame.size.height - h)/2;
+            x = (imageView.frame.size.width - w);
+            break;
+        case UIViewContentModeTopLeft:
+            w = imageView.image.size.width;
+            h = imageView.image.size.height;
+            break;
+        case UIViewContentModeTopRight:
+            w = imageView.image.size.width;
+            h = imageView.image.size.height;
+            x = (imageView.frame.size.width - w);
+            break;
+        case UIViewContentModeBottomLeft:
+            w = imageView.image.size.width;
+            h = imageView.image.size.height;
+            y = (imageView.frame.size.height - h);
+            break;
+        case UIViewContentModeBottomRight:
+            w = imageView.image.size.width;
+            h = imageView.image.size.height;
+            y = (imageView.frame.size.height - h);
+            x = (imageView.frame.size.width - w);
+        default:
+            break;
+    }
+    return CGRectMake(x, y, w, h);
+}
+
+
 
 - (void)viewDidUnload
 {
@@ -973,7 +1055,7 @@
     // e.g. self.myOutlet = nil;
 }
 - (void)dealloc {
-    [self.imageCropper removeObserver:self forKeyPath:@"crop"];
+  //  [self.imageCropper removeObserver:self forKeyPath:@"crop"];
 }
 
 
