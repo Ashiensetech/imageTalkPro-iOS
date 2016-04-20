@@ -875,45 +875,7 @@
 
 - (void)stickerViewDidCustomButtonTap:(ZDStickerView *)sticker
 {
-//    CGFloat radians = atan2f(sticker.transform.b, sticker.transform.a);
-//    [sticker setHidden:YES];
-//    [((UIImageView*)sticker.contentView) becomeFirstResponder];
-//    UIImage *bottomImage = [self.cropperImage processedImage]; //background image
-//    UIImage *image       = NULL;
-//    switch (sticker.tag) {
-//        case 0:
-//            image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"glass"]];
-//            break;
-//        case 1:
-//           image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"sleepy"]];
-//            
-//            break;
-//        case 2:
-//              image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"WINK"]];
-//            break;
-//        case 3:
-//           image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"wink2"]];
-//            
-//            break;
-//            
-//        default:
-//            break;
-//    }
-//    
-//    CGSize newSize = CGSizeMake(bottomImage.size.width, bottomImage.size.height);
-//   
-//    UIGraphicsBeginImageContext( newSize );
-//    
-//    [bottomImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
-//   
-//    [image drawInRect:CGRectMake(sticker.frame.origin.x+5, sticker.frame.origin.y+5, sticker.frame.size.width-20, sticker.frame.size.height-20)
-//            blendMode:kCGBlendModeNormal alpha:1.0];
-//  
-//    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-//    
-//    UIGraphicsEndImageContext();
-//    self.image = newImage;
-//    [self.cropperImage setOriginalImage:self.image];
+
 }
 
 - (void)stickerViewDidBeginEditing:(ZDStickerView *)sticker{

@@ -3700,11 +3700,11 @@
                                         </connections>
                                     </collectionView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rJP-ur-IaU">
-                                        <rect key="frame" x="8" y="98" width="24" height="37"/>
+                                        <rect key="frame" x="8" y="118" width="13" height="17"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="37" id="K4m-hV-bvT"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="24" id="fPQ-ve-Mkb"/>
-                                            <constraint firstAttribute="width" constant="24" id="o7m-Ka-4fQ"/>
+                                            <constraint firstAttribute="height" constant="17" id="K4m-hV-bvT"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="13" id="fPQ-ve-Mkb"/>
+                                            <constraint firstAttribute="width" constant="13" id="o7m-Ka-4fQ"/>
                                         </constraints>
                                         <state key="normal" image="potrait.png"/>
                                         <connections>
@@ -3716,7 +3716,7 @@
                                 <constraints>
                                     <constraint firstItem="eVY-Pi-O0w" firstAttribute="top" secondItem="rck-Nu-tbd" secondAttribute="top" constant="17" id="4sy-eO-w5a"/>
                                     <constraint firstItem="eVY-Pi-O0w" firstAttribute="centerX" secondItem="5XQ-gG-kIT" secondAttribute="centerX" id="68e-8L-uSU"/>
-                                    <constraint firstAttribute="trailing" secondItem="rJP-ur-IaU" secondAttribute="trailing" constant="568" id="8qu-qT-0s6"/>
+                                    <constraint firstAttribute="trailing" secondItem="rJP-ur-IaU" secondAttribute="trailing" constant="579" id="8qu-qT-0s6"/>
                                     <constraint firstItem="eVY-Pi-O0w" firstAttribute="leading" secondItem="rck-Nu-tbd" secondAttribute="leading" constant="40" id="AEl-ES-x2T"/>
                                     <constraint firstItem="5XQ-gG-kIT" firstAttribute="leading" secondItem="rck-Nu-tbd" secondAttribute="leading" id="C50-eT-8dU"/>
                                     <constraint firstItem="5XQ-gG-kIT" firstAttribute="top" secondItem="rck-Nu-tbd" secondAttribute="top" id="OC5-uU-L6p"/>
