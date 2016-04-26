@@ -13,6 +13,7 @@
 #import "TagViewController.h"
 #import "ApiAccess.h"
 
+
 @interface SharePhotoViewController ()
 
 @end
@@ -44,10 +45,35 @@
     
   
     self.comment.delegate = self;
+    
+    UITapGestureRecognizer *fbTapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tabOnFbView:)];
+    tapped.numberOfTapsRequired = 1;
+    [self.facebookShare addGestureRecognizer:fbTapped];
    
     
     
 }
+
+-(void)tabOnFbView : (id) sender
+{
+     NSLog(@"Hellooooooo");
+    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+    photo.image = self.image;
+    photo.caption = self.comment.text;
+    photo.userGenerated = YES;
+    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+    content.photos = @[photo];
+    
+    [FBSDKShareDialog showFromViewController:self
+                                 withContent:content
+                                    delegate:self];
+    
+    
+}
+
+
+
+
 -(void)tabOnImage :(id) sender
 {
     NSLog(@"here");
@@ -248,7 +274,7 @@
 }
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     
-    NSLog(@"Hellooooooo");
+   
     
     NSUInteger oldLength = [textField.text length]; NSUInteger replacementLength = [string length]; NSUInteger rangeLength = range.length;
     

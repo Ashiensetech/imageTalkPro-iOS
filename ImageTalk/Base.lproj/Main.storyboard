@@ -3238,6 +3238,7 @@
                     <connections>
                         <outlet property="comment" destination="ipu-hK-mdM" id="wq8-L7-Eqz"/>
                         <outlet property="descriptionCharLabel" destination="Jlr-p7-WhP" id="kMx-4K-KSD"/>
+                        <outlet property="facebookShare" destination="sEt-w5-2ef" id="eZU-yG-OwZ"/>
                         <outlet property="loading" destination="4Zt-dT-2Um" id="BHy-6U-3pP"/>
                         <outlet property="locationLabel" destination="gAP-K8-hOF" id="vp3-gH-uD0"/>
                         <outlet property="mainImage" destination="aa4-By-M1n" id="zUn-yY-LmH"/>

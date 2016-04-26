@@ -24,6 +24,8 @@
 		DA187B871CB51E13002D42F1 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DA187B751CB51E13002D42F1 /* UIImageView+HighlightedWebCache.m */; };
 		DA187B881CB51E13002D42F1 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DA187B771CB51E13002D42F1 /* UIImageView+WebCache.m */; };
 		DA187B891CB51E13002D42F1 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = DA187B791CB51E13002D42F1 /* UIView+WebCacheOperation.m */; };
+		DA3D02191CCF579500F58226 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA3D02181CCF579500F58226 /* FBSDKCoreKit.framework */; };
+		DA3D021B1CCF5AE300F58226 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA3D021A1CCF5AE300F58226 /* FBSDKShareKit.framework */; };
 		DA5088061CB68057003F33B3 /* cross-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DA5088031CB68057003F33B3 /* cross-icon.png */; };
 		DA5088071CB68057003F33B3 /* enlarge.png in Resources */ = {isa = PBXBuildFile; fileRef = DA5088041CB68057003F33B3 /* enlarge.png */; };
 		DA5088081CB68057003F33B3 /* tick-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DA5088051CB68057003F33B3 /* tick-icon.png */; };
@@ -340,6 +342,8 @@
 		DA187B771CB51E13002D42F1 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		DA187B781CB51E13002D42F1 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		DA187B791CB51E13002D42F1 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		DA3D02181CCF579500F58226 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		DA3D021A1CCF5AE300F58226 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		DA5088031CB68057003F33B3 /* cross-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cross-icon.png"; sourceTree = SOURCE_ROOT; };
 		DA5088041CB68057003F33B3 /* enlarge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = enlarge.png; sourceTree = SOURCE_ROOT; };
 		DA5088051CB68057003F33B3 /* tick-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tick-icon.png"; sourceTree = SOURCE_ROOT; };
@@ -861,6 +865,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA3D021B1CCF5AE300F58226 /* FBSDKShareKit.framework in Frameworks */,
+				DA3D02191CCF579500F58226 /* FBSDKCoreKit.framework in Frameworks */,
 				FD9303B51CAD000300EF1B71 /* UIKit.framework in Frameworks */,
 				FD9303B31CACFFF300EF1B71 /* Foundation.framework in Frameworks */,
 				FD7815E61CA913900045D7AA /* CoreImage.framework in Frameworks */,
@@ -897,6 +903,8 @@
 		7D8EDC49BD2D1C21FB9C07A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DA3D021A1CCF5AE300F58226 /* FBSDKShareKit.framework */,
+				DA3D02181CCF579500F58226 /* FBSDKCoreKit.framework */,
 				FD9303B41CAD000300EF1B71 /* UIKit.framework */,
 				FD9303B21CACFFF300EF1B71 /* Foundation.framework */,
 				FD7815E51CA913900045D7AA /* CoreImage.framework */,
@@ -2462,6 +2470,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ImageTalk",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = ImageTalk/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
@@ -2483,6 +2492,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ImageTalk",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = ImageTalk/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
