@@ -11,7 +11,7 @@
 #import "JSONHTTPClient.h"
 #import "ApiAccess.h"
 
-@interface SharePhotoViewController : UIViewController <ApiAccessDelegate,UITextViewDelegate>
+@interface SharePhotoViewController : UIViewController <ApiAccessDelegate,UITextFieldDelegate>
 {
     NSUserDefaults *defaults;
     NSString *baseurl;
