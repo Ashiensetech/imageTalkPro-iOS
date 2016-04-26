@@ -42,7 +42,7 @@
     [self.comment addTarget:self action:@selector(updateLabelUsingContentsOfTextField:) forControlEvents:UIControlEventEditingChanged];
     
     
-    //[self textField:self.comment shouldChangeTextInRange:NSMakeRange(0,10) replacementText:@""];
+  
     self.comment.delegate = self;
    
     
@@ -256,7 +256,7 @@
     
     BOOL returnKey = [string rangeOfString: @"\n"].location != NSNotFound;
     
-    return newLength <= 10 || returnKey;
+    return newLength <= 250 || returnKey;
     
     
 }
