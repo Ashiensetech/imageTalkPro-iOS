@@ -11,7 +11,7 @@
 #import "JSONHTTPClient.h"
 #import "ApiAccess.h"
 
-@interface SharePhotoViewController : UIViewController <ApiAccessDelegate>
+@interface SharePhotoViewController : UIViewController <ApiAccessDelegate,UITextViewDelegate>
 {
     NSUserDefaults *defaults;
     NSString *baseurl;
@@ -27,5 +27,6 @@
 @property (strong, nonatomic) CreatePostResponse *response;
 @property (strong, nonatomic) Places *place;
 @property (strong, nonatomic) IBOutlet UILabel *locationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionCharLabel;
 
 @end

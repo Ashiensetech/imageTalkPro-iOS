@@ -39,6 +39,12 @@
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     [self.view addGestureRecognizer:singleTap];
     
+    [self.comment addTarget:self action:@selector(updateLabelUsingContentsOfTextField:) forControlEvents:UIControlEventEditingChanged];
+    
+    
+    [self textField:self.comment shouldChangeTextInRange:NSMakeRange(0, 10) replacementText:@""];
+    
+    //[self.comment shouldChangeTextInRange:[self.comment textRangeFromPosition:self.comment.beginningOfDocument toPosition: self.comment.endOfDocument]replacementText: @""];
     
     
 }
@@ -228,6 +234,29 @@
         data.type = 0;
         data.myObjectSelection = self.myObjectSelection;
         
+    }
+    
+}
+
+
+- (void)updateLabelUsingContentsOfTextField:(id)sender {
+    
+    self.descriptionCharLabel.text = [NSString stringWithFormat:@"250/%lu", ((UITextField *)sender).text.length];
+    
+    
+    
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    
+    if([[textField text] length] > 10)
+    {
+        return NO;
+    }
+    else
+    {
+        return YES;
     }
     
 }

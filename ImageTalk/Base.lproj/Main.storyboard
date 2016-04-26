@@ -2901,6 +2901,16 @@
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" text="250/0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="48" translatesAutoresizingMaskIntoConstraints="NO" id="Jlr-p7-WhP">
+                                        <rect key="frame" x="533" y="79" width="59" height="22"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="22" id="G9e-3i-wCV"/>
+                                            <constraint firstAttribute="width" constant="59" id="hhg-4K-VYj"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="0.75938727094240832" green="0.75938727094240832" blue="0.75938727094240832" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sui-lf-hCV">
                                         <rect key="frame" x="90" y="50" width="510" height="1"/>
                                         <color key="backgroundColor" red="0.84705882352941175" green="0.84313725490196079" blue="0.84705882352941175" alpha="1" colorSpace="calibratedRGB"/>
@@ -2921,8 +2931,10 @@
                                     <constraint firstItem="Sui-lf-hCV" firstAttribute="top" secondItem="TjA-jF-bCx" secondAttribute="top" constant="50" id="1kZ-Rp-Bmh"/>
                                     <constraint firstItem="ipu-hK-mdM" firstAttribute="leading" secondItem="aa4-By-M1n" secondAttribute="trailing" constant="10" id="3zD-Zj-dQu"/>
                                     <constraint firstAttribute="trailing" secondItem="c5a-zg-w6l" secondAttribute="trailing" id="CKA-tW-erS"/>
-                                    <constraint firstAttribute="height" constant="110" id="DH6-Xr-xxq"/>
+                                    <constraint firstItem="Jlr-p7-WhP" firstAttribute="trailing" secondItem="TjA-jF-bCx" secondAttribute="trailingMargin" id="Ee3-9p-SR9"/>
+                                    <constraint firstItem="c5a-zg-w6l" firstAttribute="top" secondItem="Jlr-p7-WhP" secondAttribute="bottom" constant="8" symbolic="YES" id="IoJ-5V-3xR"/>
                                     <constraint firstItem="ipu-hK-mdM" firstAttribute="top" secondItem="Sui-lf-hCV" secondAttribute="bottom" id="OIu-DM-W4D"/>
+                                    <constraint firstItem="Jlr-p7-WhP" firstAttribute="top" secondItem="Sui-lf-hCV" secondAttribute="bottom" constant="28" id="QsP-O6-4ps"/>
                                     <constraint firstItem="c5a-zg-w6l" firstAttribute="leading" secondItem="TjA-jF-bCx" secondAttribute="leading" id="RNf-bX-sep"/>
                                     <constraint firstAttribute="bottom" secondItem="c5a-zg-w6l" secondAttribute="bottom" id="WHD-Fa-Uiw"/>
                                     <constraint firstAttribute="bottom" secondItem="aa4-By-M1n" secondAttribute="bottom" constant="20" id="XeC-RQ-8bz"/>
@@ -3225,6 +3237,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="comment" destination="ipu-hK-mdM" id="wq8-L7-Eqz"/>
+                        <outlet property="descriptionCharLabel" destination="Jlr-p7-WhP" id="kMx-4K-KSD"/>
                         <outlet property="loading" destination="4Zt-dT-2Um" id="BHy-6U-3pP"/>
                         <outlet property="locationLabel" destination="gAP-K8-hOF" id="vp3-gH-uD0"/>
                         <outlet property="mainImage" destination="aa4-By-M1n" id="zUn-yY-LmH"/>
@@ -7964,16 +7977,16 @@
         <image name="web" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="EDF-RG-T9N"/>
-        <segue reference="6GA-wf-SNi"/>
-        <segue reference="m7I-pa-qFJ"/>
-        <segue reference="Cos-Ov-8c2"/>
-        <segue reference="DJ5-3f-IH5"/>
-        <segue reference="0HS-LD-tJf"/>
-        <segue reference="uHW-24-y3y"/>
-        <segue reference="0Ay-17-uwa"/>
         <segue reference="TmO-XD-ODI"/>
         <segue reference="SwU-sA-rJ9"/>
+        <segue reference="EFU-E8-vhl"/>
+        <segue reference="Obc-pZ-my3"/>
+        <segue reference="0HS-LD-tJf"/>
+        <segue reference="0Ay-17-uwa"/>
+        <segue reference="m7I-pa-qFJ"/>
+        <segue reference="Cos-Ov-8c2"/>
+        <segue reference="6GA-wf-SNi"/>
+        <segue reference="DJ5-3f-IH5"/>
         <segue reference="jOb-ZT-cu4"/>
         <segue reference="DOh-Uv-lDf"/>
     </inferredMetricsTieBreakers>
