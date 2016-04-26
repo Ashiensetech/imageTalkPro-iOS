@@ -10,8 +10,11 @@
 #import "CreatePostResponse.h"
 #import "JSONHTTPClient.h"
 #import "ApiAccess.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
 
-@interface SharePhotoViewController : UIViewController <ApiAccessDelegate,UITextFieldDelegate>
+
+@interface SharePhotoViewController : UIViewController <ApiAccessDelegate,UITextFieldDelegate,FBSDKSharingDelegate>
 {
     NSUserDefaults *defaults;
     NSString *baseurl;
@@ -28,5 +31,6 @@
 @property (strong, nonatomic) Places *place;
 @property (strong, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionCharLabel;
+@property (weak, nonatomic) IBOutlet UIView *facebookShare;
 
 @end
