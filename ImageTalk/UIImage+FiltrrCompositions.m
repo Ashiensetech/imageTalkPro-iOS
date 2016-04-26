@@ -54,9 +54,11 @@
     
     return newImage;
     
+    
 }
 
 -(id) e2 {
+    
     
     RGBA minrgb, maxrgb;
     
@@ -358,17 +360,18 @@
     minrgb.blue = 10;
     minrgb.alpha = 0.2;
     
-    maxrgb.red = 130;
-    maxrgb.green = 190;
-    maxrgb.blue = 230;
+    maxrgb.red = 127;
+    maxrgb.green = 187;
+    maxrgb.blue = 227;
     maxrgb.alpha =0.2;
     
-    topImage = [[topImage tintWithMinRGB:minrgb MaxRGB:maxrgb] saturationByFactor:1.2];
+    topImage = [[[[topImage tintWithMinRGB:minrgb MaxRGB:maxrgb] contrastByFactor:0.60]saturationByFactor:0.5 ]brightnessByFactor:1.2] ;
     
-    UIImage *newImage = [[[self adjustRedChannel:0.1 GreenChannel:0.7 BlueChannel:0.4] contrastByFactor:1.2]saturationByFactor:1.35 ] ;
+    UIImage *newImage = [self adjustRedChannel:0.2 GreenChannel:0.3 BlueChannel:0.2]  ;
     newImage = [newImage multiply:topImage];
     
     return newImage;
 }
+
 
 @end

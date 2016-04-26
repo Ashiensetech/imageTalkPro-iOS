@@ -122,6 +122,7 @@
     [self.orientationBtn setHidden:YES];
     // self.orientationBtn.frame = CGRectMake(self.view.center.x, self.view.center.y+25, 25, 45);
    // [self.view addSubview:_orientationBtn];
+  
     
 }
 - (IBAction)orientationChangeAction:(id)sender {
@@ -264,7 +265,7 @@
         // Now, draw the rotated/scaled image into the context
         CGContextScaleCTM(bitmap, 1.0, -1.0);
         
-        CGContextDrawImage(bitmap, CGRectMake(-self.image.size.width / 2, -self.image.size.height / 2, self.image.size.width+150, self.image.size.height+150), [self.image CGImage]);
+        CGContextDrawImage(bitmap, CGRectMake(-self.image.size.width / 2, -self.image.size.height / 2, self.image.size.width+50, self.image.size.height+50), [self.image CGImage]);
         UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
         self.rotatedImage = newImage;
         UIGraphicsEndImageContext();
@@ -392,204 +393,62 @@
   
     
     if (self.type == 0) {
+        UIImage * convertImage = self.image;
     
         switch (indexPath.row) {
             case 0:
-                if (self.isAspect)
-                {
-                    self.image = self.imageHolder;
-                    [self.cropperImage setOriginalImage:[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)]];
-                }
-                else
-                {
-                    self.image = self.imageHolder;
-                    [self.cropperImage setOriginalImage:self.image];
-                }
+                convertImage= self.imageHolder;
                 break;
             case 1:
-                if (self.isAspect)
-                {
-                    self.image = [self.image e1];
-                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e1]];
-                }
-                else
-                {
-                    self.image = [self.image e1];
-                    [self.cropperImage setOriginalImage:[self.image e1]];
-                    
-                }
-    
+                convertImage = [self.image e1];
                 break;
             case 2:
-                if (self.isAspect)
-                {
-                    self.image = [self.image e2];
-                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e2]];
-                }
-                else
-                {
-                    self.image = [self.image e2];
-                    [self.cropperImage setOriginalImage:[self.image e2]];
-                    
-                }
-                
+             
+                convertImage = [self.image e2];
                 break;
             case 3:
-                if (self.isAspect)
-                {
-                    self.image = [self.image e3];
-                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e3]];
-                }
-                else
-                {
-                    self.image = [self.image e3];
-                    [self.cropperImage setOriginalImage:[self.image e3]];
-                    
-                }
-                
+                convertImage = [self.image e3];
                 break;
             case 4:
-                if (self.isAspect)
-                {
-                    self.image = [self.image e4];
-                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e4]];
-                }
-                else
-                {
-                    self.image = [self.image e4];
-                    [self.cropperImage setOriginalImage:[self.image e4]];
-                    
-                }
-                
+               convertImage= [self.image e4];
                 break;
             case 5:
-                if (self.isAspect)
-                {
-                    self.image = [self.image e5];
-                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e5]];
-                }
-                else
-                {
-                    self.image = [self.image e5];
-                    [self.cropperImage setOriginalImage:[self.image e5]];
-                    
-                }
-                
+             
+                convertImage = [self.image e5];
                 break;
             case 6:
-                if (self.isAspect)
-                {
-                    self.image = [self.image e6];
-                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e6]];
-                }
-                else
-                {
-                    self.image = [self.image e6];
-                    [self.cropperImage setOriginalImage:[self.image e6]];
-                    
-                }
-                
+               
+                convertImage = [self.image e6];
                 break;
             case 7:
-                if (self.isAspect)
-                {
-                    self.image = [self.image e7];
-                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e7]];
-                }
-                else
-                {
-                    self.image = [self.image e7];
-                    [self.cropperImage setOriginalImage:[self.image e7]];
-                    
-                }
-                
+              convertImage = [self.image e7];
                 break;
             case 8:
-                if (self.isAspect)
-                {
-                    self.image = [self.image e8];
-                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e8]];
-                }
-                else
-                {
-                    self.image = [self.image e8];
-                    [self.cropperImage setOriginalImage:[self.image e8]];
-                    
-                }
-                
+                convertImage = [self.image e8];
                 break;
             case 9:
-                if (self.isAspect)
-                {
-                    self.image = [self.image e9];
-                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e9]];
-                }
-                else
-                {
-                    self.image = [self.image e9];
-                    [self.cropperImage setOriginalImage:[self.image e9]];
-                    
-                }
-                
+                convertImage = [self.image e9];
                 break;
             case 10:
-                if (self.isAspect)
-                {
-                    self.image = [self.image e10];
-                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e10]];
-                }
-                else
-                {
-                    self.image = [self.image e10];
-                    [self.cropperImage setOriginalImage:[self.image e10]];
-                    
-                }
-                
+                convertImage= [self.image e10];
                 break;
             case 11:
-                 if (self.isAspect)
-                 {
-                     self.image = [self.image e11];
-                     [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e11]];
-                 }
-                 else
-                 {
-                     self.image = [self.image e11];
-                     [self.cropperImage setOriginalImage:[self.image e11]];
-                     
-                 }
-                 
-                 break;
+                convertImage = [self.image e11];
+                break;
             case 12:
-                if (self.isAspect)
-                {
-                    self.image = [self.image e12];
-                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e12]];
-                }
-                else
-                {
-                    self.image = [self.image e12];
-                    [self.cropperImage setOriginalImage:[self.image e12]];
-                    
-                }
-                
+                convertImage = [self.image e12];
                 break;
             case 13:
-                if (self.isAspect)
-                {
-                    self.image = [self.image e13];
-                    [self.cropperImage setOriginalImage:[[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] e13]];
-                }
-                else
-                {
-                    self.image = [self.image e13];
-                    [self.cropperImage setOriginalImage:[self.image e13]];
-                    
-                }
+                
+                   convertImage = [self.image e13];
                 break;
             default:
                 break;
-                
+        }
+        if(self.isAspect){
+        [self.cropperImage setOriginalImage:[convertImage scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)]];
+        }else{
+            [self.cropperImage setOriginalImage:convertImage ];
         }
        
         
@@ -807,7 +666,7 @@
         SharePhotoViewController *data = [segue destinationViewController];
       //  data.image = self.body.image;
         if(self.type==1){
-            data.image = [self.imageCropper getCroppedImage];
+            data.image = [[self.imageCropper getCroppedImage] scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)];
         }else if(stickerArray.count>0){
             data.image = self.image;
             
@@ -825,7 +684,7 @@
         ProfileViewController *data = (ProfileViewController *)([navController viewControllers][0]);
         
         if(self.type==1){
-            data.pic = [self.imageCropper getCroppedImage];
+            data.pic = [[self.imageCropper getCroppedImage] scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)];
         }else if(stickerArray.count>0){
             data.pic = self.image;
             
