@@ -126,7 +126,7 @@
     maxrgb.green = 170;
     maxrgb.blue = 210;
     
-    return [[[self saturationByFactor:0.4] contrastByFactor:0.75] tintWithMinRGB:minrgb MaxRGB:maxrgb];
+    return [[[self saturationByFactor:0.4] contrastByFactor:0.85] tintWithMinRGB:minrgb MaxRGB:maxrgb];
 }
 
 - (id) e7 { 
@@ -164,7 +164,7 @@
 
 - (id) e9 { 
     
-    UIImage *topImage = [self duplicate];
+  /*  UIImage *topImage = [self duplicate];
     
     DataField shiftIn = DataFieldMake(2, 3, 0, 1);
     DataField shiftOut = DataFieldMake(3, 0, 1, 2);
@@ -241,6 +241,28 @@
         
         return retVal;
     }];
+    
+    return newImage;*/
+    
+    //H-17, S-43, B-100, R-255, G-176, B-145
+    
+    UIImage *topImage = [self duplicate];
+    RGBA minrgb, maxrgb;
+    
+    minrgb.red = 20;
+    minrgb.green = 35;
+    minrgb.blue = 10;
+    minrgb.alpha = 0.3;
+    
+    maxrgb.red = 255;
+    maxrgb.green = 176;
+    maxrgb.blue = 145;
+    maxrgb.alpha =0.3;
+    
+    topImage = [[[[topImage tintWithMinRGB:minrgb MaxRGB:maxrgb] contrastByFactor:0.4]saturationByFactor:0.43 ]brightnessByFactor:1.0] ;
+    
+    UIImage *newImage = [self adjustRedChannel:0.2 GreenChannel:0.3 BlueChannel:0.2]  ;
+    newImage = [newImage multiply:topImage];
     
     return newImage;
     
