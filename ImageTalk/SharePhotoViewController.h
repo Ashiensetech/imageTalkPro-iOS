@@ -33,6 +33,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *descriptionCharLabel;
 @property (weak, nonatomic) IBOutlet UIView *facebookShare;
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionData;
-
 @property (strong,nonatomic)  NSMutableArray *smilyObject;
+@property (nonatomic,assign) NSString *wallPostMood;
 @end
