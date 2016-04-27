@@ -168,7 +168,10 @@
 
 - (IBAction)effect:(id)sender {
     if(self.type ==1){
+        
         self.image = [self.imageCropper getCroppedImage];
+        self.thumbImage = [self.image scaleImageToSize:CGSizeMake(80.0, 80.0)];
+        [self setCollectionData];
         [self.imageCropper removeFromSuperview];
         [self.cropView addSubview:self.cropperImage];
         [self.cropperImage setOriginalImage:self.image];
@@ -290,7 +293,11 @@
 -(void) viewDidAppear:(BOOL)animated
 {
     [[ApiAccess getSharedInstance] setDelegate:self];
+    [self setCollectionData];
     
+
+}
+-(void) setCollectionData{
     self.effectObject = [[NSMutableArray alloc] initWithObjects:
                          [NSDictionary dictionaryWithObjectsAndKeys:@"Original",@"title",self.thumbImage,@"image", nil],
                          
@@ -320,7 +327,7 @@
                        nil];
     
     [self.collectionData reloadData];
-
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -726,6 +733,7 @@
 #pragma mark - BJImageCropper
 
 - (void)updateDisplay {
+    
     if (SHOW_PREVIEW) {
         self.preview.image = [self.imageCropper getCroppedImage];
         self.preview.frame = CGRectMake(10,10,self.imageCropper.crop.size.width * 0.1, self.imageCropper.crop.size.height * 0.1);
@@ -734,6 +742,7 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([object isEqual:self.imageCropper] && [keyPath isEqualToString:@"crop"]) {
+        NSLog(@"Hello");
         [self updateDisplay];
     }
 }

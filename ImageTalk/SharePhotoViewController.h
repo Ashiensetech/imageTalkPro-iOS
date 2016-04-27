@@ -14,7 +14,7 @@
 #import <FBSDKShareKit/FBSDKShareKit.h>
 
 
-@interface SharePhotoViewController : UIViewController <ApiAccessDelegate,UITextFieldDelegate,FBSDKSharingDelegate>
+@interface SharePhotoViewController : UIViewController <ApiAccessDelegate,UITextFieldDelegate,FBSDKSharingDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 {
     NSUserDefaults *defaults;
     NSString *baseurl;
@@ -32,5 +32,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionCharLabel;
 @property (weak, nonatomic) IBOutlet UIView *facebookShare;
+@property (strong, nonatomic) IBOutlet UICollectionView *collectionData;
 
+@property (strong,nonatomic)  NSMutableArray *smilyObject;
 @end
