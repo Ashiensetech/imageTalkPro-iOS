@@ -36,11 +36,12 @@
     UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tabOnImage:)];
     tapped.numberOfTapsRequired = 1;
     [self.mainImage addGestureRecognizer:tapped];
+     tapped.cancelsTouchesInView = NO;
     
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     [self.view addGestureRecognizer:singleTap];
-    
+     singleTap.cancelsTouchesInView = NO;
     [self.comment addTarget:self action:@selector(updateLabelUsingContentsOfTextField:) forControlEvents:UIControlEventEditingChanged];
     
     
@@ -50,11 +51,13 @@
     UITapGestureRecognizer *fbTapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tabOnFbView:)];
     tapped.numberOfTapsRequired = 1;
     [self.facebookShare addGestureRecognizer:fbTapped];
+    fbTapped.cancelsTouchesInView = NO;
    
     self.collectionData.delegate = self;
     self.collectionData.dataSource = self;
     UICollectionViewFlowLayout *layout = (id) self.collectionData.collectionViewLayout;
     layout.itemSize = self.collectionData.frame.size;
+     self.collectionData.userInteractionEnabled = YES;
   
    
     
@@ -93,6 +96,7 @@
     
     UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tabOnFullImage:)];
     tapped.numberOfTapsRequired = 1;
+    tapped.cancelsTouchesInView = NO;
     [fullImage addGestureRecognizer:tapped];
 
 
@@ -149,37 +153,37 @@
     }
     
     self.smilyObject =[[NSMutableArray alloc]initWithObjects:
-                       [NSDictionary dictionaryWithObjectsAndKeys:@"Angry",@"title",[[UIImage imageNamed:@"angryL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
-                       [NSDictionary dictionaryWithObjectsAndKeys:@"Beauty",@"title",[[UIImage imageNamed:@"beautyL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
-                       [NSDictionary dictionaryWithObjectsAndKeys:@"Boozing",@"title",[[UIImage imageNamed:@"boozingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
-                       [NSDictionary dictionaryWithObjectsAndKeys:@"Chilling",@"title",[[UIImage imageNamed:@"chillingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
-                       [NSDictionary dictionaryWithObjectsAndKeys:@"Coding",@"title",[[UIImage imageNamed:@"codingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
-                       [NSDictionary dictionaryWithObjectsAndKeys:@"Coffee",@"title",[[UIImage imageNamed:@"coffeeL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
-                       [NSDictionary dictionaryWithObjectsAndKeys:@"Confused",@"title",[[UIImage imageNamed:@"confusedL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
-                       [NSDictionary dictionaryWithObjectsAndKeys:@"Cooking",@"title",[[UIImage imageNamed:@"cookingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
-                        [NSDictionary dictionaryWithObjectsAndKeys:@"Driving",@"title",[[UIImage imageNamed:@"drivingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
-                        [NSDictionary dictionaryWithObjectsAndKeys:@"Eating",@"title",[[UIImage imageNamed:@"eatingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
-                       [NSDictionary dictionaryWithObjectsAndKeys:@"Gaming",@"title",[[UIImage imageNamed:@"GamingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
-                       [NSDictionary dictionaryWithObjectsAndKeys:@"Hangover",@"title",[[UIImage imageNamed:@"hangoverL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
                        [NSDictionary dictionaryWithObjectsAndKeys:@"Happy",@"title",[[UIImage imageNamed:@"happyL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
                        [NSDictionary dictionaryWithObjectsAndKeys:@"In Love",@"title",[[UIImage imageNamed:@"inloveL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
-                       [NSDictionary dictionaryWithObjectsAndKeys:@"Insomnia",@"title",[[UIImage imageNamed:@"insomiaL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
-                       [NSDictionary dictionaryWithObjectsAndKeys:@"Late",@"title",[[UIImage imageNamed:@"lateL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Confused",@"title",[[UIImage imageNamed:@"confusedL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Sad",@"title",[[UIImage imageNamed:@"sadL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Beauty",@"title",[[UIImage imageNamed:@"beautyL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Surprised",@"title",[[UIImage imageNamed:@"surpriseL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Angry",@"title",[[UIImage imageNamed:@"angryL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Sleepy",@"title",[[UIImage imageNamed:@"sleepyL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
                        [NSDictionary dictionaryWithObjectsAndKeys:@"Love",@"title",[[UIImage imageNamed:@"loveL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Hangover",@"title",[[UIImage imageNamed:@"hangoverL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Driving",@"title",[[UIImage imageNamed:@"drivingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Chilling",@"title",[[UIImage imageNamed:@"chillingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Eating",@"title",[[UIImage imageNamed:@"eatingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Workout",@"title",[[UIImage imageNamed:@"workoutL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Movie",@"title",[[UIImage imageNamed:@"movieL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Insomnia",@"title",[[UIImage imageNamed:@"insomiaL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Boozing",@"title",[[UIImage imageNamed:@"boozingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Coding",@"title",[[UIImage imageNamed:@"codingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Coffee",@"title",[[UIImage imageNamed:@"coffeeL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Music",@"title",[[UIImage imageNamed:@"musicL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Cooking",@"title",[[UIImage imageNamed:@"cookingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Gaming",@"title",[[UIImage imageNamed:@"GamingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Late",@"title",[[UIImage imageNamed:@"lateL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
                        [NSDictionary dictionaryWithObjectsAndKeys:@"Making",@"title",[[UIImage imageNamed:@"makingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
                        [NSDictionary dictionaryWithObjectsAndKeys:@"Middle",@"title",[[UIImage imageNamed:@"middleL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
-                       [NSDictionary dictionaryWithObjectsAndKeys:@"Movie",@"title",[[UIImage imageNamed:@"movieL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
-                       [NSDictionary dictionaryWithObjectsAndKeys:@"Music",@"title",[[UIImage imageNamed:@"musicL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
                        [NSDictionary dictionaryWithObjectsAndKeys:@"Read",@"title",[[UIImage imageNamed:@"readL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
-                       [NSDictionary dictionaryWithObjectsAndKeys:@"Sad",@"title",[[UIImage imageNamed:@"sadL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
                        [NSDictionary dictionaryWithObjectsAndKeys:@"Shopping",@"title",[[UIImage imageNamed:@"ShoppingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
                        [NSDictionary dictionaryWithObjectsAndKeys:@"Singing",@"title",[[UIImage imageNamed:@"singingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
-                       [NSDictionary dictionaryWithObjectsAndKeys:@"Sleepy",@"title",[[UIImage imageNamed:@"sleepyL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
                        [NSDictionary dictionaryWithObjectsAndKeys:@"Smoking",@"title",[[UIImage imageNamed:@"smokingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
-                       [NSDictionary dictionaryWithObjectsAndKeys:@"Surprised",@"title",[[UIImage imageNamed:@"surpriseL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
                        [NSDictionary dictionaryWithObjectsAndKeys:@"Stuck In Traffic",@"title",[[UIImage imageNamed:@"trafficL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
-                       [NSDictionary dictionaryWithObjectsAndKeys:@"Workout",@"title",[[UIImage imageNamed:@"workoutL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
-                      // [NSDictionary dictionaryWithObjectsAndKeys:@"Wink 2",@"title",[UIImage imageNamed:@"wink2"],@"image", nil],
+                       
                        nil];
     
     [self.collectionData reloadData];
@@ -189,7 +193,7 @@
  
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Added");
+   
     static NSString *CellIdentifier = @"photoCell";
     EffectsCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
     
@@ -202,7 +206,17 @@
     
     return cell;
 }
-
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+//    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+//    cell.backgroundColor = [UIColor blueColor];
+    
+   
+    NSMutableDictionary *te =[self.smilyObject objectAtIndex:indexPath.row];
+    self.wallPostMood =[te objectForKey:@"title"];
+     NSLog(@"%@",[te objectForKey:@"title"] );
+   // self.wallPostMood =[self.smilyObject objectAtIndex:indexPath.row];
+}
 - (void)handleSingleTap:(UITapGestureRecognizer *)sender
 {
     [self.comment resignFirstResponder];
@@ -246,10 +260,11 @@
                                 @"type" : @"0",
                                 @"tagged_list" : taglist,
                                 @"places" : (self.place)?self.place.toJSONString:@"",
+                                @"wall_post_mood":[self.wallPostMood length ]!=0 ?self.wallPostMood:@"",
                                 @"Content-Type" : @"charset=utf-8",
                                 };
+    NSLog(@"%@",inventory);
     
-   
     [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/create" params:inventory tag:@"getPhoto"];
 
     
