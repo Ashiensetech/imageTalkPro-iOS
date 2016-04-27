@@ -12,7 +12,8 @@
 #import "Contact.h"
 #import "TagViewController.h"
 #import "ApiAccess.h"
-
+#import "EffectsCollectionViewCell.h"
+#import "UIImage+Scale.h"
 
 @interface SharePhotoViewController ()
 
@@ -50,23 +51,29 @@
     tapped.numberOfTapsRequired = 1;
     [self.facebookShare addGestureRecognizer:fbTapped];
    
-    
+    self.collectionData.delegate = self;
+    self.collectionData.dataSource = self;
+    UICollectionViewFlowLayout *layout = (id) self.collectionData.collectionViewLayout;
+    layout.itemSize = self.collectionData.frame.size;
+  
+   
     
 }
 
+
 -(void)tabOnFbView : (id) sender
 {
-     NSLog(@"Hellooooooo");
-    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
-    photo.image = self.image;
-    photo.caption = self.comment.text;
-    photo.userGenerated = YES;
-    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
-    content.photos = @[photo];
-    
-    [FBSDKShareDialog showFromViewController:self
-                                 withContent:content
-                                    delegate:self];
+//     NSLog(@"Hellooooooo");
+//    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+//    photo.image = self.image;
+//    photo.caption = self.comment.text;
+//    photo.userGenerated = YES;
+//    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+//    content.photos = @[photo];
+//    
+//    [FBSDKShareDialog showFromViewController:self
+//                                 withContent:content
+//                                    delegate:self];
     
     
 }
@@ -140,6 +147,60 @@
     {
         self.tagLabel.text = @"Tag Friends";
     }
+    
+    self.smilyObject =[[NSMutableArray alloc]initWithObjects:
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Angry",@"title",[[UIImage imageNamed:@"angryL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Beauty",@"title",[[UIImage imageNamed:@"beautyL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Boozing",@"title",[[UIImage imageNamed:@"boozingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Chilling",@"title",[[UIImage imageNamed:@"chillingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Coding",@"title",[[UIImage imageNamed:@"codingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Coffee",@"title",[[UIImage imageNamed:@"coffeeL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Confused",@"title",[[UIImage imageNamed:@"confusedL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Cooking",@"title",[[UIImage imageNamed:@"cookingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                        [NSDictionary dictionaryWithObjectsAndKeys:@"Driving",@"title",[[UIImage imageNamed:@"drivingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                        [NSDictionary dictionaryWithObjectsAndKeys:@"Eating",@"title",[[UIImage imageNamed:@"eatingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Gaming",@"title",[[UIImage imageNamed:@"GamingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Hangover",@"title",[[UIImage imageNamed:@"hangoverL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Happy",@"title",[[UIImage imageNamed:@"happyL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"In Love",@"title",[[UIImage imageNamed:@"inloveL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Insomnia",@"title",[[UIImage imageNamed:@"insomiaL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Late",@"title",[[UIImage imageNamed:@"lateL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Love",@"title",[[UIImage imageNamed:@"loveL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Making",@"title",[[UIImage imageNamed:@"makingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Middle",@"title",[[UIImage imageNamed:@"middleL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Movie",@"title",[[UIImage imageNamed:@"movieL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Music",@"title",[[UIImage imageNamed:@"musicL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Read",@"title",[[UIImage imageNamed:@"readL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Sad",@"title",[[UIImage imageNamed:@"sadL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Shopping",@"title",[[UIImage imageNamed:@"ShoppingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Singing",@"title",[[UIImage imageNamed:@"singingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Sleepy",@"title",[[UIImage imageNamed:@"sleepyL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Smoking",@"title",[[UIImage imageNamed:@"smokingL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Surprised",@"title",[[UIImage imageNamed:@"surpriseL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Stuck In Traffic",@"title",[[UIImage imageNamed:@"trafficL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"Workout",@"title",[[UIImage imageNamed:@"workoutL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
+                      // [NSDictionary dictionaryWithObjectsAndKeys:@"Wink 2",@"title",[UIImage imageNamed:@"wink2"],@"image", nil],
+                       nil];
+    
+    [self.collectionData reloadData];
+}
+- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
+    return self.smilyObject.count;
+ 
+}
+- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"Added");
+    static NSString *CellIdentifier = @"photoCell";
+    EffectsCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+   
+
+    cell.image.image = [[[self.smilyObject objectAtIndex:indexPath.row] valueForKey:@"image"]scaleToSize:CGSizeMake(50.0, 50.0)];
+    
+    cell.title.text = [[self.smilyObject objectAtIndex:indexPath.row] valueForKey:@"title"];
+ 
+    
+    return cell;
 }
 
 - (void)handleSingleTap:(UITapGestureRecognizer *)sender
@@ -286,6 +347,39 @@
     
     
 }
+
+#pragma mark - Collection view
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+
+
+
+#pragma mark Collection view layout things
+// Layout: Set cell size
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSLog(@"SETTING SIZE FOR ITEM AT INDEX %d", indexPath.row);
+    CGSize mElementSize = CGSizeMake(70, 70);
+    return mElementSize;
+}
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return 2.0;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return 2.0;
+}
+
+// Layout: Set Edges
+- (UIEdgeInsets)collectionView:
+(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    // return UIEdgeInsetsMake(0,8,0,8);  // top, left, bottom, right
+    return UIEdgeInsetsMake(0,0,0,0);  // top, left, bottom, right
+}
+
 
 
 @end
