@@ -402,11 +402,163 @@
    
         
     NSLog(@"wallpostmood: %@",data.wallPostMood);
+    if([data.wallPostMood isEqual:@""])
+    {
     
     [cell.profilePic sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.owner.user.picPath.original.path]]
                        placeholderImage:nil];
-    
- 
+    }
+    else if([data.wallPostMood isEqual:@"Angry"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"angryL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Beauty"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"beautyL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Boozing"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"boozingL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Chilling"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"chillingL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Coding"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"codingL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Coffee"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"coffeeL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Confused"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"confusedL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Cooking"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"cookingL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Driving"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"drivingL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Eating"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"eatingL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Gaming"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"GamingL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Hangover"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"hangoverL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Happy"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"happyL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"In Love"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"inloveL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Insomnia"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"insomiaL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Late"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"lateL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Love"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"loveL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Making"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"makingL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Middle"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"middleL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Movie"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"movieL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Music"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"musicL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Read"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"readL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Sad"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"sadL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Shopping"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"ShoppingL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Singing"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"singingL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Sleepy"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"sleepyL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Smoking"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"smokingL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Surprised"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"surprisedL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Stuck In Traffic"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"trafficL.png"];
+        
+    }
+    else if([data.wallPostMood isEqual:@"Workout"])
+    {
+        cell.profilePic.image = [UIImage imageNamed:@"workoutL.png"];
+        
+    }
+
    
     [cell.image sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.picPath]]
                  ];
@@ -606,6 +758,7 @@
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:alertView.tag inSection:0];
             WallPost *data = self.myObject[indexPath.row];
             
+            NSLog(@"post id: %d",data.id);
             NSDictionary *inventory = @{ @"wall_post_id" : [NSString stringWithFormat:@"%d",data.id] };
             if (data.owner.id == self.app.authCredential.id) {
             [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/delete" params:inventory tag:@"deleteData" index:alertView.tag];
