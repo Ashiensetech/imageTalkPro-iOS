@@ -22,6 +22,7 @@
 @property (assign, nonatomic) int  id;
 @property (assign, nonatomic) int  type;
 @property (strong, nonatomic) NSString  *description;
+@property (strong, nonatomic) NSString  *wallPostMood;
 @property (strong, nonatomic) AppCredential  *owner;
 @property (strong, nonatomic) NSString  *picPath;
 @property (strong, nonatomic) NSArray <AppCredential>  *tagList;

@@ -401,7 +401,7 @@
     
    
         
-    
+    NSLog(@"wallpostmood: %@",data.wallPostMood);
     
     [cell.profilePic sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.owner.user.picPath.original.path]]
                        placeholderImage:nil];
@@ -557,7 +557,7 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
     WallPost *data = self.myObject[indexPath.row];
     
-    if (data.owner.id == self.app.authCredential.id) {
+ //   if (data.owner.id == self.app.authCredential.id) {
         self.alertDelete = [[UIAlertView alloc] initWithTitle:@"Delete Picture"
                                                         message:@"Delete the Picture from your timeline"
                                                        delegate:self
@@ -565,7 +565,7 @@
                                               otherButtonTitles:@"Delete", nil];
         self.alertDelete.tag = sender.tag;
         [self.alertDelete show];
-    }
+   // }
     
    
     
@@ -607,9 +607,13 @@
             WallPost *data = self.myObject[indexPath.row];
             
             NSDictionary *inventory = @{ @"wall_post_id" : [NSString stringWithFormat:@"%d",data.id] };
-            
+            if (data.owner.id == self.app.authCredential.id) {
             [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/delete" params:inventory tag:@"deleteData" index:alertView.tag];
-
+            }
+            else
+            {
+                [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/hide" params:inventory tag:@"deleteData" index:alertView.tag];
+            }
             
         }
     }

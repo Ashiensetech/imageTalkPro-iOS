@@ -428,10 +428,10 @@
                         <viewControllerLayoutGuide type="bottom" id="Rgt-9b-uhd"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="PFI-qU-qvm">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fWx-sJ-nST">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fWx-sJ-nST">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mba-ya-oOn">
@@ -904,7 +904,7 @@
                                     <constraint firstAttribute="centerX" secondItem="EI9-ep-y1e" secondAttribute="centerX" id="xTG-hO-SVd"/>
                                 </constraints>
                             </scrollView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="432-WA-GZg">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="432-WA-GZg">
                                 <rect key="frame" x="4" y="0.0" width="596" height="536"/>
                                 <color key="backgroundColor" red="0.92156862750000001" green="0.36078431370000003" blue="0.058823529409999999" alpha="0.48999999999999999" colorSpace="calibratedRGB"/>
                                 <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -974,10 +974,10 @@
                         <viewControllerLayoutGuide type="bottom" id="GQm-dl-7QU"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vx6-nj-6DP">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2fq-ZY-keG">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2fq-ZY-keG">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                 <subviews>
                                     <searchBar contentMode="redraw" placeholder="Search" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gsn-M3-krO">
@@ -998,7 +998,7 @@
                                     <constraint firstAttribute="height" constant="50" id="y76-Y7-i1z"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="12I-oY-Quj">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="12I-oY-Quj">
                                 <rect key="frame" x="0.0" y="50" width="600" height="486"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="70" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -4120,10 +4120,10 @@
                         <viewControllerLayoutGuide type="bottom" id="jNf-VT-t2H"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="88v-4Y-gLE">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EDd-KF-Wxl">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EDd-KF-Wxl">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="0ha-SL-64K">
@@ -7978,17 +7978,17 @@
         <image name="web" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="TmO-XD-ODI"/>
-        <segue reference="SwU-sA-rJ9"/>
-        <segue reference="EFU-E8-vhl"/>
+        <segue reference="7WC-db-158"/>
         <segue reference="Obc-pZ-my3"/>
+        <segue reference="7rK-5W-S99"/>
+        <segue reference="TmO-XD-ODI"/>
+        <segue reference="jOb-ZT-cu4"/>
+        <segue reference="EFU-E8-vhl"/>
         <segue reference="0HS-LD-tJf"/>
         <segue reference="0Ay-17-uwa"/>
+        <segue reference="6GA-wf-SNi"/>
         <segue reference="m7I-pa-qFJ"/>
         <segue reference="Cos-Ov-8c2"/>
-        <segue reference="6GA-wf-SNi"/>
-        <segue reference="DJ5-3f-IH5"/>
-        <segue reference="jOb-ZT-cu4"/>
         <segue reference="DOh-Uv-lDf"/>
     </inferredMetricsTieBreakers>
 </document>
