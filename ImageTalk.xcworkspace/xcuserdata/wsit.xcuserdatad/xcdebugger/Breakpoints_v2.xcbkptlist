@@ -410,7 +410,7 @@
                   moduleName = "ImageTalk"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/DiskPart%201/codes/imagetalk/ImageTalk/SocketTestViewController.h"
-                  timestampString = "483456967.527051"
+                  timestampString = "483540839.817029"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "25"
@@ -425,57 +425,11 @@
                   moduleName = "ImageTalk"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/DiskPart%201/codes/imagetalk/ImageTalk/SocketTestViewController.h"
-                  timestampString = "483456967.527155"
+                  timestampString = "483540839.817126"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "25"
                   endingLineNumber = "25"
-                  offsetFromSymbolStart = "40">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ImageTalk/SocketTestViewController.h"
-            timestampString = "474282988.699052"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "14"
-            endingLineNumber = "14">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[SocketTestViewController videoView]"
-                  moduleName = "ImageTalk"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/DiskPart%201/codes/imagetalk/ImageTalk/SocketTestViewController.h"
-                  timestampString = "483456967.527808"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "23"
-                  endingLineNumber = "23"
-                  offsetFromSymbolStart = "16">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[SocketTestViewController setVideoView:]"
-                  moduleName = "ImageTalk"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/DiskPart%201/codes/imagetalk/ImageTalk/SocketTestViewController.h"
-                  timestampString = "483456967.527913"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "23"
-                  endingLineNumber = "23"
                   offsetFromSymbolStart = "40">
                </Location>
             </Locations>
