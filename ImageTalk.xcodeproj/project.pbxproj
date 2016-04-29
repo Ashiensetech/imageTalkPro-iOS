@@ -29,6 +29,7 @@
 		DA5088061CB68057003F33B3 /* cross-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DA5088031CB68057003F33B3 /* cross-icon.png */; };
 		DA5088071CB68057003F33B3 /* enlarge.png in Resources */ = {isa = PBXBuildFile; fileRef = DA5088041CB68057003F33B3 /* enlarge.png */; };
 		DA5088081CB68057003F33B3 /* tick-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DA5088051CB68057003F33B3 /* tick-icon.png */; };
+		DA5766621CD2260000F7747D /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = DA5766611CD2260000F7747D /* heart.png */; };
 		FD01EBD61BE746340083249B /* ApiAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = FD01EBD51BE746340083249B /* ApiAccess.m */; };
 		FD01EBDC1BE777EC0083249B /* Job.m in Sources */ = {isa = PBXBuildFile; fileRef = FD01EBDB1BE777EC0083249B /* Job.m */; };
 		FD08B7051BF9D06900000D98 /* SenderImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD08B7041BF9D06900000D98 /* SenderImageTableViewCell.m */; };
@@ -378,6 +379,7 @@
 		DA5088031CB68057003F33B3 /* cross-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cross-icon.png"; sourceTree = SOURCE_ROOT; };
 		DA5088041CB68057003F33B3 /* enlarge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = enlarge.png; sourceTree = SOURCE_ROOT; };
 		DA5088051CB68057003F33B3 /* tick-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tick-icon.png"; sourceTree = SOURCE_ROOT; };
+		DA5766611CD2260000F7747D /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = heart.png; path = /Users/workspaceinfotech/Downloads/heart.png; sourceTree = "<absolute>"; };
 		DC8043D51BBD1B4399BB615F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		FD01EBD41BE746340083249B /* ApiAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiAccess.h; sourceTree = "<group>"; };
 		FD01EBD51BE746340083249B /* ApiAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApiAccess.m; sourceTree = "<group>"; };
@@ -1236,6 +1238,7 @@
 				FD6240801CBE2AB70037551A /* potrait.png */,
 				FD62BA1A1CC6083100A531AB /* Default@2x.png */,
 				FD62BA191CC6083100A531AB /* Default.png */,
+				DA5766611CD2260000F7747D /* heart.png */,
 				FD62BA181CC6083100A531AB /* Default-568h@2x.png */,
 				FD62BA251CC6087800A531AB /* top-right.png */,
 				FD62BA231CC6087800A531AB /* top-left.png */,
@@ -2149,6 +2152,7 @@
 				FD5A2D401CD0D82800B6065B /* 1.png in Resources */,
 				FD5A2D561CD0D82800B6065B /* readL.png in Resources */,
 				FD1B26DC1C02CB1A007162ED /* image_loader.gif in Resources */,
+				DA5766621CD2260000F7747D /* heart.png in Resources */,
 				FD62BA291CC6087800A531AB /* bottom-right.png in Resources */,
 				FD62407F1CBE0DC20037551A /* scale-2.png in Resources */,
 				FDEECE2F1B9D69BF00887F4A /* LaunchScreen.xib in Resources */,

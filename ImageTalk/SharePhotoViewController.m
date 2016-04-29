@@ -99,8 +99,6 @@
     tapped.cancelsTouchesInView = NO;
     [fullImage addGestureRecognizer:tapped];
 
-
-    
     
 }
 

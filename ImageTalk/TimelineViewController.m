@@ -29,7 +29,7 @@
 
 @property (strong,nonatomic)UIImage *img;
 @property int counter;
-
+@property int counter1;
 
 @end
 
@@ -126,7 +126,6 @@
             
             TimelineTableViewCell *cell = (TimelineTableViewCell *)[self.tableData cellForRowAtIndexPath:indexPath];
             cell.commentLabel.text = [NSString stringWithFormat:@"%d comments",self.updateValue];
-            
             WallPost *data = self.myObject[indexPath.row];
             data.commentCount = self.updateValue;
         
@@ -281,9 +280,18 @@
     cell.image.userInteractionEnabled = YES;
     cell.image.tag = indexPath.row;
     
+    NSLog(@"isliked: %d",self.dataLike.responseData.isLiked);
+    NSLog(@"wall post id: %d",data.id);
+    
     UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tabOnImage:)];
     tapped.numberOfTapsRequired = 1;
     [cell.image addGestureRecognizer:tapped];
+    
+    UITapGestureRecognizer *doubleTapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTabOnImage:)];
+    doubleTapped.numberOfTapsRequired = 2;
+    [cell.image addGestureRecognizer:doubleTapped];
+    
+    
     
     NSLog(@"tag count :%d,%@",data.tagCount,data.description);
     
@@ -322,10 +330,7 @@
     else
     {
         
-//       if(cell.image.image.size.height<cell.image.frame.size.height)
-//     {
-//          cell.image.frame = CGRectMake(cell.image.frame.origin.x, cell.image.frame.origin.y,cell.image.frame.size.width, cell.image.frame.size.height);
-//     }
+
         
         cell.image.contentMode = UIViewContentModeScaleToFill;
         cell.favBtn.hidden = false;
@@ -366,21 +371,20 @@
     date = [[NSDate alloc] initWithTimeInterval:interval sinceDate:date];
     
     
-    //NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    //[dateFormatter setDateFormat:@"MMMM dd, hh:mm a"];
-    //[dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
     
-    //NSString *dateStr = [dateFormatter stringFromDate:date];
-    //date = [dateFormatter dateFromString:dateStr];
     
-    if (data.isLiked)
+    
+    if (data.isLiked == 1)
     {
+        NSLog(@"Insideeeee");
         cell.likeImg.image = [UIImage imageNamed:@"like-aa"];
     }
     else
     {
         cell.likeImg.image = [UIImage imageNamed:@"like"];
     }
+    
+    
     
     if (data.isFavorite)
     {
@@ -402,7 +406,7 @@
    
         
     NSLog(@"wallpostmood: %@",data.wallPostMood);
-    if([data.wallPostMood isEqual:@""])
+    if([data.wallPostMood isEqual:@"" ] && [data.wallPostMood isEqual:@"none"])
     {
     
     [cell.profilePic sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.owner.user.picPath.original.path]]
@@ -592,6 +596,50 @@
     
     
     return cell;
+    
+}
+
+
+-(void)doubleTabOnImage :(id) sender
+{
+    NSLog(@"INSIDE");
+    UITapGestureRecognizer *gesture = (UITapGestureRecognizer *) sender;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:gesture.view.tag inSection:0];
+    WallPost *data = self.myObject[indexPath.row];
+    TimelineTableViewCell *cell = [self.tableData cellForRowAtIndexPath:indexPath];
+    
+    
+    UIImage *image = [UIImage imageNamed:@"heart.png"];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.frame = CGRectMake((cell.frame.size.width / 2) - (image.size.width / 2), (cell.frame.size.height / 2) - (image.size.height), image.size.width, image.size.height);
+    
+    [cell.image addSubview:imageView];
+    [UIView animateWithDuration:0.5 delay:2.0 options:0 animations:^{
+        // Animate the alpha value of your imageView from 1.0 to 0.0 here
+        imageView.alpha = 0.0f;
+        
+    } completion:^(BOOL finished) {
+        // Once the animation is completed and the alpha has gone to 0.0, hide the view for good
+        imageView.hidden = YES;
+        if (data.isLiked == 1)
+        {
+            
+        }
+        else
+        {
+            
+            NSDictionary *inventory = @{@"post_id" : [NSString stringWithFormat:@"%d",data.id]};
+            [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/like" params:inventory tag:@"likeData" index:cell.image.tag];
+            
+        }
+
+        
+    }];
+    
+    
+   
+    
+    
     
 }
 
@@ -991,7 +1039,11 @@
             [self.tableData reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
             [self.tableData reloadData];
             
-        }
+    }
+        
+        
+        
+        
 
     }
     
