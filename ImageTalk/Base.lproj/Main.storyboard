@@ -2896,9 +2896,15 @@
                                             <constraint firstAttribute="width" constant="84" id="4B8-bS-D1O"/>
                                         </constraints>
                                     </imageView>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Sug-2j-V3m">
-                                        <rect key="frame" x="93" y="5" width="505" height="59"/>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Sug-2j-V3m">
+                                        <rect key="frame" x="93" y="9" width="505" height="59"/>
                                         <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="505" id="Wv2-BH-C7h"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="d8T-Si-819"/>
+                                            <constraint firstAttribute="height" constant="59" id="fMI-Tx-Fpo"/>
+                                            <constraint firstAttribute="width" constant="505" id="qmk-4a-Uzf"/>
+                                        </constraints>
                                         <inset key="scrollIndicatorInsets" minX="0.0" minY="0.0" maxX="500" maxY="0.0"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="2" id="RcY-bQ-Zac">
                                             <size key="itemSize" width="49" height="49"/>
@@ -3009,11 +3015,11 @@
                                                 </constraints>
                                                 <variation key="default">
                                                     <mask key="constraints">
-                                                        <exclude reference="r5B-wt-RId"/>
-                                                        <exclude reference="cmr-Wq-LL4"/>
                                                         <exclude reference="b1o-8b-Exh"/>
-                                                        <exclude reference="EVc-sJ-VcF"/>
+                                                        <exclude reference="cmr-Wq-LL4"/>
+                                                        <exclude reference="r5B-wt-RId"/>
                                                         <exclude reference="1Hv-F0-Gjs"/>
+                                                        <exclude reference="EVc-sJ-VcF"/>
                                                     </mask>
                                                 </variation>
                                                 <connections>
@@ -3022,16 +3028,22 @@
                                                 </connections>
                                             </collectionViewCell>
                                         </cells>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="d8T-Si-819"/>
+                                                <exclude reference="qmk-4a-Uzf"/>
+                                            </mask>
+                                        </variation>
                                         <connections>
                                             <outlet property="dataSource" destination="QIE-dp-jpL" id="8lW-Dt-qaf"/>
                                             <outlet property="delegate" destination="QIE-dp-jpL" id="WIa-7t-ytl"/>
                                         </connections>
                                     </collectionView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" text="250/0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="48" translatesAutoresizingMaskIntoConstraints="NO" id="Jlr-p7-WhP">
-                                        <rect key="frame" x="554" y="119" width="38" height="18"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" text="0/250" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="48" translatesAutoresizingMaskIntoConstraints="NO" id="Jlr-p7-WhP">
+                                        <rect key="frame" x="542" y="119" width="50" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="G9e-3i-wCV"/>
-                                            <constraint firstAttribute="width" constant="38" id="hhg-4K-VYj"/>
+                                            <constraint firstAttribute="width" constant="50" id="hhg-4K-VYj"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="0.75938727094240832" green="0.75938727094240832" blue="0.75938727094240832" alpha="1" colorSpace="calibratedRGB"/>
@@ -3058,14 +3070,16 @@
                                     </activityIndicatorView>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Write your comment here..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ipu-hK-mdM">
                                         <rect key="frame" x="98" y="80" width="500" height="58"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="Sui-lf-hCV" firstAttribute="top" secondItem="TjA-jF-bCx" secondAttribute="top" constant="71" id="1kZ-Rp-Bmh"/>
                                     <constraint firstItem="ipu-hK-mdM" firstAttribute="leading" secondItem="aa4-By-M1n" secondAttribute="trailing" constant="6" id="3zD-Zj-dQu"/>
+                                    <constraint firstItem="Sug-2j-V3m" firstAttribute="trailing" secondItem="ipu-hK-mdM" secondAttribute="trailing" id="9eJ-Lh-6bW"/>
+                                    <constraint firstItem="Sug-2j-V3m" firstAttribute="top" secondItem="TjA-jF-bCx" secondAttribute="top" constant="9" id="ANq-Bu-s6a"/>
+                                    <constraint firstItem="Sui-lf-hCV" firstAttribute="top" secondItem="Sug-2j-V3m" secondAttribute="bottom" constant="3" id="Anb-Pl-ViE"/>
                                     <constraint firstAttribute="trailing" secondItem="c5a-zg-w6l" secondAttribute="trailing" id="CKA-tW-erS"/>
                                     <constraint firstItem="Jlr-p7-WhP" firstAttribute="trailing" secondItem="TjA-jF-bCx" secondAttribute="trailingMargin" id="Ee3-9p-SR9"/>
                                     <constraint firstItem="c5a-zg-w6l" firstAttribute="top" secondItem="Jlr-p7-WhP" secondAttribute="bottom" constant="8" id="IoJ-5V-3xR"/>
@@ -3073,6 +3087,7 @@
                                     <constraint firstItem="Jlr-p7-WhP" firstAttribute="top" secondItem="Sui-lf-hCV" secondAttribute="bottom" constant="47" id="QsP-O6-4ps"/>
                                     <constraint firstItem="c5a-zg-w6l" firstAttribute="leading" secondItem="TjA-jF-bCx" secondAttribute="leading" id="RNf-bX-sep"/>
                                     <constraint firstAttribute="bottom" secondItem="c5a-zg-w6l" secondAttribute="bottom" id="WHD-Fa-Uiw"/>
+                                    <constraint firstItem="Sug-2j-V3m" firstAttribute="leading" secondItem="aa4-By-M1n" secondAttribute="trailing" constant="1" id="XYd-mD-THg"/>
                                     <constraint firstAttribute="bottom" secondItem="aa4-By-M1n" secondAttribute="bottom" constant="39" id="XeC-RQ-8bz"/>
                                     <constraint firstItem="aa4-By-M1n" firstAttribute="top" secondItem="TjA-jF-bCx" secondAttribute="top" constant="18" id="Xil-nq-2P9"/>
                                     <constraint firstAttribute="trailing" secondItem="Sui-lf-hCV" secondAttribute="trailing" id="YHW-b5-fsI"/>

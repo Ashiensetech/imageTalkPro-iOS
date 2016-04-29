@@ -223,16 +223,7 @@
                        nil];
     
     [self.collectionData reloadData];
-    UICollectionViewFlowLayout *flowLayout;
-    flowLayout = [[UICollectionViewFlowLayout alloc]init];
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-    [flowLayout setMinimumInteritemSpacing:0.0f];
-    [flowLayout setMinimumLineSpacing:0.0f];
-    [self.collectionData setPagingEnabled:YES];
-    [flowLayout setItemSize:CGSizeMake(322.0, 148.0)];  //important to leave no white space between the images
-    [self.collectionData setCollectionViewLayout:flowLayout];
-    self.collectionData.allowsMultipleSelection = NO;
-   
+
 
 }
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
@@ -252,7 +243,13 @@
         cell.image.layer.borderWidth=0.0;
         cell.image.layer.masksToBounds = YES;
         cell.image.layer.borderColor=[[UIColor redColor] CGColor];
-        //cell.title.textColor = [UIColor orangeColor];
+        
+        if([self.wallPostMood length]==0 || [cell.title.text isEqualToString:self.wallPostMood]){
+            cell.title.textColor = [UIColor orangeColor];
+        }else{
+            cell.title.textColor = [UIColor grayColor];
+        }
+        
         
          return cell;
     }else{
@@ -260,25 +257,37 @@
         EffectsCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
         cell.image.image = [[[self.smilyObject objectAtIndex:indexPath.row] valueForKey:@"image"]scaleToSize:CGSizeMake(50.0, 50.0)];
         cell.title.text = [[self.smilyObject objectAtIndex:indexPath.row] valueForKey:@"title"];
+        if([self.wallPostMood length]!=0 && [cell.title.text isEqualToString:self.wallPostMood]){
+            cell.title.textColor = [UIColor orangeColor];
+        }else{
+            cell.title.textColor = [UIColor grayColor];
+        }
         
         return cell;
     }
     
    
 }
+
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    EffectsCollectionViewCell *efCell = (EffectsCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+        efCell.title.textColor = [UIColor grayColor];
+}
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSMutableDictionary *te =[self.smilyObject objectAtIndex:indexPath.row];
     self.wallPostMood =[te objectForKey:@"title"];
     NSArray* visibleCellIndex = collectionView.indexPathsForVisibleItems ;
     for(NSIndexPath * path in visibleCellIndex){
-        NSMutableDictionary *item = [self.smilyObject objectAtIndex:path.row];
-        NSString *title = [item objectForKey:@"title"];
-        if([ title isEqual: self.wallPostMood]){
-            EffectsCollectionViewCell *efCell = (EffectsCollectionViewCell *)[collectionView cellForItemAtIndexPath:path];
-             efCell.title.textColor = [UIColor orangeColor];
+        EffectsCollectionViewCell *efCell = (EffectsCollectionViewCell *)[collectionView cellForItemAtIndexPath:path];
+        
+        if([efCell.title.text isEqualToString:self.wallPostMood]){
+      
+           efCell.title.textColor = [UIColor orangeColor];
+        
         }else{
-            EffectsCollectionViewCell *efCell = (EffectsCollectionViewCell *)[collectionView cellForItemAtIndexPath:path];
             efCell.title.textColor = [UIColor grayColor];
         }
     }
@@ -329,7 +338,7 @@
                                 @"type" : @"0",
                                 @"tagged_list" : taglist,
                                 @"places" : (self.place)?self.place.toJSONString:@"",
-                                @"wall_post_mood":[self.wallPostMood length ]!=0 || ![self.wallPostMood isEqual:@"None"] ?self.wallPostMood:@"",
+                                @"wall_post_mood":[self.wallPostMood length ]!=0 ?self.wallPostMood:@"",
                                 @"Content-Type" : @"charset=utf-8",
                                 };
     NSLog(@"%@",inventory);
@@ -412,7 +421,7 @@
 
 - (void)updateLabelUsingContentsOfTextField:(id)sender {
     
-    self.descriptionCharLabel.text = [NSString stringWithFormat:@"250/%lu", ((UITextField *)sender).text.length];
+    self.descriptionCharLabel.text = [NSString stringWithFormat:@"%lu/250", ((UITextField *)sender).text.length];
     
     
     
