@@ -62,7 +62,7 @@
     [_headerTitleSubtitleView addSubview:titleView];
     
     self.navigationItem.titleView = _headerTitleSubtitleView;
-
+    
     
     defaults = [NSUserDefaults standardUserDefaults];
     baseurl = [defaults objectForKey:@"baseurl"];
@@ -84,12 +84,12 @@
     self.offset = 0;
     self.loaded = false;
     [self getData:self.offset];
-
+    
     
     [[SocektAccess getSharedInstance]setItem:[self.tabBarController.tabBar.items objectAtIndex:1]];
     
     
-   
+    
     
     
 }
@@ -97,7 +97,7 @@
 
 - (IBAction)refresh:(id)sender {
     
-    self.myObject = [[NSMutableArray alloc] init];    
+    self.myObject = [[NSMutableArray alloc] init];
     self.offset = 0;
     self.loaded = false;
     [self getData:self.offset];
@@ -112,32 +112,32 @@
     [[[SocektAccess getSharedInstance]getSocket]setDelegate:self];
     [[[SocektAccess getSharedInstance]getSocket] reconnect];
     _chatSocket =[[SocektAccess getSharedInstance]getSocket];
-
+    
     
     if(self.updateWill)
     {
         
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.updateId inSection:0];
-            
-            NSLog(@"Update Value: %d",self.updateValue);
-            NSLog(@"Update ID: %d",self.updateId);
-            
-            
-            
-            TimelineTableViewCell *cell = (TimelineTableViewCell *)[self.tableData cellForRowAtIndexPath:indexPath];
-            cell.commentLabel.text = [NSString stringWithFormat:@"%d comments",self.updateValue];
-            WallPost *data = self.myObject[indexPath.row];
-            data.commentCount = self.updateValue;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.updateId inSection:0];
         
-           [self.myObject replaceObjectAtIndex:indexPath.row withObject:data];
-
-              WallPost *data2 = self.myObject[indexPath.row];
+        NSLog(@"Update Value: %d",self.updateValue);
+        NSLog(@"Update ID: %d",self.updateId);
         
-             NSLog(@": %d",data2.commentCount);
         
-            [self.tableData reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
-            [self.tableData reloadData];
-       
+        
+        TimelineTableViewCell *cell = (TimelineTableViewCell *)[self.tableData cellForRowAtIndexPath:indexPath];
+        cell.commentLabel.text = [NSString stringWithFormat:@"%d comments",self.updateValue];
+        WallPost *data = self.myObject[indexPath.row];
+        data.commentCount = self.updateValue;
+        
+        [self.myObject replaceObjectAtIndex:indexPath.row withObject:data];
+        
+        WallPost *data2 = self.myObject[indexPath.row];
+        
+        NSLog(@": %d",data2.commentCount);
+        
+        [self.tableData reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableData reloadData];
+        
         
     }
     
@@ -205,13 +205,13 @@
     {
         
         NSURL *filePath = [NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.picPath]];
-   
+        
         NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:filePath];
         UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:key];
         
         if(image != NULL)
         {
-        self.img = image;
+            self.img = image;
         }
         else
         {
@@ -240,7 +240,7 @@
             
             return self.img.size.height+180;
         }
-       
+        
         
         
         
@@ -254,16 +254,16 @@
         CGSize size = [data.description sizeWithFont:[UIFont fontWithName:@"Helvetica" size:14] constrainedToSize:CGSizeMake(280, 1000) lineBreakMode:NSLineBreakByWordWrapping];
         height = height + ((size.height < 40)? 40 : size.height);
     }
-
-
+    
+    
     return height;
-
+    
 }
 
 -(void) tableView:(UITableView *)tableView willDisplayCell:(TimelineTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-   
+    
     
 }
 
@@ -276,7 +276,7 @@
     self.counter = 0;
     
     WallPost *data = self.myObject[indexPath.row];
-   
+    
     cell.image.userInteractionEnabled = YES;
     cell.image.tag = indexPath.row;
     
@@ -296,17 +296,17 @@
     NSLog(@"tag count :%d,%@",data.tagCount,data.description);
     
     
-   if(data.tagCount<1)
-   {
-      cell.tagIcon.hidden = true;
-      cell.tagBtn.hidden = true;
-   }
-   else
-   {
-       cell.tagIcon.hidden = false;
-       cell.tagBtn.hidden = false;
-   }
-
+    if(data.tagCount<1)
+    {
+        cell.tagIcon.hidden = true;
+        cell.tagBtn.hidden = true;
+    }
+    else
+    {
+        cell.tagIcon.hidden = false;
+        cell.tagBtn.hidden = false;
+    }
+    
     
     
     if(data.type == 2)
@@ -330,7 +330,7 @@
     else
     {
         
-
+        
         
         cell.image.contentMode = UIViewContentModeScaleToFill;
         cell.favBtn.hidden = false;
@@ -353,7 +353,7 @@
     {
         cell.detailsHeight.constant = (contentsize.height < 40 ) ? 40 : contentsize.height;
     }
-
+    
     
     
     cell.name.text = [NSString stringWithFormat:@"%@ %@",data.owner.user.firstName,data.owner.user.lastName];
@@ -401,16 +401,16 @@
     
     cell.date.text = [NSString stringWithFormat:@"%@",[self AgoStringFromTime:date]];
     
-   // cell.date.text = [NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:date]];
+    // cell.date.text = [NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:date]];
     
-   
-        
+    
+    
     NSLog(@"wallpostmood: %@",data.wallPostMood);
     if([data.wallPostMood isEqual:@"" ] && [data.wallPostMood isEqual:@"none"])
     {
-    
-    [cell.profilePic sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.owner.user.picPath.original.path]]
-                       placeholderImage:nil];
+        
+        [cell.profilePic sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.owner.user.picPath.original.path]]
+                           placeholderImage:nil];
     }
     else if([data.wallPostMood isEqual:@"Angry"])
     {
@@ -562,17 +562,17 @@
         cell.profilePic.image = [UIImage imageNamed:@"workoutL.png"];
         
     }
-
-   
+    
+    
     [cell.image sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.picPath]]
-                 ];
+     ];
     
     
     if (data.places) {
         
         [cell.loc setTitle:data.places.name forState:UIControlStateNormal];
     }
-   
+    
     cell.likesBtn.tag = indexPath.row;
     
     cell.commentBtn.tag = indexPath.row;
@@ -609,11 +609,21 @@
     TimelineTableViewCell *cell = [self.tableData cellForRowAtIndexPath:indexPath];
     
     
+    UIImageView *blackView = [[UIImageView alloc] init];
+    blackView.frame = CGRectMake( 0, 0, cell.image.frame.size.width, cell.image.frame.size.height);
+    blackView.backgroundColor = [UIColor blackColor];
+    blackView.alpha = 0.6f;
+    [cell.image addSubview:blackView];
+    
+    
     UIImage *image = [UIImage imageNamed:@"heart.png"];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-    imageView.frame = CGRectMake((cell.frame.size.width / 2) - (image.size.width / 2), (cell.frame.size.height / 2) - (image.size.height), image.size.width, image.size.height);
-    
+    imageView.frame = CGRectMake((cell.frame.size.width / 2) - (image.size.width / 2), (cell.frame.size.height / 2) - (image.size.height), image.size.width, image.size.height-10);
     [cell.image addSubview:imageView];
+    
+    
+    
+    
     [UIView animateWithDuration:0.5 delay:2.0 options:0 animations:^{
         // Animate the alpha value of your imageView from 1.0 to 0.0 here
         imageView.alpha = 0.0f;
@@ -621,6 +631,7 @@
     } completion:^(BOOL finished) {
         // Once the animation is completed and the alpha has gone to 0.0, hide the view for good
         imageView.hidden = YES;
+        blackView.hidden = YES;
         if (data.isLiked == 1)
         {
             
@@ -632,12 +643,12 @@
             [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/like" params:inventory tag:@"likeData" index:cell.image.tag];
             
         }
-
+        
         
     }];
     
     
-   
+    
     
     
     
@@ -660,29 +671,29 @@
     {
         
         NSLog(@"%d",self.counter);
-    for(int i = 0;i<data.tagCount;i++)
-    {
+        for(int i = 0;i<data.tagCount;i++)
+        {
+            
+            // NSLog(@"%@",[[data.tagList objectAtIndex:i ]U]);
+            AppCredential *appcredential =  [data.tagList objectAtIndex:i] ;
+            NSLog(@"%@",appcredential.user.firstName);
+            
+            UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(value2,value,120,20)]; //or whatever size you need
+            value+=25;
+            value2+=50;
+            // myLabel.backgroundColor = [UIColor blackColor];
+            [myLabel setFont:[UIFont systemFontOfSize:12]];
+            
+            myLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
+            myLabel.textColor = [UIColor whiteColor];
+            myLabel.textAlignment = NSTextAlignmentCenter;
+            myLabel.text = [NSString stringWithFormat:@"%@  %@",appcredential.user.firstName,appcredential.user.lastName] ;
+            
+            [view addSubview:myLabel];
+            
+        }
         
-       // NSLog(@"%@",[[data.tagList objectAtIndex:i ]U]);
-        AppCredential *appcredential =  [data.tagList objectAtIndex:i] ;
-        NSLog(@"%@",appcredential.user.firstName);
-        
-        UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(value2,value,120,20)]; //or whatever size you need
-        value+=25;
-        value2+=50;
-       // myLabel.backgroundColor = [UIColor blackColor];
-       [myLabel setFont:[UIFont systemFontOfSize:12]];
-        
-        myLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
-        myLabel.textColor = [UIColor whiteColor];
-        myLabel.textAlignment = NSTextAlignmentCenter;
-        myLabel.text = [NSString stringWithFormat:@"%@  %@",appcredential.user.firstName,appcredential.user.lastName] ;
-
-        [view addSubview:myLabel];
-       
-    }
-    
-         self.counter = 1;
+        self.counter = 1;
         
         
     }
@@ -690,7 +701,7 @@
         
         NSLog(@"%d",self.counter);
         self.counter = 0;
- 
+        
         for (id child in [view subviews])
         {
             if ([child isMemberOfClass:[UILabel class]])
@@ -757,22 +768,22 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
     WallPost *data = self.myObject[indexPath.row];
     
- //   if (data.owner.id == self.app.authCredential.id) {
-        self.alertDelete = [[UIAlertView alloc] initWithTitle:@"Delete Picture"
-                                                        message:@"Delete the Picture from your timeline"
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"Delete", nil];
-        self.alertDelete.tag = sender.tag;
-        [self.alertDelete show];
-   // }
+    //   if (data.owner.id == self.app.authCredential.id) {
+    self.alertDelete = [[UIAlertView alloc] initWithTitle:@"Delete Picture"
+                                                  message:@"Delete the Picture from your timeline"
+                                                 delegate:self
+                                        cancelButtonTitle:@"Cancel"
+                                        otherButtonTitles:@"Delete", nil];
+    self.alertDelete.tag = sender.tag;
+    [self.alertDelete show];
+    // }
     
-   
+    
     
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-   
+    
     
     if (alertView == self.alertDownload) {
         
@@ -790,14 +801,14 @@
             [library writeImageToSavedPhotosAlbum:[viewImage CGImage] orientation:(ALAssetOrientation)[viewImage imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error){
                 if (error) {
                     NSLog(@"error");
-                   [ToastView showToastInParentView:self.view withText:@"Picture not Saved" withDuaration:2.0];
+                    [ToastView showToastInParentView:self.view withText:@"Picture not Saved" withDuaration:2.0];
                 } else {
                     NSLog(@"url %@", assetURL);
                     [ToastView showToastInParentView:self.view withText:@"Picture Saved" withDuaration:2.0];
-                }  
+                }
             }];
             
-         }
+        }
     }
     
     if (alertView == self.alertDelete) {
@@ -809,7 +820,7 @@
             NSLog(@"post id: %d",data.id);
             NSDictionary *inventory = @{ @"wall_post_id" : [NSString stringWithFormat:@"%d",data.id] };
             if (data.owner.id == self.app.authCredential.id) {
-            [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/delete" params:inventory tag:@"deleteData" index:alertView.tag];
+                [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/delete" params:inventory tag:@"deleteData" index:alertView.tag];
             }
             else
             {
@@ -818,7 +829,7 @@
             
         }
     }
-   
+    
 }
 
 
@@ -879,7 +890,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   //  WallPost *data = self.myObject[indexPath.row];
+    //  WallPost *data = self.myObject[indexPath.row];
     NSLog(@"ns lo c");
 }
 
@@ -915,7 +926,7 @@
         data.title = post.places.name;
         data.place = post.places;
     }
-
+    
     
     if ([segue.identifier isEqualToString:@"showLikes"])
     {
@@ -923,7 +934,7 @@
         WallPost *post = self.myObject[sender.tag];
         data.hidesBottomBarWhenPushed = YES;
         data.postId = post.id;
-
+        
     }
     
     if ([segue.identifier isEqualToString:@"friendsProfile"])
@@ -938,7 +949,7 @@
     
     
     
-
+    
 }
 
 #pragma mark - ApiAccessDelegate
@@ -961,31 +972,31 @@
                 [self.myObject addObject:self.data.responseData[i]];
                 
             }
-           
+            
         }
-     
+        
         self.isData = self.data.responseStat.status;
         self.loaded = self.data.responseStat.status;
         self.offset = (self.data.responseStat.status) ? self.offset+1 : self.offset;
         self.tableData.hidden = (self.myObject.count>0) ? false : true;
         self.emptyView.hidden = (self.myObject.count>0) ? true : false;
-       
+        
         [self.tableData reloadData];
-
+        
     }
     
     if ([tag isEqualToString:@"deleteData"])
     {
-       
+        
         
         NSError* error = nil;
         self.dataDelete = [[Response alloc] initWithDictionary:data error:&error];
- 
+        
         if(self.dataDelete.responseStat.status){
             
             [self.myObject removeObjectAtIndex:index];
             
-             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
             [self.tableData deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationFade];
             
             [self.tableData reloadData];
@@ -997,25 +1008,25 @@
     
     if ([tag isEqualToString:@"likeData"])
     {
-    
-       NSError* error = nil;
-       self.dataLike = [[LikeResponse alloc] initWithDictionary:data error:&error];
-
-       if(self.dataLike.responseStat.status)
-       {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-        TimelineTableViewCell *cell = (TimelineTableViewCell *)[self.tableData cellForRowAtIndexPath:indexPath];
-        cell.likeImg.image = (self.dataLike.responseData.isLiked) ? [UIImage imageNamed:@"like-aa"]:[UIImage imageNamed:@"like"];
-        cell.likeLabel.text = [NSString stringWithFormat:@"%d likes",self.dataLike.responseData.likeCount];
         
-        WallPost *data = self.myObject[indexPath.row];
-        data.isLiked = self.dataLike.responseData.isLiked;
-        data.likeCount = self.dataLike.responseData.likeCount;
+        NSError* error = nil;
+        self.dataLike = [[LikeResponse alloc] initWithDictionary:data error:&error];
         
-        
-        [self.tableData reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
-        [self.tableData reloadData];
-        
+        if(self.dataLike.responseStat.status)
+        {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+            TimelineTableViewCell *cell = (TimelineTableViewCell *)[self.tableData cellForRowAtIndexPath:indexPath];
+            cell.likeImg.image = (self.dataLike.responseData.isLiked) ? [UIImage imageNamed:@"like-aa"]:[UIImage imageNamed:@"like"];
+            cell.likeLabel.text = [NSString stringWithFormat:@"%d likes",self.dataLike.responseData.likeCount];
+            
+            WallPost *data = self.myObject[indexPath.row];
+            data.isLiked = self.dataLike.responseData.isLiked;
+            data.likeCount = self.dataLike.responseData.likeCount;
+            
+            
+            [self.tableData reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+            [self.tableData reloadData];
+            
         }
     }
     
@@ -1023,8 +1034,8 @@
     {
         NSError* error = nil;
         self.dataFav = [[FavResponse alloc] initWithDictionary:data error:&error];
-       
-       
+        
+        
         
         if(self.dataFav.responseStat.status)
         {
@@ -1039,19 +1050,19 @@
             [self.tableData reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
             [self.tableData reloadData];
             
+        }
+        
+        
+        
+        
+        
     }
-        
-        
-        
-        
-
-    }
     
     
-   
     
-
-
+    
+    
+    
 }
 
 -(void) receivedError:(JSONModelError *)error tag:(NSString *)tag
@@ -1060,12 +1071,12 @@
     
     if ([tag isEqualToString:@"getTimelineData"])
     {
-       self.tableData.hidden = true;
-       self.emptyView.hidden = false;
-       [self.tableData reloadData];
+        self.tableData.hidden = true;
+        self.emptyView.hidden = false;
+        [self.tableData reloadData];
     }
     
-   
+    
 }
 
 
