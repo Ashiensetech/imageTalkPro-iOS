@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Hxb-wn-Odv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Hxb-wn-Odv">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -3380,6 +3380,7 @@
                     <connections>
                         <outlet property="collectionData" destination="Sug-2j-V3m" id="VAz-5v-yWt"/>
                         <outlet property="comment" destination="ipu-hK-mdM" id="wq8-L7-Eqz"/>
+                        <outlet property="containerScroller" destination="QRT-NP-p67" id="UPP-WZ-n91"/>
                         <outlet property="descriptionCharLabel" destination="Jlr-p7-WhP" id="kMx-4K-KSD"/>
                         <outlet property="facebookShare" destination="sEt-w5-2ef" id="eZU-yG-OwZ"/>
                         <outlet property="loading" destination="4Zt-dT-2Um" id="BHy-6U-3pP"/>
@@ -7941,7 +7942,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2jw-iT-uV0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3754" y="2655"/>
+            <point key="canvasLocation" x="3792" y="2650"/>
         </scene>
         <!--Notification-->
         <scene sceneID="yqh-m8-lbR">
@@ -8166,16 +8167,16 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="DOh-Uv-lDf"/>
-        <segue reference="EFU-E8-vhl"/>
-        <segue reference="7rK-5W-S99"/>
         <segue reference="Obc-pZ-my3"/>
-        <segue reference="0HS-LD-tJf"/>
-        <segue reference="0Ay-17-uwa"/>
+        <segue reference="7rK-5W-S99"/>
+        <segue reference="m7I-pa-qFJ"/>
+        <segue reference="6GA-wf-SNi"/>
         <segue reference="7WC-db-158"/>
         <segue reference="Cos-Ov-8c2"/>
-        <segue reference="6GA-wf-SNi"/>
-        <segue reference="m7I-pa-qFJ"/>
-        <segue reference="TmO-XD-ODI"/>
+        <segue reference="EFU-E8-vhl"/>
+        <segue reference="JvH-LZ-azZ"/>
         <segue reference="jOb-ZT-cu4"/>
+        <segue reference="0HS-LD-tJf"/>
+        <segue reference="0Ay-17-uwa"/>
     </inferredMetricsTieBreakers>
 </document>

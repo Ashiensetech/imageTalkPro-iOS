@@ -33,50 +33,61 @@
     defaults = [NSUserDefaults standardUserDefaults];
     baseurl = [defaults objectForKey:@"baseurl"];
     
-     self.mainImage.image = self.image;
-     self.mainImage.userInteractionEnabled = YES;
+    self.mainImage.image = self.image;
+    self.mainImage.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tabOnImage:)];
     tapped.numberOfTapsRequired = 1;
     [self.mainImage addGestureRecognizer:tapped];
-     tapped.cancelsTouchesInView = NO;
+    tapped.cancelsTouchesInView = NO;
     
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     [self.view addGestureRecognizer:singleTap];
-     singleTap.cancelsTouchesInView = NO;
+    singleTap.cancelsTouchesInView = NO;
     [self.comment addTarget:self action:@selector(updateLabelUsingContentsOfTextField:) forControlEvents:UIControlEventEditingChanged];
     
     
-  
+    
     self.comment.delegate = self;
     
     UITapGestureRecognizer *fbTapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tabOnFbView:)];
     tapped.numberOfTapsRequired = 1;
     [self.facebookShare addGestureRecognizer:fbTapped];
     fbTapped.cancelsTouchesInView = NO;
-   
+    
     self.collectionData.delegate = self;
     self.collectionData.dataSource = self;
     self.collectionData.userInteractionEnabled = YES;
-    
+   
+  
    
     
 }
-
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    UIImageView *foreground = [[UIImageView alloc] init];
+    foreground.frame = CGRectMake( self.containerScroller.bounds.origin.x, self.containerScroller.bounds.origin.y, self.containerScroller.frame.size.width, self.containerScroller.frame.size.height);
+    foreground.backgroundColor = [UIColor blackColor];
+    foreground.alpha = 0.6f;
+    [self.containerScroller addSubview:foreground];
+    self.blackView = foreground;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    [self.blackView removeFromSuperview];
+}
 
 -(void)tabOnFbView : (id) sender
 {
-//     NSLog(@"Hellooooooo");
-//    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
-//    photo.image = self.image;
-//    photo.caption = self.comment.text;
-//    photo.userGenerated = YES;
-//    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
-//    content.photos = @[photo];
-//    
-//    [FBSDKShareDialog showFromViewController:self
-//                                 withContent:content
-//                                    delegate:self];
+    //     NSLog(@"Hellooooooo");
+    //    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+    //    photo.image = self.image;
+    //    photo.caption = self.comment.text;
+    //    photo.userGenerated = YES;
+    //    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+    //    content.photos = @[photo];
+    //
+    //    [FBSDKShareDialog showFromViewController:self
+    //                                 withContent:content
+    //                                    delegate:self];
     
     
 }
@@ -98,7 +109,7 @@
     tapped.numberOfTapsRequired = 1;
     tapped.cancelsTouchesInView = NO;
     [fullImage addGestureRecognizer:tapped];
-
+    
     
 }
 
@@ -150,11 +161,11 @@
         self.tagLabel.text = @"Tag Friends";
     }
     
-     AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     NSLog(@"%@",app.userPic);
     defaults = [NSUserDefaults standardUserDefaults];
     baseurl = [defaults objectForKey:@"baseurl"];
-    NSURL *filePath = [NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,app.userPic]];    
+    NSURL *filePath = [NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,app.userPic]];
     NSLog(@"%@",filePath);
     NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:filePath];
     UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:key];
@@ -181,7 +192,7 @@
                                }];
         
     }
-
+    
     
     
     
@@ -221,12 +232,12 @@
                        nil];
     
     [self.collectionData reloadData];
-
-
+    
+    
 }
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
     return self.smilyObject.count;
- 
+    
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -249,7 +260,7 @@
         }
         
         
-         return cell;
+        return cell;
     }else{
         static NSString *CellIdentifier = @"photoCell";
         EffectsCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
@@ -264,13 +275,13 @@
         return cell;
     }
     
-   
+    
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     EffectsCollectionViewCell *efCell = (EffectsCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-        efCell.title.textColor = [UIColor grayColor];
+    efCell.title.textColor = [UIColor grayColor];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -282,16 +293,16 @@
         EffectsCollectionViewCell *efCell = (EffectsCollectionViewCell *)[collectionView cellForItemAtIndexPath:path];
         
         if([efCell.title.text isEqualToString:self.wallPostMood]){
-      
-           efCell.title.textColor = [UIColor orangeColor];
-        
+            
+            efCell.title.textColor = [UIColor orangeColor];
+            
         }else{
             efCell.title.textColor = [UIColor grayColor];
         }
     }
-   
     
-   
+    
+    
 }
 - (void)handleSingleTap:(UITapGestureRecognizer *)sender
 {
@@ -308,14 +319,14 @@
     [self.loading startAnimating];
     [self.comment resignFirstResponder];
     [self.upload setEnabled:false];
-   
+    
     NSString *taglist= @"";
     
     NSLog(@"TagList size: %d",self.myObjectSelection.count);
     
     if(self.myObjectSelection.count>0)
     {
-    
+        
         for (int i=0; i<self.myObjectSelection.count; i++) {
             
             Contact *data = self.myObjectSelection[i];
@@ -342,7 +353,7 @@
     NSLog(@"%@",inventory);
     
     [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/create" params:inventory tag:@"getPhoto"];
-
+    
     
 }
 
@@ -356,7 +367,7 @@
     {
         compression -= 0.1;
         imageData = UIImageJPEGRepresentation(image, compression);
-
+        
     }
     
     return [imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
@@ -381,7 +392,7 @@
             
             [self performSegueWithIdentifier:@"timeline" sender:self];
         }
-
+        
         
     }
     
@@ -418,6 +429,7 @@
 
 
 - (void)updateLabelUsingContentsOfTextField:(id)sender {
+ 
     
     self.descriptionCharLabel.text = [NSString stringWithFormat:@"%lu/250", ((UITextField *)sender).text.length];
     
@@ -426,7 +438,7 @@
 }
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     
-   
+    
     
     NSUInteger oldLength = [textField.text length]; NSUInteger replacementLength = [string length]; NSUInteger rangeLength = range.length;
     

@@ -36,5 +36,7 @@
 @property (strong,nonatomic)  NSMutableArray *smilyObject;
 @property (nonatomic,assign) NSString *wallPostMood;
 @property (strong, nonatomic) AppCredential  *owner;
+@property (strong, nonatomic) IBOutlet UIScrollView *containerScroller;
 @property (nonatomic, assign) UIImage *profilePic;
+@property (nonatomic, assign) UIImageView *blackView;
 @end
