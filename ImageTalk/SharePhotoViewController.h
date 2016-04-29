@@ -35,4 +35,6 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionData;
 @property (strong,nonatomic)  NSMutableArray *smilyObject;
 @property (nonatomic,assign) NSString *wallPostMood;
+@property (strong, nonatomic) AppCredential  *owner;
+@property (nonatomic, assign) UIImage *profilePic;
 @end

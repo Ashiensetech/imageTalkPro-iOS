@@ -14,7 +14,9 @@
 #import "ApiAccess.h"
 #import "EffectsCollectionViewCell.h"
 #import "UIImage+Scale.h"
-
+#import "UIImageView+WebCache.h"
+#import "JSONHTTPClient.h"
+#import <QuartzCore/QuartzCore.h>
 @interface SharePhotoViewController ()
 
 @end
@@ -55,10 +57,8 @@
    
     self.collectionData.delegate = self;
     self.collectionData.dataSource = self;
-    UICollectionViewFlowLayout *layout = (id) self.collectionData.collectionViewLayout;
-    layout.itemSize = self.collectionData.frame.size;
-     self.collectionData.userInteractionEnabled = YES;
-  
+    self.collectionData.userInteractionEnabled = YES;
+    
    
     
 }
@@ -150,7 +150,43 @@
         self.tagLabel.text = @"Tag Friends";
     }
     
+     AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSLog(@"%@",app.userPic);
+    defaults = [NSUserDefaults standardUserDefaults];
+    baseurl = [defaults objectForKey:@"baseurl"];
+    NSURL *filePath = [NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,app.userPic]];    
+    NSLog(@"%@",filePath);
+    NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:filePath];
+    UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:key];
+    
+    if(image != NULL)
+    {
+        self.profilePic = image;
+    }
+    else
+    {
+        SDWebImageDownloader *downloader = [SDWebImageDownloader sharedDownloader];
+        [downloader downloadImageWithURL:filePath
+                                 options:0
+                                progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                    // progression tracking code
+                                }
+                               completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+                                   if (image && finished) {
+                                       // do something with image
+                                       
+                                       self.profilePic = image;
+                                       
+                                   }
+                               }];
+        
+    }
+
+    
+    
+    
     self.smilyObject =[[NSMutableArray alloc]initWithObjects:
+                       [NSDictionary dictionaryWithObjectsAndKeys:@"None",@"title", self.profilePic ,@"image", nil],
                        [NSDictionary dictionaryWithObjectsAndKeys:@"Happy",@"title",[[UIImage imageNamed:@"happyL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
                        [NSDictionary dictionaryWithObjectsAndKeys:@"In Love",@"title",[[UIImage imageNamed:@"inloveL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
                        [NSDictionary dictionaryWithObjectsAndKeys:@"Confused",@"title",[[UIImage imageNamed:@"confusedL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
@@ -185,35 +221,77 @@
                        nil];
     
     [self.collectionData reloadData];
+
+
 }
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
     return self.smilyObject.count;
  
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-   
-    static NSString *CellIdentifier = @"photoCell";
-    EffectsCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    if(indexPath.item == 0 && indexPath.item ==0 && indexPath.section == 0){
+        
+        static NSString *CellIdentifier = @"profilePicCell";
+        EffectsCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.image.image = [[self.smilyObject objectAtIndex:indexPath.row] valueForKey:@"image"];
+        cell.title.text = [[self.smilyObject objectAtIndex:indexPath.row] valueForKey:@"title"];
+        cell.image.layer.backgroundColor=[[UIColor clearColor] CGColor];
+        cell.image.layer.cornerRadius=cell.image.frame.size.height;
+        cell.image.layer.borderWidth=0.0;
+        cell.image.layer.masksToBounds = YES;
+        cell.image.layer.borderColor=[[UIColor redColor] CGColor];
+        
+        if([self.wallPostMood length]==0 || [cell.title.text isEqualToString:self.wallPostMood]){
+            cell.title.textColor = [UIColor orangeColor];
+        }else{
+            cell.title.textColor = [UIColor grayColor];
+        }
+        
+        
+         return cell;
+    }else{
+        static NSString *CellIdentifier = @"photoCell";
+        EffectsCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.image.image = [[[self.smilyObject objectAtIndex:indexPath.row] valueForKey:@"image"]scaleToSize:CGSizeMake(50.0, 50.0)];
+        cell.title.text = [[self.smilyObject objectAtIndex:indexPath.row] valueForKey:@"title"];
+        if([self.wallPostMood length]!=0 && [cell.title.text isEqualToString:self.wallPostMood]){
+            cell.title.textColor = [UIColor orangeColor];
+        }else{
+            cell.title.textColor = [UIColor grayColor];
+        }
+        
+        return cell;
+    }
     
    
-
-    cell.image.image = [[[self.smilyObject objectAtIndex:indexPath.row] valueForKey:@"image"]scaleToSize:CGSizeMake(50.0, 50.0)];
-    
-    cell.title.text = [[self.smilyObject objectAtIndex:indexPath.row] valueForKey:@"title"];
- 
-    
-    return cell;
 }
+
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    EffectsCollectionViewCell *efCell = (EffectsCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+        efCell.title.textColor = [UIColor grayColor];
+}
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-//    cell.backgroundColor = [UIColor blueColor];
-    
-   
     NSMutableDictionary *te =[self.smilyObject objectAtIndex:indexPath.row];
     self.wallPostMood =[te objectForKey:@"title"];
-     NSLog(@"%@",[te objectForKey:@"title"] );
-   // self.wallPostMood =[self.smilyObject objectAtIndex:indexPath.row];
+    NSArray* visibleCellIndex = collectionView.indexPathsForVisibleItems ;
+    for(NSIndexPath * path in visibleCellIndex){
+        EffectsCollectionViewCell *efCell = (EffectsCollectionViewCell *)[collectionView cellForItemAtIndexPath:path];
+        
+        if([efCell.title.text isEqualToString:self.wallPostMood]){
+      
+           efCell.title.textColor = [UIColor orangeColor];
+        
+        }else{
+            efCell.title.textColor = [UIColor grayColor];
+        }
+    }
+   
+    
+   
 }
 - (void)handleSingleTap:(UITapGestureRecognizer *)sender
 {
@@ -341,7 +419,7 @@
 
 - (void)updateLabelUsingContentsOfTextField:(id)sender {
     
-    self.descriptionCharLabel.text = [NSString stringWithFormat:@"250/%lu", ((UITextField *)sender).text.length];
+    self.descriptionCharLabel.text = [NSString stringWithFormat:@"%lu/250", ((UITextField *)sender).text.length];
     
     
     
