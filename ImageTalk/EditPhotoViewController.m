@@ -301,19 +301,19 @@
     self.effectObject = [[NSMutableArray alloc] initWithObjects:
                          [NSDictionary dictionaryWithObjectsAndKeys:@"Original",@"title",self.thumbImage,@"image", nil],
                          
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Mir",@"title",[self.thumbImage e1],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Predok",@"title",[self.thumbImage e2],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Derevo",@"title",[self.thumbImage e3],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Temno",@"title",[self.thumbImage e4],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Briana",@"title",[self.thumbImage e5],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Prizrak",@"title",[self.thumbImage e6],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Gothic",@"title",[self.thumbImage e7],@"image", nil],
+                         [NSDictionary dictionaryWithObjectsAndKeys:@"Marsh",@"title",[self.thumbImage e1],@"image", nil],
+                         [NSDictionary dictionaryWithObjectsAndKeys:@"Chill",@"title",[self.thumbImage e2],@"image", nil],
+                         [NSDictionary dictionaryWithObjectsAndKeys:@"Sunny",@"title",[self.thumbImage e3],@"image", nil],
+                         [NSDictionary dictionaryWithObjectsAndKeys:@"Black & White",@"title",[self.thumbImage e4],@"image", nil],
+                         [NSDictionary dictionaryWithObjectsAndKeys:@"Sun Barn",@"title",[self.thumbImage e5],@"image", nil],
+                         [NSDictionary dictionaryWithObjectsAndKeys:@"Helio",@"title",[self.thumbImage e6],@"image", nil],
+                         [NSDictionary dictionaryWithObjectsAndKeys:@"Sweet Charm",@"title",[self.thumbImage e7],@"image", nil],
                          [NSDictionary dictionaryWithObjectsAndKeys:@"Katholic",@"title",[self.thumbImage e8],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Hidra",@"title",[self.thumbImage e9],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Con",@"title",[self.thumbImage e10],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Tirex",@"title",[self.thumbImage e11],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Willow",@"title",[self.thumbImage e12],@"image", nil],
-                         [NSDictionary dictionaryWithObjectsAndKeys:@"Clarendon",@"title",[self.thumbImage e13],@"image", nil],
+                         [NSDictionary dictionaryWithObjectsAndKeys:@"Bluelin",@"title",[self.thumbImage e9],@"image", nil],
+                         [NSDictionary dictionaryWithObjectsAndKeys:@"Safia",@"title",[self.thumbImage e10],@"image", nil],
+                         [NSDictionary dictionaryWithObjectsAndKeys:@"1958",@"title",[self.thumbImage e11],@"image", nil],
+                         [NSDictionary dictionaryWithObjectsAndKeys:@"Moonlight",@"title",[self.thumbImage e12],@"image", nil],
+                         [NSDictionary dictionaryWithObjectsAndKeys:@"Watermalon",@"title",[self.thumbImage e13],@"image", nil],
                          nil];
     
     self.borderObject = [[NSMutableArray alloc]init];
@@ -396,10 +396,19 @@
 {
     //[self.view addSubview:self.loading];
 
-    [self.loading startAnimating];
+   
   
     
     if (self.type == 0) {
+        self.loading.hidden = NO;
+        
+        [  self.loading startAnimating];
+        
+     //   [self performSelector:@selector(saveClicked) withObject:nil afterDelay:0.1];
+        
+        [self.view bringSubviewToFront:  self.loading];
+        
+        
         UIImage * convertImage = self.image;
     
         switch (indexPath.row) {
@@ -410,7 +419,6 @@
                 convertImage = [self.image e1];
                 break;
             case 2:
-             
                 convertImage = [self.image e2];
                 break;
             case 3:
@@ -420,11 +428,9 @@
                convertImage= [self.image e4];
                 break;
             case 5:
-             
                 convertImage = [self.image e5];
                 break;
             case 6:
-               
                 convertImage = [self.image e6];
                 break;
             case 7:
@@ -446,8 +452,7 @@
                 convertImage = [self.image e12];
                 break;
             case 13:
-                
-                   convertImage = [self.image e13];
+                convertImage = [self.image e13];
                 break;
             default:
                 break;
@@ -457,7 +462,7 @@
         }else{
             [self.cropperImage setOriginalImage:convertImage ];
         }
-       
+        [self.loading stopAnimating];
         
     }
     if(self.type ==1){
@@ -491,7 +496,7 @@
     if (self.type == 3) {
         
     }
-    [self.loading stopAnimating];
+   
 }
 -(void) setSticker:(UIImage *)sticker  IndexRow: (int) row{
     UIImageView *stickerView = [[UIImageView alloc]

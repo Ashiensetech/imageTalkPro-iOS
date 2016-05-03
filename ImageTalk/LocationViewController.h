@@ -9,8 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LocationSearchResponse.h"
 #import "ApiAccess.h"
-
-@import GoogleMaps;
+#import "GoogleMaps/GoogleMaps.h"
 
 @interface LocationViewController : UIViewController<CLLocationManagerDelegate,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,ApiAccessDelegate>
 {

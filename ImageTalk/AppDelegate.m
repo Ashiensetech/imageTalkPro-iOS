@@ -13,8 +13,10 @@
 #import "SoundManager.h"
 #import "SocketResponse.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import "VKSdk.h"
 
-@import GoogleMaps;
+#import <GoogleMaps/GoogleMaps.h>
+//@import GoogleMaps;
 
 @interface AppDelegate ()
 
@@ -249,13 +251,18 @@
 
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                                  openURL:url
-                                                        sourceApplication:sourceApplication
-                                                               annotation:annotation
-                    ];
+//    BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application
+//                                                                  openURL:url
+//                                                        sourceApplication:sourceApplication
+//                                                               annotation:annotation
+//                    ];
+//
+//      [VKSdk processOpenURL:url fromApplication:sourceApplication];
     // Add any custom logic here.
-    return handled;
+//    return handled;
+    [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+    [VKSdk processOpenURL:url fromApplication:sourceApplication];
+    return YES;
 }
 
 

@@ -17,6 +17,7 @@
 #import "UIImageView+WebCache.h"
 #import "JSONHTTPClient.h"
 #import <QuartzCore/QuartzCore.h>
+#import "VKSdk.h"
 @interface SharePhotoViewController ()
 
 @end
@@ -44,55 +45,195 @@
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     [self.view addGestureRecognizer:singleTap];
     singleTap.cancelsTouchesInView = NO;
-    [self.comment addTarget:self action:@selector(updateLabelUsingContentsOfTextField:) forControlEvents:UIControlEventEditingChanged];
     
-    
-    
-    self.comment.delegate = self;
     
     UITapGestureRecognizer *fbTapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tabOnFbView:)];
     tapped.numberOfTapsRequired = 1;
     [self.facebookShare addGestureRecognizer:fbTapped];
     fbTapped.cancelsTouchesInView = NO;
+  
+    UITapGestureRecognizer *igTapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tabonInstagramView:)];
+    igTapped.numberOfTapsRequired = 1;
+    [self.instagramShare addGestureRecognizer:igTapped];
+    igTapped.cancelsTouchesInView = NO;
+    
+    
+    UITapGestureRecognizer *vkTapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tabOnVKView:)];
+    vkTapped.numberOfTapsRequired = 1;
+    [self.VKShare addGestureRecognizer:vkTapped];
+    vkTapped.cancelsTouchesInView = NO;
+    
     
     self.collectionData.delegate = self;
     self.collectionData.dataSource = self;
     self.collectionData.userInteractionEnabled = YES;
    
-  
-   
+    self.postCaption.delegate = self;
+    self.postCaption.text = @"write your comment here...";
+    self.postCaption.textColor = [UIColor lightGrayColor];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(dismissKeyboard)];
+    
+    [self.view addGestureRecognizer:tap];
+   tap.cancelsTouchesInView = NO;
     
 }
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
+-(void)dismissKeyboard {
+    
+    [self.postCaption resignFirstResponder];
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@"write your comment here..."]) {
+        textView.text = @"";
+        textView.textColor = [UIColor blackColor]; //optional
+    }
+    [textView becomeFirstResponder];
     UIImageView *foreground = [[UIImageView alloc] init];
     foreground.frame = CGRectMake( self.containerScroller.bounds.origin.x, self.containerScroller.bounds.origin.y, self.containerScroller.frame.size.width, self.containerScroller.frame.size.height);
     foreground.backgroundColor = [UIColor blackColor];
     foreground.alpha = 0.6f;
     [self.containerScroller addSubview:foreground];
     self.blackView = foreground;
+    self.containerScroller.userInteractionEnabled = NO;
 }
-- (void)textFieldDidEndEditing:(UITextField *)textField{
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@""]) {
+        textView.text = @"write your comment here...";
+        textView.textColor = [UIColor lightGrayColor]; //optional
+    }
+    [self.postCaption resignFirstResponder];
     [self.blackView removeFromSuperview];
+    self.containerScroller.userInteractionEnabled = YES;
+}
+-(void)textViewDidChangeSelection:(UITextView *)textView{
+    if ([textView.text isEqualToString:@"write your comment here..."]) {
+        self.descriptionCharLabel.text = [NSString stringWithFormat:@"0/250"];
+     
+    }else{
+        self.descriptionCharLabel.text = [NSString stringWithFormat:@"%u/250", (textView.text.length)];
+    }
+    
+
+}
+-(BOOL) textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    NSUInteger oldLength = [textView.text length]; NSUInteger replacementLength = [text length]; NSUInteger rangeLength = range.length;
+    
+    NSUInteger newLength = oldLength - rangeLength + replacementLength;
+    
+    BOOL returnKey = [text rangeOfString: @"\n"].location != NSNotFound;
+    
+    return newLength <= 250 || returnKey;
 }
 
 -(void)tabOnFbView : (id) sender
 {
-    //     NSLog(@"Hellooooooo");
-    //    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
-    //    photo.image = self.image;
-    //    photo.caption = self.comment.text;
-    //    photo.userGenerated = YES;
-    //    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
-    //    content.photos = @[photo];
-    //
-    //    [FBSDKShareDialog showFromViewController:self
-    //                                 withContent:content
-    //                                    delegate:self];
+         NSLog(@"Hellooooooo");
+        FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+        photo.image = self.image;
+        //photo.caption = self.comment.text;
+    [photo setCaption:self.comment.text];
+        photo.userGenerated = YES;
+        FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+        content.photos = @[photo];
+    
+        [FBSDKShareDialog showFromViewController:self
+                                     withContent:content
+                                        delegate:self];
     
     
 }
+-(void)tabonInstagramView:(id) sender{
+  
+    NSURL *instagramURL = [NSURL URLWithString:@"instagram://app"];
+    imageMain.image = self.image;
+    if([[UIApplication sharedApplication] canOpenURL:instagramURL])
+    {
+        CGFloat cropVal = (imageMain.image.size.height > imageMain.image.size.width ? imageMain.image.size.width : imageMain.image.size.height);
+        
+        cropVal *= [imageMain.image scale];
+        
+        CGRect cropRect = (CGRect){.size.height = cropVal, .size.width = cropVal};
+        CGImageRef imageRef = CGImageCreateWithImageInRect([imageMain.image CGImage], cropRect);
+        
+        NSData *imageData = UIImageJPEGRepresentation([UIImage imageWithCGImage:imageRef], 1.0);
+      //  CGImageRelease(imageRef);
+        
+        
+        NSFileManager *fileManager = [NSFileManager defaultManager];//create instance of NSFileManager
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); //create an array and store result of our search for the documents directory in it
+        NSString *documentsDirectory = [paths objectAtIndex:0]; //create NSString object, that holds our exact path to the documents directory
+        NSString *fullPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"instagram.igo"]]; //add our image to the path
+        [fileManager createFileAtPath:fullPath contents:imageData attributes:nil];
+        
+        
+        
+        
+        
+        
+//        NSString *writePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"instagram.igo"];
+//        if (![imageData writeToFile:writePath atomically:YES]) {
+//            // failure
+//            NSLog(@"image save failed to path %@", writePath);
+//            return;
+//        } else {
+//            // success.
+    //    }
+        
+        // send it to instagram.
+        NSURL *fileURL = [NSURL fileURLWithPath:fullPath];
+        self.documentController = [UIDocumentInteractionController interactionControllerWithURL:fileURL];
+        self.documentController.delegate = self;
+        [self.documentController setUTI:@"com.instagram.exclusivegram"];
+        [self.documentController setAnnotation:@{@"InstagramCaption" : @"We are making fun"}];
+        [self.documentController presentOpenInMenuFromRect:CGRectMake(0, 0, 320, 480) inView:self.view animated:YES];
+    }
+    else
+    {
+        NSLog (@"Instagram not found");
+        
+    }
+    
+    
 
+}
+-(void) tabOnVKView :(id) sender{
+    NSLog(@"VKtabbed");
+    
+   [[VKSdk initializeWithAppId:@"5444705"] registerDelegate:self];
+  
+    
+    NSArray *SCOPE =@[ @"photos", @"wall"] ;
+    
+    [VKSdk wakeUpSession:SCOPE completeBlock:^(VKAuthorizationState state, NSError *error) {
+     
+        if (state == VKAuthorizationAuthorized) {
+            
+            VKRequest *request = [VKApi uploadWallPhotoRequest:self.image parameters:[VKImageParameters pngImage] userId:0 groupId:0 ];
+            [request executeWithResultBlock:^(VKResponse *response) {
+                NSLog(@"Json result: %@", response.json);
+            } errorBlock:^(NSError * error) {
+                if (error.code != VK_API_ERROR) {
+                    [error.vkError.request repeat];
+                } else {
+                    NSLog(@"VK error: %@", error);
+                }
+            }];
+           
+        } else if (error) {
+             NSLog(@"VK auth error: %@", error);
+           //[VKSdk authorize:SCOPE];
+        }
+    }];
 
+ 
+    
+}
 
 
 -(void)tabOnImage :(id) sender
@@ -304,10 +445,7 @@
     
     
 }
-- (void)handleSingleTap:(UITapGestureRecognizer *)sender
-{
-    [self.comment resignFirstResponder];
-}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -317,12 +455,12 @@
 - (IBAction)upload:(id)sender {
     
     [self.loading startAnimating];
-    [self.comment resignFirstResponder];
+   // [self.postCaption resignFirstResponder];
     [self.upload setEnabled:false];
-    
+    NSLog(@"%@", self.postCaption.text);
     NSString *taglist= @"";
     
-    NSLog(@"TagList size: %d",self.myObjectSelection.count);
+   // NSLog(@"TagList size: %d",self.myObjectSelection.count);
     
     if(self.myObjectSelection.count>0)
     {
@@ -337,12 +475,18 @@
         taglist = [NSString stringWithFormat:@"%@]",taglist];
     }
     
-    NSLog(@"TAGLIST %@",taglist);
-    
-    self.comment.text = [NSString stringWithFormat:@"%@ ",self.comment.text];
+   // NSLog(@"TAGLIST %@",taglist);
+    NSString * str = [[NSString alloc]init];
+    if ([self.postCaption.text  isEqualToString:@"write your comment here..."]) {
+        str = @"";
+        
+    }else{
+        str = self.postCaption.text;
+    }
+    self.postCaption.text = [NSString stringWithFormat:@"%@ ",self.postCaption.text];
     
     NSDictionary *inventory = @{
-                                @"description" : self.comment.text,
+                                @"description" : str,
                                 @"photo" : [self imageToString:self.image],
                                 @"type" : @"0",
                                 @"tagged_list" : taglist,
@@ -350,7 +494,7 @@
                                 @"wall_post_mood":[self.wallPostMood length ]!=0 ?self.wallPostMood:@"",
                                 @"Content-Type" : @"charset=utf-8",
                                 };
-    NSLog(@"%@",inventory);
+   // NSLog(@"%@",inventory);
     
     [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/create" params:inventory tag:@"getPhoto"];
     
@@ -428,28 +572,6 @@
 }
 
 
-- (void)updateLabelUsingContentsOfTextField:(id)sender {
- 
-    
-    self.descriptionCharLabel.text = [NSString stringWithFormat:@"%lu/250", ((UITextField *)sender).text.length];
-    
-    
-    
-}
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    
-    
-    
-    NSUInteger oldLength = [textField.text length]; NSUInteger replacementLength = [string length]; NSUInteger rangeLength = range.length;
-    
-    NSUInteger newLength = oldLength - rangeLength + replacementLength;
-    
-    BOOL returnKey = [string rangeOfString: @"\n"].location != NSNotFound;
-    
-    return newLength <= 250 || returnKey;
-    
-    
-}
 
 #pragma mark - Collection view
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -483,6 +605,36 @@
     return UIEdgeInsetsMake(0,0,0,0);  // top, left, bottom, right
 }
 
+#pragma mark - FBSDKSharingDelegate
+
+- (void)sharer:(id<FBSDKSharing>)sharer didCompleteWithResults:(NSDictionary *)results
+{
+    NSLog(@"completed share:%@", results);
+}
+
+- (void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error
+{
+    NSLog(@"sharing error:%@", error);
+    NSString *message = error.userInfo[FBSDKErrorLocalizedDescriptionKey] ?:
+    @"There was a problem sharing, please try again later.";
+    NSString *title = error.userInfo[FBSDKErrorLocalizedTitleKey] ?: @"Oops!";
+    
+    [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+}
+
+- (void)sharerDidCancel:(id<FBSDKSharing>)sharer
+{
+    NSLog(@"share cancelled");
+}
+
+#pragma mark - vk sdk delegate
+
+- (void)vkSdkAccessAuthorizationFinishedWithResult:(VKAuthorizationResult *)result{
+    NSLog(@"Result : %@" ,result);
+}
+- (void)vkSdkUserAuthorizationFailed{
+ NSLog(@"AUthorization Failed  ");
+}
 
 
 @end

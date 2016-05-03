@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "Places.h"
 
-@import GoogleMaps;
+#import "GoogleMaps/GoogleMaps.h"
+
 
 @interface ShareLocationViewController : UIViewController<CLLocationManagerDelegate>
 {
