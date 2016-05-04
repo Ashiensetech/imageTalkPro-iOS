@@ -44,6 +44,7 @@
 @property (assign,nonatomic) BOOL updateWill;
 @property (assign,nonatomic) int updateId;
 @property (assign,nonatomic) int updateValue;
+@property (weak, nonatomic) IBOutlet UILabel *toast;
 
 
 
