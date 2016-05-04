@@ -994,6 +994,21 @@
         
         if(self.dataDelete.responseStat.status){
             
+            self.toast.text = @"The post is successfully deleted";
+            self.toast.hidden = NO;
+            [UIView animateWithDuration:0.5 delay:2.0 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+                // Animate the alpha value of your imageView from 1.0 to 0.0 here
+                self.toast.alpha = 0.9f;
+                
+            } completion:^(BOOL finished) {
+                // Once the animation is completed and the alpha has gone to 0.0, hide the view for good
+                self.toast.hidden = YES;
+                
+                
+            }];
+
+            
+            
             [self.myObject removeObjectAtIndex:index];
             
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
