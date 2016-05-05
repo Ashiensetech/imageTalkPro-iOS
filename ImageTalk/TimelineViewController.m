@@ -108,6 +108,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+   
     [[ApiAccess getSharedInstance] setDelegate:self];
     [[[SocektAccess getSharedInstance]getSocket]setDelegate:self];
     [[[SocektAccess getSharedInstance]getSocket] reconnect];
@@ -116,7 +117,7 @@
     
     if(self.updateWill)
     {
-        
+        NSLog(@"viewDidAppear");
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.updateId inSection:0];
         
         NSLog(@"Update Value: %d",self.updateValue);
@@ -125,7 +126,10 @@
         
         
         TimelineTableViewCell *cell = (TimelineTableViewCell *)[self.tableData cellForRowAtIndexPath:indexPath];
-        cell.commentLabel.text = [NSString stringWithFormat:@"%d comments",self.updateValue];
+        
+       
+        
+        
         WallPost *data = self.myObject[indexPath.row];
         data.commentCount = self.updateValue;
         
@@ -252,7 +256,7 @@
     if(![data.description isEqual:@""])
     {
         CGSize size = [data.description sizeWithFont:[UIFont fontWithName:@"Helvetica" size:14] constrainedToSize:CGSizeMake(280, 1000) lineBreakMode:NSLineBreakByWordWrapping];
-        height = height + ((size.height < 40)? 40 : size.height);
+        height = height + ((size.height < 40)? 40 : size.height)+5;
     }
     
     
@@ -279,6 +283,20 @@
     
     cell.image.userInteractionEnabled = YES;
     cell.image.tag = indexPath.row;
+    
+    if(self.updateWill == YES)
+    {
+        NSLog(@"YES YES");
+        NSLog(@"Updated value : %d", (int)self.updateValue);
+      data.commentCount= (int)self.updateValue;
+     
+        
+    }
+    else
+    {
+        data.commentCount = (int)data.comments.count;
+        
+    }
     
     NSLog(@"isliked: %d",self.dataLike.responseData.isLiked);
     NSLog(@"wall post id: %d",data.id);
@@ -577,7 +595,7 @@
     
     cell.commentBtn.tag = indexPath.row;
     
-    cell.commentLabel.text = [NSString stringWithFormat:@"%lu comments",(unsigned long)data.comments.count];
+    cell.commentLabel.text = [NSString stringWithFormat:@"%d comments",data.commentCount];
     
     cell.profileBtn.tag = indexPath.row;
     cell.loc.tag = indexPath.row;
@@ -913,7 +931,7 @@
         CommentsViewController *data = [segue destinationViewController];
         WallPost *post = self.myObject[sender.tag];
         data.hidesBottomBarWhenPushed = YES;
-        data.index  = sender.tag;
+        data.index  = (int)sender.tag;
         data.postId = post.id;
         data.postOwnerId = post.owner.id;
     }
