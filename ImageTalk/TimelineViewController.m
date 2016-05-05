@@ -89,8 +89,7 @@
     [[SocektAccess getSharedInstance]setItem:[self.tabBarController.tabBar.items objectAtIndex:1]];
     
     
-    
-    
+   
     
 }
 

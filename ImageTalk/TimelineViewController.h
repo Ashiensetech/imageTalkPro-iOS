@@ -18,7 +18,7 @@
 #import "ApiAccess.h"
 
 
-@interface TimelineViewController : UIViewController  <UITableViewDelegate,UITableViewDataSource,tcpSocketChatDelegate,ApiAccessDelegate>
+@interface TimelineViewController : UIViewController  <UITableViewDelegate,UITableViewDataSource,tcpSocketChatDelegate,ApiAccessDelegate,UITabBarControllerDelegate>
 {
     NSUserDefaults *defaults;
     NSString *baseurl;

@@ -1476,7 +1476,7 @@
                                                                         <constraint firstAttribute="height" constant="1" id="Pv5-8m-dhE"/>
                                                                     </constraints>
                                                                 </view>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EkB-Tq-bhH">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="justified" lineBreakMode="characterWrap" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EkB-Tq-bhH">
                                                                     <rect key="frame" x="20" y="11" width="564" height="14"/>
                                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                                     <nil key="highlightedColor"/>
@@ -8187,17 +8187,17 @@
         <image name="web" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="DOh-Uv-lDf"/>
         <segue reference="Obc-pZ-my3"/>
         <segue reference="7rK-5W-S99"/>
-        <segue reference="m7I-pa-qFJ"/>
-        <segue reference="6GA-wf-SNi"/>
-        <segue reference="7WC-db-158"/>
-        <segue reference="Cos-Ov-8c2"/>
         <segue reference="EFU-E8-vhl"/>
         <segue reference="JvH-LZ-azZ"/>
-        <segue reference="jOb-ZT-cu4"/>
         <segue reference="0HS-LD-tJf"/>
         <segue reference="0Ay-17-uwa"/>
+        <segue reference="jOb-ZT-cu4"/>
+        <segue reference="m7I-pa-qFJ"/>
+        <segue reference="7WC-db-158"/>
+        <segue reference="6GA-wf-SNi"/>
+        <segue reference="Cos-Ov-8c2"/>
+        <segue reference="DOh-Uv-lDf"/>
     </inferredMetricsTieBreakers>
 </document>
