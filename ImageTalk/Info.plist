@@ -28,7 +28,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.6.9</string>
+	<string>1.7.0</string>
 	<key>FacebookAppID</key>
 	<string>267236836947716</string>
 	<key>FacebookDisplayName</key>
@@ -48,10 +48,10 @@
 		<string>fbauth</string>
 		<string>fbauth2</string>
 		<string>fb-messenger-api20140430</string>
-        <string>instagram</string>
-        <string>vk</string>
-        <string>vk-share</string>
-        <string>vkauthorize</string>
+		<string>instagram</string>
+		<string>vk</string>
+		<string>vk-share</string>
+		<string>vkauthorize</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -59,18 +59,18 @@
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
-        <key>NSExceptionDomains</key>
-        <dict>
-            <key>vk.com</key>
-            <dict>
-                <key>NSExceptionRequiresForwardSecrecy</key>
-                <false/>
-                <key>NSIncludesSubdomains</key>
-                <true/>
-                <key>NSExceptionAllowsInsecureHTTPLoads</key>
-                <true/>
-            </dict>
-        </dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>vk.com</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+		</dict>
 	</dict>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>USE IT</string>
@@ -103,5 +103,4 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>
-
 </plist>

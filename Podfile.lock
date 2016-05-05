@@ -1,5 +1,5 @@
 PODS:
-  - GoogleMaps (1.9.2)
+  - GoogleMaps (1.13.1)
   - VK-ios-sdk (1.3.16)
 
 DEPENDENCIES:
@@ -7,7 +7,7 @@ DEPENDENCIES:
   - VK-ios-sdk
 
 SPEC CHECKSUMS:
-  GoogleMaps: 56aac0f356383bab283c731acb1e687c51de6472
+  GoogleMaps: 8935220056a6cc8e9ca298b4da4ae530620aa71b
   VK-ios-sdk: 7804776d9947cf9b6f54a259fac589b9212156f1
 
 COCOAPODS: 0.39.0
