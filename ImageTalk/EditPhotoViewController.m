@@ -235,7 +235,10 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if([scrollView isEqual: self.scroller]&&self.type==1){
-       
+        
+   //   UIImage *small = [UIImage imageWithCGImage:self.image.CGImage scale:4     orientation:self.image.imageOrientation];
+        NSLog(@"%f %f",self.image.size.width, self.image.size.height);
+        
         if (self.lastContentOffset > scrollView.contentOffset.x)
            self.currentScrollDirection = 1; //Right
         else if (self.lastContentOffset < scrollView.contentOffset.x)
@@ -246,33 +249,21 @@
         self.lastContentOffset = scrollView.contentOffset.x;
         CGFloat radians =0.0;
         radians = (self.lastContentOffset-237)/302;
-        //self.image = [self.image scaleImageToSize:CGSizeMake(self.imageHolder.size.width, self.imageHolder.size.height)];
-        [self.imageCropper setCropViewPosition:55 y:30 width:220 height:220];
-
-        UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.image.size.width/1.7, self.image.size.height/1.7)];
+        UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.image.size.width, self.image.size.height)];
         CGAffineTransform t = CGAffineTransformMakeRotation(radians);//radians
         rotatedViewBox.transform = t;
         CGSize rotatedSize = rotatedViewBox.frame.size;
-        
-        // Create the bitmap context
         UIGraphicsBeginImageContext(rotatedSize);
         CGContextRef bitmap = UIGraphicsGetCurrentContext();
-        
-        // Move the origin to the middle of the image so we will rotate and scale around the center.
         CGContextTranslateCTM(bitmap, rotatedSize.width/2, rotatedSize.height/2);
-        
-        //   // Rotate the image context
-        CGContextRotateCTM(bitmap,radians );//radians
-        
-        // Now, draw the rotated/scaled image into the context
+        CGContextRotateCTM(bitmap,radians );
         CGContextScaleCTM(bitmap, 1.0, -1.0);
-        
-        CGContextDrawImage(bitmap, CGRectMake(-self.image.size.width / 2, -self.image.size.height / 2, self.image.size.width+75, self.image.size.height+75), [self.image CGImage]);
+        CGContextDrawImage(bitmap, CGRectMake(-self.image.size.width/ 2, -self.image.size.height/ 2, self.image.size.width, self.image.size.height), [self.image CGImage]);
         UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-        self.rotatedImage = newImage;
+        self.rotatedImage = [UIImage imageWithCGImage:newImage.CGImage scale:4     orientation:newImage.imageOrientation];;
         UIGraphicsEndImageContext();
         [self.imageCropper setImage:self.rotatedImage];
-      
+       NSLog(@"%f %f",self.rotatedImage.size.width, self.rotatedImage.size.height);
     }
 }
 
