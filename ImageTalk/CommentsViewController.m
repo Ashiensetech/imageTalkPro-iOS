@@ -16,6 +16,7 @@
 #import "ToastView.h"
 
 @interface CommentsViewController ()
+@property TimelineViewController *timeLine;
 
 @end
 
@@ -244,7 +245,9 @@
     {
         
         NSError* error = nil;
-        
+        NSLog(@"createComment inside");
+        NSLog(@"%@",self.navigationController.viewControllers);
+       
         self.responseAdd = [[CommentResponse alloc] initWithDictionary:data error:&error];
         [self.commentTxt resignFirstResponder];
         
@@ -252,6 +255,11 @@
         {
             self.commentTxt.text=@"";
             [self getData];
+            TimelineViewController *t = (TimelineViewController *)self.navigationController.viewControllers[0];
+            t.updateWill = YES;
+            t.updateId = self.index;
+            t.updateValue =(int)self.response.responseData.count+1;
+            NSLog(@"response %d",(int)self.response.responseData.count);
             
         }
     }
@@ -306,5 +314,9 @@
         
     }
 }
+
+
+
+
 
 @end
