@@ -120,8 +120,7 @@
     
     //orientation Button
     [self.orientationBtn setHidden:YES];
-    // self.orientationBtn.frame = CGRectMake(self.view.center.x, self.view.center.y+25, 25, 45);
-   // [self.view addSubview:_orientationBtn];
+   
   
     
 }
@@ -245,12 +244,12 @@
            self.currentScrollDirection = 0;
         
         self.lastContentOffset = scrollView.contentOffset.x;
-        
-       
-        [self.imageCropper setCropViewPosition:50 y:30 width:250 height:250];
         CGFloat radians =0.0;
         radians = (self.lastContentOffset-237)/302;
-        UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.image.size.width/1.5, self.image.size.height/1.5)];
+        //self.image = [self.image scaleImageToSize:CGSizeMake(self.imageHolder.size.width, self.imageHolder.size.height)];
+        [self.imageCropper setCropViewPosition:55 y:30 width:220 height:220];
+
+        UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.image.size.width/1.7, self.image.size.height/1.7)];
         CGAffineTransform t = CGAffineTransformMakeRotation(radians);//radians
         rotatedViewBox.transform = t;
         CGSize rotatedSize = rotatedViewBox.frame.size;
@@ -268,13 +267,12 @@
         // Now, draw the rotated/scaled image into the context
         CGContextScaleCTM(bitmap, 1.0, -1.0);
         
-        CGContextDrawImage(bitmap, CGRectMake(-self.image.size.width / 2, -self.image.size.height / 2, self.image.size.width+50, self.image.size.height+50), [self.image CGImage]);
+        CGContextDrawImage(bitmap, CGRectMake(-self.image.size.width / 2, -self.image.size.height / 2, self.image.size.width+75, self.image.size.height+75), [self.image CGImage]);
         UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
         self.rotatedImage = newImage;
         UIGraphicsEndImageContext();
-        
-        [self.imageCropper setImage: self.rotatedImage];
-        [self.imageCropper setCrop:CGRectMake(0,0 , self.rotatedImage.size.width, self.rotatedImage.size.width)];
+        [self.imageCropper setImage:self.rotatedImage];
+      
     }
 }
 
@@ -557,7 +555,6 @@
 }
 - (IBAction)adjustImageAction:(id)sender {
     self.isAspect = !self.isAspect;
-    NSLog(@"Hello");
     
     if (self.isAspect)
     {
@@ -576,7 +573,7 @@
 
 -(void) receivedResponse:(NSDictionary *)data tag:(NSString *)tag index:(int)index
 {
-    NSLog(@"%@",tag);
+    
     [self.loading stopAnimating];
     
     if ([tag isEqualToString:@"changePicture"])
