@@ -1360,7 +1360,7 @@
                                             <constraint firstAttribute="trailing" secondItem="EIi-nR-71t" secondAttribute="trailing" id="zHR-dc-PBr"/>
                                         </constraints>
                                     </view>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PvT-C6-Vsc">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PvT-C6-Vsc">
                                         <rect key="frame" x="-1" y="0.0" width="602" height="48"/>
                                         <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1370,10 +1370,12 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="PvT-C6-Vsc" firstAttribute="top" secondItem="ESK-gX-SMW" secondAttribute="top" id="365-q5-bhJ"/>
                                     <constraint firstItem="Oed-UJ-UPa" firstAttribute="width" secondItem="ESK-gX-SMW" secondAttribute="width" id="8q8-cO-Oxi"/>
                                     <constraint firstAttribute="bottom" secondItem="ESK-gX-SMW" secondAttribute="bottom" id="Dzp-db-gfQ"/>
                                     <constraint firstItem="Oed-UJ-UPa" firstAttribute="leading" secondItem="ESK-gX-SMW" secondAttribute="trailing" id="Iu7-93-YON"/>
                                     <constraint firstItem="ESK-gX-SMW" firstAttribute="top" secondItem="UAV-TJ-uy2" secondAttribute="top" id="Kog-qx-SAM"/>
+                                    <constraint firstItem="PvT-C6-Vsc" firstAttribute="bottom" secondItem="Oed-UJ-UPa" secondAttribute="bottom" id="TI8-hn-5pR"/>
                                     <constraint firstAttribute="trailing" secondItem="PvT-C6-Vsc" secondAttribute="trailing" constant="-1" id="XQD-wt-pfW"/>
                                     <constraint firstItem="ESK-gX-SMW" firstAttribute="leading" secondItem="UAV-TJ-uy2" secondAttribute="leading" id="ZNw-f8-9QL"/>
                                     <constraint firstAttribute="trailing" secondItem="Oed-UJ-UPa" secondAttribute="trailing" id="ZdQ-6v-Z0b"/>
@@ -1877,6 +1879,10 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics" barStyle="black"/>
                     <connections>
                         <outlet property="emptyView" destination="3Df-nn-NgA" id="eyp-Hz-2v3"/>
+                        <outlet property="heightConstraint" destination="guT-LM-yZS" id="9PE-V7-Joy"/>
+                        <outlet property="moodView" destination="Oed-UJ-UPa" id="Rv8-dS-CTX"/>
+                        <outlet property="parentOfPhotoview" destination="UAV-TJ-uy2" id="Etf-BW-N8y"/>
+                        <outlet property="photoView" destination="ESK-gX-SMW" id="ZbB-eG-eho"/>
                         <outlet property="tableData" destination="wUL-Ie-sfu" id="oR9-BK-Sqj"/>
                         <outlet property="toast" destination="PvT-C6-Vsc" id="09g-w1-E2p"/>
                     </connections>

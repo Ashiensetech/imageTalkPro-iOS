@@ -30,6 +30,7 @@
 @property (strong,nonatomic)UIImage *img;
 @property int counter;
 @property int counter1;
+@property UILabel *topView;
 
 @end
 
@@ -88,10 +89,32 @@
     
     [[SocektAccess getSharedInstance]setItem:[self.tabBarController.tabBar.items objectAtIndex:1]];
     
+    UITabBarController *tabBarController = (UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController ;
     
+    [tabBarController setDelegate:self];
    
+    self.topView = [[UILabel alloc] init];
+    self.topView.frame = CGRectMake( 0, 0,self.view.frame.size.width, 20);
+    self.topView.backgroundColor = [UIColor orangeColor];
+    
+
+   // self.topView.hidden = YES;
     
 }
+
+
+-(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+   NSLog(@"comeon: %@", tabBarController);
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+
+    [self.tableData scrollToRowAtIndexPath:indexPath
+                          atScrollPosition:UITableViewScrollPositionTop
+                                  animated:YES];
+    
+    
+}
+
 
 
 - (IBAction)refresh:(id)sender {
@@ -423,7 +446,7 @@
     
     
     NSLog(@"wallpostmood: %@",data.wallPostMood);
-    if([data.wallPostMood isEqual:@"" ] && [data.wallPostMood isEqual:@"none"])
+    if([data.wallPostMood isEqual:@"" ] || [data.wallPostMood isEqual:@"none"])
     {
         
         [cell.profilePic sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.owner.user.picPath.original.path]]
@@ -880,11 +903,49 @@
     CGPoint offset = scrollView.contentOffset;
     self.counter = 0;
     CGRect bounds = scrollView.bounds;
+        // then we are at the top
+        
+    
     CGSize size = scrollView.contentSize;
     UIEdgeInsets inset = scrollView.contentInset;
     float y = offset.y + bounds.size.height - inset.bottom;
     float h = size.height;
     float reload_distance = 10;
+    
+    
+    float scrollViewHeight = scrollView.frame.size.height;
+    float scrollContentSizeHeight = scrollView.contentSize.height;
+    float scrollOffset = scrollView.contentOffset.y;
+    
+    
+    if (scrollOffset == 0)
+    {
+        [self.topView removeFromSuperview];
+        
+        [[self navigationController] setNavigationBarHidden:NO animated:YES];
+     
+        
+        [self changeHeight:48];
+       
+        
+    }
+    else if(scrollOffset>2)
+    {
+        [self.view addSubview:_topView];
+        [[self navigationController] setNavigationBarHidden:YES animated:YES];
+        
+        [self changeHeight:0];
+        
+    }
+    else if (scrollOffset + scrollViewHeight == scrollContentSizeHeight)
+    {
+        // then we are at the end
+    }
+    
+    
+    
+    
+    
     if(y > h + reload_distance) {
         
         
@@ -895,11 +956,20 @@
             [self getData:self.offset];
             
             NSLog(@"load more rows");
+            
         }
         
         
     }
     
+}
+
+
+- (void)changeHeight:(CGFloat )height {
+    self.heightConstraint.constant = height;
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.view layoutIfNeeded];
+    }];
 }
 
 
