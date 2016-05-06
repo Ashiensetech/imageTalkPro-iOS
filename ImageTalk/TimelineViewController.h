@@ -45,6 +45,10 @@
 @property (assign,nonatomic) int updateId;
 @property (assign,nonatomic) int updateValue;
 @property (weak, nonatomic) IBOutlet UILabel *toast;
+@property (weak, nonatomic) IBOutlet UIView *moodView;
+@property (weak, nonatomic) IBOutlet UIView *photoView;
+@property (weak, nonatomic) IBOutlet UIView *parentOfPhotoview;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
 
 
 
