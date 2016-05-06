@@ -75,7 +75,7 @@
     self.adjustFitBtn.frame = CGRectInset(self.adjustFitBtn.frame, -0.5f, -0.5f);
     self.adjustFitBtn.layer.borderColor = [UIColor whiteColor].CGColor;
     self.adjustFitBtn.layer.borderWidth = 0.5f;
-  
+    
     self.cropperImage = [[HIPImageCropperView alloc]
                          initWithFrame:self.cropView.bounds
                          cropAreaSize:CGSizeMake(self.view.frame.size.width,self.view.frame.size.width-20)
@@ -91,7 +91,7 @@
     UIImageView *tempImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"scale-2.png"]] ;
     tempImageView.frame = CGRectMake(self.scroller.bounds.origin.x, self.scroller.bounds.origin.y, tempImageView.image.size.width, tempImageView.image.size.height);//self.scroller.bounds;
     self.scaleImage = tempImageView;
-   
+    
     [_scroller setShowsHorizontalScrollIndicator:NO];
     [_scroller setShowsVerticalScrollIndicator:NO];
     _scroller.backgroundColor = [UIColor blackColor];
@@ -102,10 +102,10 @@
     
     [_scroller addSubview:self.scaleImage];
     _scroller.decelerationRate = UIScrollViewDecelerationRateFast;
- 
-     [self.scroller setHidden:YES];
     
-     self.pointer= [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lg-color.png"]] ;
+    [self.scroller setHidden:YES];
+    
+    self.pointer= [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lg-color.png"]] ;
     _pointer.frame = CGRectMake(self.view.center.x, self.view.center.y+79 , 2.5, _pointer.image.size.height);
     
     [self.view addSubview:_pointer];
@@ -120,8 +120,8 @@
     
     //orientation Button
     [self.orientationBtn setHidden:YES];
-   
-  
+    
+    
     
 }
 - (IBAction)orientationChangeAction:(id)sender {
@@ -141,7 +141,7 @@
                           orientation: UIImageOrientationRight];
             
             NSLog(@"Down");
-
+            
             break;
         case UIImageOrientationLeft: //Down
             imageToDisplay =
@@ -149,7 +149,7 @@
                                 scale:[originalImage scale]
                           orientation: UIImageOrientationDown];
             NSLog(@"Left");
-
+            
             break;
         case UIImageOrientationRight: //Up
             imageToDisplay =
@@ -175,7 +175,7 @@
         [self.cropView addSubview:self.cropperImage];
         [self.cropperImage setOriginalImage:self.image];
         [self.cropperImage setOriginalImage:[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)]];
-       
+        
     }
     [self.orientationBtn setHidden:YES];
     [_pointer setHidden:YES];
@@ -197,7 +197,7 @@
     [_scroller setContentOffset:CGPointMake(self.scaleImage.image.size.width/4+55.5, 0)];
     [self.scroller setHidden:NO];
     [_pointer setHidden:NO];
-     self.type = 1;
+    self.type = 1;
     [self changeType];
     
     [self callBJImageCropper];
@@ -209,7 +209,7 @@
         self.image= [self.imageCropper getCroppedImage];
         [self.imageCropper removeFromSuperview];
         [self.cropView addSubview:self.cropperImage];
-//        [self.cropperImage setOriginalImage:self.image];
+        //        [self.cropperImage setOriginalImage:self.image];
         [self.cropperImage setOriginalImage:[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)]];
     }
     [self.orientationBtn setHidden:YES];
@@ -235,21 +235,18 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if([scrollView isEqual: self.scroller]&&self.type==1){
-        
-   //   UIImage *small = [UIImage imageWithCGImage:self.image.CGImage scale:4     orientation:self.image.imageOrientation];
-        NSLog(@"%f %f",self.image.size.width, self.image.size.height);
-        
         if (self.lastContentOffset > scrollView.contentOffset.x)
-           self.currentScrollDirection = 1; //Right
+            self.currentScrollDirection = 1; //Right
         else if (self.lastContentOffset < scrollView.contentOffset.x)
-           self.currentScrollDirection = 2;//Left
+            self.currentScrollDirection = 2;//Left
         else if(self.lastContentOffset == scrollView.contentOffset.x)
-           self.currentScrollDirection = 0;
+            self.currentScrollDirection = 0;
         
         self.lastContentOffset = scrollView.contentOffset.x;
         CGFloat radians =0.0;
         radians = (self.lastContentOffset-237)/302;
-        UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.image.size.width, self.image.size.height)];
+        
+        UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.image.size.width/1.5, self.image.size.height/1.5)];
         CGAffineTransform t = CGAffineTransformMakeRotation(radians);//radians
         rotatedViewBox.transform = t;
         CGSize rotatedSize = rotatedViewBox.frame.size;
@@ -258,15 +255,31 @@
         CGContextTranslateCTM(bitmap, rotatedSize.width/2, rotatedSize.height/2);
         CGContextRotateCTM(bitmap,radians );
         CGContextScaleCTM(bitmap, 1.0, -1.0);
-        CGContextDrawImage(bitmap, CGRectMake(-self.image.size.width/ 2, -self.image.size.height/ 2, self.image.size.width, self.image.size.height), [self.image CGImage]);
+        CGContextDrawImage(bitmap, CGRectMake(-self.image.size.width/ 2, -self.image.size.height/ 2, self.image.size.width+50, self.image.size.height+50), [self.image CGImage]);
         UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-        self.rotatedImage = [UIImage imageWithCGImage:newImage.CGImage scale:4     orientation:newImage.imageOrientation];;
+        self.rotatedImage =  [self croppedImageWithImage:newImage zoom:1.45];
         UIGraphicsEndImageContext();
         [self.imageCropper setImage:self.rotatedImage];
-       NSLog(@"%f %f",self.rotatedImage.size.width, self.rotatedImage.size.height);
+        CGRect imagePosition  = [self imagePositionInImageView: self.imageCropper];
+        [self.imageCropper setCropViewPosition:imagePosition.origin.x y:imagePosition.origin.y  width:imagePosition.size.width height:imagePosition.size.height];
+      
     }
 }
-
+-(UIImage*)croppedImageWithImage:(UIImage *)image zoom:(CGFloat)zoom
+{
+    CGFloat zoomReciprocal = 1.0f / zoom;
+    
+    CGPoint offset = CGPointMake(image.size.width * ((1.0f - zoomReciprocal) / 2.0f), image.size.height * ((1.0f - zoomReciprocal) / 2.0f));
+    CGRect croppedRect = CGRectMake(offset.x, offset.y, image.size.width * zoomReciprocal, image.size.height * zoomReciprocal);
+    
+    CGImageRef croppedImageRef = CGImageCreateWithImageInRect([image CGImage], croppedRect);
+    
+    UIImage* croppedImage = [[UIImage alloc] initWithCGImage:croppedImageRef scale:[image scale] orientation:[image imageOrientation]];
+    
+    CGImageRelease(croppedImageRef);
+    
+    return croppedImage;
+}
 
 
 -(void)changeType
@@ -284,7 +297,7 @@
     [[ApiAccess getSharedInstance] setDelegate:self];
     [self setCollectionData];
     
-
+    
 }
 -(void) setCollectionData{
     self.effectObject = [[NSMutableArray alloc] initWithObjects:
@@ -325,18 +338,18 @@
 }
 
 - (IBAction)save:(id)sender {
-
+    
     
     
     if(self.isTimeline)
     {
-         [self performSegueWithIdentifier:@"sharePhoto" sender:self];
+        [self performSegueWithIdentifier:@"sharePhoto" sender:self];
     }
     else
     {
-       [self.loading startAnimating];
-       NSDictionary *inventory = @{@"photo" : [self imageToString:[self.cropperImage processedImage]]};
-//        NSLog(@"%@",[self imageToString:[self.cropperImage processedImage]]);
+        [self.loading startAnimating];
+        NSDictionary *inventory = @{@"photo" : [self imageToString:[self.cropperImage processedImage]]};
+        //        NSLog(@"%@",[self imageToString:[self.cropperImage processedImage]]);
         [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/profile/change/picture" params:inventory tag:@"changePicture"];
     }
 }
@@ -361,22 +374,22 @@
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
     
     if (self.type == 0) {
-         return self.effectObject.count;
+        return self.effectObject.count;
     }
     
     else if (self.type == 1) {
-         return self.lipsObject.count;
+        return self.lipsObject.count;
     }
     
     else if (self.type == 2) {
-         return self.smilyObject.count;
+        return self.smilyObject.count;
     }
     
     else{
         return self.effectObject.count;
-       //  return self.borderObject.count;
+        //  return self.borderObject.count;
     }
-   
+    
 }
 
 
@@ -384,22 +397,22 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     //[self.view addSubview:self.loading];
-
-   
-  
+    
+    
+    
     
     if (self.type == 0) {
         self.loading.hidden = NO;
         
         [  self.loading startAnimating];
         
-     //   [self performSelector:@selector(saveClicked) withObject:nil afterDelay:0.1];
+        //   [self performSelector:@selector(saveClicked) withObject:nil afterDelay:0.1];
         
         [self.view bringSubviewToFront:  self.loading];
         
         
         UIImage * convertImage = self.image;
-    
+        
         switch (indexPath.row) {
             case 0:
                 convertImage= self.imageHolder;
@@ -414,7 +427,7 @@
                 convertImage = [self.image e3];
                 break;
             case 4:
-               convertImage= [self.image e4];
+                convertImage= [self.image e4];
                 break;
             case 5:
                 convertImage = [self.image e5];
@@ -423,7 +436,7 @@
                 convertImage = [self.image e6];
                 break;
             case 7:
-              convertImage = [self.image e7];
+                convertImage = [self.image e7];
                 break;
             case 8:
                 convertImage = [self.image e8];
@@ -447,7 +460,7 @@
                 break;
         }
         if(self.isAspect){
-        [self.cropperImage setOriginalImage:[convertImage scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)]];
+            [self.cropperImage setOriginalImage:[convertImage scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)]];
         }else{
             [self.cropperImage setOriginalImage:convertImage ];
         }
@@ -485,11 +498,11 @@
     if (self.type == 3) {
         
     }
-   
+    
 }
 -(void) setSticker:(UIImage *)sticker  IndexRow: (int) row{
     UIImageView *stickerView = [[UIImageView alloc]
-                               initWithImage: sticker];
+                                initWithImage: sticker];
     CGRect stickerFrame = CGRectMake(50, 50, 140, 140);
     
     UIView* contentView = [[UIView alloc] initWithFrame:stickerFrame];
@@ -503,10 +516,10 @@
     userResizableView1.contentView = contentView;//contentView;
     userResizableView1.preventsPositionOutsideSuperview = YES;
     userResizableView1.translucencySticker = NO;
-     userResizableView1.preventsCustomButton = NO;
-//    [userResizableView1 setButton:ZDSTICKERVIEW_BUTTON_CUSTOM
-//                           image:[UIImage imageNamed:@"tick-icon.png"]];
-  
+    userResizableView1.preventsCustomButton = NO;
+    //    [userResizableView1 setButton:ZDSTICKERVIEW_BUTTON_CUSTOM
+    //                           image:[UIImage imageNamed:@"tick-icon.png"]];
+    
     [userResizableView1 showEditingHandles];
     [self.cropView addSubview:userResizableView1];
     [stickerArray addObject:userResizableView1];
@@ -529,7 +542,7 @@
     else if (self.type == 1) {
         cell.image.image = [[self.lipsObject objectAtIndex:indexPath.row] valueForKey:@"image"];
         cell.image.layoutMargins = UIEdgeInsetsMake(0.0, 0.0,10,0);
-       cell.title.text = @"";
+        cell.title.text = @"";
     }
     else if (self.type == 2) {
         cell.image.image = [[self.smilyObject objectAtIndex:indexPath.row] valueForKey:@"image"];
@@ -549,13 +562,14 @@
     
     if (self.isAspect)
     {
-       [self.cropperImage setOriginalImage:[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)]];
+       
+        [self.cropperImage setOriginalImage:[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)] ];
     }
     else
     {
-      //  [self.cropperImage setOriginalImage:[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.height)]];
-
-       [self.cropperImage setOriginalImage:self.image];
+        //  [self.cropperImage setOriginalImage:[self.image scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.height)]];
+        
+        [self.cropperImage setOriginalImage:self.image];
         
     }
 }
@@ -575,7 +589,7 @@
             self.app.userPic = self.response.responseData.picPath.original.path;
             [self.navigationController popToRootViewControllerAnimated:YES];
         }
-
+        
     }
     
 }
@@ -588,38 +602,38 @@
 
 
 - (UIImage *)imageRotatedByDegrees:(CGFloat)degrees Image:(UIImage *) image
-    {
-        // calculate the size of the rotated view's containing box for our drawing space
-        UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,image.size.width, image.size.height)];
-        CGAffineTransform t = CGAffineTransformMakeRotation(degrees);
-        rotatedViewBox.transform = t;
-        CGSize rotatedSize = rotatedViewBox.frame.size;
-        
-        // Create the bitmap context
-        UIGraphicsBeginImageContext(rotatedSize);
-        CGContextRef bitmap = UIGraphicsGetCurrentContext();
-        
-        // Move the origin to the middle of the image so we will rotate and scale around the center.
-        CGContextTranslateCTM(bitmap, rotatedSize.width/2, rotatedSize.height/2);
-        
-        //   // Rotate the image context
-        CGContextRotateCTM(bitmap, degrees);
-        
-        // Now, draw the rotated/scaled image into the context
-        CGContextScaleCTM(bitmap, 1.0, -1.0);
-        CGContextDrawImage(bitmap, CGRectMake(-image.size.width / 2, -image.size.height / 2, image.size.width, image.size.height), [image CGImage]);
-        
-        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        return newImage;
-        
-    }
-
+{
+    // calculate the size of the rotated view's containing box for our drawing space
+    UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,image.size.width, image.size.height)];
+    CGAffineTransform t = CGAffineTransformMakeRotation(degrees);
+    rotatedViewBox.transform = t;
+    CGSize rotatedSize = rotatedViewBox.frame.size;
     
+    // Create the bitmap context
+    UIGraphicsBeginImageContext(rotatedSize);
+    CGContextRef bitmap = UIGraphicsGetCurrentContext();
+    
+    // Move the origin to the middle of the image so we will rotate and scale around the center.
+    CGContextTranslateCTM(bitmap, rotatedSize.width/2, rotatedSize.height/2);
+    
+    //   // Rotate the image context
+    CGContextRotateCTM(bitmap, degrees);
+    
+    // Now, draw the rotated/scaled image into the context
+    CGContextScaleCTM(bitmap, 1.0, -1.0);
+    CGContextDrawImage(bitmap, CGRectMake(-image.size.width / 2, -image.size.height / 2, image.size.width, image.size.height), [image CGImage]);
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+    
+}
+
+
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-   
+    
     if(stickerArray.count>0){
         UIImage *stickeredImage =(!self.isAspect) ? [self.cropperImage processedImage] : self.image;
         for(int i=0 ; i<stickerArray.count ;i++){
@@ -657,14 +671,14 @@
             
         }
         self.image = stickeredImage;
-
+        
     }
     
     if ([segue.identifier isEqualToString:@"sharePhoto"])
     {
-       
+        
         SharePhotoViewController *data = [segue destinationViewController];
-      //  data.image = self.body.image;
+        //  data.image = self.body.image;
         if(self.type==1){
             data.image = [[self.imageCropper getCroppedImage] scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)];
         }else if(stickerArray.count>0){
@@ -672,10 +686,10 @@
             
         }
         else{
-             data.image = (!self.isAspect) ? [self.cropperImage processedImage] : self.image;
+            data.image = (!self.isAspect) ? [self.cropperImage processedImage] : self.image;
         }
-       
-
+        
+        
     }
     
     if ([segue.identifier isEqualToString:@"profileShow"])
@@ -711,7 +725,7 @@
 
 - (void)stickerViewDidCustomButtonTap:(ZDStickerView *)sticker
 {
-
+    
 }
 
 - (void)stickerViewDidBeginEditing:(ZDStickerView *)sticker{
@@ -719,7 +733,7 @@
 }
 
 - (void)stickerViewDidEndEditing:(ZDStickerView *)sticker{
-      NSLog(@"end : %f",sticker.contentView.frame.size.width);
+    NSLog(@"end : %f",sticker.contentView.frame.size.width);
     NSLog(@"%@",sticker.subviews);
 }
 
@@ -750,15 +764,15 @@
         self.imageCropper.showNodes = YES;
         self.imageCropper.center = self.cropView.center;
         CGRect imagePosition  = [self imagePositionInImageView: self.imageCropper];
-        self.imageCropper.frame = imagePosition;
+        self.imageCropper.frame =imagePosition;
         [self.imageCropper setCropViewPosition:imagePosition.origin.x y:imagePosition.origin.y width:imagePosition.size.width height:imagePosition.size.height];
-
+        
     }
     [self.adjustFitBtn setHidden:YES];
     [self.view sendSubviewToBack:self.cropView];
     [self.cropperImage removeFromSuperview];
     [self.cropView addSubview:self.imageCropper];
-  
+    
     
 }
 - (CGRect) imagePositionInImageView:(UIImageView*)imageView
@@ -851,64 +865,64 @@
 - (void)viewDidUnload
 {
     [self setImageCropper:nil];
-        [super viewDidUnload];
+    [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
 - (void)dealloc {
-  //  [self.imageCropper removeObserver:self forKeyPath:@"crop"];
+    //  [self.imageCropper removeObserver:self forKeyPath:@"crop"];
 }
 
 /*-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    if([scrollView isEqual: self.scroller] && self.type ==1){
-        if (!decelerate) {
-            [self stoppedScrolling];
-        }
-    }
-}
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    if([scrollView isEqual: self.scroller] && self.type ==1){
-        [self stoppedScrolling];
-    }
-}
-
-
-
-- (void)stoppedScrolling
-{
-    NSLog(@"last : %d ,Current : %d",self.lastScrollDirection,self.currentScrollDirection);
-    [self.imageCropper setCropViewPosition:50 y:30 width:250 height:250];
-    CGFloat radians =0.0;
-    radians = (self.lastContentOffset-237)/302;
-    UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.image.size.width/1.5, self.image.size.height/1.5)];
-    CGAffineTransform t = CGAffineTransformMakeRotation(radians);//radians
-    rotatedViewBox.transform = t;
-    CGSize rotatedSize = rotatedViewBox.frame.size;
-    
-    // Create the bitmap context
-    UIGraphicsBeginImageContext(rotatedSize);
-    CGContextRef bitmap = UIGraphicsGetCurrentContext();
-    
-    // Move the origin to the middle of the image so we will rotate and scale around the center.
-    CGContextTranslateCTM(bitmap, rotatedSize.width/2, rotatedSize.height/2);
-    
-    //   // Rotate the image context
-    CGContextRotateCTM(bitmap,radians );//radians
-    
-    // Now, draw the rotated/scaled image into the context
-    CGContextScaleCTM(bitmap, 1.0, -1.0);
-    
-    CGContextDrawImage(bitmap, CGRectMake(-self.image.size.width / 2, -self.image.size.height / 2, self.image.size.width+5, self.image.size.height+5), [self.image CGImage]);
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    self.rotatedImage = newImage;
-    UIGraphicsEndImageContext();
-    
-    [self.imageCropper setImage:self.rotatedImage];
-    [self.imageCropper setCrop:CGRectMake(0,0 , self.rotatedImage.size.width, self.rotatedImage.size.width)];
-    
-    
-}*/
+ if([scrollView isEqual: self.scroller] && self.type ==1){
+ if (!decelerate) {
+ [self stoppedScrolling];
+ }
+ }
+ }
+ - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+ {
+ if([scrollView isEqual: self.scroller] && self.type ==1){
+ [self stoppedScrolling];
+ }
+ }
+ 
+ 
+ 
+ - (void)stoppedScrolling
+ {
+ NSLog(@"last : %d ,Current : %d",self.lastScrollDirection,self.currentScrollDirection);
+ [self.imageCropper setCropViewPosition:50 y:30 width:250 height:250];
+ CGFloat radians =0.0;
+ radians = (self.lastContentOffset-237)/302;
+ UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.image.size.width/1.5, self.image.size.height/1.5)];
+ CGAffineTransform t = CGAffineTransformMakeRotation(radians);//radians
+ rotatedViewBox.transform = t;
+ CGSize rotatedSize = rotatedViewBox.frame.size;
+ 
+ // Create the bitmap context
+ UIGraphicsBeginImageContext(rotatedSize);
+ CGContextRef bitmap = UIGraphicsGetCurrentContext();
+ 
+ // Move the origin to the middle of the image so we will rotate and scale around the center.
+ CGContextTranslateCTM(bitmap, rotatedSize.width/2, rotatedSize.height/2);
+ 
+ //   // Rotate the image context
+ CGContextRotateCTM(bitmap,radians );//radians
+ 
+ // Now, draw the rotated/scaled image into the context
+ CGContextScaleCTM(bitmap, 1.0, -1.0);
+ 
+ CGContextDrawImage(bitmap, CGRectMake(-self.image.size.width / 2, -self.image.size.height / 2, self.image.size.width+5, self.image.size.height+5), [self.image CGImage]);
+ UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+ self.rotatedImage = newImage;
+ UIGraphicsEndImageContext();
+ 
+ [self.imageCropper setImage:self.rotatedImage];
+ [self.imageCropper setCrop:CGRectMake(0,0 , self.rotatedImage.size.width, self.rotatedImage.size.width)];
+ 
+ 
+ }*/
 
 
 
