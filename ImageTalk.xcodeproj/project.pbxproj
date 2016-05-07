@@ -26,6 +26,7 @@
 		DA187B891CB51E13002D42F1 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = DA187B791CB51E13002D42F1 /* UIView+WebCacheOperation.m */; };
 		DA3D02191CCF579500F58226 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA3D02181CCF579500F58226 /* FBSDKCoreKit.framework */; };
 		DA3D021B1CCF5AE300F58226 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA3D021A1CCF5AE300F58226 /* FBSDKShareKit.framework */; };
+		DA4EA6E11CDDD12C00317641 /* MYHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4EA6E01CDDD12C00317641 /* MYHTTPRequestOperationManager.m */; };
 		DA5088061CB68057003F33B3 /* cross-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DA5088031CB68057003F33B3 /* cross-icon.png */; };
 		DA5088071CB68057003F33B3 /* enlarge.png in Resources */ = {isa = PBXBuildFile; fileRef = DA5088041CB68057003F33B3 /* enlarge.png */; };
 		DA5088081CB68057003F33B3 /* tick-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DA5088051CB68057003F33B3 /* tick-icon.png */; };
@@ -376,6 +377,8 @@
 		DA187B791CB51E13002D42F1 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		DA3D02181CCF579500F58226 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		DA3D021A1CCF5AE300F58226 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		DA4EA6DF1CDDD12C00317641 /* MYHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYHTTPRequestOperationManager.h; sourceTree = "<group>"; };
+		DA4EA6E01CDDD12C00317641 /* MYHTTPRequestOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYHTTPRequestOperationManager.m; sourceTree = "<group>"; };
 		DA5088031CB68057003F33B3 /* cross-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cross-icon.png"; sourceTree = SOURCE_ROOT; };
 		DA5088041CB68057003F33B3 /* enlarge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = enlarge.png; sourceTree = SOURCE_ROOT; };
 		DA5088051CB68057003F33B3 /* tick-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tick-icon.png"; sourceTree = SOURCE_ROOT; };
@@ -1122,6 +1125,8 @@
 				FD57F4731C04287400430FF6 /* AFURLResponseSerialization.m */,
 				FD57F4741C04287400430FF6 /* AFURLSessionManager.h */,
 				FD57F4751C04287400430FF6 /* AFURLSessionManager.m */,
+				DA4EA6DF1CDDD12C00317641 /* MYHTTPRequestOperationManager.h */,
+				DA4EA6E01CDDD12C00317641 /* MYHTTPRequestOperationManager.m */,
 			);
 			path = AFNetworking;
 			sourceTree = "<group>";
@@ -2401,6 +2406,7 @@
 				FD57F4991C0428F000430FF6 /* UIWebView+AFNetworking.m in Sources */,
 				FDECBB861BE0C272005B6415 /* LikesResponse.m in Sources */,
 				FDEECE541B9D9D0400887F4A /* SignUpFourthViewController.m in Sources */,
+				DA4EA6E11CDDD12C00317641 /* MYHTTPRequestOperationManager.m in Sources */,
 				FD953AC31BC634E5009538AA /* JSONModelArray.m in Sources */,
 				FDD320BE1C44E3D30048A43D /* TSocketServer.m in Sources */,
 				FDD320D11C44E3D80048A43D /* TMultiplexedProtocol.m in Sources */,

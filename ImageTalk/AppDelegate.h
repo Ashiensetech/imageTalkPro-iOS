@@ -21,6 +21,7 @@
 @property (strong, nonatomic) AccessTokenResponse *response;
 @property (strong, nonatomic) AuthCredential  *authCredential;
 @property (strong, nonatomic) NSString  *userPic;
+@property (strong, nonatomic) NSString *userId;
 @property (strong, nonatomic) NSString  *textStatus;
 @property (assign, nonatomic) int  wallpost;
 @property (assign) SystemSoundID pewPewSound;
