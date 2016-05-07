@@ -18,8 +18,9 @@
 #import "JSONHTTPClient.h"
 #import <QuartzCore/QuartzCore.h>
 #import "VKSdk.h"
+#import "VKUploadImage.h"
 @interface SharePhotoViewController ()
-
+@property (nonatomic, retain) UIDocumentInteractionController *dic;
 @end
 
 @implementation SharePhotoViewController
@@ -149,88 +150,72 @@
     
 }
 -(void)tabonInstagramView:(id) sender{
-  
     NSURL *instagramURL = [NSURL URLWithString:@"instagram://app"];
-    imageMain.image = self.image;
-    if([[UIApplication sharedApplication] canOpenURL:instagramURL])
+    if([[UIApplication sharedApplication] canOpenURL:instagramURL]) //check for App is install or not
     {
-        CGFloat cropVal = (imageMain.image.size.height > imageMain.image.size.width ? imageMain.image.size.width : imageMain.image.size.height);
-        
-        cropVal *= [imageMain.image scale];
-        
-        CGRect cropRect = (CGRect){.size.height = cropVal, .size.width = cropVal};
-        CGImageRef imageRef = CGImageCreateWithImageInRect([imageMain.image CGImage], cropRect);
-        
-        NSData *imageData = UIImageJPEGRepresentation([UIImage imageWithCGImage:imageRef], 1.0);
-      //  CGImageRelease(imageRef);
-        
-        
+        NSData *imageData = UIImagePNGRepresentation(self.image); //convert image into .png format.
         NSFileManager *fileManager = [NSFileManager defaultManager];//create instance of NSFileManager
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); //create an array and store result of our search for the documents directory in it
         NSString *documentsDirectory = [paths objectAtIndex:0]; //create NSString object, that holds our exact path to the documents directory
-        NSString *fullPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"instagram.igo"]]; //add our image to the path
-        [fileManager createFileAtPath:fullPath contents:imageData attributes:nil];
+        NSString *fullPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"insta.igo"]]; //add our image to the path
+        [fileManager createFileAtPath:fullPath contents:imageData attributes:nil]; //finally save the path (image)
+        NSLog(@"image saved");
+        
+        CGRect rect = CGRectMake(0 ,0 , 0, 0);
+        UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, self.view.opaque, 0.0);
+        [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+        UIGraphicsEndImageContext();
+        NSString *fileNameToSave = [NSString stringWithFormat:@"Documents/insta.igo"];
+        NSString  *jpgPath = [NSHomeDirectory() stringByAppendingPathComponent:fileNameToSave];
+        NSLog(@"jpg path %@",jpgPath);
+        NSString *newJpgPath = [NSString stringWithFormat:@"file://%@",jpgPath];
+        NSLog(@"with File path %@",newJpgPath);
+        NSURL *igImageHookFile = [[NSURL alloc]initFileURLWithPath:newJpgPath];
+        NSLog(@"url Path %@",igImageHookFile);
+        
+        self.documentController.UTI = @"com.instagram.exclusivegram";
+        // self.documentController = [self setupControllerWithURL:igImageHookFile usingDelegate:self];
         
         
-        
-        
-        
-        
-//        NSString *writePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"instagram.igo"];
-//        if (![imageData writeToFile:writePath atomically:YES]) {
-//            // failure
-//            NSLog(@"image save failed to path %@", writePath);
-//            return;
-//        } else {
-//            // success.
-    //    }
-        
-        // send it to instagram.
-        NSURL *fileURL = [NSURL fileURLWithPath:fullPath];
-        self.documentController = [UIDocumentInteractionController interactionControllerWithURL:fileURL];
-        self.documentController.delegate = self;
-        [self.documentController setUTI:@"com.instagram.exclusivegram"];
-        [self.documentController setAnnotation:@{@"InstagramCaption" : @"We are making fun"}];
-        [self.documentController presentOpenInMenuFromRect:CGRectMake(0, 0, 320, 480) inView:self.view animated:YES];
+        self.documentController=[UIDocumentInteractionController interactionControllerWithURL:igImageHookFile];
+        NSString *caption = @"#Your Text"; //settext as Default Caption
+        self.documentController.annotation=[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@",caption],@"InstagramCaption", nil];
+        [self.documentController presentOpenInMenuFromRect:rect inView: self.view animated:YES];
     }
     else
     {
-        NSLog (@"Instagram not found");
-        
+        UIAlertView *errMsg = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"No Instagram Available" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [errMsg show];
     }
-    
     
 
 }
+
+
 -(void) tabOnVKView :(id) sender{
     NSLog(@"VKtabbed");
-    
-   [[VKSdk initializeWithAppId:@"5444705"] registerDelegate:self];
   
-    
-    NSArray *SCOPE =@[ @"photos", @"wall"] ;
-    
-    [VKSdk wakeUpSession:SCOPE completeBlock:^(VKAuthorizationState state, NSError *error) {
-     
-        if (state == VKAuthorizationAuthorized) {
+    VKSdk *sdkInstance = [VKSdk initializeWithAppId:@"5444705"];
+    if(sdkInstance !=NULL){
+        NSString * str = [[NSString alloc]init];
+        if ([self.postCaption.text  isEqualToString:@"write your comment here..."]) {
+            str = @"";
             
-            VKRequest *request = [VKApi uploadWallPhotoRequest:self.image parameters:[VKImageParameters pngImage] userId:0 groupId:0 ];
-            [request executeWithResultBlock:^(VKResponse *response) {
-                NSLog(@"Json result: %@", response.json);
-            } errorBlock:^(NSError * error) {
-                if (error.code != VK_API_ERROR) {
-                    [error.vkError.request repeat];
-                } else {
-                    NSLog(@"VK error: %@", error);
-                }
-            }];
-           
-        } else if (error) {
-             NSLog(@"VK auth error: %@", error);
-           //[VKSdk authorize:SCOPE];
+        }else{
+            str = self.postCaption.text;
         }
-    }];
 
+        VKUploadImage *vk = [[VKUploadImage alloc]init];
+        vk.sourceImage = self.image;
+        VKShareDialogController *shareDialog = [VKShareDialogController new]; //1
+        shareDialog.text         = str;
+        shareDialog.uploadImages = @[vk];
+       
+        [shareDialog setCompletionHandler:^(VKShareDialogController * diaglog, VKShareDialogControllerResult result) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+        [self presentViewController:shareDialog animated:YES completion:nil]; //6
+    }
  
     
 }

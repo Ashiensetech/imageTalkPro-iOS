@@ -24,11 +24,12 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb267236836947716</string>
+                 <string>vk5444705</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.7.0</string>
+	<string>1.7.1</string>
 	<key>FacebookAppID</key>
 	<string>267236836947716</string>
 	<key>FacebookDisplayName</key>
@@ -50,7 +51,7 @@
 		<string>fb-messenger-api20140430</string>
 		<string>instagram</string>
 		<string>vk</string>
-		<string>vk-share</string>
+        <string>vk-share</string>
 		<string>vkauthorize</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>

@@ -15,6 +15,7 @@
 #import "ShareMoodViewController.h"
 #import "SharePhotoViewController.h"
 #import "ApiAccess.h"
+#import "ZDStickerView.h"
 
 @interface TagViewController ()
 
@@ -36,16 +37,11 @@
     defaults = [NSUserDefaults standardUserDefaults];
     baseurl = [defaults objectForKey:@"baseurl"];
     
-    
-    self.singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
-    [self.view addGestureRecognizer:self.singleTap];
-    self.singleTap.cancelsTouchesInView = NO;
-    
-    UITapGestureRecognizer *imageTapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tabOnImage:)];
-    imageTapped.numberOfTapsRequired = 1;
-    [self.picture addGestureRecognizer:imageTapped];
-    imageTapped.cancelsTouchesInView = NO;
-    
+    self.picture.userInteractionEnabled = YES;
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+    [self.picture addGestureRecognizer:singleTap];
+    singleTap.cancelsTouchesInView = NO;
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardDidShow:)
                                                  name:UIKeyboardWillShowNotification
@@ -91,17 +87,17 @@
     
     self.tableData.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
--(void) tabOnImage :(id) sender{
-    CGPoint tapLocation = [sender locationInView:self.view];
-    NSLog(@"Hello1");
-    
-}
+
 
 - (void)handleSingleTap:(UITapGestureRecognizer *)sender
 {
-    //    [self.searchBar resignFirstResponder];
-    // [self.tableData setHidden:YES];
-    //   [self.view endEditing:YES];
+    
+    [self.searchBar becomeFirstResponder];
+    self.tabPosition = [sender locationInView:self.picture];
+
+   
+    
+ 
 }
 
 -(void)keyboardDidShow:(NSNotification *)notification
@@ -154,7 +150,7 @@
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    NSLog(@"SearchBarSearchButtonClicked");
+   
     [self.view endEditing:YES];
     
 }
@@ -264,6 +260,38 @@
         if(shouoldAdd)
         {
             NSLog(@"section2");
+//            UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.tabPosition.x,self.tabPosition.y,120,20)]; //or whatever size you need
+//            myLabel.center = self.tabPosition;
+//            // myLabel.backgroundColor = [UIColor blackColor];
+//            [myLabel setFont:[UIFont systemFontOfSize:12]];
+//            
+//            myLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
+//            myLabel.textColor = [UIColor whiteColor];
+//            myLabel.textAlignment = NSTextAlignmentCenter;
+//            myLabel.text = [NSString stringWithFormat:@"%@  %@",data.user.firstName,data.user.lastName] ;
+            
+           
+            CGRect gripFrame3 = CGRectMake(self.tabPosition.x,self.tabPosition.y,120,20);
+            UITextView *textView2 = [[UITextView alloc] initWithFrame:gripFrame3];
+            textView2.text = [NSString stringWithFormat:@"%@  %@",data.user.firstName,data.user.lastName] ;
+            textView2.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
+            textView2.textColor =[UIColor whiteColor];
+            textView2.editable = NO;
+            //textView2.delegate = self;
+            textView2.textColor = [UIColor greenColor];
+            
+            ZDStickerView *userResizableView = [[ZDStickerView alloc] initWithFrame:gripFrame3];
+            userResizableView.tag = 1;
+            userResizableView.stickerViewDelegate = self;
+            userResizableView.contentView = textView2;
+            userResizableView.preventsPositionOutsideSuperview = YES;
+            userResizableView.preventsCustomButton = NO;
+            userResizableView.preventsResizing = YES;
+            [userResizableView hideEditingHandles];
+          
+            
+            [self.picture addSubview:userResizableView];
+            
             [self.myObjectSelection addObject:self.myObject[indexPath.row]];
         }
         else
@@ -279,6 +307,7 @@
         self.picture.hidden = false;
         if(self.type == 1)
         {
+            
             self.pictureHeight.constant = self.view.frame.size.width/2;
             self.picture.contentMode = UIViewContentModeScaleToFill;
             
