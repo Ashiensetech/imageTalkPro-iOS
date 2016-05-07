@@ -783,11 +783,16 @@
     timeAgo = timeAgo/[[timeScale objectForKey:scale] integerValue];
     NSString *s = @"";
     if (timeAgo > 1) {
-        s = @"s";
+        s = @"s ago";
+    }
+    else
+    {
+        s=@" ago";
     }
     
     
-    return [dateTime formattedAsTimeAgo];//[NSString stringWithFormat:@"%d %@%@", timeAgo,([scale isEqualToString:@"hr"])?@"hour" : scale , s];
+    //return [dateTime formattedAsTimeAgo];
+    return [NSString stringWithFormat:@"%d %@%@", timeAgo,([scale isEqualToString:@"hr"])?@"hour" : scale , s];
 }
 
 -(void)downloadClick:(UIButton*)sender

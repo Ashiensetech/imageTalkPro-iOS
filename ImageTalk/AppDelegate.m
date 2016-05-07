@@ -139,7 +139,8 @@
                                                self.userPic = self.response.responseData.authCredential.user.picPath.original.path;
                                                self.wallpost = self.response.responseData.extra.wallPost;
                                                self.textStatus = self.response.responseData.authCredential.textStatus;
-                                               
+                                               self.userId=self.response.responseData.authCredential.user.id;
+                                              
                                                
                                                UITabBarController *rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"timeline"];
                                                

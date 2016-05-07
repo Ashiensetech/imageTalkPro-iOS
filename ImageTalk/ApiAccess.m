@@ -8,6 +8,7 @@
 
 #import "ApiAccess.h"
 #import "JSONHTTPClient.h"
+#import "MYHTTPRequestOperationManager.h"
 
 static ApiAccess *sharedInstance = nil;
 
@@ -40,6 +41,7 @@ static ApiAccess *sharedInstance = nil;
 
 - (void) postRequestWithUrl:(NSString*) url params:(NSDictionary*) params tag:(NSString*) tag index:(int) index
 {
+  
     [JSONHTTPClient postJSONFromURLWithString:[NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"baseurl"],url] params:params
                                    completion:^(NSDictionary *json, JSONModelError *err)
      {
@@ -103,45 +105,83 @@ static ApiAccess *sharedInstance = nil;
 
 - (void) getRequestWithUrl:(NSString*) url params:(NSDictionary*) params tag:(NSString*) tag
 {
-    [JSONHTTPClient getJSONFromURLWithString:[NSString stringWithFormat:@"%@%@",baseurl,url] params:params completion:^(id json, JSONModelError *err)
-    {
-      
-         if(err)
-         {
-             [self.delegate receivedError:err tag:tag];
-         }
-         else
-         {
-             NSError* error = nil;
-             Response *response = [[Response alloc] initWithDictionary:json error:&error];
-             
-             if (response.responseStat.isLogin) {
-                 [self.delegate receivedResponse:json tag:tag index:0];
-             }
-             else
+     MYHTTPRequestOperationManager *manager = [MYHTTPRequestOperationManager manager];
+    [manager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    [manager GET:[NSString stringWithFormat:@"%@%@",baseurl,url] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+        
+        NSError* error = nil;
+        Response *response = [[Response alloc] initWithDictionary:responseObject error:&error];
+        
+        if (response.responseStat.isLogin) {
+            [self.delegate receivedResponse:responseObject tag:tag index:0];
+        }
+        else
+        {
+            [JSONHTTPClient postJSONFromURLWithString:[NSString stringWithFormat:@"%@app/login/authenticate/accesstoken",baseurl] bodyString:[NSString stringWithFormat:@"access_token=%@",accessToken]
+                                           completion:^(NSDictionary *json, JSONModelError *err)
              {
-                 [JSONHTTPClient postJSONFromURLWithString:[NSString stringWithFormat:@"%@app/login/authenticate/accesstoken",baseurl] bodyString:[NSString stringWithFormat:@"access_token=%@",accessToken]
-                                                completion:^(NSDictionary *json, JSONModelError *err)
-                  {
-                      
-                      NSError* error = nil;
-                      AccessTokenResponse *response = [[AccessTokenResponse alloc] initWithDictionary:json error:&error];
-                      
-                      if(response.responseStat.status)
-                      {
-                          [self postRequestWithUrl:url params:params tag:tag];
-                      }
-                      
-                  }];
                  
-             }
-             
-             
-             
-         }
+                 NSError* error = nil;
+                 AccessTokenResponse *response = [[AccessTokenResponse alloc] initWithDictionary:json error:&error];
+                 
+                 if(response.responseStat.status)
+                 {
+                     [self postRequestWithUrl:url params:params tag:tag];
+                 }
+                 
+             }];
+            
+        }
 
         
-     }];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+        //[self.delegate receivedError:error tag:tag];
+    }];
+    
+    
+//    [JSONHTTPClient getJSONFromURLWithString:[NSString stringWithFormat:@"%@%@",baseurl,url] params:params completion:^(id json, JSONModelError *err)
+//    {
+//      
+//         if(err)
+//         {
+//             [self.delegate receivedError:err tag:tag];
+//         }
+//         else
+//         {
+//             NSError* error = nil;
+//             Response *response = [[Response alloc] initWithDictionary:json error:&error];
+//             
+//             if (response.responseStat.isLogin) {
+//                 [self.delegate receivedResponse:json tag:tag index:0];
+//             }
+//             else
+//             {
+//                 [JSONHTTPClient postJSONFromURLWithString:[NSString stringWithFormat:@"%@app/login/authenticate/accesstoken",baseurl] bodyString:[NSString stringWithFormat:@"access_token=%@",accessToken]
+//                                                completion:^(NSDictionary *json, JSONModelError *err)
+//                  {
+//                      
+//                      NSError* error = nil;
+//                      AccessTokenResponse *response = [[AccessTokenResponse alloc] initWithDictionary:json error:&error];
+//                      
+//                      if(response.responseStat.status)
+//                      {
+//                          [self postRequestWithUrl:url params:params tag:tag];
+//                      }
+//                      
+//                  }];
+//                 
+//             }
+//             
+//             
+//             
+//         }
+//
+//        
+//     }];
     
 }
 
