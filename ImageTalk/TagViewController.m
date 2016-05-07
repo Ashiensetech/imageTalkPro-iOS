@@ -38,16 +38,22 @@
     
     
     self.singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
-    //[self.view addGestureRecognizer:self.singleTap];
+    [self.view addGestureRecognizer:self.singleTap];
+    self.singleTap.cancelsTouchesInView = NO;
+    
+    UITapGestureRecognizer *imageTapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tabOnImage:)];
+    imageTapped.numberOfTapsRequired = 1;
+    [self.picture addGestureRecognizer:imageTapped];
+    imageTapped.cancelsTouchesInView = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-     selector:@selector(keyboardDidShow:)
-     name:UIKeyboardWillShowNotification
-     object:nil];
-     [[NSNotificationCenter defaultCenter] addObserver:self
-     selector:@selector(keyboardDidHide:)
-     name:UIKeyboardWillHideNotification
-     object:nil];
+                                             selector:@selector(keyboardDidShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
     
     self.selected = false;
     
@@ -73,7 +79,7 @@
     }
     else if(self.type == 0)
     {
-
+        
         self.pictureHeight.constant = self.view.frame.size.width;
         self.picture.contentMode = UIViewContentModeScaleToFill;
     }
@@ -83,13 +89,19 @@
         self.picture.contentMode = UIViewContentModeCenter;
     }
     
-     self.tableData.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableData.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
-
+-(void) tabOnImage :(id) sender{
+    CGPoint tapLocation = [sender locationInView:self.view];
+    NSLog(@"Hello1");
+    
+}
 
 - (void)handleSingleTap:(UITapGestureRecognizer *)sender
 {
-     [self.view endEditing:YES];
+    //    [self.searchBar resignFirstResponder];
+    // [self.tableData setHidden:YES];
+    //   [self.view endEditing:YES];
 }
 
 -(void)keyboardDidShow:(NSNotification *)notification
@@ -99,7 +111,7 @@
 
 -(void)keyboardDidHide:(NSNotification *)notification
 {
-   
+    
 }
 
 -(void) getData:(int) offset keyword:(NSString*) keyword{
@@ -142,9 +154,9 @@
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    
+    NSLog(@"SearchBarSearchButtonClicked");
     [self.view endEditing:YES];
-
+    
 }
 
 
@@ -170,7 +182,7 @@
 
 - (IBAction)done:(id)sender {
     
-   
+    
     if(self.type == 0)
     {
         SharePhotoViewController *data = self.navigationController.viewControllers[3];
@@ -202,7 +214,7 @@
 {
     if(self.selected)
     {
-      return self.myObject.count;
+        return self.myObject.count;
     }
     else
     {
@@ -216,7 +228,7 @@
     TagTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     
-   
+    
     Contact *data = (self.selected)?self.myObject[indexPath.row]:self.myObjectSelection[indexPath.row];
     
     
@@ -235,34 +247,34 @@
     NSLog(@"section1");
     if(self.selected)
     {
-    BOOL shouoldAdd = YES;
-    Contact *data = self.myObject[indexPath.row];
-    
-    for (int i=0;i<self.myObjectSelection.count; i++) {
+        BOOL shouoldAdd = YES;
+        Contact *data = self.myObject[indexPath.row];
         
-        
-        Contact *data1 = self.myObjectSelection[i];
-        
-        if(data.id == data1.id)
-        {
-            shouoldAdd = NO;
+        for (int i=0;i<self.myObjectSelection.count; i++) {
+            
+            
+            Contact *data1 = self.myObjectSelection[i];
+            
+            if(data.id == data1.id)
+            {
+                shouoldAdd = NO;
+            }
         }
-    }
-    
-      if(shouoldAdd)
-      {
-          NSLog(@"section2");
-      [self.myObjectSelection addObject:self.myObject[indexPath.row]];
-      }
-      else
-      {
-          [ToastView showToastInParentView:self.view withText:@"Already Tagged This Friend" withDuaration:2.0];
-      }
-    
-      self.selected = false;
-      [self.view endEditing:YES];
-    
-      [self.tableData reloadData];
+        
+        if(shouoldAdd)
+        {
+            NSLog(@"section2");
+            [self.myObjectSelection addObject:self.myObject[indexPath.row]];
+        }
+        else
+        {
+            [ToastView showToastInParentView:self.view withText:@"Already Tagged This Friend" withDuaration:2.0];
+        }
+        
+        self.selected = false;
+        [self.view endEditing:YES];
+        
+        [self.tableData reloadData];
         
         self.picture.hidden = false;
         if(self.type == 1)
@@ -291,7 +303,7 @@
     
     if(!self.selected)
     {
-    
+        
         UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Delete Tag" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
             
             NSLog(@"Delete");
@@ -371,13 +383,13 @@
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
