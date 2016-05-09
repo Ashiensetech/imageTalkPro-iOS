@@ -245,19 +245,21 @@
     UILabel *label = (UILabel *)gesture.view;
     CGPoint translation = [gesture translationInView:label];
     
-    for(int i=0;i<self.tagPostions.count;i++){
-        if([[self.tagPostions[i] valueForKey:@"origin_x"]floatValue]==label.center.x && [[self.tagPostions[i] valueForKey:@"origin_y"]floatValue] == label.center.y){
-            NSObject * owner =[self.tagPostions[i] valueForKey:@"owner"];
-            [self.tagPostions replaceObjectAtIndex:i withObject:@{@"origin_x": [NSNumber numberWithFloat: label.center.x + translation.x] ,@"origin_y":[NSNumber numberWithFloat: label.center.y + translation.y],@"owner":owner}];
+    if(CGRectContainsPoint(self.picture.bounds,CGPointMake(label.center.x + translation.x, label.center.y + translation.y))){
+        for(int i=0;i<self.tagPostions.count;i++){
+            if([[self.tagPostions[i] valueForKey:@"origin_x"]floatValue]==label.center.x && [[self.tagPostions[i] valueForKey:@"origin_y"]floatValue] == label.center.y){
+                NSObject * owner =[self.tagPostions[i] valueForKey:@"owner"];
+                [self.tagPostions replaceObjectAtIndex:i withObject:@{@"origin_x": [NSNumber numberWithFloat: label.center.x + translation.x] ,@"origin_y":[NSNumber numberWithFloat: label.center.y + translation.y],@"owner":owner}];
+            }
         }
+        
+        // move label
+        label.center = CGPointMake(label.center.x + translation.x,
+                                   label.center.y + translation.y);
+        
+        // reset translation
+        [gesture setTranslation:CGPointZero inView:label];
     }
-    
-    // move label
-    label.center = CGPointMake(label.center.x + translation.x,
-                               label.center.y + translation.y);
-    
-    // reset translation
-    [gesture setTranslation:CGPointZero inView:label];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
