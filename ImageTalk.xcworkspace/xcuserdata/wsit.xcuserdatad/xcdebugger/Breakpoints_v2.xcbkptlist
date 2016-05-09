@@ -121,22 +121,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ImageTalk/TagViewController.m"
-            timestampString = "484313174.114902"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "237"
-            endingLineNumber = "237"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "ImageTalk/PTEHorizontalTableView.h"
             timestampString = "468910527.557201"
             startingColumnNumber = "9223372036854775807"
@@ -278,22 +262,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ImageTalk/AppDelegate.h"
-            timestampString = "473949503.003584"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
-            landmarkName = "@interface AppDelegate"
-            landmarkType = "2">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -394,7 +362,7 @@
                   moduleName = "ImageTalk"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/DiskPart%201/codes/imagetalk/ImageTalk/SocketTestViewController.h"
-                  timestampString = "484313614.238062"
+                  timestampString = "484491788.441043"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "25"
@@ -409,7 +377,7 @@
                   moduleName = "ImageTalk"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/DiskPart%201/codes/imagetalk/ImageTalk/SocketTestViewController.h"
-                  timestampString = "484313614.238162"
+                  timestampString = "484491788.441201"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "25"

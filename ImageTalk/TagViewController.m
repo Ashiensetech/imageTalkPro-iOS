@@ -86,7 +86,10 @@
     }
     
     self.tableData.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+   self.tagPostions = [[NSMutableArray alloc] init];
 }
+
 
 
 - (void)handleSingleTap:(UITapGestureRecognizer *)sender
@@ -221,6 +224,7 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"cellfor");
     TagTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     
@@ -236,6 +240,24 @@
     
     return cell;
     
+}
+-(void) labelDragged :(UIPanGestureRecognizer *)gesture {
+    UILabel *label = (UILabel *)gesture.view;
+    CGPoint translation = [gesture translationInView:label];
+    
+    for(int i=0;i<self.tagPostions.count;i++){
+        if([[self.tagPostions[i] valueForKey:@"origin_x"]floatValue]==label.center.x && [[self.tagPostions[i] valueForKey:@"origin_y"]floatValue] == label.center.y){
+            NSObject * owner =[self.tagPostions[i] valueForKey:@"owner"];
+            [self.tagPostions replaceObjectAtIndex:i withObject:@{@"origin_x": [NSNumber numberWithFloat: label.center.x + translation.x] ,@"origin_y":[NSNumber numberWithFloat: label.center.y + translation.y],@"owner":owner}];
+        }
+    }
+    
+    // move label
+    label.center = CGPointMake(label.center.x + translation.x,
+                               label.center.y + translation.y);
+    
+    // reset translation
+    [gesture setTranslation:CGPointZero inView:label];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -259,40 +281,30 @@
         
         if(shouoldAdd)
         {
+              NSLog(@"indexpath row :%d",indexPath.row);
             NSLog(@"section2");
-//            UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.tabPosition.x,self.tabPosition.y,120,20)]; //or whatever size you need
-//            myLabel.center = self.tabPosition;
-//            // myLabel.backgroundColor = [UIColor blackColor];
-//            [myLabel setFont:[UIFont systemFontOfSize:12]];
-//            
-//            myLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
-//            myLabel.textColor = [UIColor whiteColor];
-//            myLabel.textAlignment = NSTextAlignmentCenter;
-//            myLabel.text = [NSString stringWithFormat:@"%@  %@",data.user.firstName,data.user.lastName] ;
+            UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.tabPosition.x,self.tabPosition.y,120,20)]; //or whatever size you need
+            myLabel.center = self.tabPosition;
+            [myLabel setFont:[UIFont systemFontOfSize:12]];
+            myLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
+            myLabel.textColor = [UIColor whiteColor];
+            myLabel.textAlignment = NSTextAlignmentCenter;
+            myLabel.text = [NSString stringWithFormat:@"%@  %@",data.user.firstName,data.user.lastName] ;
+            myLabel.tag = indexPath.row;
+            myLabel.userInteractionEnabled = YES;
             
-           
-            CGRect gripFrame3 = CGRectMake(self.tabPosition.x,self.tabPosition.y,120,20);
-            UITextView *textView2 = [[UITextView alloc] initWithFrame:gripFrame3];
-            textView2.text = [NSString stringWithFormat:@"%@  %@",data.user.firstName,data.user.lastName] ;
-            textView2.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
-            textView2.textColor =[UIColor whiteColor];
-            textView2.editable = NO;
-            //textView2.delegate = self;
-            textView2.textColor = [UIColor greenColor];
+            UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc]
+                                                initWithTarget:self
+                                                action:@selector(labelDragged:)] ;
+            [myLabel addGestureRecognizer:gesture];
             
-            ZDStickerView *userResizableView = [[ZDStickerView alloc] initWithFrame:gripFrame3];
-            userResizableView.tag = 1;
-            userResizableView.stickerViewDelegate = self;
-            userResizableView.contentView = textView2;
-            userResizableView.preventsPositionOutsideSuperview = YES;
-            userResizableView.preventsCustomButton = NO;
-            userResizableView.preventsResizing = YES;
-            [userResizableView hideEditingHandles];
-          
             
-            [self.picture addSubview:userResizableView];
+            [self.picture addSubview:myLabel];
+            
             
             [self.myObjectSelection addObject:self.myObject[indexPath.row]];
+            [self.tagPostions addObject:@{@"origin_x": [NSNumber numberWithFloat: self.tabPosition.x] ,@"origin_y":[NSNumber numberWithFloat: self.tabPosition.y],@"owner":self.myObject[indexPath.row] }];
+
         }
         else
         {
@@ -334,10 +346,19 @@
     {
         
         UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Delete Tag" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
-            
-            NSLog(@"Delete");
+            NSObject *tagItem =[self.tagPostions  objectAtIndex:indexPath.row];
+            for (UIView *i in self.picture.subviews){
+                if([i isKindOfClass:[UILabel class]]){
+                    UILabel *newLbl = (UILabel *)i;
+                    if(newLbl.center.x == [[tagItem valueForKey:@"origin_x"] floatValue] && newLbl.center.y == [[tagItem valueForKey:@"origin_y"] floatValue]){
+                        [newLbl setHidden:YES];
+                        [self.picture willRemoveSubview:newLbl];
+                    }
+                }
+            }
             
             [self.myObjectSelection removeObjectAtIndex:indexPath.row];
+            [self.tagPostions removeObjectAtIndex:indexPath.row];
             [self.tableData reloadData];
             
             
