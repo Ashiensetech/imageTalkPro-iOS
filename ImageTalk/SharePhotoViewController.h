@@ -47,7 +47,7 @@
 @property (strong, nonatomic) IBOutlet UIView *addLocView;
 @property (strong, nonatomic) IBOutlet UIButton *tagFriendView;
 @property (strong, nonatomic) IBOutlet UITextView *postCaption;
-
-
+@property(strong,nonatomic) NSString *tagCustomMessage;
+@property (strong,nonatomic) NSMutableArray *tagList;
 @property (nonatomic, strong) UIDocumentInteractionController *documentController;
 @end
