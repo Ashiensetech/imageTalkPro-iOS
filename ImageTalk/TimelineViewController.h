@@ -18,7 +18,7 @@
 #import "ApiAccess.h"
 
 
-@interface TimelineViewController : UIViewController  <UITableViewDelegate,UITableViewDataSource,tcpSocketChatDelegate,ApiAccessDelegate,UITabBarControllerDelegate,UIActionSheetDelegate>
+@interface TimelineViewController : UIViewController  <UITableViewDelegate,UITableViewDataSource,tcpSocketChatDelegate,ApiAccessDelegate,UITabBarControllerDelegate>
 {
     NSUserDefaults *defaults;
     NSString *baseurl;
@@ -27,9 +27,7 @@
     
 }
 @property (strong, nonatomic) UIAlertView *alertDownload;
-@property (strong, nonatomic) UIAlertView *alertDelete;
-@property (strong, nonatomic) UIActionSheet *popupDelete;
-@property (strong, nonatomic) UIActionSheet *popupDownload;
+@property (strong, nonatomic) UIAlertController *alertDelete;
 @property (strong, nonatomic) IBOutlet UIView *emptyView;
 @property (strong, nonatomic) AppDelegate *app;
 @property (strong, nonatomic) tcpSocketChat *chatSocket;
