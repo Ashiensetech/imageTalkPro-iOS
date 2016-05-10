@@ -512,7 +512,7 @@
                                 };
     // NSLog(@"%@",inventory);
     
-    // [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/create" params:inventory tag:@"getPhoto"];
+     [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/create" params:inventory tag:@"getPhoto"];
     
     
 }
