@@ -512,7 +512,7 @@
                                 };
     // NSLog(@"%@",inventory);
     
-    //  [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/create" params:inventory tag:@"getPhoto"];
+    // [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/create" params:inventory tag:@"getPhoto"];
     
     
 }
@@ -582,6 +582,8 @@
         data.pic  = self.image;
         data.type = 0;
         data.myObjectSelection = self.myObjectSelection;
+        data.tagPostions = self.tagList;
+        data.customMessageString = self.tagCustomMessage;
         
     }
     

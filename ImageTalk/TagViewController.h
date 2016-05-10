@@ -33,6 +33,7 @@
 @property (assign,nonatomic) CGPoint tabPosition;
 @property (assign,nonatomic) BOOL selected;
 @property (strong, nonatomic) IBOutlet UITextView *customMessage;
+@property(strong,nonatomic) NSString * customMessageString;
 
 @property (assign,nonatomic) int type;
 @property (strong, nonatomic) UIImage *pic;
