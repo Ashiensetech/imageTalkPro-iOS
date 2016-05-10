@@ -35,6 +35,7 @@
 
 @property (assign,nonatomic) int type;
 @property (strong, nonatomic) UIImage *pic;
+@property (strong,nonatomic)NSMutableArray *tagPostions;
 
 
 @end
