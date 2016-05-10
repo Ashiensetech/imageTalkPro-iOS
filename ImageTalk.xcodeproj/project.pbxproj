@@ -30,6 +30,7 @@
 		DA5088061CB68057003F33B3 /* cross-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DA5088031CB68057003F33B3 /* cross-icon.png */; };
 		DA5088071CB68057003F33B3 /* enlarge.png in Resources */ = {isa = PBXBuildFile; fileRef = DA5088041CB68057003F33B3 /* enlarge.png */; };
 		DA5088081CB68057003F33B3 /* tick-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DA5088051CB68057003F33B3 /* tick-icon.png */; };
+		DA5F06B81CE1BD0C00EAA954 /* detail_menu_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = DA5F06B71CE1BD0C00EAA954 /* detail_menu_bg.png */; };
 		FD01EBD61BE746340083249B /* ApiAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = FD01EBD51BE746340083249B /* ApiAccess.m */; };
 		FD01EBDC1BE777EC0083249B /* Job.m in Sources */ = {isa = PBXBuildFile; fileRef = FD01EBDB1BE777EC0083249B /* Job.m */; };
 		FD08B7051BF9D06900000D98 /* SenderImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD08B7041BF9D06900000D98 /* SenderImageTableViewCell.m */; };
@@ -382,6 +383,7 @@
 		DA5088031CB68057003F33B3 /* cross-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cross-icon.png"; sourceTree = SOURCE_ROOT; };
 		DA5088041CB68057003F33B3 /* enlarge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = enlarge.png; sourceTree = SOURCE_ROOT; };
 		DA5088051CB68057003F33B3 /* tick-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tick-icon.png"; sourceTree = SOURCE_ROOT; };
+		DA5F06B71CE1BD0C00EAA954 /* detail_menu_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = detail_menu_bg.png; path = ../../../../../Users/workspaceinfotech/Downloads/detail_menu_bg.png; sourceTree = "<group>"; };
 		DC8043D51BBD1B4399BB615F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		FD01EBD41BE746340083249B /* ApiAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiAccess.h; sourceTree = "<group>"; };
 		FD01EBD51BE746340083249B /* ApiAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApiAccess.m; sourceTree = "<group>"; };
@@ -1232,6 +1234,7 @@
 		FD62BA2E1CC6088400A531AB /* images */ = {
 			isa = PBXGroup;
 			children = (
+				DA5F06B71CE1BD0C00EAA954 /* detail_menu_bg.png */,
 				FD1F9E461CD3715E00E79756 /* heart.png */,
 				FD5A2D201CD0D81700B6065B /* moods */,
 				FD42E8971CB62678008D724A /* tactile_noise.png */,
@@ -2105,6 +2108,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA5F06B81CE1BD0C00EAA954 /* detail_menu_bg.png in Resources */,
 				FD5A2D421CD0D82800B6065B /* beautyL.png in Resources */,
 				FD62BA2B1CC6087800A531AB /* top-left.png in Resources */,
 				FD5A2D511CD0D82800B6065B /* loveL.png in Resources */,
