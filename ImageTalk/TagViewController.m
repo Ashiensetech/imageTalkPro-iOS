@@ -41,7 +41,7 @@
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     [self.picture addGestureRecognizer:singleTap];
     singleTap.cancelsTouchesInView = NO;
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardDidShow:)
                                                  name:UIKeyboardWillShowNotification
@@ -87,11 +87,41 @@
     
     self.tableData.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-   self.tagPostions = [[NSMutableArray alloc] init];
+    if(!self.tagPostions){
+        self.tagPostions = [[NSMutableArray alloc] init];
+    }else{
+        NSLog(@"%@",self.tagPostions);
+        for(int i=0;i<self.tagPostions.count;i++){
+            Contact *data = [self.tagPostions[i] valueForKey:@"owner"];
+            UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(50,50,120,20)]; //or whatever size you need
+            myLabel.center =  CGPointMake([[self.tagPostions[i] valueForKey:@"origin_x"]floatValue], [[self.tagPostions[i] valueForKey:@"origin_y"]floatValue]);
+            [myLabel setFont:[UIFont systemFontOfSize:12]];
+            myLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
+            myLabel.textColor = [UIColor whiteColor];
+            myLabel.textAlignment = NSTextAlignmentCenter;
+            myLabel.text = [NSString stringWithFormat:@"%@  %@",data.user.firstName,data.user.lastName] ;
+            
+            myLabel.userInteractionEnabled = YES;
+            
+            UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc]
+                                               initWithTarget:self
+                                               action:@selector(labelDragged:)] ;
+            [myLabel addGestureRecognizer:gesture];
+            
+            
+            [self.picture addSubview:myLabel];
+        }
+        
+    }
     
     self.customMessage.delegate = self;
-    self.customMessage.text = @"custom message...";
-    self.customMessage.textColor = [UIColor lightGrayColor];
+    if(self.customMessageString ==NULL){
+        self.customMessageString =@"custom message...";
+        self.customMessage.textColor = [UIColor lightGrayColor];
+    }
+    self.customMessage.text = self.customMessageString;
+    
+    
 }
 
 
@@ -101,10 +131,10 @@
     
     [self.searchBar becomeFirstResponder];
     self.tabPosition = [sender locationInView:self.picture];
-
-   
     
- 
+    
+    
+    
 }
 
 -(void)keyboardDidShow:(NSNotification *)notification
@@ -157,7 +187,7 @@
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-   
+    
     [self.view endEditing:YES];
     
 }
@@ -231,7 +261,7 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  
+    
     TagTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     
@@ -302,8 +332,8 @@
             myLabel.userInteractionEnabled = YES;
             
             UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc]
-                                                initWithTarget:self
-                                                action:@selector(labelDragged:)] ;
+                                               initWithTarget:self
+                                               action:@selector(labelDragged:)] ;
             [myLabel addGestureRecognizer:gesture];
             
             
@@ -312,7 +342,7 @@
             
             [self.myObjectSelection addObject:self.myObject[indexPath.row]];
             [self.tagPostions addObject:@{@"origin_x": [NSNumber numberWithFloat: self.tabPosition.x] ,@"origin_y":[NSNumber numberWithFloat: self.tabPosition.y],@"owner":self.myObject[indexPath.row] }];
-
+            
         }
         else
         {
@@ -368,7 +398,7 @@
             [self.myObjectSelection removeObjectAtIndex:indexPath.row];
             [self.tagPostions removeObjectAtIndex:indexPath.row];
             [self.tableData reloadData];
-           
+            
             
             
         }];
@@ -447,7 +477,7 @@
         textView.textColor = [UIColor lightGrayColor]; //optional
     }
     [textView resignFirstResponder];
- 
+    
 }
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
@@ -456,7 +486,7 @@
         textView.textColor = [UIColor blackColor]; //optional
     }
     [textView becomeFirstResponder];
-
+    
 }
 
 /*

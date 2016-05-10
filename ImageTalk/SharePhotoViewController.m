@@ -465,17 +465,16 @@
             Contact *çontact = [self.tagList[i] valueForKey:@"owner"];
             
             NSDictionary *dict = @{
-                                   @"owner_id" : [NSNumber numberWithInt: çontact.id],
+                                   @"tag_id" : [NSNumber numberWithInt: çontact.id],
                                    @"origin_x"  :[self.tagList[i] valueForKey:@"origin_x"] ,
                                    @"origin_y"  :[self.tagList[i] valueForKey:@"origin_y"] ,
-                                   
+                                   @"tag_message" : self.tagCustomMessage,
                                    };
             [tags addObject:dict];
         }
         
         NSDictionary * dict1 =@{
-                                @"tag_message" : self.tagCustomMessage,
-                                @"tagged_id": tags
+                                @"tagged_id_list": tags
                                 };
         NSError *error;
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict1
@@ -512,7 +511,7 @@
                                 };
     // NSLog(@"%@",inventory);
     
-    //  [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/create" params:inventory tag:@"getPhoto"];
+    // [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/create" params:inventory tag:@"getPhoto"];
     
     
 }
@@ -582,6 +581,8 @@
         data.pic  = self.image;
         data.type = 0;
         data.myObjectSelection = self.myObjectSelection;
+        data.tagPostions = self.tagList;
+        data.customMessageString = self.tagCustomMessage;
         
     }
     
