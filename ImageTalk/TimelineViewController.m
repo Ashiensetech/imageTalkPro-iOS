@@ -813,19 +813,96 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
     WallPost *data = self.myObject[indexPath.row];
     
-    //   if (data.owner.id == self.app.authCredential.id) {
-    self.alertDelete = [[UIAlertView alloc] initWithTitle:@"Delete Picture"
-                                                  message:@"Delete the Picture from your timeline"
-                                                 delegate:self
-                                        cancelButtonTitle:@"Cancel"
-                                        otherButtonTitles:@"Delete", nil];
-    self.alertDelete.tag = sender.tag;
-    [self.alertDelete show];
+//    //   if (data.owner.id == self.app.authCredential.id) {
+//    self.alertDelete = [[UIAlertView alloc] initWithTitle:@"Delete Picture"
+//                                                  message:@"Delete the Picture from your timeline"
+//                                                 delegate:self
+//                                        cancelButtonTitle:@"Cancel"
+//                                        otherButtonTitles:@"Delete", nil];
+//    self.alertDelete.tag = sender.tag;
+//    [self.alertDelete show];
     // }
+    
+    
+    self.popupDelete = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Remove",nil];
+    self.popupDelete.tag = sender.tag;
+    [self.popupDelete showInView:self.view];
+    
     
     
     
 }
+
+- (void)willPresentActionSheet:(UIActionSheet *)actionSheet
+{
+    
+        UIImage *theImage = [UIImage imageNamed:@"detail_menu_bg.png"];
+        theImage = [theImage stretchableImageWithLeftCapWidth:32 topCapHeight:32];
+        CGSize theSize = actionSheet.frame.size;
+        // draw the background image and replace layer content
+        UIGraphicsBeginImageContext(theSize);
+        [theImage drawInRect:CGRectMake(0, 0, theSize.width, theSize.height)];
+        theImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        [[actionSheet layer] setContents:(id)theImage.CGImage];
+    
+    
+    
+    
+}
+
+
+
+- (void)actionSheet:(UIActionSheet *)popup clickedButtonAtIndex:(NSInteger)buttonIndex {
+
+//    if (popup == self.popupDelete) {
+//        
+//        if (buttonIndex == 1)
+//        {
+//            
+//            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:popup.tag inSection:0];
+//            WallPost *data = self.myObject[indexPath.row];
+//            
+//            NSURL *imgUrl = [NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.picPath]];
+//            UIImage *viewImage = [UIImage imageWithData: [NSData dataWithContentsOfURL:imgUrl]];
+//            
+//            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+//            // Request to save the image to camera roll
+//            [library writeImageToSavedPhotosAlbum:[viewImage CGImage] orientation:(ALAssetOrientation)[viewImage imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error){
+//                if (error) {
+//                    NSLog(@"error");
+//                    [ToastView showToastInParentView:self.view withText:@"Picture not Saved" withDuaration:2.0];
+//                } else {
+//                    NSLog(@"url %@", assetURL);
+//                    [ToastView showToastInParentView:self.view withText:@"Picture Saved" withDuaration:2.0];
+//                }
+//            }];
+//            
+//        }
+//    }
+//    
+//    if (popup == self.popupDelete) {
+//        if (buttonIndex == 1) {
+//            
+//            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:popup.tag inSection:0];
+//            WallPost *data = self.myObject[indexPath.row];
+//            
+//            NSLog(@"post id: %d",data.id);
+//            NSDictionary *inventory = @{ @"wall_post_id" : [NSString stringWithFormat:@"%d",data.id] };
+//            if (data.owner.id == self.app.authCredential.id) {
+//                [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/delete" params:inventory tag:@"deleteData" index:popup.tag];
+//            }
+//            else
+//            {
+//                [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/hide" params:inventory tag:@"deleteData" index:popup.tag];
+//            }
+//            
+//        }
+//    }
+
+}
+
+
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     
@@ -972,9 +1049,9 @@
 
 - (void)changeHeight:(CGFloat )height {
     self.heightConstraint.constant = height;
-    [UIView animateWithDuration:0.3 animations:^{
-        [self.view layoutIfNeeded];
-    }];
+    
+    [self.view layoutIfNeeded];
+    
 }
 
 
