@@ -52,7 +52,7 @@
     tapped.numberOfTapsRequired = 1;
     [self.facebookShare addGestureRecognizer:fbTapped];
     fbTapped.cancelsTouchesInView = NO;
-  
+    
     UITapGestureRecognizer *igTapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tabonInstagramView:)];
     igTapped.numberOfTapsRequired = 1;
     [self.instagramShare addGestureRecognizer:igTapped];
@@ -68,7 +68,7 @@
     self.collectionData.delegate = self;
     self.collectionData.dataSource = self;
     self.collectionData.userInteractionEnabled = YES;
-   
+    
     self.postCaption.delegate = self;
     self.postCaption.text = @"write your comment here...";
     self.postCaption.textColor = [UIColor lightGrayColor];
@@ -78,7 +78,7 @@
                                    action:@selector(dismissKeyboard)];
     
     [self.view addGestureRecognizer:tap];
-   tap.cancelsTouchesInView = NO;
+    tap.cancelsTouchesInView = NO;
     
 }
 -(void)dismissKeyboard {
@@ -115,12 +115,12 @@
 -(void)textViewDidChangeSelection:(UITextView *)textView{
     if ([textView.text isEqualToString:@"write your comment here..."]) {
         self.descriptionCharLabel.text = [NSString stringWithFormat:@"0/250"];
-     
+        
     }else{
         self.descriptionCharLabel.text = [NSString stringWithFormat:@"%u/250", (textView.text.length)];
     }
     
-
+    
 }
 -(BOOL) textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     NSUInteger oldLength = [textView.text length]; NSUInteger replacementLength = [text length]; NSUInteger rangeLength = range.length;
@@ -134,18 +134,18 @@
 
 -(void)tabOnFbView : (id) sender
 {
-         NSLog(@"Hellooooooo");
-        FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
-        photo.image = self.image;
-        //photo.caption = self.comment.text;
+    NSLog(@"Hellooooooo");
+    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+    photo.image = self.image;
+    //photo.caption = self.comment.text;
     [photo setCaption:self.comment.text];
-        photo.userGenerated = YES;
-        FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
-        content.photos = @[photo];
+    photo.userGenerated = YES;
+    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+    content.photos = @[photo];
     
-        [FBSDKShareDialog showFromViewController:self
-                                     withContent:content
-                                        delegate:self];
+    [FBSDKShareDialog showFromViewController:self
+                                 withContent:content
+                                    delegate:self];
     
     
 }
@@ -188,13 +188,13 @@
         [errMsg show];
     }
     
-
+    
 }
 
 
 -(void) tabOnVKView :(id) sender{
     NSLog(@"VKtabbed");
-  
+    
     VKSdk *sdkInstance = [VKSdk initializeWithAppId:@"5444705"];
     if(sdkInstance !=NULL){
         NSString * str = [[NSString alloc]init];
@@ -204,19 +204,19 @@
         }else{
             str = self.postCaption.text;
         }
-
+        
         VKUploadImage *vk = [[VKUploadImage alloc]init];
         vk.sourceImage = self.image;
         VKShareDialogController *shareDialog = [VKShareDialogController new]; //1
         shareDialog.text         = str;
         shareDialog.uploadImages = @[vk];
-       
+        
         [shareDialog setCompletionHandler:^(VKShareDialogController * diaglog, VKShareDialogControllerResult result) {
             [self dismissViewControllerAnimated:YES completion:nil];
         }];
         [self presentViewController:shareDialog animated:YES completion:nil]; //6
     }
- 
+    
     
 }
 
@@ -440,27 +440,58 @@
 - (IBAction)upload:(id)sender {
     
     [self.loading startAnimating];
-   // [self.postCaption resignFirstResponder];
+    // [self.postCaption resignFirstResponder];
     [self.upload setEnabled:false];
     NSLog(@"%@", self.postCaption.text);
     NSString *taglist= @"";
     
-   // NSLog(@"TagList size: %d",self.myObjectSelection.count);
+    // NSLog(@"TagList size: %d",self.myObjectSelection.count);
     
-    if(self.myObjectSelection.count>0)
-    {
-        
-        for (int i=0; i<self.myObjectSelection.count; i++) {
+    //    if(self.myObjectSelection.count>0)
+    //    {
+    //
+    //        for (int i=0; i<self.myObjectSelection.count; i++) {
+    //
+    //            Contact *data = self.myObjectSelection[i];
+    //
+    //            taglist = (i==0) ? [NSString stringWithFormat:@"[%d",data.id] : [NSString stringWithFormat:@"%@,%d",taglist,data.id];
+    //        }
+    //
+    //        taglist = [NSString stringWithFormat:@"%@]",taglist];
+    //    }
+    NSMutableArray *tags = [[NSMutableArray alloc] init];
+    if(self.tagList.count>0){
+        for (int i=0; i<self.tagList.count;i++ ) {
+            Contact *çontact = [self.tagList[i] valueForKey:@"owner"];
             
-            Contact *data = self.myObjectSelection[i];
-            
-            taglist = (i==0) ? [NSString stringWithFormat:@"[%d",data.id] : [NSString stringWithFormat:@"%@,%d",taglist,data.id];
+            NSDictionary *dict = @{
+                                   @"owner_id" : [NSNumber numberWithInt: çontact.id],
+                                   @"origin_x"  :[self.tagList[i] valueForKey:@"origin_x"] ,
+                                   @"origin_y"  :[self.tagList[i] valueForKey:@"origin_y"] ,
+                                   
+                                   };
+            [tags addObject:dict];
         }
         
-        taglist = [NSString stringWithFormat:@"%@]",taglist];
+        NSDictionary * dict1 =@{
+                                @"tag_message" : self.tagCustomMessage,
+                                @"tagged_id": tags
+                                };
+        NSError *error;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict1
+                                                           options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                             error:&error];
+        
+        if (! jsonData) {
+            NSLog(@"Got an error: %@", error);
+        } else {
+            taglist = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            
+        }
+        
     }
     
-   // NSLog(@"TAGLIST %@",taglist);
+    NSLog(@"%@",taglist);
     NSString * str = [[NSString alloc]init];
     if ([self.postCaption.text  isEqualToString:@"write your comment here..."]) {
         str = @"";
@@ -479,9 +510,9 @@
                                 @"wall_post_mood":[self.wallPostMood length ]!=0 ?self.wallPostMood:@"",
                                 @"Content-Type" : @"charset=utf-8",
                                 };
-   // NSLog(@"%@",inventory);
+    // NSLog(@"%@",inventory);
     
-    [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/create" params:inventory tag:@"getPhoto"];
+    //  [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/create" params:inventory tag:@"getPhoto"];
     
     
 }
@@ -618,7 +649,7 @@
     NSLog(@"Result : %@" ,result);
 }
 - (void)vkSdkUserAuthorizationFailed{
- NSLog(@"AUthorization Failed  ");
+    NSLog(@"AUthorization Failed  ");
 }
 
 

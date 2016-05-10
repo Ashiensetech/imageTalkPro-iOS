@@ -88,6 +88,10 @@
     self.tableData.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
    self.tagPostions = [[NSMutableArray alloc] init];
+    
+    self.customMessage.delegate = self;
+    self.customMessage.text = @"custom message...";
+    self.customMessage.textColor = [UIColor lightGrayColor];
 }
 
 
@@ -184,8 +188,11 @@
     
     if(self.type == 0)
     {
+        
         SharePhotoViewController *data = self.navigationController.viewControllers[3];
         data.myObjectSelection = self.myObjectSelection;
+        data.tagList = self.tagPostions;
+        data.tagCustomMessage = ([self.customMessage.text isEqualToString: @"custom message..."]) ?@"":self.customMessage.text;
     }
     
     if(self.type == 2)
@@ -224,7 +231,7 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"cellfor");
+  
     TagTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     
@@ -283,8 +290,7 @@
         
         if(shouoldAdd)
         {
-              NSLog(@"indexpath row :%d",indexPath.row);
-            NSLog(@"section2");
+            
             UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.tabPosition.x,self.tabPosition.y,120,20)]; //or whatever size you need
             myLabel.center = self.tabPosition;
             [myLabel setFont:[UIFont systemFontOfSize:12]];
@@ -362,6 +368,7 @@
             [self.myObjectSelection removeObjectAtIndex:indexPath.row];
             [self.tagPostions removeObjectAtIndex:indexPath.row];
             [self.tableData reloadData];
+           
             
             
         }];
@@ -432,7 +439,25 @@
     
     
 }
+#pragma mark - UITextViewDelegate
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@""]) {
+        textView.text = @"custom message...";
+        textView.textColor = [UIColor lightGrayColor]; //optional
+    }
+    [textView resignFirstResponder];
+ 
+}
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString: @"custom message..."]) {
+        textView.text = @"";
+        textView.textColor = [UIColor blackColor]; //optional
+    }
+    [textView becomeFirstResponder];
 
+}
 
 /*
  #pragma mark - Navigation

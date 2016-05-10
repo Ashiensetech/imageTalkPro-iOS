@@ -11,7 +11,7 @@
 #import "ApiAccess.h"
 #import "ZDStickerView.h"
 
-@interface TagViewController : UIViewController<UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate,ApiAccessDelegate,ZDStickerViewDelegate>
+@interface TagViewController : UIViewController<UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate,ApiAccessDelegate,ZDStickerViewDelegate,UITextViewDelegate>
 {
     NSUserDefaults *defaults;
     NSString *baseurl;
@@ -32,6 +32,7 @@
 @property (assign,nonatomic) BOOL loaded;
 @property (assign,nonatomic) CGPoint tabPosition;
 @property (assign,nonatomic) BOOL selected;
+@property (strong, nonatomic) IBOutlet UITextView *customMessage;
 
 @property (assign,nonatomic) int type;
 @property (strong, nonatomic) UIImage *pic;
