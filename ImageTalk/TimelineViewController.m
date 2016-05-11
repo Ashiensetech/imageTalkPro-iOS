@@ -704,7 +704,7 @@
     NSLog(@"Tag = %d", data.tagCount);
     NSLog(@"%ld",(long)indexPath.row);
     TimelineTableViewCell *cell = [self.tableData cellForRowAtIndexPath:indexPath];
-    UIView *view = cell.imageView;
+    
     
    
     if(self.counter==0)
@@ -728,7 +728,7 @@
             myLabel.textAlignment = NSTextAlignmentCenter;
             myLabel.text = [NSString stringWithFormat:@"%@  %@",tag.tagId.user.firstName,tag.tagId.user.lastName] ;
             myLabel.center = CGPointMake([tag.originX floatValue], [tag.originY floatValue]);
-            [view addSubview:myLabel];
+            [cell.image addSubview:myLabel];
             
         }
         
@@ -741,7 +741,7 @@
         NSLog(@"%d",self.counter);
         self.counter = 0;
         
-        for (id child in [view subviews])
+        for (id child in [cell.image subviews])
         {
             if ([child isMemberOfClass:[UILabel class]])
             {

@@ -15,9 +15,9 @@
 @interface Tag : JSONModel
 
 @property (strong, nonatomic) AppCredential *tagId;
-@property (strong, nonatomic) NSString *originX;
-@property (strong, nonatomic) NSString *originY;
-@property (strong, nonatomic) NSString *tagMessage;
+@property (strong, nonatomic) NSString <Optional> *originX;
+@property (strong, nonatomic) NSString <Optional> *originY;
+@property (strong, nonatomic) NSString <Optional> *tagMessage;
 
 
 
