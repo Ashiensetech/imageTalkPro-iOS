@@ -59,6 +59,16 @@
     
     [self changeHeight:0];
     [self.searchView setHidden:YES];
+    
+    self.lblOne = [[UILabel alloc] initWithFrame:CGRectMake(0,0,120,20)];
+    self.lblOne.center = CGPointMake(159, 70.5);
+    [self.lblOne setFont:[UIFont systemFontOfSize:12]];
+    self.lblOne.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
+    self.lblOne.textColor = [UIColor whiteColor];
+    self.lblOne.textAlignment = NSTextAlignmentCenter;
+    self.lblOne.text = [NSString stringWithFormat:@"who's this?"] ;
+    [self.picture addSubview:self.lblOne];
+    
 
 }
 
@@ -75,6 +85,7 @@
     [self.searchView setHidden:NO];
     [self.searchBar becomeFirstResponder];
     self.tabPosition = [sender locationInView:self.picture];
+    NSLog(@"%@",NSStringFromCGPoint(self.tabPosition));
 }
 
 -(void)keyboardDidShow:(NSNotification *)notification
@@ -346,6 +357,7 @@
         NSLog(@"Check");
         [self changeHeight:0];
         [self.searchView setHidden:YES];
+        [self.lblOne removeFromSuperview];
         self.selected = false;
         [self.view endEditing:YES];
         
