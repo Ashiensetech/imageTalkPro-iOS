@@ -811,21 +811,34 @@
 
 -(void)deleteClick:(UIButton*)sender
 {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
-    WallPost *data = self.myObject[indexPath.row];
     
-    //   if (data.owner.id == self.app.authCredential.id) {
     self.alertDelete =   [UIAlertController
                                  alertControllerWithTitle:nil
-                                 message:@""
+                                 message:nil
                                  preferredStyle:UIAlertControllerStyleActionSheet];
-    
+   
     UIAlertAction* ok = [UIAlertAction
                          actionWithTitle:@"Remove Post"
                          style:UIAlertActionStyleDefault
                          handler:^(UIAlertAction * action)
                          {
                              //Do some thing here
+                             
+                             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
+                             WallPost *data = self.myObject[indexPath.row];
+                             
+                             NSLog(@"post id: %d",data.id);
+                             NSDictionary *inventory = @{ @"wall_post_id" : [NSString stringWithFormat:@"%d",data.id] };
+                             if (data.owner.id == self.app.authCredential.id) {
+                                 [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/delete" params:inventory tag:@"deleteData" index:(int)sender.tag];
+                             }
+                             else
+                             {
+                                 [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/hide" params:inventory tag:@"deleteData" index:(int)sender.tag];
+                             }
+                             
+
+                             
                              [self.alertDelete dismissViewControllerAnimated:YES completion:nil];
                              
                          }];
@@ -838,25 +851,14 @@
                                  
                              }];
     
+
+    
     
     [self.alertDelete addAction:ok];
     [self.alertDelete addAction:cancel];
     [self presentViewController:self.alertDelete animated:YES completion:nil];
 
 }
-
-    
-    
-
-//Adding an action
-- (void)addAction:(UIAlertAction *)action
-{
-    
-    NSLog(@"indicate");
-    
-}
-
-
 
 
 
@@ -890,25 +892,7 @@
         }
     }
     
-    if (alertView == self.alertDelete) {
-        if (buttonIndex == 1) {
-            
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:alertView.tag inSection:0];
-            WallPost *data = self.myObject[indexPath.row];
-            
-            NSLog(@"post id: %d",data.id);
-            NSDictionary *inventory = @{ @"wall_post_id" : [NSString stringWithFormat:@"%d",data.id] };
-            if (data.owner.id == self.app.authCredential.id) {
-                [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/delete" params:inventory tag:@"deleteData" index:alertView.tag];
-            }
-            else
-            {
-                [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/hide" params:inventory tag:@"deleteData" index:alertView.tag];
-            }
-            
-        }
-    }
-    
+        
 }
 
 

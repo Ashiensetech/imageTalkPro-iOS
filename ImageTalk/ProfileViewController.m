@@ -32,8 +32,7 @@
     
     self.app =(AppDelegate *)[[UIApplication sharedApplication] delegate];
     
-    NSDictionary *inventory = @{@"owner_id":self.app.userId};
-    [[ApiAccess getSharedInstance] postRequestWithUrl:@"/app/wallpost/count/byownerid" params:inventory tag:@"postCount"];
+   
     
     self.profilePic.layer.cornerRadius = 45;
     [self.profilePic.layer setMasksToBounds:YES];
@@ -42,8 +41,16 @@
     
     self.singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     [self.view addGestureRecognizer:self.singleTap];
-    
+    [self getData:self.app.userId];
    
+}
+
+
+-(void) getData:(NSString*) ownerId{
+    
+    NSDictionary *inventory = @{@"owner_id":ownerId};
+    [[ApiAccess getSharedInstance] postRequestWithUrl:@"/app/wallpost/count/byownerid" params:inventory tag:@"postCount"];
+    
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -105,8 +112,10 @@
     {
         NSError* error = nil;
         self.response = [[StatusResponse alloc] initWithDictionary:data error:&error];
-        self.picCount.text = (self.response.responseStat.status) ?self.response.responseData.textStatus : @"";
+       // self.picCount.text = (self.response.responseStat.status) ?self.response.responseData.textStatus : @"";
 
+        
+        NSLog(@"Post count: %@",self.response);
         
     }
     
