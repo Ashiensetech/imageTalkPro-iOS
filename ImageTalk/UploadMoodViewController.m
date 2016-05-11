@@ -29,8 +29,9 @@
     defaults = [NSUserDefaults standardUserDefaults];
     baseurl = [defaults objectForKey:@"baseurl"];
     
+    [self.picture setUserInteractionEnabled:YES];
     self.singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
-    //[self.view addGestureRecognizer:self.singleTap];
+    [self.picture addGestureRecognizer:self.singleTap];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardDidShow:)
@@ -53,12 +54,27 @@
     [self getData:self.offset keyword:self.keyword];
     
     self.picture.image =self.pic;
+    
+    self.tagPostions = [[NSMutableArray alloc] init];
+    
+    [self changeHeight:0];
+    [self.searchView setHidden:YES];
 
+}
+
+- (void)changeHeight:(CGFloat )height {
+    self.searchViewHeight.constant = height;
+    
+    [self.searchView layoutIfNeeded];
+    
 }
 
 - (void)handleSingleTap:(UITapGestureRecognizer *)sender
 {
-    [self.view endEditing:YES];
+    [self changeHeight:50];
+    [self.searchView setHidden:NO];
+    [self.searchBar becomeFirstResponder];
+    self.tabPosition = [sender locationInView:self.picture];
 }
 
 -(void)keyboardDidShow:(NSNotification *)notification
@@ -141,30 +157,49 @@
 
 
 - (IBAction)done:(id)sender {
-    
+    NSLog(@"upload");
     [self.loading startAnimating];
     [self.customMsg resignFirstResponder];
-    
-    
-    
-    NSLog(@"%@app/wallpost/create?%@",baseurl,[NSString stringWithFormat:@"description=%@photo=%@",self.customMsg.text,[self imageToString:self.picture.image]]);
-    
     self.customMsg.text = [NSString stringWithFormat:@"%@ ",self.customMsg.text];
-    
     NSString *taglist= @"";
     
-    if(self.myObjectSelection.count>0)
-    {
+    
+    
+    
+    NSMutableArray *tags = [[NSMutableArray alloc] init];
+    NSLog(@"%d",self.tagPostions.count);
+    if(self.tagPostions.count>0){
         
-        for (int i=0; i<self.myObjectSelection.count; i++) {
+        for (int i=0; i<self.tagPostions.count;i++ ) {
+            Contact *çontact = [self.tagPostions[i] valueForKey:@"owner"];
             
-            Contact *data = self.myObjectSelection[i];
-            
-            taglist = (i==0) ? [NSString stringWithFormat:@"[%d",data.id] : [NSString stringWithFormat:@"%@,%d",taglist,data.id];
+            NSDictionary *dict = @{
+                                   @"tag_id" : [NSNumber numberWithInt: çontact.id],
+                                   @"origin_x"  :[self.tagPostions[i] valueForKey:@"origin_x"] ,
+                                   @"origin_y"  :[self.tagPostions[i] valueForKey:@"origin_y"] ,
+                                   @"tag_message" : @"",
+                                   };
+            [tags addObject:dict];
         }
         
-        taglist = [NSString stringWithFormat:@"%@]",taglist];
+        NSDictionary * dict1 =@{
+                                @"tagged_id_list": tags
+                                };
+        NSError *error;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict1
+                                                           options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                             error:&error];
+        
+        if (! jsonData) {
+            NSLog(@"Got an error: %@", error);
+        } else {
+            taglist = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            
+        }
+        
     }
+    
+    NSLog(@"%@",taglist);
     
     
     NSDictionary *inventory = @{
@@ -199,6 +234,28 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(void) labelDragged :(UIPanGestureRecognizer *)gesture {
+    UILabel *label = (UILabel *)gesture.view;
+    CGPoint translation = [gesture translationInView:label];
+    
+    if(CGRectContainsPoint(self.picture.bounds,CGPointMake(label.center.x + translation.x, label.center.y + translation.y))){
+        for(int i=0;i<self.tagPostions.count;i++){
+            if([[self.tagPostions[i] valueForKey:@"origin_x"]floatValue]==label.center.x && [[self.tagPostions[i] valueForKey:@"origin_y"]floatValue] == label.center.y){
+                NSObject * owner =[self.tagPostions[i] valueForKey:@"owner"];
+                [self.tagPostions replaceObjectAtIndex:i withObject:@{@"origin_x": [NSNumber numberWithFloat: label.center.x + translation.x] ,@"origin_y":[NSNumber numberWithFloat: label.center.y + translation.y],@"owner":owner}];
+            }
+        }
+        
+        // move label
+        label.center = CGPointMake(label.center.x + translation.x,
+                                   label.center.y + translation.y);
+        
+        // reset translation
+        [gesture setTranslation:CGPointZero inView:label];
+    }
+}
+
 
 #pragma mark - table methods
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -259,7 +316,27 @@
         
         if(shouoldAdd)
         {
+            UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.tabPosition.x,self.tabPosition.y,120,20)]; //or whatever size you need
+            myLabel.center = self.tabPosition;
+            [myLabel setFont:[UIFont systemFontOfSize:12]];
+            myLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
+            myLabel.textColor = [UIColor whiteColor];
+            myLabel.textAlignment = NSTextAlignmentCenter;
+            myLabel.text = [NSString stringWithFormat:@"%@  %@",data.user.firstName,data.user.lastName] ;
+            myLabel.tag = indexPath.row;
+            myLabel.userInteractionEnabled = YES;
+            
+            UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc]
+                                               initWithTarget:self
+                                               action:@selector(labelDragged:)] ;
+            [myLabel addGestureRecognizer:gesture];
+            
+            
+            [self.picture addSubview:myLabel];
+            
+            
             [self.myObjectSelection addObject:self.myObject[indexPath.row]];
+            [self.tagPostions addObject:@{@"origin_x": [NSNumber numberWithFloat: self.tabPosition.x] ,@"origin_y":[NSNumber numberWithFloat: self.tabPosition.y],@"owner":self.myObject[indexPath.row] }];
         }
         else
         {
@@ -267,7 +344,8 @@
         }
         
         NSLog(@"Check");
-        
+        [self changeHeight:0];
+        [self.searchView setHidden:YES];
         self.selected = false;
         [self.view endEditing:YES];
         
@@ -286,12 +364,20 @@
     
     if(!self.selected)
     {
-        
         UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Delete Tag" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
-            
-            NSLog(@"Delete");
+            NSObject *tagItem =[self.tagPostions  objectAtIndex:indexPath.row];
+            for (UIView *i in self.picture.subviews){
+                if([i isKindOfClass:[UILabel class]]){
+                    UILabel *newLbl = (UILabel *)i;
+                    if(newLbl.center.x == [[tagItem valueForKey:@"origin_x"] floatValue] && newLbl.center.y == [[tagItem valueForKey:@"origin_y"] floatValue]){
+                        [newLbl setHidden:YES];
+                        [self.picture willRemoveSubview:newLbl];
+                    }
+                }
+            }
             
             [self.myObjectSelection removeObjectAtIndex:indexPath.row];
+            [self.tagPostions removeObjectAtIndex:indexPath.row];
             [self.tableData reloadData];
             
             

@@ -237,6 +237,7 @@
     
     if ([segue.identifier isEqualToString:@"tag"])
     {
+        NSLog(@"Tag segue called");
         UploadMoodViewController *data = [segue destinationViewController];
         data.pic  = self.imageSticker.image;
         data.type = 2;

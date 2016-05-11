@@ -2462,6 +2462,8 @@
                         <outlet property="picture" destination="Cqa-bd-k4B" id="Jfz-SY-Yg9"/>
                         <outlet property="pictureHeight" destination="Brd-Eo-hWG" id="222-vU-Vyr"/>
                         <outlet property="searchBar" destination="aEq-9q-IKD" id="i37-DP-n3J"/>
+                        <outlet property="searchView" destination="iOF-R4-AAe" id="BzZ-5s-1HQ"/>
+                        <outlet property="searchViewHeight" destination="l70-2q-JTQ" id="Kda-Yv-eGW"/>
                         <outlet property="tableData" destination="knu-Mp-ePr" id="gWL-5E-KEc"/>
                         <segue destination="Hxb-wn-Odv" kind="presentation" identifier="timeline" id="EDF-RG-T9N"/>
                     </connections>
@@ -3525,7 +3527,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jh7-Fi-ZXr">
-                                <rect key="frame" x="0.0" y="465" width="600" height="135"/>
+                                <rect key="frame" x="0.0" y="424" width="600" height="176"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="60" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
@@ -3587,23 +3589,25 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jHE-I8-kXU">
-                                <rect key="frame" x="0.0" y="416" width="600" height="46"/>
+                                <rect key="frame" x="0.0" y="416" width="600" height="0.0"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YO3-OT-Ypp">
-                                        <rect key="frame" x="8" y="0.0" width="592" height="46"/>
+                                        <rect key="frame" x="8" y="0.0" width="592" height="0.0"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" id="bUm-X3-ahh"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="YO3-OT-Ypp" firstAttribute="top" secondItem="jHE-I8-kXU" secondAttribute="top" id="Mho-Gt-nHX"/>
-                                    <constraint firstAttribute="bottom" secondItem="YO3-OT-Ypp" secondAttribute="bottom" id="Ohz-45-pjF"/>
-                                    <constraint firstAttribute="height" constant="46" id="Ydj-bf-wwU"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="cbG-0r-O9F"/>
-                                    <constraint firstAttribute="trailing" secondItem="YO3-OT-Ypp" secondAttribute="trailing" id="ft8-1X-fdF"/>
-                                    <constraint firstItem="YO3-OT-Ypp" firstAttribute="leading" secondItem="jHE-I8-kXU" secondAttribute="leading" constant="8" id="hzT-gD-wex"/>
+                                    <constraint firstItem="YO3-OT-Ypp" firstAttribute="top" secondItem="jHE-I8-kXU" secondAttribute="top" id="B1b-WN-2K7"/>
+                                    <constraint firstAttribute="trailing" secondItem="YO3-OT-Ypp" secondAttribute="trailing" id="MEe-lN-nqD"/>
+                                    <constraint firstItem="YO3-OT-Ypp" firstAttribute="leading" secondItem="jHE-I8-kXU" secondAttribute="leadingMargin" id="VbG-6z-Alg"/>
+                                    <constraint firstAttribute="height" id="Ydj-bf-wwU"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" id="cbG-0r-O9F"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -3612,7 +3616,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="ZKx-DL-ByD" secondAttribute="trailing" constant="-20" id="0co-Sq-zuF"/>
                             <constraint firstItem="aqc-KI-vIa" firstAttribute="leading" secondItem="CzJ-vD-wE1" secondAttribute="leadingMargin" constant="-20" id="0jy-Di-ysf"/>
                             <constraint firstItem="5LN-SI-Nfv" firstAttribute="top" secondItem="jh7-Fi-ZXr" secondAttribute="bottom" id="0sI-1r-VqH"/>
-                            <constraint firstItem="jh7-Fi-ZXr" firstAttribute="top" secondItem="ZKx-DL-ByD" secondAttribute="bottom" constant="51" id="5Ph-fk-ktL"/>
+                            <constraint firstItem="jh7-Fi-ZXr" firstAttribute="top" secondItem="ZKx-DL-ByD" secondAttribute="bottom" constant="10" id="5Ph-fk-ktL"/>
                             <constraint firstItem="jHE-I8-kXU" firstAttribute="leading" secondItem="CzJ-vD-wE1" secondAttribute="leadingMargin" constant="-20" id="7ct-y7-vqC"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jHE-I8-kXU" secondAttribute="trailing" constant="-20" id="9Kz-4q-NJg"/>
                             <constraint firstItem="jHE-I8-kXU" firstAttribute="top" secondItem="ZKx-DL-ByD" secondAttribute="bottom" constant="2" id="BGe-aI-SjP"/>
@@ -3622,8 +3626,8 @@
                             <constraint firstItem="aqc-KI-vIa" firstAttribute="top" secondItem="CuW-6o-DRm" secondAttribute="bottom" id="dNA-JQ-1ta"/>
                             <constraint firstItem="ZKx-DL-ByD" firstAttribute="leading" secondItem="CzJ-vD-wE1" secondAttribute="leadingMargin" constant="-20" id="eHx-Pi-ztw"/>
                             <constraint firstItem="jh7-Fi-ZXr" firstAttribute="leading" secondItem="CzJ-vD-wE1" secondAttribute="leadingMargin" constant="-20" id="fyh-8e-kJG"/>
-                            <constraint firstItem="jh7-Fi-ZXr" firstAttribute="top" secondItem="jHE-I8-kXU" secondAttribute="bottom" constant="3" id="gRY-WE-Esa"/>
-                            <constraint firstItem="jh7-Fi-ZXr" firstAttribute="top" secondItem="jHE-I8-kXU" secondAttribute="bottom" constant="3" id="m5Y-3u-38L"/>
+                            <constraint firstItem="jh7-Fi-ZXr" firstAttribute="top" secondItem="jHE-I8-kXU" secondAttribute="bottom" constant="8" id="gRY-WE-Esa"/>
+                            <constraint firstItem="jh7-Fi-ZXr" firstAttribute="top" secondItem="jHE-I8-kXU" secondAttribute="bottom" constant="8" id="m5Y-3u-38L"/>
                             <constraint firstItem="jHE-I8-kXU" firstAttribute="leading" secondItem="CzJ-vD-wE1" secondAttribute="leadingMargin" constant="-20" id="oiC-QO-poQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="aqc-KI-vIa" secondAttribute="trailing" constant="-20" id="uKC-KY-0lu"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jh7-Fi-ZXr" secondAttribute="trailing" constant="-20" id="zSF-3s-tH9"/>
@@ -3651,10 +3655,12 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="customMessage" destination="YO3-OT-Ypp" id="yoD-Pm-dvt"/>
+                        <outlet property="heightConstraint" destination="Hbn-PU-eBI" id="tQt-C0-hWI"/>
                         <outlet property="picture" destination="ZKx-DL-ByD" id="mAQ-1P-fxO"/>
                         <outlet property="pictureHeight" destination="w6j-ao-HvD" id="kq9-jn-gQh"/>
                         <outlet property="searchBar" destination="mzd-Nx-tsj" id="8Nw-jI-4VF"/>
                         <outlet property="searchDisplayController" destination="qUf-2Y-VPg" id="m09-EW-6g3"/>
+                        <outlet property="serachView" destination="aqc-KI-vIa" id="eYz-NJ-Zx2"/>
                         <outlet property="tableData" destination="jh7-Fi-ZXr" id="VhX-uJ-6cC"/>
                     </connections>
                 </viewController>
@@ -8223,6 +8229,7 @@
         <image name="web" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
+
         <segue reference="EFU-E8-vhl"/>
         <segue reference="SwU-sA-rJ9"/>
         <segue reference="JvH-LZ-azZ"/>
