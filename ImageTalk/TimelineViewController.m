@@ -706,8 +706,7 @@
     TimelineTableViewCell *cell = [self.tableData cellForRowAtIndexPath:indexPath];
     UIView *view = cell.imageView;
     
-    int value = 150;
-    int value2 = 25;
+   
     if(self.counter==0)
     {
         
@@ -716,20 +715,19 @@
         {
             
             // NSLog(@"%@",[[data.tagList objectAtIndex:i ]U]);
-            AppCredential *appcredential =  [data.tagList objectAtIndex:i] ;
-            NSLog(@"%@",appcredential.user.firstName);
+            Tag *tag =  [data.tagList objectAtIndex:i] ;
+            NSLog(@"%@",tag.tagId.user.firstName);
             
-            UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(value2,value,120,20)]; //or whatever size you need
-            value+=25;
-            value2+=50;
+            UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,120,20)]; //or whatever size you need
+            
             // myLabel.backgroundColor = [UIColor blackColor];
             [myLabel setFont:[UIFont systemFontOfSize:12]];
             
             myLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
             myLabel.textColor = [UIColor whiteColor];
             myLabel.textAlignment = NSTextAlignmentCenter;
-            myLabel.text = [NSString stringWithFormat:@"%@  %@",appcredential.user.firstName,appcredential.user.lastName] ;
-            
+            myLabel.text = [NSString stringWithFormat:@"%@  %@",tag.tagId.user.firstName,tag.tagId.user.lastName] ;
+            myLabel.center = CGPointMake([tag.originX floatValue], [tag.originY floatValue]);
             [view addSubview:myLabel];
             
         }

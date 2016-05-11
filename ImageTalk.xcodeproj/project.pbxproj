@@ -26,6 +26,7 @@
 		DA187B891CB51E13002D42F1 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = DA187B791CB51E13002D42F1 /* UIView+WebCacheOperation.m */; };
 		DA3D02191CCF579500F58226 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA3D02181CCF579500F58226 /* FBSDKCoreKit.framework */; };
 		DA3D021B1CCF5AE300F58226 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA3D021A1CCF5AE300F58226 /* FBSDKShareKit.framework */; };
+		DA4B89B91CE337D2007225E4 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4B89B81CE337D2007225E4 /* Tag.m */; };
 		DA4EA6E11CDDD12C00317641 /* MYHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4EA6E01CDDD12C00317641 /* MYHTTPRequestOperationManager.m */; };
 		DA5088061CB68057003F33B3 /* cross-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DA5088031CB68057003F33B3 /* cross-icon.png */; };
 		DA5088071CB68057003F33B3 /* enlarge.png in Resources */ = {isa = PBXBuildFile; fileRef = DA5088041CB68057003F33B3 /* enlarge.png */; };
@@ -377,6 +378,8 @@
 		DA187B791CB51E13002D42F1 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		DA3D02181CCF579500F58226 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		DA3D021A1CCF5AE300F58226 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		DA4B89B71CE337D2007225E4 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
+		DA4B89B81CE337D2007225E4 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
 		DA4EA6DF1CDDD12C00317641 /* MYHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYHTTPRequestOperationManager.h; sourceTree = "<group>"; };
 		DA4EA6E01CDDD12C00317641 /* MYHTTPRequestOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYHTTPRequestOperationManager.m; sourceTree = "<group>"; };
 		DA5088031CB68057003F33B3 /* cross-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cross-icon.png"; sourceTree = SOURCE_ROOT; };
@@ -1796,6 +1799,8 @@
 				FD4449BA1C49269F00B87D33 /* MediaPath.m */,
 				FD26C4341C50E2E300122383 /* Date.h */,
 				FD26C4351C50E2E300122383 /* Date.m */,
+				DA4B89B71CE337D2007225E4 /* Tag.h */,
+				DA4B89B81CE337D2007225E4 /* Tag.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2340,6 +2345,7 @@
 				FDFB2BBE1C1FEACA0030C055 /* SenderSingleTableViewCell.m in Sources */,
 				FD58E0501BC274CE00F5D98C /* Location.m in Sources */,
 				FD99C99D1BC3E4FC002C25C2 /* CustomCollectionViewCell.m in Sources */,
+				DA4B89B91CE337D2007225E4 /* Tag.m in Sources */,
 				FDFC90AC1BEB729B0019B9CB /* Acknowledgement.m in Sources */,
 				FD3EFAA71BC52DF10091BB0F /* PictureSize.m in Sources */,
 				FDF1EFBD1BCD007700A33BDD /* ContactsTableViewCell.m in Sources */,
