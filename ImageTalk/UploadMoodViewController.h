@@ -38,4 +38,9 @@
 @property (assign,nonatomic) int type;
 @property (strong, nonatomic) UIImage *pic;
 
+@property (assign,nonatomic) CGPoint tabPosition;
+@property (strong,nonatomic)NSMutableArray *tagPostions;
+@property (strong, nonatomic) IBOutlet UIView *searchView;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *searchViewHeight;
+
 @end

@@ -90,7 +90,7 @@
     if(!self.tagPostions){
         self.tagPostions = [[NSMutableArray alloc] init];
     }else{
-        NSLog(@"%@",self.tagPostions);
+      
         for(int i=0;i<self.tagPostions.count;i++){
             Contact *data = [self.tagPostions[i] valueForKey:@"owner"];
             UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(50,50,120,20)]; //or whatever size you need
@@ -115,20 +115,29 @@
     }
     
     self.customMessage.delegate = self;
-    if(self.customMessageString ==NULL){
-        self.customMessageString =@"custom message...";
-        self.customMessage.textColor = [UIColor lightGrayColor];
-    }
-    self.customMessage.text = self.customMessageString;
+//    if(self.customMessageString ==NULL){
+//        self.customMessageString =@"custom message...";
+//        self.customMessage.textColor = [UIColor lightGrayColor];
+//    }
+//    self.customMessage.text = self.customMessageString;
     
+    [self changeHeight:0];
+    [self.serachView setHidden:YES];
+  
     
 }
 
-
+- (void)changeHeight:(CGFloat )height {
+    self.heightConstraint.constant = height;
+    
+    [self.serachView layoutIfNeeded];
+    
+}
 
 - (void)handleSingleTap:(UITapGestureRecognizer *)sender
 {
-    
+    [self changeHeight:50];
+    [self.serachView setHidden:NO];
     [self.searchBar becomeFirstResponder];
     self.tabPosition = [sender locationInView:self.picture];
     
@@ -211,6 +220,8 @@
     self.keyword = searchText;
     [self getData:self.offset keyword:self.keyword];
 }
+
+
 
 
 - (IBAction)done:(id)sender {
@@ -342,13 +353,14 @@
             
             [self.myObjectSelection addObject:self.myObject[indexPath.row]];
             [self.tagPostions addObject:@{@"origin_x": [NSNumber numberWithFloat: self.tabPosition.x] ,@"origin_y":[NSNumber numberWithFloat: self.tabPosition.y],@"owner":self.myObject[indexPath.row] }];
-            
-        }
+                   }
         else
         {
             [ToastView showToastInParentView:self.view withText:@"Already Tagged This Friend" withDuaration:2.0];
         }
-        
+        [self changeHeight:0];
+        [self.serachView setHidden:YES];
+
         self.selected = false;
         [self.view endEditing:YES];
         

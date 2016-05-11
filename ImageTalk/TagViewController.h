@@ -34,10 +34,12 @@
 @property (assign,nonatomic) BOOL selected;
 @property (strong, nonatomic) IBOutlet UITextView *customMessage;
 @property(strong,nonatomic) NSString * customMessageString;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
 
 @property (assign,nonatomic) int type;
 @property (strong, nonatomic) UIImage *pic;
 @property (strong,nonatomic)NSMutableArray *tagPostions;
+@property (strong, nonatomic) IBOutlet UIView *serachView;
 
 
 @end
