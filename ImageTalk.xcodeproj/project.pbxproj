@@ -44,7 +44,6 @@
 		FD1B26EA1C02FB47007162ED /* MBAutoGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1B26E91C02FB47007162ED /* MBAutoGrowingTextView.m */; };
 		FD1F9E471CD3715E00E79756 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = FD1F9E461CD3715E00E79756 /* heart.png */; };
 		FD217E741C1014B300C04E5A /* ZoomRotatePanImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD217E731C1014B300C04E5A /* ZoomRotatePanImageView.m */; };
-		FD25492E1CB4CAD400A997AE /* scale-3.png in Resources */ = {isa = PBXBuildFile; fileRef = FD25492B1CB4CAD400A997AE /* scale-3.png */; };
 		FD26C42F1C50B3DE00122383 /* UIImage+BlurredFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = FD26C42C1C50B3DE00122383 /* UIImage+BlurredFrame.m */; };
 		FD26C4301C50B3DE00122383 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = FD26C42E1C50B3DE00122383 /* UIImage+ImageEffects.m */; };
 		FD26C4331C50E1FA00122383 /* DateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD26C4321C50E1FA00122383 /* DateTableViewCell.m */; };
@@ -410,7 +409,6 @@
 		FD1F9E461CD3715E00E79756 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = SOURCE_ROOT; };
 		FD217E721C1014B300C04E5A /* ZoomRotatePanImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZoomRotatePanImageView.h; sourceTree = "<group>"; };
 		FD217E731C1014B300C04E5A /* ZoomRotatePanImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZoomRotatePanImageView.m; sourceTree = "<group>"; };
-		FD25492B1CB4CAD400A997AE /* scale-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scale-3.png"; sourceTree = SOURCE_ROOT; };
 		FD26C42B1C50B3DE00122383 /* UIImage+BlurredFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+BlurredFrame.h"; sourceTree = "<group>"; };
 		FD26C42C1C50B3DE00122383 /* UIImage+BlurredFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+BlurredFrame.m"; sourceTree = "<group>"; };
 		FD26C42D1C50B3DE00122383 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
@@ -2142,7 +2140,6 @@
 				FD5A2D461CD0D82800B6065B /* coffeeL.png in Resources */,
 				FD462DC91C085A4B00BE9344 /* Arcitectura_Regular.otf in Resources */,
 				FD5A2D531CD0D82800B6065B /* middleL.png in Resources */,
-				FD25492E1CB4CAD400A997AE /* scale-3.png in Resources */,
 				FD62BA1C1CC6083100A531AB /* Default.png in Resources */,
 				FD5A2D5D1CD0D82800B6065B /* trafficL.png in Resources */,
 				FD5A2D4B1CD0D82800B6065B /* GamingL.png in Resources */,
