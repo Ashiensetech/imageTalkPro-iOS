@@ -42,5 +42,5 @@
 @property (strong,nonatomic)NSMutableArray *tagPostions;
 @property (strong, nonatomic) IBOutlet UIView *searchView;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *searchViewHeight;
-
+@property (strong,nonatomic)UILabel *lblOne;
 @end

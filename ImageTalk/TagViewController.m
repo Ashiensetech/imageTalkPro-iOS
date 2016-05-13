@@ -89,6 +89,15 @@
     
     if(!self.tagPostions){
         self.tagPostions = [[NSMutableArray alloc] init];
+        
+        self.lblOne = [[UILabel alloc] initWithFrame:CGRectMake(0,0,120,20)];
+        self.lblOne.center = CGPointMake(self.picture.bounds.size.height/2, self.picture.bounds.size.height/2);
+        [self.lblOne setFont:[UIFont systemFontOfSize:12]];
+        self.lblOne.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
+        self.lblOne.textColor = [UIColor whiteColor];
+        self.lblOne.textAlignment = NSTextAlignmentCenter;
+        self.lblOne.text = [NSString stringWithFormat:@"who's this?"] ;
+        [self.picture addSubview:self.lblOne];
     }else{
       
         for(int i=0;i<self.tagPostions.count;i++){
@@ -123,6 +132,7 @@
     
     [self changeHeight:0];
     [self.serachView setHidden:YES];
+    
   
     
 }
@@ -360,6 +370,7 @@
         }
         [self changeHeight:0];
         [self.serachView setHidden:YES];
+        [self.lblOne removeFromSuperview];
 
         self.selected = false;
         [self.view endEditing:YES];

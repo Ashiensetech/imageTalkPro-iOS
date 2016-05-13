@@ -26,7 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+   
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.tabBarController.tabBar.hidden=YES;
     
@@ -258,6 +258,7 @@
 
 -(void) receivedError:(JSONModelError *)error tag:(NSString *)tag
 {
+    NSLog(@"eroor:%@",error);
     [ToastView showErrorToastInParentView:self.view withText:@"Internet connection error" withDuaration:2.0];
     [self.loading stopAnimating];
     
