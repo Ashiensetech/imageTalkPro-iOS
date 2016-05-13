@@ -440,25 +440,12 @@
 - (IBAction)upload:(id)sender {
     
     [self.loading startAnimating];
-    // [self.postCaption resignFirstResponder];
+    [self.postCaption resignFirstResponder];
     [self.upload setEnabled:false];
     NSLog(@"%@", self.postCaption.text);
     NSString *taglist= @"";
     
-    // NSLog(@"TagList size: %d",self.myObjectSelection.count);
-    
-    //    if(self.myObjectSelection.count>0)
-    //    {
-    //
-    //        for (int i=0; i<self.myObjectSelection.count; i++) {
-    //
-    //            Contact *data = self.myObjectSelection[i];
-    //
-    //            taglist = (i==0) ? [NSString stringWithFormat:@"[%d",data.id] : [NSString stringWithFormat:@"%@,%d",taglist,data.id];
-    //        }
-    //
-    //        taglist = [NSString stringWithFormat:@"%@]",taglist];
-    //    }
+  
     NSMutableArray *tags = [[NSMutableArray alloc] init];
     if(self.tagList.count>0){
         for (int i=0; i<self.tagList.count;i++ ) {

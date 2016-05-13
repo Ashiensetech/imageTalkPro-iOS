@@ -15,8 +15,8 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "VKSdk.h"
 
-#import <GoogleMaps/GoogleMaps.h>
-//@import GoogleMaps;
+//#import <GoogleMaps/GoogleMaps.h>
+@import GoogleMaps;
 
 @interface AppDelegate ()
 
@@ -71,7 +71,7 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    [GMSServices provideAPIKey:@"AIzaSyCKb0wh3l4oiYtOgQctAXCPxUh76Q7s-ko"];
+    [GMSServices provideAPIKey:@"AIzaSyAsgxFpn_lHDqw3oj81fguR4Q6BFBk-pPs"];
     
   //  [defaults setValue:@"http://159.203.253.167:8080/" forKey:@"baseurl"];
   //  [defaults setValue:@"159.203.253.167" forKey:@"socketurl"];
@@ -82,7 +82,7 @@
      [defaults setValue:@"9025" forKey:@"port"];
     
 
-     [defaults setValue:@"AIzaSyAq4og4K5Wb6D38azyml00Ewc7J0rSKgEc" forKey:@"gmskey"];
+    [defaults setValue:@"1ab4fb622d9e6f5dfdff193c38a1c93d17a38e91" forKey:@"gmskey"];
     
     
  

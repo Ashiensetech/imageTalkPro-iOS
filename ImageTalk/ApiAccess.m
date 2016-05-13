@@ -188,7 +188,11 @@ static ApiAccess *sharedInstance = nil;
 
 - (void) getRequestForGoogleWithParams:(NSDictionary*) params tag:(NSString*) tag
 {
-    [JSONHTTPClient getJSONFromURLWithString:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json" params:params completion:^(id json, JSONModelError *err)
+    NSLog(@"%@",params);
+    
+    NSDictionary * newParam = @{@"key":@"29362df98623085a9b086b0979fa79c00ac0ee62" ,@"location" : [params valueForKey:@"location"],@"name":[params valueForKey:@"name"],@"pagetoken":[params valueForKey:@"pagetoken"],@"radius":[params valueForKey:@"radius"],@"sensor":@false};
+    
+    [JSONHTTPClient getJSONFromURLWithString:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json" params:newParam completion:^(id json, JSONModelError *err)
      {
          
          if(err)
