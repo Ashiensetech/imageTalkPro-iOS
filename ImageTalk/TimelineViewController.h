@@ -26,7 +26,7 @@
     NSString *port;
     
 }
-@property (strong, nonatomic) UIAlertView *alertDownload;
+@property (strong, nonatomic) UIAlertController *alertDownload;
 @property (strong, nonatomic) UIAlertController *alertDelete;
 @property (strong, nonatomic) IBOutlet UIView *emptyView;
 @property (strong, nonatomic) AppDelegate *app;

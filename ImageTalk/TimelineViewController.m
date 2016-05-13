@@ -278,8 +278,8 @@
     
     if(![data.description isEqual:@""])
     {
-        CGSize size = [data.description sizeWithFont:[UIFont fontWithName:@"Helvetica" size:14] constrainedToSize:CGSizeMake(280, 1000) lineBreakMode:NSLineBreakByWordWrapping];
-        height = height + ((size.height < 40)? 40 : size.height)+5;
+        CGSize size = [data.description sizeWithFont:[UIFont fontWithName:@"Helvetica" size:14] constrainedToSize:CGSizeMake(280, 1100) ];
+        height = height + ((size.height < 40)? 40 : size.height);
     }
     
     
@@ -399,17 +399,37 @@
     
     cell.name.text = [NSString stringWithFormat:@"%@ %@",data.owner.user.firstName,data.owner.user.lastName];
     
-    NSTimeInterval timestamp = [data.createdDate longLongValue];
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
+    NSLog(@"Timestamp: %@",data.createdDate);
     
-    NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+    //NSTimeInterval timestamp = [data.createdDate longLongValue];
+//    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
+//    NSLog(@"old date: %@",date);
+   
+    NSDate *now = [NSDate date];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy.MM.dd HH:mm:ss.0";
+    [dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
+    
+    NSLog(@"The Current Time is %@",[dateFormatter stringFromDate:now]);
+    
+    NSString *dateStr = data.createdDate;
+    NSDate *old =  [dateFormatter dateFromString:dateStr];
+    
+    NSLog(@"The old time in current date format: %@",old);
+    
+    NSTimeZone* sourceTimeZone = [NSTimeZone systemTimeZone];
     NSTimeZone* destinationTimeZone = [NSTimeZone systemTimeZone];
     
-    NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:date];
-    NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:date];
+    NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:old];
+    NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:now];
     NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
     
-    date = [[NSDate alloc] initWithTimeInterval:interval sinceDate:date];
+    
+    
+    
+    
+    old = [[NSDate alloc] initWithTimeInterval:interval sinceDate:old];
     
     
     
@@ -440,7 +460,7 @@
     
     cell.likeLabel.text = [NSString stringWithFormat:@"%d likes",data.likeCount];
     
-    cell.date.text = [NSString stringWithFormat:@"%@",[self AgoStringFromTime:date]];
+    cell.date.text = [NSString stringWithFormat:@"%@",[self AgoStringFromTime:old]];
     
     // cell.date.text = [NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:date]];
     
@@ -754,6 +774,9 @@
 
 -(NSString*) AgoStringFromTime : (NSDate*) dateTime
 {
+    
+    
+    
     NSDictionary *timeScale = @{@"sec"  :@1,
                                 @"min"  :@60,
                                 @"hr"   :@3600,
@@ -796,14 +819,63 @@
 
 -(void)downloadClick:(UIButton*)sender
 {
+//    
+//    self.alertDownload = [[UIAlertView alloc] initWithTitle:@"Download Picture"
+//                                                    message:@"Download the picture in your iPhone."
+//                                                   delegate:self
+//                                          cancelButtonTitle:@"Cancel"
+//                                          otherButtonTitles:@"Download", nil];
+
+    self.alertDownload =   [UIAlertController
+                          alertControllerWithTitle:@"Download Picture"
+                          message:@"Download the picture in your iPhone."
+                          preferredStyle:UIAlertControllerStyleActionSheet];
     
-    self.alertDownload = [[UIAlertView alloc] initWithTitle:@"Download Picture"
-                                                    message:@"Download the picture in your iPhone."
-                                                   delegate:self
-                                          cancelButtonTitle:@"Cancel"
-                                          otherButtonTitles:@"Download", nil];
-    self.alertDownload.tag = sender.tag;
-    [self.alertDownload show];
+    
+    
+    
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"Download"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             //Do some thing here
+                             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
+                             WallPost *data = self.myObject[indexPath.row];
+                             
+                             NSURL *imgUrl = [NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.picPath]];
+                             UIImage *viewImage = [UIImage imageWithData: [NSData dataWithContentsOfURL:imgUrl]];
+                             
+                             ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+                             // Request to save the image to camera roll
+                             [library writeImageToSavedPhotosAlbum:[viewImage CGImage] orientation:(ALAssetOrientation)[viewImage imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error){
+                                 if (error) {
+                                     NSLog(@"error");
+                                     [ToastView showToastInParentView:self.view withText:@"Picture not Saved" withDuaration:2.0];
+                                 } else {
+                                     NSLog(@"url %@", assetURL);
+                                     [ToastView showToastInParentView:self.view withText:@"Picture Saved" withDuaration:2.0];
+                                 }
+                             }];
+
+                             
+                         }];
+    
+    UIAlertAction* cancel = [UIAlertAction
+                             actionWithTitle:@"Cancel"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 [self.alertDownload dismissViewControllerAnimated:YES completion:nil];
+                                 
+                             }];
+    
+    [self.alertDownload addAction:ok];
+    [self.alertDownload addAction:cancel];
+    self.alertDownload.view.tintColor = [UIColor orangeColor];
+    [self presentViewController:self.alertDownload animated:YES completion:nil];
+
+    
     
 }
 
@@ -854,6 +926,7 @@
     
     [self.alertDelete addAction:ok];
     [self.alertDelete addAction:cancel];
+    self.alertDelete.view.tintColor = [UIColor orangeColor];
     [self presentViewController:self.alertDelete animated:YES completion:nil];
 
 }
@@ -869,23 +942,6 @@
         if (buttonIndex == 1)
         {
             
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:alertView.tag inSection:0];
-            WallPost *data = self.myObject[indexPath.row];
-            
-            NSURL *imgUrl = [NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.picPath]];
-            UIImage *viewImage = [UIImage imageWithData: [NSData dataWithContentsOfURL:imgUrl]];
-            
-            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-            // Request to save the image to camera roll
-            [library writeImageToSavedPhotosAlbum:[viewImage CGImage] orientation:(ALAssetOrientation)[viewImage imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error){
-                if (error) {
-                    NSLog(@"error");
-                    [ToastView showToastInParentView:self.view withText:@"Picture not Saved" withDuaration:2.0];
-                } else {
-                    NSLog(@"url %@", assetURL);
-                    [ToastView showToastInParentView:self.view withText:@"Picture Saved" withDuaration:2.0];
-                }
-            }];
             
         }
     }
