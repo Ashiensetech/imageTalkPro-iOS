@@ -158,6 +158,7 @@
 		FD62BA2B1CC6087800A531AB /* top-left.png in Resources */ = {isa = PBXBuildFile; fileRef = FD62BA231CC6087800A531AB /* top-left.png */; };
 		FD62BA2D1CC6087800A531AB /* top-right.png in Resources */ = {isa = PBXBuildFile; fileRef = FD62BA251CC6087800A531AB /* top-right.png */; };
 		FD640F181CA16E7000A3A665 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD640F161CA16E7000A3A665 /* Main.storyboard */; };
+		FD65A4761CE5BC8E00EDA8C9 /* MapLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = FD65A4751CE5BC8E00EDA8C9 /* MapLocation.m */; };
 		FD6BCE251BBD130400F595E8 /* UIBasicButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6BCE241BBD130400F595E8 /* UIBasicButton.m */; };
 		FD6BCE281BBD14AD00F595E8 /* UIPhotoButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6BCE271BBD14AD00F595E8 /* UIPhotoButton.m */; };
 		FD6BCE2B1BBD14C100F595E8 /* UILocationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6BCE2A1BBD14C100F595E8 /* UILocationButton.m */; };
@@ -592,6 +593,8 @@
 		FD62BA231CC6087800A531AB /* top-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "top-left.png"; path = "borderCorners/top-left.png"; sourceTree = SOURCE_ROOT; };
 		FD62BA251CC6087800A531AB /* top-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "top-right.png"; path = "borderCorners/top-right.png"; sourceTree = SOURCE_ROOT; };
 		FD640F171CA16E7000A3A665 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FD65A4741CE5BC8E00EDA8C9 /* MapLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapLocation.h; sourceTree = "<group>"; };
+		FD65A4751CE5BC8E00EDA8C9 /* MapLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapLocation.m; sourceTree = "<group>"; };
 		FD6BCE231BBD130400F595E8 /* UIBasicButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIBasicButton.h; sourceTree = "<group>"; };
 		FD6BCE241BBD130400F595E8 /* UIBasicButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBasicButton.m; sourceTree = "<group>"; };
 		FD6BCE261BBD14AD00F595E8 /* UIPhotoButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPhotoButton.h; sourceTree = "<group>"; };
@@ -1799,6 +1802,8 @@
 				FD26C4351C50E2E300122383 /* Date.m */,
 				DA4B89B71CE337D2007225E4 /* Tag.h */,
 				DA4B89B81CE337D2007225E4 /* Tag.m */,
+				FD65A4741CE5BC8E00EDA8C9 /* MapLocation.h */,
+				FD65A4751CE5BC8E00EDA8C9 /* MapLocation.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2444,6 +2449,7 @@
 				FDFC90A91BEB6DC70019B9CB /* SocketTextResponse.m in Sources */,
 				FDEECE211B9D69BF00887F4A /* main.m in Sources */,
 				FDD320BA1C44E3CC0048A43D /* TTransportException.m in Sources */,
+				FD65A4761CE5BC8E00EDA8C9 /* MapLocation.m in Sources */,
 				FDD320B61C44E3CC0048A43D /* TNSStreamTransport.m in Sources */,
 				DA187B7B1CB51E13002D42F1 /* NSData+ImageContentType.m in Sources */,
 				FD57F4601C04241500430FF6 /* UIImageView+XLNetworking.m in Sources */,

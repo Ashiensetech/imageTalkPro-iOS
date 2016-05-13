@@ -13,7 +13,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
 #import "VKSdk.h" 
-
+@import  MapKit;
 
 @interface SharePhotoViewController : UIViewController <ApiAccessDelegate,UITextViewDelegate,FBSDKSharingDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UIDocumentInteractionControllerDelegate,VKSdkDelegate,VKSdkUIDelegate>
 {
@@ -50,4 +50,5 @@
 @property(strong,nonatomic) NSString *tagCustomMessage;
 @property (strong,nonatomic) NSMutableArray *tagList;
 @property (nonatomic, strong) UIDocumentInteractionController *documentController;
+@property (nonatomic,strong) MKMapItem *postLocation;
 @end

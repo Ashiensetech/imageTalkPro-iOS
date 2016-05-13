@@ -9,7 +9,7 @@
 #import "ApiAccess.h"
 #import "JSONHTTPClient.h"
 #import "MYHTTPRequestOperationManager.h"
-
+@import MapKit;
 static ApiAccess *sharedInstance = nil;
 
 @implementation ApiAccess
@@ -188,6 +188,7 @@ static ApiAccess *sharedInstance = nil;
 
 - (void) getRequestForGoogleWithParams:(NSDictionary*) params tag:(NSString*) tag
 {
+   
     NSLog(@"%@",params);
     
     NSDictionary * newParam = @{@"key":@"29362df98623085a9b086b0979fa79c00ac0ee62" ,@"location" : [params valueForKey:@"location"],@"name":[params valueForKey:@"name"],@"pagetoken":[params valueForKey:@"pagetoken"],@"radius":[params valueForKey:@"radius"],@"sensor":@false};
@@ -208,7 +209,7 @@ static ApiAccess *sharedInstance = nil;
          
          
      }];
-    
+
 }
 
 
@@ -248,6 +249,32 @@ static ApiAccess *sharedInstance = nil;
 }
 
 
-
+-(void) mapKitServiceWithCLLocationCoordinate2D:(CLLocationCoordinate2D)start Keyboard :(NSString *) keyboard andTag : (NSString *) tag{
+    MKCoordinateSpan span;
+    span.latitudeDelta = 0.002;
+    span.longitudeDelta = 0.002;
+    MKCoordinateRegion region;
+    region.span = span;
+    region.center = start;
+    MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
+    request.naturalLanguageQuery = keyboard;
+    request.region = region;
+    // Create and initialize a search object.
+    MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
+    // Start the search and display the results as annotations on the map.
+    [search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error)
+     {
+         if(error)
+         {
+             //[self.delegate receivedError:@{@"error": error} tag:tag];
+         }
+         else
+         {
+             
+            // NSLog(@"%@",json);
+             [self.delegate receivedResponse:@{@"response": response.mapItems} tag:tag index:0];
+         }
+     }];
+}
 
 @end

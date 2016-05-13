@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Hxb-wn-Odv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Hxb-wn-Odv">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -8229,17 +8229,17 @@
         <image name="web" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="DOh-Uv-lDf"/>
-        <segue reference="7rK-5W-S99"/>
+        <segue reference="Cos-Ov-8c2"/>
         <segue reference="EDF-RG-T9N"/>
         <segue reference="0HS-LD-tJf"/>
         <segue reference="0Ay-17-uwa"/>
-        <segue reference="7WC-db-158"/>
+        <segue reference="XpC-VB-DQn"/>
+        <segue reference="hwa-Rq-OMl"/>
+        <segue reference="uHW-24-y3y"/>
         <segue reference="m7I-pa-qFJ"/>
-        <segue reference="Cos-Ov-8c2"/>
-        <segue reference="6GA-wf-SNi"/>
+        <segue reference="7rK-5W-S99"/>
         <segue reference="TmO-XD-ODI"/>
         <segue reference="jOb-ZT-cu4"/>
-        <segue reference="EFU-E8-vhl"/>
+        <segue reference="DOh-Uv-lDf"/>
     </inferredMetricsTieBreakers>
 </document>

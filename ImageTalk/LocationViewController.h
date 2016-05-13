@@ -20,7 +20,7 @@
 }
 
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
-@property (strong, nonatomic)  NSMutableArray *myObject;
+//@property (strong, nonatomic)  NSMutableArray *myObject;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loading;
 @property (strong, nonatomic) IBOutlet UITableView *tableData;
 @property (nonatomic, strong) UITapGestureRecognizer *singleTap;
@@ -30,4 +30,6 @@
 @property (assign,nonatomic) BOOL isData;
 @property (assign,nonatomic) BOOL loaded;
 @property (strong,nonatomic) NSString *keyword;
+@property (strong, nonatomic)  NSMutableArray *locations;
+@property (strong, nonatomic)  NSMutableArray *selectedLocations;
 @end
