@@ -155,8 +155,9 @@
     
     
     MKMapItem * data = self.locations[indexPath.row];
+    
     cell.address.text =[NSString stringWithFormat:@"%@",data.name];
-    cell.duration.text = [NSString stringWithFormat:@"%@",data.placemark];
+    cell.duration.text = [NSString stringWithFormat:@"%@",[[data.placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@"," ]];
     cell.image.image = [UIImage imageNamed:@"loc"];
     
     return cell;

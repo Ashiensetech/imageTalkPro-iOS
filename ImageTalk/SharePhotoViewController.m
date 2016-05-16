@@ -443,24 +443,7 @@
     [super didReceiveMemoryWarning];
     
 }
-- (NSDictionary *)dictionaryFromMapItem:(MKMapItem *)item {
-    return [NSDictionary dictionaryWithObjectsAndKeys:
-            item.name,@"name",
-            (NSString*)item.placemark,@"placemark",
-          (NSString*)  item.timeZone ,@"timeZone",
-            item.isCurrentLocation ,@"isCurrentLocation",
-            item.phoneNumber ,@"phoneNumber",
-            item.url,@"url",
-            nil];
-}
-- (NSDictionary *)dictionaryFromMKPlacemark:(MKPlacemark *)placemark {
-    return [NSDictionary dictionaryWithObjectsAndKeys:
-            placemark.name,@"name",
-            placemark.addressDictionary,@"addressDictonary",
-//            placemark.location,@"location",
-          
-            nil];
-}
+
 
 - (IBAction)upload:(id)sender {
     
@@ -469,25 +452,38 @@
     [self.upload setEnabled:false];
     NSLog(@"%@", self.postCaption.text);
     NSString *taglist= @"";
-//    NSString *location =@"";
-//    
-//    if(self.postLocation){
-//    
-//       
-//        NSError *error;
-//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[self dictionaryFromMapItem:self.postLocation]
-//                                                           options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
-//                                                             error:&error];
-//        
-//        if (! jsonData) {
-//            NSLog(@"Got an error: %@", error);
-//        } else {
-//            location = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-//            
-//        }
-//    }
-//    
-//    NSLog(@"%@",location);
+    NSString *location =@"";
+    
+    if(self.postLocation){
+    
+      CLLocation * loc = self.postLocation.placemark.location;
+        NSDictionary *dict = @{
+                               @"placeId":@"",
+                               @"icon":@"",
+                               @"name":self.postLocation.name,
+                               @"googlePlaceId":@"",
+                               @"lat":[[NSNumber alloc] initWithDouble:loc.coordinate.latitude],
+                               @"lng":[[NSNumber alloc] initWithDouble:loc.coordinate.longitude],
+                               @"formattedAddress":[NSString stringWithFormat:@"%@",[[self.postLocation.placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@"," ]],
+                               @"countryName":self.postLocation.placemark.country
+                               };
+       
+        NSError *error;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject: dict
+                                                           options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                             error:&error];
+        
+        if (! jsonData) {
+            NSLog(@"Got an error: %@", error);
+        } else {
+            location = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            
+        }
+    }
+    
+    NSLog(@"place mark string: %@",location);
+    
+
     
     
     NSMutableArray *tags = [[NSMutableArray alloc] init];
@@ -536,7 +532,7 @@
                                 @"photo" : [self imageToString:self.image],
                                 @"type" : @"0",
                                 @"tagged_list" : taglist,
-                                @"places" : @"",
+                                @"places" : location,
                                 @"wall_post_mood":[self.wallPostMood length ]!=0 ?self.wallPostMood:@"",
                                 @"Content-Type" : @"charset=utf-8",
                                 };
