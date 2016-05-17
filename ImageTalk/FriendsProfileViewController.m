@@ -28,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
     self.title = [NSString stringWithFormat:@"%@ %@",self.owner.user.firstName,self.owner.user.lastName];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.tabBarController.tabBar.hidden= YES;
