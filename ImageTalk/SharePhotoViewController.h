@@ -12,12 +12,14 @@
 #import "ApiAccess.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
+#import "VKSdk.h" 
+@import  MapKit;
 
-
-@interface SharePhotoViewController : UIViewController <ApiAccessDelegate,UITextFieldDelegate,FBSDKSharingDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+@interface SharePhotoViewController : UIViewController <ApiAccessDelegate,UITextViewDelegate,FBSDKSharingDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UIDocumentInteractionControllerDelegate,VKSdkDelegate,VKSdkUIDelegate>
 {
     NSUserDefaults *defaults;
     NSString *baseurl;
+    UIImageView *imageMain;
 }
 
 @property (strong, nonatomic) IBOutlet UILabel *tagLabel;
@@ -37,6 +39,16 @@
 @property (nonatomic,assign) NSString *wallPostMood;
 @property (strong, nonatomic) AppCredential  *owner;
 @property (strong, nonatomic) IBOutlet UIScrollView *containerScroller;
+@property (strong, nonatomic) IBOutlet UIView *tagFview;
 @property (nonatomic, assign) UIImage *profilePic;
 @property (nonatomic, assign) UIImageView *blackView;
+@property (strong, nonatomic) IBOutlet UIView *instagramShare;
+@property (strong, nonatomic) IBOutlet UIView *VKShare;
+@property (strong, nonatomic) IBOutlet UIView *addLocView;
+@property (strong, nonatomic) IBOutlet UIButton *tagFriendView;
+@property (strong, nonatomic) IBOutlet UITextView *postCaption;
+@property(strong,nonatomic) NSString *tagCustomMessage;
+@property (strong,nonatomic) NSMutableArray *tagList;
+@property (nonatomic, strong) UIDocumentInteractionController *documentController;
+@property (nonatomic,strong) MKMapItem *postLocation;
 @end

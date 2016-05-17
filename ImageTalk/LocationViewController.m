@@ -15,14 +15,18 @@
 #import "ToastView.h"
 
 #import "ApiAccess.h"
-
+#import "MapLocation.h"
+@import MapKit;
 @interface LocationViewController ()
-
+{
+    CLLocationCoordinate2D start;
+}
 @end
 
 @implementation LocationViewController
 
 @synthesize locationManager;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -35,7 +39,9 @@
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     [self.locationManager requestWhenInUseAuthorization];
     [self.locationManager startUpdatingLocation];
-
+    
+    
+    
     self.singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     
     
@@ -44,13 +50,15 @@
     
     [[ApiAccess getSharedInstance] setDelegate:self];
     
-    self.myObject = [[NSMutableArray alloc] init];
+    //  self.myObject = [[NSMutableArray alloc] init];
     
     self.offset = @"";
     self.loaded = false;
     self.keyword = @"";
-
-
+    
+    self.locations = [[NSMutableArray alloc]init];
+    self.selectedLocations = [[NSMutableArray alloc]init];
+    
 }
 
 - (void)handleSingleTap:(UITapGestureRecognizer *)sender
@@ -73,29 +81,30 @@
     NSLog(@"didUpdateToLocation: %@", newLocation);
     currentLocation = newLocation;
     NSLog(@"%f %f",newLocation.coordinate.longitude,newLocation.coordinate.latitude);
-    
+    start.latitude =newLocation.coordinate.latitude;
+    start.longitude = newLocation.coordinate.longitude;
     
     [locationManager stopUpdatingLocation];
     
     [self getData:self.keyword];
+    
+    
 }
 
 -(void) getData:(NSString*) keyboard{
     
     [self.loading startAnimating];
     
-    NSDictionary *inventory = @{
-                                @"location" : [NSString stringWithFormat:@"%f,%f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude],
-                                @"pagetoken" : [NSString stringWithFormat:@"%@",self.offset],
-                                @"name" : keyboard,
-                                @"radius" : @"500",
-                                @"key" : [defaults objectForKey:@"gmskey"],
-                                };
+    NSLog(@"manager location :%@",self.locationManager.location);
     
-    [[ApiAccess getSharedInstance] getRequestForGoogleWithParams:inventory tag:@"getLocationData"];
-
+    
+    
+    [[ApiAccess getSharedInstance] mapKitServiceWithCLLocationCoordinate2D :start  Keyboard:keyboard andTag : @"getLocationData"];
+    
+    
     
 }
+
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -131,50 +140,62 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.myObject.count;
+    
+    NSLog(@"numberOfRowsInSection: %d",self.locations.count);
+    
+    return self.locations.count;
     
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LocationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    Places *data = self.myObject[indexPath.row];
-    cell.address.text = [NSString stringWithFormat:@"%@",data.name];
-    cell.duration.text = [NSString stringWithFormat:@"%@",data.formattedAddress];
     
-    [cell.image sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@",data.icon]]
-                  placeholderImage:nil];
+    
+    LocationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    
+    
+    MKMapItem * data = self.locations[indexPath.row];
+    
+    cell.address.text =[NSString stringWithFormat:@"%@",data.name];
+    cell.duration.text = [NSString stringWithFormat:@"%@",[[data.placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@"," ]];
+    cell.image.image = [UIImage imageNamed:@"loc"];
     
     return cell;
+    
+    
+    
+    
     
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Places *data =self.myObject[indexPath.row];
+       // Places *data =self.myObject[indexPath.row];
     
-    NSInteger numberOfViewControllers = self.navigationController.viewControllers.count;
+    MKMapItem *data  = self.locations[indexPath.row];
+        NSInteger numberOfViewControllers = self.navigationController.viewControllers.count;
     
-    if([[self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2] isKindOfClass:[SharePhotoViewController class]])
-    {
-        SharePhotoViewController *data1 = [self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2];
-        data1.place = data;
-    }
-    else
-    {
-        ChatViewController *data1 = [self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2];
-        data1.placeToSend = data;
-    }
+        if([[self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2] isKindOfClass:[SharePhotoViewController class]])
+        {
+            SharePhotoViewController *data1 = [self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2];
+            //data1.place = data;
+            data1.postLocation = data;
+        }
+        else
+        {
+            ChatViewController *data1 = [self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2];
+          //  data1.placeToSend = data;
+        }
     
-    [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
     
 }
 
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     
-    
-    self.myObject = [[NSMutableArray alloc] init];
+    self.locations =[[NSMutableArray alloc] init];
+    //self.myObject = [[NSMutableArray alloc] init];
     self.loaded = false;
     self.offset = @"";
     NSLog(@"%@",searchBar.text);
@@ -186,7 +207,7 @@
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-   
+    
     [self.tableData reloadData];
     
     return YES;
@@ -194,7 +215,8 @@
 
 -(void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-     self.keyword = searchText;
+    self.keyword = searchText;
+    [self getData:self.keyword];
 }
 
 
@@ -207,48 +229,55 @@
 
 -(void) receivedResponse:(NSDictionary *)data tag:(NSString *)tag index:(int)index
 {
-    NSLog(@"%@",tag);
+    // NSLog(@"%@",tag);
     [self.loading stopAnimating];
     
     if ([tag isEqualToString:@"getLocationData"])
     {
-
+        
         NSError* error = nil;
-        self.responseSearch = [[LocationSearchResponse alloc] initWithDictionary:data error:&error];
+        // NSLog(@"%@",data);
+        //        self.responseSearch = [[LocationSearchResponse alloc] initWithDictionary:data error:&error];
+        //
+        //
+        //     //   NSLog(@"%@ %@",error,self.responseSearch);
+        //
+        //            self.offset = [NSString stringWithFormat:@"%@",self.responseSearch.next_page_token];
+        //            self.isData = !self.offset;
+        //
+        //            if(self.responseSearch.results.count>0)
+        //            {
+        //
+        //                for(int i=0;i<self.responseSearch.results.count;i++)
+        //                {
+        //                    GooglePlaces *pl = self.responseSearch.results[i];
+        //                    Places *send = [[Places alloc]init];
+        //                    send.placeId = pl.placeId;
+        //                    send.lat = pl.lat;
+        //                    send.lng = pl.lng;
+        //                    send.name = pl.name;
+        //                    send.formattedAddress = pl.formattedAddress;
+        //                    send.rating = pl.rating;
+        //                    send.icon = pl.icon;
+        //                    send.id = pl.id;
+        //
+        //                    [self.myObject addObject:send];
+        //                }
+        //            }
+        //            else
+        //            {
+        //                self.isData = false;
+        //            }
+        //
+        //            self.loaded = true;
         
         
-     //   NSLog(@"%@ %@",error,self.responseSearch);
-        
-            self.offset = [NSString stringWithFormat:@"%@",self.responseSearch.next_page_token];
-            self.isData = !self.offset;
-        
-            if(self.responseSearch.results.count>0)
-            {
-                
-                for(int i=0;i<self.responseSearch.results.count;i++)
-                {
-                    GooglePlaces *pl = self.responseSearch.results[i];
-                    Places *send = [[Places alloc]init];
-                    send.placeId = pl.placeId;
-                    send.lat = pl.lat;
-                    send.lng = pl.lng;
-                    send.name = pl.name;
-                    send.formattedAddress = pl.formattedAddress;
-                    send.rating = pl.rating;
-                    send.icon = pl.icon;
-                    send.id = pl.id;
-                    
-                    [self.myObject addObject:send];
-                }
+        NSMutableArray *result = [data valueForKey:@"response"];
+        if(result.count>0){
+            for (MKMapItem *item in result) {
+                [self.locations addObject:item];
             }
-            else
-            {
-                self.isData = false;
-            }
-            
-            self.loaded = true;
-        
-        
+        }
         
         
         [self.tableData reloadData];
@@ -258,6 +287,7 @@
 
 -(void) receivedError:(JSONModelError *)error tag:(NSString *)tag
 {
+    NSLog(@"eroor:%@",error);
     [ToastView showErrorToastInParentView:self.view withText:@"Internet connection error" withDuaration:2.0];
     [self.loading stopAnimating];
     
@@ -271,13 +301,13 @@
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

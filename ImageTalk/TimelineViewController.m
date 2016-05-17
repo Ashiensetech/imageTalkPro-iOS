@@ -25,11 +25,13 @@
 #import "ToastView.h"
 #import "NSDate+NVTimeAgo.h"
 
+
 @interface TimelineViewController ()
 
 @property (strong,nonatomic)UIImage *img;
 @property int counter;
 @property int counter1;
+@property UILabel *topView;
 
 @end
 
@@ -88,11 +90,32 @@
     
     [[SocektAccess getSharedInstance]setItem:[self.tabBarController.tabBar.items objectAtIndex:1]];
     
+    UITabBarController *tabBarController = (UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController ;
     
+    [tabBarController setDelegate:self];
+   
+    self.topView = [[UILabel alloc] init];
+    self.topView.frame = CGRectMake( 0, 0,self.view.frame.size.width, 20);
+    self.topView.backgroundColor = [UIColor orangeColor];
     
+
+   // self.topView.hidden = YES;
+    
+}
+
+
+-(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+   NSLog(@"comeon: %@", tabBarController);
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+
+    [self.tableData scrollToRowAtIndexPath:indexPath
+                          atScrollPosition:UITableViewScrollPositionTop
+                                  animated:YES];
     
     
 }
+
 
 
 - (IBAction)refresh:(id)sender {
@@ -108,6 +131,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+   
     [[ApiAccess getSharedInstance] setDelegate:self];
     [[[SocektAccess getSharedInstance]getSocket]setDelegate:self];
     [[[SocektAccess getSharedInstance]getSocket] reconnect];
@@ -116,7 +140,7 @@
     
     if(self.updateWill)
     {
-        
+        NSLog(@"viewDidAppear");
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.updateId inSection:0];
         
         NSLog(@"Update Value: %d",self.updateValue);
@@ -125,7 +149,10 @@
         
         
         TimelineTableViewCell *cell = (TimelineTableViewCell *)[self.tableData cellForRowAtIndexPath:indexPath];
-        cell.commentLabel.text = [NSString stringWithFormat:@"%d comments",self.updateValue];
+        
+       
+        
+        
         WallPost *data = self.myObject[indexPath.row];
         data.commentCount = self.updateValue;
         
@@ -251,7 +278,7 @@
     
     if(![data.description isEqual:@""])
     {
-        CGSize size = [data.description sizeWithFont:[UIFont fontWithName:@"Helvetica" size:14] constrainedToSize:CGSizeMake(280, 1000) lineBreakMode:NSLineBreakByWordWrapping];
+        CGSize size = [data.description sizeWithFont:[UIFont fontWithName:@"Helvetica" size:14] constrainedToSize:CGSizeMake(280, 1100) ];
         height = height + ((size.height < 40)? 40 : size.height);
     }
     
@@ -279,6 +306,20 @@
     
     cell.image.userInteractionEnabled = YES;
     cell.image.tag = indexPath.row;
+    
+    if(self.updateWill == YES)
+    {
+        NSLog(@"YES YES");
+        NSLog(@"Updated value : %d", (int)self.updateValue);
+      data.commentCount= (int)self.updateValue;
+     
+        
+    }
+    else
+    {
+        data.commentCount = (int)data.comments.count;
+        
+    }
     
     NSLog(@"isliked: %d",self.dataLike.responseData.isLiked);
     NSLog(@"wall post id: %d",data.id);
@@ -358,17 +399,37 @@
     
     cell.name.text = [NSString stringWithFormat:@"%@ %@",data.owner.user.firstName,data.owner.user.lastName];
     
-    NSTimeInterval timestamp = [data.createdDate longLongValue];
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
+    NSLog(@"Timestamp: %@",data.createdDate);
     
-    NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+    //NSTimeInterval timestamp = [data.createdDate longLongValue];
+//    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
+//    NSLog(@"old date: %@",date);
+   
+    NSDate *now = [NSDate date];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy.MM.dd HH:mm:ss.0";
+    [dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
+    
+    NSLog(@"The Current Time is %@",[dateFormatter stringFromDate:now]);
+    
+    NSString *dateStr = data.createdDate;
+    NSDate *old =  [dateFormatter dateFromString:dateStr];
+    
+    NSLog(@"The old time in current date format: %@",old);
+    
+    NSTimeZone* sourceTimeZone = [NSTimeZone systemTimeZone];
     NSTimeZone* destinationTimeZone = [NSTimeZone systemTimeZone];
     
-    NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:date];
-    NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:date];
+    NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:old];
+    NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:now];
     NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
     
-    date = [[NSDate alloc] initWithTimeInterval:interval sinceDate:date];
+    
+    
+    
+    
+    old = [[NSDate alloc] initWithTimeInterval:interval sinceDate:old];
     
     
     
@@ -399,14 +460,14 @@
     
     cell.likeLabel.text = [NSString stringWithFormat:@"%d likes",data.likeCount];
     
-    cell.date.text = [NSString stringWithFormat:@"%@",[self AgoStringFromTime:date]];
+    cell.date.text = [NSString stringWithFormat:@"%@",[self AgoStringFromTime:old]];
     
     // cell.date.text = [NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:date]];
     
     
     
     NSLog(@"wallpostmood: %@",data.wallPostMood);
-    if([data.wallPostMood isEqual:@"" ] && [data.wallPostMood isEqual:@"none"])
+    if([data.wallPostMood isEqual:@"" ] || [data.wallPostMood isEqual:@"none"])
     {
         
         [cell.profilePic sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.owner.user.picPath.original.path]]
@@ -577,7 +638,7 @@
     
     cell.commentBtn.tag = indexPath.row;
     
-    cell.commentLabel.text = [NSString stringWithFormat:@"%lu comments",(unsigned long)data.comments.count];
+    cell.commentLabel.text = [NSString stringWithFormat:@"%d comments",data.commentCount];
     
     cell.profileBtn.tag = indexPath.row;
     cell.loc.tag = indexPath.row;
@@ -663,10 +724,9 @@
     NSLog(@"Tag = %d", data.tagCount);
     NSLog(@"%ld",(long)indexPath.row);
     TimelineTableViewCell *cell = [self.tableData cellForRowAtIndexPath:indexPath];
-    UIView *view = cell.imageView;
     
-    int value = 150;
-    int value2 = 25;
+    
+   
     if(self.counter==0)
     {
         
@@ -675,21 +735,20 @@
         {
             
             // NSLog(@"%@",[[data.tagList objectAtIndex:i ]U]);
-            AppCredential *appcredential =  [data.tagList objectAtIndex:i] ;
-            NSLog(@"%@",appcredential.user.firstName);
+            Tag *tag =  [data.tagList objectAtIndex:i] ;
+            NSLog(@"%@",tag.tagId.user.firstName);
             
-            UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(value2,value,120,20)]; //or whatever size you need
-            value+=25;
-            value2+=50;
+            UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,120,20)]; //or whatever size you need
+            
             // myLabel.backgroundColor = [UIColor blackColor];
             [myLabel setFont:[UIFont systemFontOfSize:12]];
             
             myLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
             myLabel.textColor = [UIColor whiteColor];
             myLabel.textAlignment = NSTextAlignmentCenter;
-            myLabel.text = [NSString stringWithFormat:@"%@  %@",appcredential.user.firstName,appcredential.user.lastName] ;
-            
-            [view addSubview:myLabel];
+            myLabel.text = [NSString stringWithFormat:@"%@  %@",tag.tagId.user.firstName,tag.tagId.user.lastName] ;
+            myLabel.center = CGPointMake([tag.originX floatValue], [tag.originY floatValue]);
+            [cell.image addSubview:myLabel];
             
         }
         
@@ -702,7 +761,7 @@
         NSLog(@"%d",self.counter);
         self.counter = 0;
         
-        for (id child in [view subviews])
+        for (id child in [cell.image subviews])
         {
             if ([child isMemberOfClass:[UILabel class]])
             {
@@ -715,6 +774,9 @@
 
 -(NSString*) AgoStringFromTime : (NSDate*) dateTime
 {
+    
+    
+    
     NSDictionary *timeScale = @{@"sec"  :@1,
                                 @"min"  :@60,
                                 @"hr"   :@3600,
@@ -743,44 +805,134 @@
     timeAgo = timeAgo/[[timeScale objectForKey:scale] integerValue];
     NSString *s = @"";
     if (timeAgo > 1) {
-        s = @"s";
+        s = @"s ago";
+    }
+    else
+    {
+        s=@" ago";
     }
     
     
-    return [dateTime formattedAsTimeAgo];//[NSString stringWithFormat:@"%d %@%@", timeAgo,([scale isEqualToString:@"hr"])?@"hour" : scale , s];
+    //return [dateTime formattedAsTimeAgo];
+    return [NSString stringWithFormat:@"%d %@%@", timeAgo,([scale isEqualToString:@"hr"])?@"hour" : scale , s];
 }
 
 -(void)downloadClick:(UIButton*)sender
 {
+//    
+//    self.alertDownload = [[UIAlertView alloc] initWithTitle:@"Download Picture"
+//                                                    message:@"Download the picture in your iPhone."
+//                                                   delegate:self
+//                                          cancelButtonTitle:@"Cancel"
+//                                          otherButtonTitles:@"Download", nil];
+
+    self.alertDownload =   [UIAlertController
+                          alertControllerWithTitle:@"Download Picture"
+                          message:@"Download the picture in your iPhone."
+                          preferredStyle:UIAlertControllerStyleActionSheet];
     
-    self.alertDownload = [[UIAlertView alloc] initWithTitle:@"Download Picture"
-                                                    message:@"Download the picture in your iPhone."
-                                                   delegate:self
-                                          cancelButtonTitle:@"Cancel"
-                                          otherButtonTitles:@"Download", nil];
-    self.alertDownload.tag = sender.tag;
-    [self.alertDownload show];
+    
+    
+    
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"Download"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             //Do some thing here
+                             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
+                             WallPost *data = self.myObject[indexPath.row];
+                             
+                             NSURL *imgUrl = [NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.picPath]];
+                             UIImage *viewImage = [UIImage imageWithData: [NSData dataWithContentsOfURL:imgUrl]];
+                             
+                             ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+                             // Request to save the image to camera roll
+                             [library writeImageToSavedPhotosAlbum:[viewImage CGImage] orientation:(ALAssetOrientation)[viewImage imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error){
+                                 if (error) {
+                                     NSLog(@"error");
+                                     [ToastView showToastInParentView:self.view withText:@"Picture not Saved" withDuaration:2.0];
+                                 } else {
+                                     NSLog(@"url %@", assetURL);
+                                     [ToastView showToastInParentView:self.view withText:@"Picture Saved" withDuaration:2.0];
+                                 }
+                             }];
+
+                             
+                         }];
+    
+    UIAlertAction* cancel = [UIAlertAction
+                             actionWithTitle:@"Cancel"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 [self.alertDownload dismissViewControllerAnimated:YES completion:nil];
+                                 
+                             }];
+    
+    [self.alertDownload addAction:ok];
+    [self.alertDownload addAction:cancel];
+    self.alertDownload.view.tintColor = [UIColor orangeColor];
+    [self presentViewController:self.alertDownload animated:YES completion:nil];
+
+    
     
 }
 
 -(void)deleteClick:(UIButton*)sender
 {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
-    WallPost *data = self.myObject[indexPath.row];
     
-    //   if (data.owner.id == self.app.authCredential.id) {
-    self.alertDelete = [[UIAlertView alloc] initWithTitle:@"Delete Picture"
-                                                  message:@"Delete the Picture from your timeline"
-                                                 delegate:self
-                                        cancelButtonTitle:@"Cancel"
-                                        otherButtonTitles:@"Delete", nil];
-    self.alertDelete.tag = sender.tag;
-    [self.alertDelete show];
-    // }
+    self.alertDelete =   [UIAlertController
+                                 alertControllerWithTitle:nil
+                                 message:nil
+                                 preferredStyle:UIAlertControllerStyleActionSheet];
+   
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"Remove Post"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             //Do some thing here
+                             
+                             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
+                             WallPost *data = self.myObject[indexPath.row];
+                             
+                             NSLog(@"post id: %d",data.id);
+                             NSDictionary *inventory = @{ @"wall_post_id" : [NSString stringWithFormat:@"%d",data.id] };
+                             if (data.owner.id == self.app.authCredential.id) {
+                                 [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/delete" params:inventory tag:@"deleteData" index:(int)sender.tag];
+                             }
+                             else
+                             {
+                                 [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/hide" params:inventory tag:@"deleteData" index:(int)sender.tag];
+                             }
+                             
+
+                             
+                             [self.alertDelete dismissViewControllerAnimated:YES completion:nil];
+                             
+                         }];
+    UIAlertAction* cancel = [UIAlertAction
+                             actionWithTitle:@"Cancel"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 [self.alertDelete dismissViewControllerAnimated:YES completion:nil];
+                                 
+                             }];
+    
+
     
     
-    
+    [self.alertDelete addAction:ok];
+    [self.alertDelete addAction:cancel];
+    self.alertDelete.view.tintColor = [UIColor orangeColor];
+    [self presentViewController:self.alertDelete animated:YES completion:nil];
+
 }
+
+
+
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     
@@ -790,46 +942,11 @@
         if (buttonIndex == 1)
         {
             
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:alertView.tag inSection:0];
-            WallPost *data = self.myObject[indexPath.row];
-            
-            NSURL *imgUrl = [NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.picPath]];
-            UIImage *viewImage = [UIImage imageWithData: [NSData dataWithContentsOfURL:imgUrl]];
-            
-            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-            // Request to save the image to camera roll
-            [library writeImageToSavedPhotosAlbum:[viewImage CGImage] orientation:(ALAssetOrientation)[viewImage imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error){
-                if (error) {
-                    NSLog(@"error");
-                    [ToastView showToastInParentView:self.view withText:@"Picture not Saved" withDuaration:2.0];
-                } else {
-                    NSLog(@"url %@", assetURL);
-                    [ToastView showToastInParentView:self.view withText:@"Picture Saved" withDuaration:2.0];
-                }
-            }];
             
         }
     }
     
-    if (alertView == self.alertDelete) {
-        if (buttonIndex == 1) {
-            
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:alertView.tag inSection:0];
-            WallPost *data = self.myObject[indexPath.row];
-            
-            NSLog(@"post id: %d",data.id);
-            NSDictionary *inventory = @{ @"wall_post_id" : [NSString stringWithFormat:@"%d",data.id] };
-            if (data.owner.id == self.app.authCredential.id) {
-                [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/delete" params:inventory tag:@"deleteData" index:alertView.tag];
-            }
-            else
-            {
-                [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/hide" params:inventory tag:@"deleteData" index:alertView.tag];
-            }
-            
-        }
-    }
-    
+        
 }
 
 
@@ -863,11 +980,49 @@
     CGPoint offset = scrollView.contentOffset;
     self.counter = 0;
     CGRect bounds = scrollView.bounds;
+        // then we are at the top
+        
+    
     CGSize size = scrollView.contentSize;
     UIEdgeInsets inset = scrollView.contentInset;
     float y = offset.y + bounds.size.height - inset.bottom;
     float h = size.height;
     float reload_distance = 10;
+    
+    
+    float scrollViewHeight = scrollView.frame.size.height;
+    float scrollContentSizeHeight = scrollView.contentSize.height;
+    float scrollOffset = scrollView.contentOffset.y;
+    
+    
+    if (scrollOffset == 0)
+    {
+        [self.topView removeFromSuperview];
+        
+        [[self navigationController] setNavigationBarHidden:NO animated:YES];
+     
+        
+        [self changeHeight:48];
+       
+        
+    }
+    else if(scrollOffset>2)
+    {
+        [self.view addSubview:_topView];
+        [[self navigationController] setNavigationBarHidden:YES animated:YES];
+        
+        [self changeHeight:0];
+        
+    }
+    else if (scrollOffset + scrollViewHeight == scrollContentSizeHeight)
+    {
+        // then we are at the end
+    }
+    
+    
+    
+    
+    
     if(y > h + reload_distance) {
         
         
@@ -878,10 +1033,19 @@
             [self getData:self.offset];
             
             NSLog(@"load more rows");
+            
         }
         
         
     }
+    
+}
+
+
+- (void)changeHeight:(CGFloat )height {
+    self.heightConstraint.constant = height;
+    
+    [self.view layoutIfNeeded];
     
 }
 
@@ -913,7 +1077,7 @@
         CommentsViewController *data = [segue destinationViewController];
         WallPost *post = self.myObject[sender.tag];
         data.hidesBottomBarWhenPushed = YES;
-        data.index  = sender.tag;
+        data.index  = (int)sender.tag;
         data.postId = post.id;
         data.postOwnerId = post.owner.id;
     }
@@ -993,6 +1157,21 @@
         self.dataDelete = [[Response alloc] initWithDictionary:data error:&error];
         
         if(self.dataDelete.responseStat.status){
+            
+            self.toast.text = @"The post is successfully deleted";
+            self.toast.hidden = NO;
+            [UIView animateWithDuration:0.5 delay:2.0 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+                // Animate the alpha value of your imageView from 1.0 to 0.0 here
+                self.toast.alpha = 0.9f;
+                
+            } completion:^(BOOL finished) {
+                // Once the animation is completed and the alpha has gone to 0.0, hide the view for good
+                self.toast.hidden = YES;
+                
+                
+            }];
+
+            
             
             [self.myObject removeObjectAtIndex:index];
             

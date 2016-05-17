@@ -12,6 +12,7 @@
 #import "PostComment.h"
 #import "Picture.h"
 #import "Liker.h"
+#import "Tag.h"
 
 @protocol WallPost
 
@@ -25,7 +26,7 @@
 @property (strong, nonatomic) NSString  *wallPostMood;
 @property (strong, nonatomic) AppCredential  *owner;
 @property (strong, nonatomic) NSString  *picPath;
-@property (strong, nonatomic) NSArray <AppCredential>  *tagList;
+@property (strong, nonatomic) NSArray <Tag> *tagList;
 @property (assign, nonatomic) int  likeCount;
 @property (assign, nonatomic) int  commentCount;
 @property (assign, nonatomic) int  tagCount;

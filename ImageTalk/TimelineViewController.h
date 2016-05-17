@@ -18,7 +18,7 @@
 #import "ApiAccess.h"
 
 
-@interface TimelineViewController : UIViewController  <UITableViewDelegate,UITableViewDataSource,tcpSocketChatDelegate,ApiAccessDelegate>
+@interface TimelineViewController : UIViewController  <UITableViewDelegate,UITableViewDataSource,tcpSocketChatDelegate,ApiAccessDelegate,UITabBarControllerDelegate>
 {
     NSUserDefaults *defaults;
     NSString *baseurl;
@@ -26,8 +26,8 @@
     NSString *port;
     
 }
-@property (strong, nonatomic) UIAlertView *alertDownload;
-@property (strong, nonatomic) UIAlertView *alertDelete;
+@property (strong, nonatomic) UIAlertController *alertDownload;
+@property (strong, nonatomic) UIAlertController *alertDelete;
 @property (strong, nonatomic) IBOutlet UIView *emptyView;
 @property (strong, nonatomic) AppDelegate *app;
 @property (strong, nonatomic) tcpSocketChat *chatSocket;
@@ -44,6 +44,11 @@
 @property (assign,nonatomic) BOOL updateWill;
 @property (assign,nonatomic) int updateId;
 @property (assign,nonatomic) int updateValue;
+@property (weak, nonatomic) IBOutlet UILabel *toast;
+@property (weak, nonatomic) IBOutlet UIView *moodView;
+@property (weak, nonatomic) IBOutlet UIView *photoView;
+@property (weak, nonatomic) IBOutlet UIView *parentOfPhotoview;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
 
 
 

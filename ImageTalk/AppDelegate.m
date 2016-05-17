@@ -13,7 +13,9 @@
 #import "SoundManager.h"
 #import "SocketResponse.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import "VKSdk.h"
 
+//#import <GoogleMaps/GoogleMaps.h>
 @import GoogleMaps;
 
 @interface AppDelegate ()
@@ -69,7 +71,7 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    [GMSServices provideAPIKey:@"AIzaSyCKb0wh3l4oiYtOgQctAXCPxUh76Q7s-ko"];
+    [GMSServices provideAPIKey:@"AIzaSyAsgxFpn_lHDqw3oj81fguR4Q6BFBk-pPs"];
     
   //  [defaults setValue:@"http://159.203.253.167:8080/" forKey:@"baseurl"];
   //  [defaults setValue:@"159.203.253.167" forKey:@"socketurl"];
@@ -80,7 +82,7 @@
      [defaults setValue:@"9025" forKey:@"port"];
     
 
-     [defaults setValue:@"AIzaSyAq4og4K5Wb6D38azyml00Ewc7J0rSKgEc" forKey:@"gmskey"];
+    [defaults setValue:@"1ab4fb622d9e6f5dfdff193c38a1c93d17a38e91" forKey:@"gmskey"];
     
     
  
@@ -137,7 +139,8 @@
                                                self.userPic = self.response.responseData.authCredential.user.picPath.original.path;
                                                self.wallpost = self.response.responseData.extra.wallPost;
                                                self.textStatus = self.response.responseData.authCredential.textStatus;
-                                               
+                                               self.userId=self.response.responseData.authCredential.user.id;
+                                              
                                                
                                                UITabBarController *rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"timeline"];
                                                
@@ -249,15 +252,19 @@
 
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                                  openURL:url
-                                                        sourceApplication:sourceApplication
-                                                               annotation:annotation
-                    ];
+//    BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application
+//                                                                  openURL:url
+//                                                        sourceApplication:sourceApplication
+//                                                               annotation:annotation
+//                    ];
+//
+//      [VKSdk processOpenURL:url fromApplication:sourceApplication];
     // Add any custom logic here.
-    return handled;
+//    return handled;
+    [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+    [VKSdk processOpenURL:url fromApplication:sourceApplication];
+    return YES;
 }
-
 
 
 

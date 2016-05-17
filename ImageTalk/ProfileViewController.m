@@ -23,6 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
     self.title = @"Profile";
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     
@@ -31,6 +32,8 @@
     
     self.app =(AppDelegate *)[[UIApplication sharedApplication] delegate];
     
+   
+    
     self.profilePic.layer.cornerRadius = 45;
     [self.profilePic.layer setMasksToBounds:YES];
     
@@ -38,9 +41,17 @@
     
     self.singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     [self.view addGestureRecognizer:self.singleTap];
-    
+  //  [self getData:self.app.userId];
    
 }
+
+
+//-(void) getData:(NSString*) ownerId{
+//    
+//    NSDictionary *inventory = @{@"owner_id":ownerId};
+//    [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/count/byownerid" params:inventory tag:@"postCount"];
+//    
+//}
 
 -(void) viewDidAppear:(BOOL)animated
 {
@@ -95,6 +106,15 @@
         self.response = [[StatusResponse alloc] initWithDictionary:data error:&error];
         self.textStaus.text = (self.response.responseStat.status) ? self.response.responseData.textStatus : @"";
         
+        
+    }
+    else if([tag isEqualToString:@"postCount"])
+    {
+        NSError* error = nil;
+        self.response = [[StatusResponse alloc] initWithDictionary:data error:&error];
+        self.picCount.text = (self.response.responseStat.status) ?self.response.responseData.textStatus : @"0";
+
+        NSLog(@"Post count: %@",data);
         
     }
     
