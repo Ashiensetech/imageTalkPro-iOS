@@ -409,7 +409,7 @@
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"yyyy.MM.dd HH:mm:ss.0";
-    [dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
     
     NSLog(@"The Current Time is %@",[dateFormatter stringFromDate:now]);
     
