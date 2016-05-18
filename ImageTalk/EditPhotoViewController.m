@@ -82,7 +82,7 @@
                          position:HIPImageCropperViewPositionTop];
     
     [self.cropView addSubview:self.cropperImage];
-    [self.cropperImage setOriginalImage:self.image];
+    [self.cropperImage setOriginalImage: self.image ];
     [self.view sendSubviewToBack:self.cropView];
     [self.cropView addSubview:self.adjustFitBtn];
     
