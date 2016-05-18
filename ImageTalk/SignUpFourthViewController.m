@@ -20,13 +20,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
     self.title = @"About You";
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     
     defaults = [NSUserDefaults standardUserDefaults];
     baseurl = [defaults objectForKey:@"baseurl"];
     
-   // [self.keyboardBorder removeFromSuperview];
+    // [self.keyboardBorder removeFromSuperview];
     
     self.keyboardBorder=[[UIView alloc]initWithFrame:CGRectMake(0,0,self.view.frame.size.width,10)];
     [self.keyboardBorder setBackgroundColor:[UIColor orangeColor]];
@@ -41,13 +42,13 @@
     
     
     /*[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardDidShowOrHide:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardDidShowOrHide:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];*/
+     selector:@selector(keyboardDidShowOrHide:)
+     name:UIKeyboardWillShowNotification
+     object:nil];
+     [[NSNotificationCenter defaultCenter] addObserver:self
+     selector:@selector(keyboardDidShowOrHide:)
+     name:UIKeyboardWillHideNotification
+     object:nil];*/
     
     
     if (!self.assets) {
@@ -79,8 +80,8 @@
          
      }
      ];
-
-
+    
+    
     
     
     
@@ -124,93 +125,111 @@
 
 - (IBAction)complete:(id)sender {
     
-    [self.loading startAnimating];
     
-    
-    self.name.text = [NSString stringWithFormat:@"%@  ",self.name.text];
-    NSArray *outputArray = [self.name.text componentsSeparatedByString:@" "];
-    NSString *first_name;
-    NSString *last_name;
-    
-    for (int i=0;i<[outputArray count];i++) {
+    if(self.name.text && self.name.text.length > 0)
+    {
         
-        if (i==0)
-        {
-            first_name = [outputArray objectAtIndex:i];
+        
+        
+        
+        
+        [self.loading startAnimating];
+        
+        
+        self.name.text = [NSString stringWithFormat:@"%@  ",self.name.text];
+        NSArray *outputArray = [self.name.text componentsSeparatedByString:@" "];
+        NSString *first_name;
+        NSString *last_name;
+        
+        for (int i=0;i<[outputArray count];i++) {
+            
+            if (i==0)
+            {
+                first_name = [outputArray objectAtIndex:i];
+            }
+            else if(i==1)
+            {
+                last_name = [outputArray objectAtIndex:i];
+            }
+            else
+            {
+                last_name = [NSString stringWithFormat:@"%@ %@",last_name,[outputArray objectAtIndex:i]];
+            }
+            
         }
-        else if(i==1)
-        {
-            last_name = [outputArray objectAtIndex:i];
-        }
-        else
-        {
-            last_name = [NSString stringWithFormat:@"%@ %@",last_name,[outputArray objectAtIndex:i]];
-        }
+        
+        
+        
+        NSDictionary *inventory = @{
+                                    @"phone_number" : self.phone,
+                                    @"token" : self.token,
+                                    @"first_name" : first_name,
+                                    @"last_name" : last_name,
+                                    @"photo" : [self imageToString:self.pic.image],
+                                    };
+        NSLog(@"%@",inventory);
+        
+        
+        [JSONHTTPClient postJSONFromURLWithString:[NSString stringWithFormat:@"%@app/register/user",baseurl] params:inventory
+                                       completion:^(NSDictionary *json, JSONModelError *err) {
+                                           
+                                           
+                                           
+                                           NSError* error = nil;
+                                           self.response = [[RegistrationResponse alloc] initWithDictionary:json error:&error];
+                                           
+                                           NSLog(@"%@",error);
+                                           
+                                           if(error)
+                                           {
+                                               [ToastView showToastInParentView:self.view withText:@"Server Unreachable" withDuaration:2.0];
+                                           }
+                                           else
+                                           {
+                                               [ToastView showToastInParentView:self.view withText:self.response.responseStat.msg withDuaration:2.0 ];
+                                           }
+                                           
+                                           [self.loading stopAnimating];
+                                           
+                                           if(self.response.responseStat.status){
+                                               
+                                               NSLog(@"%@",self.response);
+                                               [defaults removeObjectForKey:@"access_token"];
+                                               [defaults setValue:self.response.responseData.accessToken forKey:@"access_token"];
+                                               
+                                               
+                                               
+                                               self.app.authCredential = self.response.responseData;
+                                               self.app.userPic = self.response.responseData.user.picPath.original.path;
+                                               self.app.wallpost = 0;
+                                               self.app.textStatus = self.response.responseData.textStatus;
+                                               
+                                               
+                                               
+                                               [[SocektAccess getSharedInstance]setDelegate:self];
+                                               [[SocektAccess getSharedInstance]initSocket];
+                                               [[SocektAccess getSharedInstance]authentication];
+                                               
+                                               
+                                               
+                                               
+                                               
+                                               [self performSegueWithIdentifier:@"next" sender:self];
+                                           }
+                                           
+                                       }];
+        
         
     }
     
-   
-    
-    NSDictionary *inventory = @{
-                                @"phone_number" : self.phone,
-                                @"token" : self.token,
-                                @"first_name" : first_name,
-                                @"last_name" : last_name,
-                                @"photo" : [self imageToString:self.pic.image],
-                                };
-     NSLog(@"%@",inventory);
-    
-    
-    [JSONHTTPClient postJSONFromURLWithString:[NSString stringWithFormat:@"%@app/register/user",baseurl] params:inventory
-                                   completion:^(NSDictionary *json, JSONModelError *err) {
-                                       
-                                       
-                                       
-                                       NSError* error = nil;
-                                       self.response = [[RegistrationResponse alloc] initWithDictionary:json error:&error];
-                                       
-                                       NSLog(@"%@",error);
-                                       
-                                       if(error)
-                                       {
-                                           [ToastView showToastInParentView:self.view withText:@"Server Unreachable" withDuaration:2.0];
-                                       }
-                                       else
-                                       {
-                                           [ToastView showToastInParentView:self.view withText:self.response.responseStat.msg withDuaration:2.0 ];
-                                       }
-                                       
-                                       [self.loading stopAnimating];
-                                       
-                                       if(self.response.responseStat.status){
-                                           
-                                           NSLog(@"%@",self.response);
-                                           [defaults removeObjectForKey:@"access_token"];
-                                           [defaults setValue:self.response.responseData.accessToken forKey:@"access_token"];
-                                           
-                                        
-                                           
-                                           self.app.authCredential = self.response.responseData;
-                                           self.app.userPic = self.response.responseData.user.picPath.original.path;
-                                           self.app.wallpost = 0;
-                                           self.app.textStatus = self.response.responseData.textStatus;
-                                           
-                                           
-                                           
-                                           [[SocektAccess getSharedInstance]setDelegate:self];
-                                           [[SocektAccess getSharedInstance]initSocket];
-                                           [[SocektAccess getSharedInstance]authentication];
-                                    
-
-                                           
-                                           
-                                           
-                                           [self performSegueWithIdentifier:@"next" sender:self];
-                                       }
-                                       
-                                   }];
-
-    
+    else
+    {
+        NSLog(@"no name");
+        
+        
+        
+        
+    }
 }
 
 #pragma mark - tcpSocketDelegate
@@ -363,8 +382,9 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"next"])
     {
-       // TimelineViewController *data= segue.destinationViewController;
-       
+        
+        // TimelineViewController *data= segue.destinationViewController;
+        
     }
 }
 
