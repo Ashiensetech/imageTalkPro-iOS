@@ -146,24 +146,45 @@
         NSLog(@"Update Value: %d",self.updateValue);
         NSLog(@"Update ID: %d",self.updateId);
         
+    
         
         
-        TimelineTableViewCell *cell = (TimelineTableViewCell *)[self.tableData cellForRowAtIndexPath:indexPath];
-        
-       
         
         
-        WallPost *data = self.myObject[indexPath.row];
-        data.commentCount = self.updateValue;
+//        [self.tableData reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+//        [self.tableData reloadData];
         
-        [self.myObject replaceObjectAtIndex:indexPath.row withObject:data];
         
-        WallPost *data2 = self.myObject[indexPath.row];
-        
-        NSLog(@": %d",data2.commentCount);
-        
-        [self.tableData reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
         [self.tableData reloadData];
+        
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+            //Background Thread
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                //Run UI Updates
+                NSArray *paths = [self.tableData indexPathsForVisibleRows];
+                for (NSIndexPath *path in paths)
+                {
+                    //get desired cell here
+                    if(path ==indexPath)
+                    {
+                    TimelineTableViewCell *cell = (TimelineTableViewCell *)[self.tableData cellForRowAtIndexPath:path];
+                    
+                    WallPost *data = self.myObject[path.row];
+                    data.commentCount = (int)self.updateValue;
+                    
+                    [self.myObject replaceObjectAtIndex:path.row withObject:data];
+                    
+                    
+                    
+                    cell.commentLabel.text = [NSString stringWithFormat:@"%d comments",data.commentCount]; //now you can update here on your cell items
+                
+                    }
+                    }
+                
+            });
+        });
+        
+        
         
         
     }
@@ -307,21 +328,12 @@
     cell.image.userInteractionEnabled = YES;
     cell.image.tag = indexPath.row;
     
-    if(self.updateWill == YES)
-    {
-        NSLog(@"YES YES");
-        NSLog(@"Updated value : %d", (int)self.updateValue);
-      data.commentCount= (int)self.updateValue;
-     
-        
-    }
-    else
-    {
-        data.commentCount = (int)data.comments.count;
-        
-    }
     
-    NSLog(@"isliked: %d",self.dataLike.responseData.isLiked);
+
+    
+    
+    
+    NSLog(@"comments count: %d",data.commentCount);
     NSLog(@"wall post id: %d",data.id);
     
     UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tabOnImage:)];
@@ -409,7 +421,7 @@
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"yyyy.MM.dd HH:mm:ss.0";
-    [dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
     
     NSLog(@"The Current Time is %@",[dateFormatter stringFromDate:now]);
     
@@ -467,7 +479,7 @@
     
     
     NSLog(@"wallpostmood: %@",data.wallPostMood);
-    if([data.wallPostMood isEqual:@"" ] || [data.wallPostMood isEqual:@"none"])
+    if([data.wallPostMood isEqual:@"" ] || [data.wallPostMood isEqual:@"None"])
     {
         
         [cell.profilePic sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.owner.user.picPath.original.path]]
