@@ -36,5 +36,6 @@
 @property (nonatomic, strong) NSMutableArray *assets;
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) UITapGestureRecognizer *singleTap;
+@property (weak, nonatomic) IBOutlet UILabel *toast;
 
 @end
