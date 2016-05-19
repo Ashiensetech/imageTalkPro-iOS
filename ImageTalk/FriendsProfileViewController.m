@@ -198,7 +198,7 @@
     {
         NSError* error = nil;
         self.data = [[TimelineResponse alloc] initWithDictionary:data error:&error];
-        
+        NSLog(@"%@",self.data);
         
         if(self.data.responseStat.status){
             

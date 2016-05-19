@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Hxb-wn-Odv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Hxb-wn-Odv">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -3545,8 +3545,10 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="appleMapView" destination="DyO-QV-EFf" id="HLm-ZP-6az"/>
+                        <outlet property="collectionHeight" destination="f8O-5J-p2b" id="lGW-45-1XZ"/>
                         <outlet property="collectionView" destination="OUq-be-6pI" id="CuP-sT-5ok"/>
                         <segue destination="Hxb-wn-Odv" kind="presentation" identifier="timeline" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="HBw-D8-ya3"/>
+                        <segue destination="wuc-Jd-Nce" kind="showDetail" identifier="showDetails" id="iAz-T9-Q7v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ipd-pr-NJL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -8065,7 +8067,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2jw-iT-uV0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3792" y="2650"/>
+            <point key="canvasLocation" x="5850" y="2014"/>
         </scene>
         <!--Notification-->
         <scene sceneID="yqh-m8-lbR">
@@ -8290,16 +8292,17 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="HBw-D8-ya3"/>
-        <segue reference="XpC-VB-DQn"/>
-        <segue reference="0HS-LD-tJf"/>
-        <segue reference="hwa-Rq-OMl"/>
-        <segue reference="uHW-24-y3y"/>
-        <segue reference="0Ay-17-uwa"/>
-        <segue reference="Cos-Ov-8c2"/>
-        <segue reference="m7I-pa-qFJ"/>
+        <segue reference="N1u-v5-Na8"/>
+        <segue reference="iAz-T9-Q7v"/>
+        <segue reference="C9D-kT-xaQ"/>
+        <segue reference="y4Q-Xs-wje"/>
         <segue reference="7rK-5W-S99"/>
         <segue reference="TmO-XD-ODI"/>
         <segue reference="jOb-ZT-cu4"/>
+        <segue reference="7iZ-Cq-brG"/>
+        <segue reference="hwa-Rq-OMl"/>
+        <segue reference="0Ay-17-uwa"/>
+        <segue reference="uHW-24-y3y"/>
         <segue reference="DOh-Uv-lDf"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -27,7 +27,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"de");
+    NSLog(@"Details");
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.tabBarController.tabBar.hidden= YES;
     
