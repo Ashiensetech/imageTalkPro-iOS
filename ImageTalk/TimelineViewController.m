@@ -1136,6 +1136,7 @@
     
     if ([tag isEqualToString:@"getTimelineData"])
     {
+        NSLog(@"timeline response: %@",data);
         
         NSError* error = nil;
         self.data = [[TimelineResponse alloc] initWithDictionary:data error:&error];

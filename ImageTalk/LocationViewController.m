@@ -216,7 +216,8 @@
 -(void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     self.keyword = searchText;
-    [self getData:self.keyword];
+     [self getData:searchBar.text];
+    [self.tableData reloadData];
 }
 
 

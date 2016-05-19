@@ -8,21 +8,27 @@
 
 #import <UIKit/UIKit.h>
 #import "Places.h"
+#import "ApiAccess.h"
+#import "TimelineResponse.h"
 
-//#import "GoogleMaps/GoogleMaps.h"
-@import GoogleMaps;
-
-@interface ShareLocationViewController : UIViewController<CLLocationManagerDelegate>
+@import MapKit;
+@interface ShareLocationViewController : UIViewController<CLLocationManagerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,ApiAccessDelegate>
 {
     CLLocation *currentLocation;
+    NSUserDefaults *defaults;
+    NSString *baseurl;
 }
 
 
 @property (nonatomic, strong) UITapGestureRecognizer *singleTap;
-@property (strong, nonatomic) IBOutlet GMSMapView *mapView;
+//@property (strong, nonatomic) IBOutlet GMSMapView *mapView;
 @property (nonatomic,strong) CLLocationManager *locationManager;
 @property (nonatomic,strong) UIImageView *image;
 @property (strong, nonatomic) Places *place;
+@property (strong, nonatomic) IBOutlet MKMapView *appleMapView;
 
+@property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (strong,nonatomic) TimelineResponse *data;
+@property (strong,nonatomic) NSMutableArray *myObject;
 
 @end

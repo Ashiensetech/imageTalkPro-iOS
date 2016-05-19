@@ -47,7 +47,7 @@ static ApiAccess *sharedInstance = nil;
                                    completion:^(NSDictionary *json, JSONModelError *err)
      {
          
-         NSLog(@"%@",params);
+       //  NSLog(@"%@",params);
         
          if(err)
          {
