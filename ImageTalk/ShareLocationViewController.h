@@ -10,7 +10,8 @@
 #import "Places.h"
 #import "ApiAccess.h"
 #import "TimelineResponse.h"
-
+#import "LikeResponse.h"
+#import "FavResponse.h"
 @import MapKit;
 @interface ShareLocationViewController : UIViewController<CLLocationManagerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,ApiAccessDelegate>
 {
@@ -27,8 +28,12 @@
 @property (strong, nonatomic) Places *place;
 @property (strong, nonatomic) IBOutlet MKMapView *appleMapView;
 
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *collectionHeight;
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong,nonatomic) TimelineResponse *data;
+@property (strong,nonatomic) LikeResponse *dataLike;
+@property (strong,nonatomic) FavResponse *dataFav;
+@property (strong,nonatomic) WallPost *post;
 @property (strong,nonatomic) NSMutableArray *myObject;
 
 @end

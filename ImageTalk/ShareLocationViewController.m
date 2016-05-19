@@ -16,6 +16,7 @@
 #import "TagViewController.h"
 #import "ApiAccess.h"
 #import "CustomCollectionViewCell.h"
+#import "DetailsViewController.h"
 @interface ShareLocationViewController ()
 
 @end
@@ -85,7 +86,11 @@
 }
 
 -(void) getData{
-
+//    NSDictionary *inventory = @{@"offset" : [NSString stringWithFormat:@"%d",0],
+//                                @"other_app_credential_id" : [NSString stringWithFormat:@"%d",137],
+//                                @"limit":@"20"
+//                                };
+//    [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/get/others" params:inventory tag:@"getData"];
     
     NSDictionary *inventory = @{@"lat" : [NSString stringWithFormat:@"%f",self.place.lat],
                                 @"lng" : [NSString stringWithFormat:@"%f",self.place.lng]
@@ -94,11 +99,7 @@
 
 
     
-//    [JSONHTTPClient postJSONFromURLWithString:[NSString stringWithFormat:@"%@app/wallpost/get/nearby",baseurl] bodyString:[NSString stringWithFormat:@"lng=%f&lat=%f",self.place.lat,self.place.lng]
-//                                   completion:^(NSDictionary *json, JSONModelError *err) {
-//                                       NSLog(@"json %@",json);
-//                                       
-//                                   }];
+
 }
 
 
@@ -118,8 +119,18 @@
 
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
     
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        self.collectionHeight.constant = self.collectionView.frame.size.width/6*ceil(self.myObject.count/3);
+    }
+    else
+    {
+        self.collectionHeight.constant =self.collectionView.frame.size.width/3*ceil(self.myObject.count/3);
+    }
+    
+    
+    
     return self.myObject.count;
-   
 }
 
 
@@ -139,12 +150,8 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-//    Wallpost *data = self.myObject[indexPath.row];
-//    [self.imageSticker sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/sticker?p=%@",baseurl,data.path]]
-//                         placeholderImage:nil];
-//    
-//    [self performSegueWithIdentifier:@"tag" sender:self];
+    self.post = self.myObject[indexPath.row];
+    [self performSegueWithIdentifier:@"showDetails" sender:self];
     
     
 }
@@ -154,14 +161,10 @@
     
     static NSString *CellIdentifier = @"photoCell";
     
-    NSLog(@"ihdifgs");
+    NSLog(@"Row %d %f",indexPath.row,ceil(self.myObject.count/3));
     
     CustomCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor lightGrayColor];
-    cell.selectedBackgroundView.backgroundColor = [UIColor lightGrayColor];
-    
-    cell.image.contentMode = UIViewContentModeCenter;
-    cell.image.image = [UIImage imageNamed:@"angryL.png"];
+    cell.backgroundColor = [UIColor darkGrayColor];
     WallPost *data = self.myObject[indexPath.row];
     [cell.image sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.picPath]]
                   placeholderImage:nil];
@@ -176,28 +179,19 @@
 
 -(void) receivedResponse:(NSDictionary *)data tag:(NSString *)tag index:(int)index
 {
-    
-    
-    if ([tag isEqualToString:@"getNearbyPost"])
     {
-        NSLog(@"response data :%@",data);
         NSError* error = nil;
         self.data = [[TimelineResponse alloc] initWithDictionary:data error:&error];
-        
         NSLog(@"self.data :%@",self.data);
-        
         if(self.data.responseStat.status){
-            
             for(int i=0;i<self.data.responseData.count;i++)
             {
                 [self.myObject addObject:self.data.responseData[i]];
             }
-            
+            [self.collectionView reloadData];
         }
-        
-        
+      
     }
-    
 }
 
 -(void) receivedError:(JSONModelError *)error tag:(NSString *)tag
@@ -220,6 +214,13 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     
+    if ([segue.identifier isEqualToString:@"showDetails"])
+    {
+        DetailsViewController *data = [segue destinationViewController];
+        data.hidesBottomBarWhenPushed = YES;
+        data.data = self.post;
+        
+    }
    
 }
 

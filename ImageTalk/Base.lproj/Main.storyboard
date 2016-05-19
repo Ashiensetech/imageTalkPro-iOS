@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Hxb-wn-Odv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Hxb-wn-Odv">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -190,7 +190,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="3m3-sx-Fw5" detailTextLabel="yBt-8U-9BZ" style="IBUITableViewCellStyleValue1" id="cQ1-vJ-PJc">
-                                        <rect key="frame" x="0.0" y="22" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="86" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cQ1-vJ-PJc" id="5MR-XS-cnW">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -220,7 +220,9 @@
                                 </connections>
                             </tableView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="umQ-oC-ZNk">
+
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello! What's your number?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wz5-Mx-fhh">
                                         <rect key="frame" x="20" y="50" width="560" height="21"/>
@@ -1116,7 +1118,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="9du-Zk-e5E" customClass="CustomCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="199" height="103"/>
+                                        <rect key="frame" x="0.0" y="64" width="199" height="103"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="199" height="103"/>
@@ -1231,6 +1233,7 @@
                                 </constraints>
                             </scrollView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="7UP-ie-4U2">
+
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <color key="backgroundColor" red="0.92156862750000001" green="0.36078431370000003" blue="0.058823529409999999" alpha="0.48999999999999999" colorSpace="calibratedRGB"/>
                                 <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -3560,13 +3563,15 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="appleMapView" destination="DyO-QV-EFf" id="HLm-ZP-6az"/>
+                        <outlet property="collectionHeight" destination="f8O-5J-p2b" id="lGW-45-1XZ"/>
                         <outlet property="collectionView" destination="OUq-be-6pI" id="CuP-sT-5ok"/>
                         <segue destination="Hxb-wn-Odv" kind="presentation" identifier="timeline" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="HBw-D8-ya3"/>
+                        <segue destination="wuc-Jd-Nce" kind="show" identifier="showDetails" id="DCh-b7-KRB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ipd-pr-NJL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5151" y="1879"/>
+            <point key="canvasLocation" x="4764" y="1845"/>
         </scene>
         <!--Tag Friends-->
         <scene sceneID="UCI-Ou-qvB">
@@ -4505,7 +4510,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y4M-P0-E8G">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y4M-P0-E8G">
                                 <rect key="frame" x="0.0" y="64" width="600" height="387"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TGz-rQ-bwt">
@@ -4582,7 +4587,7 @@
                                 <color key="textColor" red="0.60784313729999995" green="0.61176470589999998" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="O0r-kM-FxZ">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="O0r-kM-FxZ">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <color key="backgroundColor" red="0.92156862750000001" green="0.36078431370000003" blue="0.058823529409999999" alpha="0.48999999999999999" colorSpace="calibratedRGB"/>
                                 <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -7987,9 +7992,6 @@
                                                         <state key="normal" title="location">
                                                             <color key="titleColor" red="0.91764705879999997" green="0.42352941179999998" blue="0.050980392159999999" alpha="1" colorSpace="calibratedRGB"/>
                                                         </state>
-                                                        <connections>
-                                                            <segue destination="VTW-pt-Vxr" kind="show" identifier="showLocation" id="N1u-v5-Na8"/>
-                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -8080,7 +8082,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2jw-iT-uV0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3792" y="2650"/>
+            <point key="canvasLocation" x="5432" y="1845"/>
         </scene>
         <!--Notification-->
         <scene sceneID="yqh-m8-lbR">
@@ -8304,6 +8306,7 @@
         <image name="web" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
+
         <segue reference="Cos-Ov-8c2"/>
         <segue reference="QWU-bF-Zfl"/>
         <segue reference="WCu-FZ-FMp"/>
