@@ -225,7 +225,21 @@
     else
     {
         NSLog(@"no name");
+        self.toast.text = @"Please Insert Username";
         
+        self.toast.alpha = 1.0f;
+        self.toast.hidden = NO;
+        [UIView animateWithDuration:0.5 delay:2.0 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+            // Animate the alpha value of your imageView from 1.0 to 0.0 here
+            self.toast.alpha = 0.9f;
+            
+        } completion:^(BOOL finished) {
+            // Once the animation is completed and the alpha has gone to 0.0, hide the view for good
+            self.toast.hidden = YES;
+            
+            
+        }];
+
         
         
         
