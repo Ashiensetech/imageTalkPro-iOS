@@ -261,14 +261,14 @@
     
     [[ApiAccess getSharedInstance] setDelegate:self];
     
-//    if(self.place)
-//    {
-//        self.locationLabel.text = [NSString stringWithFormat:@"%@",self.place.name];
-//    }
-//    else
-//    {
-//        self.locationLabel.text = @"Add Location";
-//    }
+    //    if(self.place)
+    //    {
+    //        self.locationLabel.text = [NSString stringWithFormat:@"%@",self.place.name];
+    //    }
+    //    else
+    //    {
+    //        self.locationLabel.text = @"Add Location";
+    //    }
     if(self.postLocation)
     {
         self.locationLabel.text =[NSString stringWithFormat:@"%@",self.postLocation.name];
@@ -446,17 +446,19 @@
 
 
 - (IBAction)upload:(id)sender {
-    
+  
+    [self.view addSubview:self.loading];
+    self.loading.hidden = NO;
     [self.loading startAnimating];
     [self.postCaption resignFirstResponder];
     [self.upload setEnabled:false];
-    NSLog(@"%@", self.postCaption.text);
+    
     NSString *taglist= @"";
     NSString *location =@"";
     
     if(self.postLocation){
-    
-      CLLocation * loc = self.postLocation.placemark.location;
+        
+        CLLocation * loc = self.postLocation.placemark.location;
         NSDictionary *dict = @{
                                @"placeId":@"",
                                @"icon":@"",
@@ -467,7 +469,7 @@
                                @"formattedAddress":[NSString stringWithFormat:@"%@",[[self.postLocation.placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@"," ]],
                                @"countryName":self.postLocation.placemark.country
                                };
-       
+        
         NSError *error;
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject: dict
                                                            options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
@@ -480,11 +482,6 @@
             
         }
     }
-    
-    NSLog(@"place mark string: %@",location);
-    
-
-    
     
     NSMutableArray *tags = [[NSMutableArray alloc] init];
     if(self.tagList.count>0){
@@ -538,9 +535,9 @@
                                 };
     // NSLog(@"%@",inventory);
     
-     [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/create" params:inventory tag:@"getPhoto"];
+    [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/create" params:inventory tag:@"getPhoto"];
     
-    
+   
 }
 
 -(NSString*) imageToString : (UIImage*) image{

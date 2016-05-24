@@ -56,8 +56,11 @@
     self.loaded = false;
     self.keyword = @"";
     
-    self.locations = [[NSMutableArray alloc]init];
-    self.selectedLocations = [[NSMutableArray alloc]init];
+     self.selectedLocations = [[NSMutableArray alloc]init];
+    
+    [self getData:@""];
+    [self.view endEditing:YES];
+   
     
 }
 
@@ -94,11 +97,12 @@
 -(void) getData:(NSString*) keyboard{
     
     [self.loading startAnimating];
-    
-    NSLog(@"manager location :%@",self.locationManager.location);
-    
-    
-    
+    if([keyboard isEqualToString:@""]){
+      keyboard = @"restaurants";
+    }
+    self.locations =[[NSMutableArray alloc] init];
+    start.latitude =currentLocation.coordinate.latitude;
+    start.longitude = currentLocation.coordinate.longitude;
     [[ApiAccess getSharedInstance] mapKitServiceWithCLLocationCoordinate2D :start  Keyboard:keyboard andTag : @"getLocationData"];
     
     
@@ -194,7 +198,7 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     
-    self.locations =[[NSMutableArray alloc] init];
+   
     //self.myObject = [[NSMutableArray alloc] init];
     self.loaded = false;
     self.offset = @"";
@@ -215,9 +219,12 @@
 
 -(void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    self.keyword = searchText;
-     [self getData:searchBar.text];
-    [self.tableData reloadData];
+    //self.locations =[[NSMutableArray alloc] init];
+    //self.myObject = [[NSMutableArray alloc] init];
+    self.loaded = false;
+    self.offset = @"";
+    NSLog(@"%@",searchBar.text);
+    [self getData:searchBar.text];
 }
 
 
@@ -237,43 +244,8 @@
     {
         
         NSError* error = nil;
-        // NSLog(@"%@",data);
-        //        self.responseSearch = [[LocationSearchResponse alloc] initWithDictionary:data error:&error];
-        //
-        //
-        //     //   NSLog(@"%@ %@",error,self.responseSearch);
-        //
-        //            self.offset = [NSString stringWithFormat:@"%@",self.responseSearch.next_page_token];
-        //            self.isData = !self.offset;
-        //
-        //            if(self.responseSearch.results.count>0)
-        //            {
-        //
-        //                for(int i=0;i<self.responseSearch.results.count;i++)
-        //                {
-        //                    GooglePlaces *pl = self.responseSearch.results[i];
-        //                    Places *send = [[Places alloc]init];
-        //                    send.placeId = pl.placeId;
-        //                    send.lat = pl.lat;
-        //                    send.lng = pl.lng;
-        //                    send.name = pl.name;
-        //                    send.formattedAddress = pl.formattedAddress;
-        //                    send.rating = pl.rating;
-        //                    send.icon = pl.icon;
-        //                    send.id = pl.id;
-        //
-        //                    [self.myObject addObject:send];
-        //                }
-        //            }
-        //            else
-        //            {
-        //                self.isData = false;
-        //            }
-        //
-        //            self.loaded = true;
-        
-        
         NSMutableArray *result = [data valueForKey:@"response"];
+        NSLog(@"%@",result);
         if(result.count>0){
             for (MKMapItem *item in result) {
                 [self.locations addObject:item];
@@ -289,7 +261,7 @@
 -(void) receivedError:(JSONModelError *)error tag:(NSString *)tag
 {
     NSLog(@"eroor:%@",error);
-    [ToastView showErrorToastInParentView:self.view withText:@"Internet connection error" withDuaration:2.0];
+    [ToastView showErrorToastInParentView:self.view withText:@"No Nearby Location Found" withDuaration:2.0];
     [self.loading stopAnimating];
     
     if ([tag isEqualToString:@"getLocationData"])

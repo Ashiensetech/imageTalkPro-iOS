@@ -266,7 +266,8 @@ static ApiAccess *sharedInstance = nil;
      {
          if(error)
          {
-             //[self.delegate receivedError:@{@"error": error} tag:tag];
+             
+             [self.delegate receivedError:@{@"error": @"No Location found"} tag:tag];
          }
          else
          {

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ShopDetailsViewController : UIViewController <UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+@interface ShopDetailsViewController : UIViewController <UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UIDocumentInteractionControllerDelegate>
 {
     NSUserDefaults *defaults;
     NSString *baseurl;
@@ -26,4 +26,8 @@
 @property (strong, nonatomic) NSString *name_;
 @property (strong, nonatomic) UIImage *image_;
 @property (strong, nonatomic)  NSArray *myObject;
+
+@property (retain) UIDocumentInteractionController * documentInteractionController;
+
+
 @end

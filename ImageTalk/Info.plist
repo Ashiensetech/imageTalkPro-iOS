@@ -29,7 +29,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.7.4</string>
+	<string>1.7.5</string>
 	<key>FacebookAppID</key>
 	<string>267236836947716</string>
 	<key>FacebookDisplayName</key>
@@ -53,6 +53,7 @@
 		<string>vk</string>
 		<string>vk-share</string>
 		<string>vkauthorize</string>
+		<string>whatsapp</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

@@ -35,6 +35,17 @@
     self.buy.layer.cornerRadius = 3;
     [self.buy.layer setMasksToBounds:YES];
 }
+- (IBAction)inviteFriendAction:(id)sender {
+    NSLog(@"invite frinend");
+    NSString * msg = @"Hey , I am using Imagetalk on my Iphone. Its fun ! thought you may find it interesting too. ";
+    NSString * urlWhats = [NSString stringWithFormat:@"whatsapp://send?text=%@",msg];
+    NSURL * whatsappURL = [NSURL URLWithString:[urlWhats stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    if ([[UIApplication sharedApplication] canOpenURL: whatsappURL]) {
+        [[UIApplication sharedApplication] openURL: whatsappURL];
+    } else {
+        NSLog(@"Cant't open whatsapp");
+    }
+}
 
 #pragma mark - UICollectionViewDelegate
 
