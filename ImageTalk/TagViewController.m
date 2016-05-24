@@ -130,8 +130,8 @@
 //    }
 //    self.customMessage.text = self.customMessageString;
     
-    [self changeHeight:0];
-    [self.serachView setHidden:YES];
+//    [self changeHeight:0];
+//    [self.serachView setHidden:YES];
     
   
     
@@ -146,8 +146,8 @@
 
 - (void)handleSingleTap:(UITapGestureRecognizer *)sender
 {
-    [self changeHeight:50];
-    [self.serachView setHidden:NO];
+//    [self changeHeight:50];
+//    [self.serachView setHidden:NO];
     [self.searchBar becomeFirstResponder];
     self.tabPosition = [sender locationInView:self.picture];
     
@@ -214,6 +214,12 @@
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
+    if(CGPointEqualToPoint(self.tabPosition, CGPointMake(0, 0)) ){
+        NSLog(@"tab point 0 ");
+      self.tabPosition = CGPointMake(self.picture.bounds.size.height/2, self.picture.bounds.size.height/2);
+    }
+    
+   
     self.selected = true;
     self.pictureHeight.constant = 0;
     self.picture.hidden = true;
@@ -368,8 +374,8 @@
         {
             [ToastView showToastInParentView:self.view withText:@"Already Tagged This Friend" withDuaration:2.0];
         }
-        [self changeHeight:0];
-        [self.serachView setHidden:YES];
+//        [self changeHeight:0];
+//        [self.serachView setHidden:YES];
         [self.lblOne removeFromSuperview];
 
         self.selected = false;

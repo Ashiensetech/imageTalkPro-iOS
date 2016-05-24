@@ -267,12 +267,11 @@
         CGContextScaleCTM(bitmap, 1.0, -1.0);
         CGContextDrawImage(bitmap, CGRectMake(-self.image.size.width/ 2, -self.image.size.height/ 2, self.image.size.width+50, self.image.size.height+50), [self.image CGImage]);
         UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-        if(zoomScale<100){
-            self.rotatedImage =  newImage;
+        if(zoomScale <2){
+            self.rotatedImage = self.image;
         }else{
              self.rotatedImage =  [self croppedImageWithImage:newImage zoom:1.5];
         }
-       
         UIGraphicsEndImageContext();
         [self.imageCropper setImage:self.rotatedImage];
         CGRect imagePosition  = [self imagePositionInImageView: self.imageCropper];
