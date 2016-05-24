@@ -244,9 +244,19 @@
         
         self.lastContentOffset = scrollView.contentOffset.x;
         CGFloat radians =0.0;
+        CGFloat zoomScale = 0.0;
+        NSLog(@"last content : %f",self.lastContentOffset);
         radians = (self.lastContentOffset-237)/302;
+        if(self.lastContentOffset >237){
+            zoomScale = (self.lastContentOffset-237);
+        }else{
+            zoomScale = (237-self.lastContentOffset);
+        }
         
-        UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.image.size.width/1.5, self.image.size.height/1.5)];
+         NSLog(@"zoomscale : %f",zoomScale);
+        UIView *rotatedViewBox =[[UIView alloc] initWithFrame:CGRectMake(0,0,self.image.size.width/1.5, self.image.size.height/1.5)];
+        
+        
         CGAffineTransform t = CGAffineTransformMakeRotation(radians);//radians
         rotatedViewBox.transform = t;
         CGSize rotatedSize = rotatedViewBox.frame.size;
@@ -257,7 +267,12 @@
         CGContextScaleCTM(bitmap, 1.0, -1.0);
         CGContextDrawImage(bitmap, CGRectMake(-self.image.size.width/ 2, -self.image.size.height/ 2, self.image.size.width+50, self.image.size.height+50), [self.image CGImage]);
         UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-        self.rotatedImage =  [self croppedImageWithImage:newImage zoom:1.45];
+        if(zoomScale<100){
+            self.rotatedImage =  newImage;
+        }else{
+             self.rotatedImage =  [self croppedImageWithImage:newImage zoom:1.5];
+        }
+       
         UIGraphicsEndImageContext();
         [self.imageCropper setImage:self.rotatedImage];
         CGRect imagePosition  = [self imagePositionInImageView: self.imageCropper];

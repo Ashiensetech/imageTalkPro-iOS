@@ -166,6 +166,7 @@
     CustomCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
     cell.backgroundColor = [UIColor darkGrayColor];
     WallPost *data = self.myObject[indexPath.row];
+    cell.image.contentMode = UIViewContentModeScaleAspectFill;
     [cell.image sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.picPath]]
                   placeholderImage:nil];
 
