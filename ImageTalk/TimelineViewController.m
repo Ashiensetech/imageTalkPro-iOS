@@ -1020,10 +1020,47 @@
     }
     else if(scrollOffset>2)
     {
-        [self.view addSubview:_topView];
-        [[self navigationController] setNavigationBarHidden:YES animated:YES];
         
-        [self changeHeight:0];
+        if(scrollView.contentOffset.y>4)
+        {
+            [self.topView removeFromSuperview];
+            
+            [[self navigationController] setNavigationBarHidden:NO animated:YES];
+            
+            
+            [self changeHeight:40];
+
+            
+            
+        }
+        else if(scrollView.contentOffset.y>8)
+        {
+            [self.topView removeFromSuperview];
+            
+            [[self navigationController] setNavigationBarHidden:NO animated:YES];
+            
+            
+            [self changeHeight:32];
+            
+            
+            
+        }
+
+        else if(scrollView.contentOffset.y>12)
+        {
+            [self.topView removeFromSuperview];
+            
+            [[self navigationController] setNavigationBarHidden:NO animated:YES];
+            
+            
+            [self changeHeight:24];
+            
+            
+            
+        }
+
+        
+        
         
     }
     else if (scrollOffset + scrollViewHeight == scrollContentSizeHeight)
