@@ -42,7 +42,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+   
     self.counter = 0;
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.tabBarController.tabBar.hidden= NO;
@@ -992,7 +992,7 @@
     CGPoint offset = scrollView.contentOffset;
     self.counter = 0;
     CGRect bounds = scrollView.bounds;
-        // then we are at the top
+    
         
     
     CGSize size = scrollView.contentSize;
@@ -1006,7 +1006,7 @@
     float scrollContentSizeHeight = scrollView.contentSize.height;
     float scrollOffset = scrollView.contentOffset.y;
     
-    
+    NSLog(@"constant %f",self.heightConstraint.constant);
     if (scrollOffset == 0)
     {
         [self.topView removeFromSuperview];
@@ -1020,12 +1020,26 @@
     }
     else if(scrollOffset>2)
     {
-        [self.view addSubview:_topView];
-        [[self navigationController] setNavigationBarHidden:YES animated:YES];
         
-        [self changeHeight:0];
+        //[[self navigationController] setNavigationBarHidden:YES animated:YES];
+        //[self.view addSubview:_topView];
+        if(self.heightConstraint.constant<2)
+        {
+            [self changeHeight:0];
+        }
+        else
+        {
+        [self changeHeight:48-(scrollView.contentOffset.y)];
+        self.parentOfPhotoview.frame = CGRectMake(0, -scrollView.contentOffset.y, self.parentOfPhotoview.frame.size.width, self.heightConstraint.constant);
+            self.parentOfPhotoview.backgroundColor = [UIColor whiteColor];
+            
+        }
+        
+
+
         
     }
+    
     else if (scrollOffset + scrollViewHeight == scrollContentSizeHeight)
     {
         // then we are at the end
