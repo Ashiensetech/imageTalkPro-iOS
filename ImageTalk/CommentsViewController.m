@@ -37,31 +37,47 @@
     [self.view addGestureRecognizer:self.singleTap];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-     selector:@selector(keyboardDidShowOrHide:)
-     name:UIKeyboardWillShowNotification
-     object:nil];
-     [[NSNotificationCenter defaultCenter] addObserver:self
-     selector:@selector(keyboardDidShowOrHide:)
-     name:UIKeyboardWillHideNotification
-     object:nil];
+                                             selector:@selector(keyboardDidShowOrHide:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShowOrHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
     
     self.app =(AppDelegate *)[[UIApplication sharedApplication] delegate];
     
-    self.textView.layer.cornerRadius = 5;
-    [self.textView.layer setMasksToBounds:YES];
-    
-    self.textView.frame = CGRectInset(self.textView.frame, -1.0f, -1.0f);
-    self.textView.layer.borderColor = [UIColor darkGrayColor].CGColor;
-    self.textView.layer.borderWidth = 1.0f;
+//    self.textView.layer.cornerRadius = 5;
+//    [self.textView.layer setMasksToBounds:YES];
+//    
+//    self.textView.frame = CGRectInset(self.textView.frame, -1.0f, -1.0f);
+//    self.textView.layer.borderColor = [UIColor darkGrayColor].CGColor;
+//    self.textView.layer.borderWidth = 1.0f;
     
     self.tableData.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-   
+    
+    self.comment.delegate = self;
+    
+    self.comment.layer.cornerRadius = 5;
+    [self.comment.layer setMasksToBounds:YES];
+    
+    self.comment.text = @"write your comment here...";
+    self.comment.textColor = [UIColor lightGrayColor];
+    
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(dismissKeyboard)];
+    
+    [self.view addGestureRecognizer:tap];
+    tap.cancelsTouchesInView = NO;
     
     [[ApiAccess getSharedInstance] setDelegate:self];
     [self getData];
-
+    
 }
+
 
 -(void) viewDidAppear:(BOOL)animated
 {
@@ -70,7 +86,11 @@
 
 - (void)handleSingleTap:(UITapGestureRecognizer *)sender
 {
-    [self.commentTxt resignFirstResponder];
+    [self.comment resignFirstResponder];
+}
+-(void)dismissKeyboard {
+    
+    [self.comment resignFirstResponder];
 }
 
 -(void)keyboardDidShowOrHide:(NSNotification *)notification
@@ -98,13 +118,23 @@
 
 - (IBAction)add:(id)sender {
     
-    NSDictionary *inventory = @{
-                                @"post_id" : [NSString stringWithFormat:@"%d",self.postId],
-                                @"comment" : self.commentTxt.text
-                                };
+    if([self.comment.text isEqualToString:@"write your comment here..."] || [self.comment.text isEqualToString:@""])
+    {
+         [ToastView showErrorToastInParentView:self.view withText:@"please write your comment first" withDuaration:2.0];
+    }
+    else
+    {
+        NSDictionary *inventory = @{
+                                    @"post_id" : [NSString stringWithFormat:@"%d",self.postId],
+                                    @"comment" : self.comment.text
+                                    };
+        
+        [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/create/comment" params:inventory tag:@"createComment"];
+        
+    }
     
-    [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/create/comment" params:inventory tag:@"createComment"];
-
+   
+    
 }
 
 -(void) getData{
@@ -132,7 +162,17 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return UITableViewAutomaticDimension;
+    CGFloat height ;
+    height = 20 ;
+    
+     PostComment *data = self.myObject[indexPath.row];
+    
+    CGSize size = [data.comment sizeWithFont:[UIFont fontWithName:@"Helvetica" size:14] constrainedToSize:CGSizeMake(516, 1100) ];
+    height = height + ((size.height < 40)? 40 : size.height);
+  //  NSLog(@"nslog :%f",height);
+    return height;
+    
+   // return UITableViewAutomaticDimension;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -141,17 +181,32 @@
     PostComment *data = self.myObject[indexPath.row];
     cell.name.text = [NSString stringWithFormat:@"%@ %@",data.commenter.user.firstName,data.commenter.user.lastName];
     cell.click.tag = indexPath.row;
-    NSTimeInterval timestamp = [data.createdDate longLongValue];
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
+    NSLog(@"date: %@",data.createdDate);
+//    NSTimeInterval timestamp = [data.createdDate longLongValue];
+//    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
+//    
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"MMMM dd, hh:mm a"];
+//    [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
+    NSDate *now = [NSDate date];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"MMMM dd, hh:mm a"];
-    [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
+    dateFormatter.dateFormat = @"MMMM dd, hh:mm a";
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
     
-    cell.date.text = [NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:date]];
-   
-    cell.comment.text = [NSString stringWithFormat:@"%@",data.comment];
+    NSLog(@"The Current Time is %@",[dateFormatter stringFromDate:now]);
     
+    
+    NSDate *old =  [dateFormatter dateFromString:data.createdDate];
+    
+    NSLog(@"The old time in current date format: %@",old);
+    cell.date.text = [NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:old]];
+    
+ cell.commentTextView.text = [NSString stringWithFormat:@"%@",data.comment];
+
+    CGRect frame = cell.commentTextView.frame;
+    frame.size.height = cell.commentTextView.contentSize.height;
+    cell.commentTextView.frame=frame;
     
     [cell.profilePic sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.commenter.user.picPath.original.path]]
                        placeholderImage:nil];
@@ -163,36 +218,60 @@
 }
 
 -(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+     PostComment *data = self.myObject[indexPath.row];
     
-    
-    NSLog(@"Delete");
-   
-        PostComment *data = self.myObject[indexPath.row];
+    if (self.app.authCredential.id == data.commenter.id || self.app.authCredential.id == self.postOwnerId)
+    {
+        NSLog(@"Delete");
         
-    
-    
-    
-    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:(self.app.authCredential.id == data.commenter.id || self.app.authCredential.id == self.postOwnerId)?[NSString stringWithFormat:@"Delete"]:[NSString stringWithFormat:@""]  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+       
+        UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:(self.app.authCredential.id == data.commenter.id || self.app.authCredential.id == self.postOwnerId)?[NSString stringWithFormat:@"Delete"]:[NSString stringWithFormat:@""]  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
             
             NSLog(@"Delete");
             
-            if (self.app.authCredential.id == data.commenter.id || self.app.authCredential.id == self.postOwnerId)
-            {
             
-                NSDictionary *inventory = @{@"comment_id" : [NSString stringWithFormat:@"%d",data.id]};
-                [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/delete/comment" params:inventory tag:@"deleteComment"];
+            NSDictionary *inventory = @{@"comment_id" : [NSString stringWithFormat:@"%d",data.id]};
+            [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/delete/comment" params:inventory tag:@"deleteComment"];
             
-            }
-
+            
             
             
         }];
-    
+        
         deleteAction.backgroundColor = [UIColor redColor];
         
         
-        return @[deleteAction];
-   
+        UITableViewRowAction *replyAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:[NSString stringWithFormat:@"Reply"] handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+            
+            NSLog(@"reply");
+            
+            
+            
+            
+            
+        }];
+        
+        replyAction.backgroundColor = [UIColor grayColor];
+        
+        return @[replyAction,deleteAction];
+        
+    }
+    else{
+        UITableViewRowAction *replyAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:[NSString stringWithFormat:@"Reply"] handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+            
+            NSLog(@"reply");
+            
+            
+            
+            
+            
+        }];
+        
+        replyAction.backgroundColor = [UIColor grayColor];
+        
+        return @[replyAction];
+
+    }
     
 }
 
@@ -228,17 +307,17 @@
         
         if(self.response.responseStat.status){
             
-                for(int i=0;i<self.response.responseData.count;i++)
-                {
-                    [self.myObject addObject:self.response.responseData[i]];
-                }
+            for(int i=0;i<self.response.responseData.count;i++)
+            {
+                [self.myObject addObject:self.response.responseData[i]];
+            }
             
         }
         
         
         [self.tableData setHidden:(self.myObject.count>0) ? NO : YES];
         [self.tableData reloadData];
-      
+        
         
     }
     
@@ -249,13 +328,15 @@
         NSError* error = nil;
         NSLog(@"createComment inside");
         NSLog(@"%@",self.navigationController.viewControllers);
-       
-        self.responseAdd = [[CommentResponse alloc] initWithDictionary:data error:&error];
-        [self.commentTxt resignFirstResponder];
         
+        self.responseAdd = [[CommentResponse alloc] initWithDictionary:data error:&error];
+       // [self.commentTxt resignFirstResponder];
+        [self.comment resignFirstResponder];
         if(self.responseAdd.responseStat.status)
         {
-            self.commentTxt.text=@"";
+            self.comment.text = @"write your comment here...";
+            self.comment.textColor = [UIColor lightGrayColor];
+          //  self.commentTxt.text=@"";
             [self getData];
             TimelineViewController *t = (TimelineViewController *)self.navigationController.viewControllers[0];
             t.updateWill = YES;
@@ -273,15 +354,15 @@
         NSError* error = nil;
         self.responseDelete = [[Response alloc] initWithDictionary:data error:&error];
         
-           
+        
         if(self.responseDelete.responseStat.status)
         {
             [self getData];
         }
     }
-
     
-
+    
+    
     
 }
 
@@ -318,7 +399,26 @@
 }
 
 
+#pragma mark - TextViewDelegate 
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@"write your comment here..."]) {
+        textView.text = @"";
+        textView.textColor = [UIColor blackColor]; //optional
+    }
+    [textView becomeFirstResponder];
 
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@""]) {
+        textView.text = @"write your comment here...";
+        textView.textColor = [UIColor lightGrayColor]; //optional
+    }
+    [textView resignFirstResponder];
+  
+}
 
 
 @end
