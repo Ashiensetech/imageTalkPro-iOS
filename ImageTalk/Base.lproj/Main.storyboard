@@ -1288,7 +1288,7 @@
         <!--ImageTalk-->
         <scene sceneID="zc4-GR-DlM">
             <objects>
-                <viewController id="nGE-Te-b8P" customClass="TimelineViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="nGE-Te-b8P" customClass="TimelineViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wdC-ke-Zlb"/>
                         <viewControllerLayoutGuide type="bottom" id="YcO-Lz-zjM"/>

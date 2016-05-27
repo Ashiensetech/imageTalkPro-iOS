@@ -986,6 +986,10 @@
     
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 48.f;
+}
+
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
