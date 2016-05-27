@@ -42,7 +42,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-   
     self.counter = 0;
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.tabBarController.tabBar.hidden= NO;
@@ -99,6 +98,8 @@
     self.topView.backgroundColor = [UIColor orangeColor];
     
 
+    self.view.backgroundColor = [UIColor whiteColor];
+    
    // self.topView.hidden = YES;
     
 }
@@ -987,7 +988,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 48.f;
+    return 0.f;
 }
 
 
@@ -1019,6 +1020,7 @@
      
         
         [self changeHeight:48];
+        [self changeTop:0];
        
         
     }
@@ -1027,17 +1029,13 @@
         
         //[[self navigationController] setNavigationBarHidden:YES animated:YES];
         //[self.view addSubview:_topView];
-        if(self.heightConstraint.constant<2)
-        {
-            [self changeHeight:0];
-        }
-        else
-        {
-        [self changeHeight:48-(scrollView.contentOffset.y)];
-        self.parentOfPhotoview.frame = CGRectMake(0, -scrollView.contentOffset.y, self.parentOfPhotoview.frame.size.width, self.heightConstraint.constant);
+       
+        
+           [self changeHeight:48-(scrollView.contentOffset.y)];
+            self.parentOfPhotoview.frame = CGRectMake(0, -scrollView.contentOffset.y, self.parentOfPhotoview.frame.size.width, self.heightConstraint.constant);
             self.parentOfPhotoview.backgroundColor = [UIColor whiteColor];
-            
-        }
+            [self changeTop:-14];
+        
         
 
 
@@ -1076,6 +1074,14 @@
     self.heightConstraint.constant = height;
     
     [self.view layoutIfNeeded];
+    
+}
+
+-(void)changeTop:(CGFloat)height{
+    
+    self.topOfTableData.constant = height;
+    [self.view layoutIfNeeded];
+    
     
 }
 
