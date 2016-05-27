@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Hxb-wn-Odv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Hxb-wn-Odv">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -1288,7 +1288,7 @@
         <!--ImageTalk-->
         <scene sceneID="zc4-GR-DlM">
             <objects>
-                <viewController id="nGE-Te-b8P" customClass="TimelineViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="nGE-Te-b8P" customClass="TimelineViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wdC-ke-Zlb"/>
                         <viewControllerLayoutGuide type="bottom" id="YcO-Lz-zjM"/>
@@ -1901,6 +1901,7 @@
                         <outlet property="photoView" destination="ESK-gX-SMW" id="ZbB-eG-eho"/>
                         <outlet property="tableData" destination="wUL-Ie-sfu" id="oR9-BK-Sqj"/>
                         <outlet property="toast" destination="PvT-C6-Vsc" id="09g-w1-E2p"/>
+                        <outlet property="topOfTableData" destination="TUr-7s-8I7" id="SyY-SS-SGP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yl9-8O-nRv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -8373,6 +8374,9 @@
         <image name="web" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="jOb-ZT-cu4"/>
+        <segue reference="JvH-LZ-azZ"/>
+        <segue reference="QWU-bF-Zfl"/>
         <segue reference="WCu-FZ-FMp"/>
         <segue reference="7rK-5W-S99"/>
         <segue reference="sCE-kZ-pHJ"/>
@@ -8386,5 +8390,6 @@
         <segue reference="7iZ-Cq-brG"/>
         <segue reference="uHW-24-y3y"/>
         <segue reference="0Ay-17-uwa"/>
+
     </inferredMetricsTieBreakers>
 </document>
