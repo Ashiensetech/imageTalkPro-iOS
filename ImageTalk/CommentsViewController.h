@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 #import "ApiAccess.h"
 
-@interface CommentsViewController : UIViewController <ApiAccessDelegate>
+@interface CommentsViewController : UIViewController <ApiAccessDelegate,UITextViewDelegate>
 {
     NSUserDefaults *defaults;
     NSString *baseurl;
@@ -30,5 +30,6 @@
 @property (strong, nonatomic) CommentResponse *response;
 @property (strong, nonatomic) CommentResponse *responseAdd;
 @property (strong, nonatomic) Response *responseDelete;
+@property (strong, nonatomic) IBOutlet UITextView *comment;
 
 @end
