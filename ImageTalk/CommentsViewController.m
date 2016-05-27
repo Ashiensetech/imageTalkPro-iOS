@@ -47,12 +47,12 @@
     
     self.app =(AppDelegate *)[[UIApplication sharedApplication] delegate];
     
-//    self.textView.layer.cornerRadius = 5;
-//    [self.textView.layer setMasksToBounds:YES];
-//    
-//    self.textView.frame = CGRectInset(self.textView.frame, -1.0f, -1.0f);
-//    self.textView.layer.borderColor = [UIColor darkGrayColor].CGColor;
-//    self.textView.layer.borderWidth = 1.0f;
+    //    self.textView.layer.cornerRadius = 5;
+    //    [self.textView.layer setMasksToBounds:YES];
+    //
+    //    self.textView.frame = CGRectInset(self.textView.frame, -1.0f, -1.0f);
+    //    self.textView.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    //    self.textView.layer.borderWidth = 1.0f;
     
     self.tableData.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
@@ -120,7 +120,7 @@
     
     if([self.comment.text isEqualToString:@"write your comment here..."] || [self.comment.text isEqualToString:@""])
     {
-         [ToastView showErrorToastInParentView:self.view withText:@"please write your comment first" withDuaration:2.0];
+        [ToastView showErrorToastInParentView:self.view withText:@"please write your comment first" withDuaration:2.0];
     }
     else
     {
@@ -133,7 +133,7 @@
         
     }
     
-   
+    
     
 }
 
@@ -156,22 +156,25 @@
     
 }
 
--(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //minimum size of your cell, it should be single line of label if you are not clear min. then return UITableViewAutomaticDimension;
-    return UITableViewAutomaticDimension;
-}
+//-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    //minimum size of your cell, it should be single line of label if you are not clear min. then return UITableViewAutomaticDimension;
+//    //return UITableViewAutomaticDimension;
+//    return 140.00;
+//}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
+
     CGFloat height ;
-    height = 20 ;
-    
+    height = 60 ;
+
      PostComment *data = self.myObject[indexPath.row];
     
-    CGSize size = [data.comment sizeWithFont:[UIFont fontWithName:@"Helvetica" size:14] constrainedToSize:CGSizeMake(516, 1100) ];
-    height = height + ((size.height < 40)? 40 : size.height);
-  //  NSLog(@"nslog :%f",height);
+    CGSize size = [data.comment sizeWithFont:[UIFont fontWithName:@"Helvetica" size:12] constrainedToSize:CGSizeMake(280, MAXFLOAT) ];
+    height = height + ((size.height < 20)? 20 : size.height);
+    NSLog(@"nslog :%f",height);
     return height;
-    
+
    // return UITableViewAutomaticDimension;
 }
 
@@ -181,33 +184,46 @@
     PostComment *data = self.myObject[indexPath.row];
     cell.name.text = [NSString stringWithFormat:@"%@ %@",data.commenter.user.firstName,data.commenter.user.lastName];
     cell.click.tag = indexPath.row;
-    NSLog(@"date: %@",data.createdDate);
-//    NSTimeInterval timestamp = [data.createdDate longLongValue];
-//    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
+    NSDateFormatter * df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd HH:mm:ss.0"];
+    [df setTimeZone:[NSTimeZone systemTimeZone]];
+    [df setFormatterBehavior:NSDateFormatterBehaviorDefault];
+    
+    NSDate *theDate = [df dateFromString:data.createdDate];
+    
+    [df setDateFormat:@"MMMM dd, HH:mm:ss a"];
+    
+  
+    
+    //CGRect frame = cell.commentTextView.frame;
+    
+    CGSize size = [data.comment sizeWithFont:[UIFont fontWithName:@"Helvetica" size:14] constrainedToSize:CGSizeMake(280, MAXFLOAT)];
+    
+    NSLog(@"comment height:%f ",size.height);
+    
+    
+    
+    if(size.height<20)
+    {
+        cell.commentHeight.constant = 20;
+        
+    }
+    else
+    {
+         cell.commentHeight.constant = size.height-10;
+    }
+    
+//    frame.size.height =  ((size.height < 16)? 16 : size.height);
+//    cell.commentTextView.frame=frame;
+//    NSLog(@"chaged Height %f",cell.commentTextView.frame.size.height);
 //    
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setDateFormat:@"MMMM dd, hh:mm a"];
-//    [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
-    NSDate *now = [NSDate date];
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"MMMM dd, hh:mm a";
-    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
-    
-    NSLog(@"The Current Time is %@",[dateFormatter stringFromDate:now]);
     
     
-    NSDate *old =  [dateFormatter dateFromString:data.createdDate];
     
-    NSLog(@"The old time in current date format: %@",old);
-    cell.date.text = [NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:old]];
+    cell.date.text = [NSString stringWithFormat:@"%@",[df stringFromDate:theDate]];
     
- cell.commentTextView.text = [NSString stringWithFormat:@"%@",data.comment];
-
-    CGRect frame = cell.commentTextView.frame;
-    frame.size.height = cell.commentTextView.contentSize.height;
-    cell.commentTextView.frame=frame;
     
+    cell.commentTextView.text = [NSString stringWithFormat:@"%@",data.comment];
     [cell.profilePic sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.commenter.user.picPath.original.path]]
                        placeholderImage:nil];
     
@@ -218,13 +234,13 @@
 }
 
 -(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-     PostComment *data = self.myObject[indexPath.row];
+    PostComment *data = self.myObject[indexPath.row];
     
     if (self.app.authCredential.id == data.commenter.id || self.app.authCredential.id == self.postOwnerId)
     {
         NSLog(@"Delete");
         
-       
+        
         UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:(self.app.authCredential.id == data.commenter.id || self.app.authCredential.id == self.postOwnerId)?[NSString stringWithFormat:@"Delete"]:[NSString stringWithFormat:@""]  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
             
             NSLog(@"Delete");
@@ -270,7 +286,7 @@
         replyAction.backgroundColor = [UIColor grayColor];
         
         return @[replyAction];
-
+        
     }
     
 }
@@ -330,13 +346,13 @@
         NSLog(@"%@",self.navigationController.viewControllers);
         
         self.responseAdd = [[CommentResponse alloc] initWithDictionary:data error:&error];
-       // [self.commentTxt resignFirstResponder];
+        // [self.commentTxt resignFirstResponder];
         [self.comment resignFirstResponder];
         if(self.responseAdd.responseStat.status)
         {
             self.comment.text = @"write your comment here...";
             self.comment.textColor = [UIColor lightGrayColor];
-          //  self.commentTxt.text=@"";
+            //  self.commentTxt.text=@"";
             [self getData];
             TimelineViewController *t = (TimelineViewController *)self.navigationController.viewControllers[0];
             t.updateWill = YES;
@@ -390,6 +406,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UIButton*)sender {
     if ([segue.identifier isEqualToString:@"friendsProfile"])
     {
+        NSLog(@"tag : %d",sender.tag);
         FriendsProfileViewController *data = [segue destinationViewController];
         PostComment *post = self.myObject[sender.tag];
         data.hidesBottomBarWhenPushed = YES;
@@ -399,7 +416,7 @@
 }
 
 
-#pragma mark - TextViewDelegate 
+#pragma mark - TextViewDelegate
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
     if ([textView.text isEqualToString:@"write your comment here..."]) {
@@ -407,7 +424,7 @@
         textView.textColor = [UIColor blackColor]; //optional
     }
     [textView becomeFirstResponder];
-
+    
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView
@@ -417,7 +434,7 @@
         textView.textColor = [UIColor lightGrayColor]; //optional
     }
     [textView resignFirstResponder];
-  
+    
 }
 
 
