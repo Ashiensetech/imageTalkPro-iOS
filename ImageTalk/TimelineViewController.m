@@ -284,10 +284,10 @@
         
         if (self.img.size.width > CGRectGetWidth(self.view.bounds)) {
             CGFloat ratio = self.img.size.height / self.img.size.width;
-            return CGRectGetWidth(self.view.bounds) * ratio+140;
+            height = CGRectGetWidth(self.view.bounds) * ratio+140;
         } else {
             
-            return self.img.size.height+180;
+            height = self.img.size.height;
         }
         
         
@@ -300,7 +300,8 @@
     
     if(![data.description isEqual:@""])
     {
-        CGSize size = [data.description sizeWithFont:[UIFont fontWithName:@"Helvetica" size:14] constrainedToSize:CGSizeMake(280, 1100) ];
+        CGSize size = [data.description sizeWithFont:[UIFont fontWithName:@"Helvetica" size:14] constrainedToSize:CGSizeMake(280, MAXFLOAT) ];
+        
         height = height + ((size.height < 40)? 40 : size.height);
     }
     
@@ -315,6 +316,13 @@
     
     
 }
+
+
+
+
+
+
+
 
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -395,7 +403,18 @@
     
     cell.description.text = (data.description)?[NSString stringWithFormat:@"%@",data.description]:@"";
     
-    CGSize contentsize = [data.description sizeWithFont:[UIFont fontWithName:@"Helvetica" size:14] constrainedToSize:CGSizeMake(280, 1000) lineBreakMode:NSLineBreakByWordWrapping];
+  
+    
+   
+    cell.description.lineBreakMode = NSLineBreakByWordWrapping;
+    cell.description.numberOfLines = 0;
+    cell.description.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+    
+    
+    UIFont *cellFont = cell.textLabel.font;
+    CGSize constraintSize = CGSizeMake(280.0f, MAXFLOAT);
+    CGSize labelSize = [data.description sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
+   
     
     if([data.description isEqual:@""])
     {
@@ -405,7 +424,14 @@
     }
     else
     {
-        cell.detailsHeight.constant = (contentsize.height < 40 ) ? 40 : contentsize.height;
+        if(labelSize.height<40)
+        {
+             cell.detailsHeight.constant = 40;
+        }
+        else{
+            
+            cell.detailsHeight.constant = labelSize.height-20;
+        }
     }
     
     
