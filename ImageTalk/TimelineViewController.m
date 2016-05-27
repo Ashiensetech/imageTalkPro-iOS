@@ -1037,7 +1037,7 @@
     float scrollContentSizeHeight = scrollView.contentSize.height;
     float scrollOffset = scrollView.contentOffset.y;
     
-    NSLog(@"constant %f",self.heightConstraint.constant);
+   
     if (scrollOffset == 0)
     {
         [self.topView removeFromSuperview];
