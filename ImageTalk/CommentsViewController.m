@@ -212,23 +212,10 @@
     {
          cell.commentHeight.constant = size.height-10;
     }
-    
-//    frame.size.height =  ((size.height < 16)? 16 : size.height);
-//    cell.commentTextView.frame=frame;
-//    NSLog(@"chaged Height %f",cell.commentTextView.frame.size.height);
-//    
-    
-    
-    
     cell.date.text = [NSString stringWithFormat:@"%@",[df stringFromDate:theDate]];
-    
-    
     cell.commentTextView.text = [NSString stringWithFormat:@"%@",data.comment];
     [cell.profilePic sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.commenter.user.picPath.original.path]]
                        placeholderImage:nil];
-    
-    
-    
     return cell;
     
 }

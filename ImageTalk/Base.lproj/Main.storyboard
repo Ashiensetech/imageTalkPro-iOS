@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Hxb-wn-Odv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Hxb-wn-Odv">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -3155,7 +3155,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zxv-1L-u0c">
                                         <rect key="frame" x="0.0" y="246" width="600" height="48"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="instagram" translatesAutoresizingMaskIntoConstraints="NO" id="5EY-Os-aoh">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="twitter" translatesAutoresizingMaskIntoConstraints="NO" id="5EY-Os-aoh">
                                                 <rect key="frame" x="40" y="8" width="30" height="32"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="30" id="Cy2-gC-zIa"/>
@@ -3169,8 +3169,8 @@
                                                     <constraint firstAttribute="height" id="qMq-Wm-aHJ"/>
                                                 </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instagram" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PhR-dX-eba">
-                                                <rect key="frame" x="90" y="14" width="77" height="21"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Twitter" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PhR-dX-eba">
+                                                <rect key="frame" x="90" y="14" width="53" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.78823529410000004" green="0.78039215689999997" blue="0.78039215689999997" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -8331,7 +8331,6 @@
         <image name="edit-head" width="45" height="45"/>
         <image name="facebook-1" width="27" height="57"/>
         <image name="frnddtl" width="83" height="49"/>
-        <image name="instagram" width="56" height="56"/>
         <image name="key" width="32" height="32"/>
         <image name="like-aa" width="42" height="40"/>
         <image name="likes_emty" width="238" height="238"/>
@@ -8369,27 +8368,24 @@
         <image name="tag" width="45" height="45"/>
         <image name="timeline" width="26" height="26"/>
         <image name="timesd" width="50" height="50"/>
+        <image name="twitter" width="500" height="500"/>
         <image name="upload-1" width="165" height="165"/>
         <image name="w" width="56" height="46"/>
         <image name="web" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="jOb-ZT-cu4"/>
-        <segue reference="JvH-LZ-azZ"/>
-        <segue reference="QWU-bF-Zfl"/>
         <segue reference="WCu-FZ-FMp"/>
+        <segue reference="0Ay-17-uwa"/>
+        <segue reference="7iZ-Cq-brG"/>
+        <segue reference="f1w-Mv-YyS"/>
+        <segue reference="Cos-Ov-8c2"/>
+        <segue reference="Obc-pZ-my3"/>
         <segue reference="7rK-5W-S99"/>
-        <segue reference="sCE-kZ-pHJ"/>
+        <segue reference="EFU-E8-vhl"/>
         <segue reference="JvH-LZ-azZ"/>
         <segue reference="jOb-ZT-cu4"/>
         <segue reference="6GA-wf-SNi"/>
         <segue reference="m7I-pa-qFJ"/>
-        <segue reference="Cos-Ov-8c2"/>
-        <segue reference="f1w-Mv-YyS"/>
         <segue reference="Lix-gK-bIk"/>
-        <segue reference="7iZ-Cq-brG"/>
-        <segue reference="uHW-24-y3y"/>
-        <segue reference="0Ay-17-uwa"/>
-
     </inferredMetricsTieBreakers>
 </document>

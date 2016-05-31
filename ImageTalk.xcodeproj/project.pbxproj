@@ -172,6 +172,7 @@
 		FD8252301BCE15C100281782 /* ContactsResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = FD82522F1BCE15C100281782 /* ContactsResponse.m */; };
 		FD8252331BCE47B900281782 /* Like.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8252321BCE47B900281782 /* Like.m */; };
 		FD8252361BCE486D00281782 /* LikeResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8252351BCE486D00281782 /* LikeResponse.m */; };
+		FD8997C11CFC554700B82D3A /* arrow-2.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8997C01CFC554700B82D3A /* arrow-2.png */; };
 		FD8FA96B1BCBC18600E20746 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8FA96A1BCBC18600E20746 /* AddressBook.framework */; };
 		FD8FA96D1BCBC19000E20746 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8FA96C1BCBC19000E20746 /* AddressBookUI.framework */; };
 		FD9076F51BF0C9AA00FCE2E4 /* HorizontalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9076F41BF0C9AA00FCE2E4 /* HorizontalTableViewCell.m */; };
@@ -617,6 +618,7 @@
 		FD8252321BCE47B900281782 /* Like.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Like.m; sourceTree = "<group>"; };
 		FD8252341BCE486D00281782 /* LikeResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikeResponse.h; sourceTree = "<group>"; };
 		FD8252351BCE486D00281782 /* LikeResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikeResponse.m; sourceTree = "<group>"; };
+		FD8997C01CFC554700B82D3A /* arrow-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-2.png"; sourceTree = SOURCE_ROOT; };
 		FD8FA96A1BCBC18600E20746 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		FD8FA96C1BCBC19000E20746 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		FD9076F31BF0C9AA00FCE2E4 /* HorizontalTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HorizontalTableViewCell.h; sourceTree = "<group>"; };
@@ -1236,6 +1238,7 @@
 		FD62BA2E1CC6088400A531AB /* images */ = {
 			isa = PBXGroup;
 			children = (
+				FD8997C01CFC554700B82D3A /* arrow-2.png */,
 				FD1F9E461CD3715E00E79756 /* heart.png */,
 				FD5A2D201CD0D81700B6065B /* moods */,
 				FD42E8971CB62678008D724A /* tactile_noise.png */,
@@ -2145,6 +2148,7 @@
 				FD5A2D461CD0D82800B6065B /* coffeeL.png in Resources */,
 				FD462DC91C085A4B00BE9344 /* Arcitectura_Regular.otf in Resources */,
 				FD5A2D531CD0D82800B6065B /* middleL.png in Resources */,
+				FD8997C11CFC554700B82D3A /* arrow-2.png in Resources */,
 				FD62BA1C1CC6083100A531AB /* Default.png in Resources */,
 				FD5A2D5D1CD0D82800B6065B /* trafficL.png in Resources */,
 				FD5A2D4B1CD0D82800B6065B /* GamingL.png in Resources */,

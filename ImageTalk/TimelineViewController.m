@@ -401,7 +401,17 @@
         cell.downloadImg.hidden = false;
     }
     
-    cell.description.text = (data.description)?[NSString stringWithFormat:@"%@",data.description]:@"";
+    NSString *descriptionTxt = @"";
+    
+    if(data.description){
+        NSData *strData = [data.description dataUsingEncoding:NSUTF8StringEncoding];
+        descriptionTxt = [[NSString alloc] initWithData:strData encoding:NSNonLossyASCIIStringEncoding];
+    }else{
+        descriptionTxt = @"";
+    }
+    
+    
+    cell.description.text = descriptionTxt;
     
   
     
@@ -772,22 +782,31 @@
         NSLog(@"%d",self.counter);
         for(int i = 0;i<data.tagCount;i++)
         {
-            
-            // NSLog(@"%@",[[data.tagList objectAtIndex:i ]U]);
             Tag *tag =  [data.tagList objectAtIndex:i] ;
-            NSLog(@"%@",tag.tagId.user.firstName);
+            
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0,0,120,20)];
+            view.center = CGPointMake([tag.originX floatValue], [tag.originY floatValue]);
+           // view.userInteractionEnabled = YES;
+            
+            
+            UIImageView *thumbnailImage;
+            thumbnailImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, 120, 20)];
+            thumbnailImage.image = [UIImage imageNamed:@"arrow-2.png"];
+            [thumbnailImage setContentMode:UIViewContentModeScaleAspectFill];
+            thumbnailImage.clipsToBounds = YES;
             
             UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,120,20)]; //or whatever size you need
-            
-            // myLabel.backgroundColor = [UIColor blackColor];
+            // myLabel.center = self.tabPosition;
             [myLabel setFont:[UIFont systemFontOfSize:12]];
-            
             myLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
             myLabel.textColor = [UIColor whiteColor];
             myLabel.textAlignment = NSTextAlignmentCenter;
             myLabel.text = [NSString stringWithFormat:@"%@  %@",tag.tagId.user.firstName,tag.tagId.user.lastName] ;
-            myLabel.center = CGPointMake([tag.originX floatValue], [tag.originY floatValue]);
-            [cell.image addSubview:myLabel];
+
+            
+            [view addSubview:thumbnailImage];
+            [view addSubview:myLabel];
+            [cell.image addSubview:view];
             
         }
         
@@ -802,7 +821,7 @@
         
         for (id child in [cell.image subviews])
         {
-            if ([child isMemberOfClass:[UILabel class]])
+            if ([child isMemberOfClass:[UIView class]])
             {
                 [child removeFromSuperview];
             }

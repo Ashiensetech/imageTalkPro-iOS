@@ -40,7 +40,7 @@
 @property (strong, nonatomic) UIImage *pic;
 @property (strong,nonatomic)NSMutableArray *tagPostions;
 @property (strong, nonatomic) IBOutlet UIView *serachView;
-@property (strong,nonatomic) UILabel *lblOne;
+@property (strong,nonatomic) UIView *lblOne;
 
 
 @end

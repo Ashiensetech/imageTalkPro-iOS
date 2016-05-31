@@ -5,7 +5,7 @@
 //  Created by Workspace Infotech on 10/2/15.
 //  Copyright (c) 2015 Workspace Infotech. All rights reserved.
 //
-
+#import <UIKit/UIKit.h>
 #import "SharePhotoViewController.h"
 #import "EditPhotoViewController.h"
 #import "ToastView.h"
@@ -19,10 +19,13 @@
 #import <QuartzCore/QuartzCore.h>
 #import "VKSdk.h"
 #import "VKUploadImage.h"
+
+#import <Accounts/Accounts.h>
+#import <Social/Social.h>
 @interface SharePhotoViewController ()
 @property (nonatomic, retain) UIDocumentInteractionController *dic;
 @end
-
+@import  Social;
 @implementation SharePhotoViewController
 
 - (void)viewDidLoad {
@@ -150,43 +153,13 @@
     
 }
 -(void)tabonInstagramView:(id) sender{
-    NSURL *instagramURL = [NSURL URLWithString:@"instagram://app"];
-    if([[UIApplication sharedApplication] canOpenURL:instagramURL]) //check for App is install or not
-    {
-        NSData *imageData = UIImagePNGRepresentation(self.image); //convert image into .png format.
-        NSFileManager *fileManager = [NSFileManager defaultManager];//create instance of NSFileManager
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); //create an array and store result of our search for the documents directory in it
-        NSString *documentsDirectory = [paths objectAtIndex:0]; //create NSString object, that holds our exact path to the documents directory
-        NSString *fullPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"insta.igo"]]; //add our image to the path
-        [fileManager createFileAtPath:fullPath contents:imageData attributes:nil]; //finally save the path (image)
-        NSLog(@"image saved");
-        
-        CGRect rect = CGRectMake(0 ,0 , 0, 0);
-        UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, self.view.opaque, 0.0);
-        [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
-        UIGraphicsEndImageContext();
-        NSString *fileNameToSave = [NSString stringWithFormat:@"Documents/insta.igo"];
-        NSString  *jpgPath = [NSHomeDirectory() stringByAppendingPathComponent:fileNameToSave];
-        NSLog(@"jpg path %@",jpgPath);
-        NSString *newJpgPath = [NSString stringWithFormat:@"file://%@",jpgPath];
-        NSLog(@"with File path %@",newJpgPath);
-        NSURL *igImageHookFile = [[NSURL alloc]initFileURLWithPath:newJpgPath];
-        NSLog(@"url Path %@",igImageHookFile);
-        
-        self.documentController.UTI = @"com.instagram.exclusivegram";
-        // self.documentController = [self setupControllerWithURL:igImageHookFile usingDelegate:self];
-        
-        
-        self.documentController=[UIDocumentInteractionController interactionControllerWithURL:igImageHookFile];
-        NSString *caption = @"#Your Text"; //settext as Default Caption
-        self.documentController.annotation=[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@",caption],@"InstagramCaption", nil];
-        [self.documentController presentOpenInMenuFromRect:rect inView: self.view animated:YES];
-    }
-    else
-    {
-        UIAlertView *errMsg = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"No Instagram Available" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [errMsg show];
-    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+                                                    message:@"...Do you want to proceed with twitter sharing ?"
+                                                   delegate:self
+                                          cancelButtonTitle:@"No"
+                                          otherButtonTitles:@"Yes", nil];
+    [alert show];
+ 
     
     
 }
@@ -447,6 +420,7 @@
 
 - (IBAction)upload:(id)sender {
   
+    
     [self.view addSubview:self.loading];
     self.loading.hidden = NO;
     [self.loading startAnimating];
@@ -520,8 +494,11 @@
         str = @"";
         
     }else{
-        str = self.postCaption.text;
+        NSData *data = [self.postCaption.text dataUsingEncoding:NSNonLossyASCIIStringEncoding];
+       str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+     //   str = self.postCaption.text;
     }
+      NSLog(@"post Caption : %@", str);
     self.postCaption.text = [NSString stringWithFormat:@"%@ ",self.postCaption.text];
     
     NSDictionary *inventory = @{
@@ -537,7 +514,7 @@
     
     [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/create" params:inventory tag:@"getPhoto"];
     
-   
+    
 }
 
 -(NSString*) imageToString : (UIImage*) image{
@@ -677,5 +654,66 @@
     NSLog(@"AUthorization Failed  ");
 }
 
+#pragma mark - UIAlertViewDelegate method
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex != [alertView cancelButtonIndex])
+    {
+        //User clicked ok
+        NSLog(@"ok");
+        
+        
+        ACAccountStore *account=[[ACAccountStore alloc]init];
+        ACAccountType *accountType=[account accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+        [account requestAccessToAccountsWithType:accountType options:nil completion:^(BOOL granted, NSError *error) {
+            if (granted==YES) {
+                NSArray *arrayOfAccount=[account accountsWithAccountType:accountType];
+                if ([arrayOfAccount count]>0) {
+                    ACAccount *twitterAccount=[arrayOfAccount lastObject];
+                    NSString * str = [[NSString alloc]init];
+                    if ([self.postCaption.text  isEqualToString:@"write your comment here..."]) {
+                        str = @"";
+                        
+                    }else{
+                        str = self.postCaption.text;
+                    }
+                    
+                    NSDictionary *message = @{@"status": str};
+                    NSURL *requestURL = [NSURL
+                                         URLWithString:@"https://upload.twitter.com/1/statuses/update_with_media.json"];
+                    SLRequest *postRequest = [SLRequest
+                                              requestForServiceType:SLServiceTypeTwitter
+                                              requestMethod:SLRequestMethodPOST
+                                              URL:requestURL parameters:message];
+                    // UIImage *image = [self.image];
+                    NSData *myData = UIImagePNGRepresentation(self.image);
+                    [postRequest addMultipartData:myData withName:@"media" type:@"image/png" filename:@"TestImage"];
+                    
+                    postRequest.account=twitterAccount;
+                    NSLog(@"Post data :%@",postRequest);
+                    
+                    [postRequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
+                        NSMutableDictionary *responseDictionary  = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:nil];
+                        NSLog(@"Response dictionary: %@", responseDictionary);
+                        if(error){
+                             [ToastView showToastInParentView:self.view withText:@"There was an error sharing to twitter" withDuaration:2.0];
+                        }
+                        if(responseDictionary){
+                           
+                                [ToastView showToastInParentView:self.view withText:@"shared to twitter " withDuaration:2.0];
+                            
+                        }
+                    }];
+                    
+                }
+            }
+        }];
+        
+    }
+    else
+    {
+        //User clicked cancel
+        NSLog(@"cancel");
+    }
+}
 @end

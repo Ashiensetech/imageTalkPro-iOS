@@ -15,7 +15,7 @@
 #import "VKSdk.h" 
 @import  MapKit;
 
-@interface SharePhotoViewController : UIViewController <ApiAccessDelegate,UITextViewDelegate,FBSDKSharingDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UIDocumentInteractionControllerDelegate,VKSdkDelegate,VKSdkUIDelegate>
+@interface SharePhotoViewController : UIViewController <ApiAccessDelegate,UITextViewDelegate,FBSDKSharingDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UIDocumentInteractionControllerDelegate,VKSdkDelegate,VKSdkUIDelegate,UIAlertViewDelegate>
 {
     NSUserDefaults *defaults;
     NSString *baseurl;

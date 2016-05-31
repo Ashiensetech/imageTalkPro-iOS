@@ -90,35 +90,87 @@
     if(!self.tagPostions){
         self.tagPostions = [[NSMutableArray alloc] init];
         
-        self.lblOne = [[UILabel alloc] initWithFrame:CGRectMake(0,0,120,20)];
-        self.lblOne.center = CGPointMake(self.picture.bounds.size.height/2, self.picture.bounds.size.height/2);
-        [self.lblOne setFont:[UIFont systemFontOfSize:12]];
-        self.lblOne.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
-        self.lblOne.textColor = [UIColor whiteColor];
-        self.lblOne.textAlignment = NSTextAlignmentCenter;
-        self.lblOne.text = [NSString stringWithFormat:@"who's this?"] ;
+        
+        
+         self.lblOne = [[UIView alloc] initWithFrame:CGRectMake(50, 50, 120, 20)];
+         self.lblOne.center = CGPointMake(self.picture.bounds.size.height/2, self.picture.bounds.size.height/2);
+        
+        UIImageView *thumbnailImage;
+        thumbnailImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, 120, 20)];
+        thumbnailImage.image = [UIImage imageNamed:@"arrow-2.png"];
+        [thumbnailImage setContentMode:UIViewContentModeScaleAspectFill];
+        thumbnailImage.clipsToBounds = YES;
+        
+        UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,120,20)]; //or whatever size you need
+        // myLabel.center = self.tabPosition;
+        [myLabel setFont:[UIFont systemFontOfSize:12]];
+        myLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
+        myLabel.textColor = [UIColor whiteColor];
+        myLabel.textAlignment = NSTextAlignmentCenter;
+        myLabel.text = [NSString stringWithFormat:@"whos's this?"] ;
+        [self.lblOne addSubview:thumbnailImage];
+        [self.lblOne addSubview:myLabel];
+        
         [self.picture addSubview:self.lblOne];
     }else{
       
         for(int i=0;i<self.tagPostions.count;i++){
             Contact *data = [self.tagPostions[i] valueForKey:@"owner"];
-            UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(50,50,120,20)]; //or whatever size you need
-            myLabel.center =  CGPointMake([[self.tagPostions[i] valueForKey:@"origin_x"]floatValue], [[self.tagPostions[i] valueForKey:@"origin_y"]floatValue]);
+            
+            
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(50, 50, 120, 20)];
+            view.center = CGPointMake([[self.tagPostions[i] valueForKey:@"origin_x"]floatValue], [[self.tagPostions[i] valueForKey:@"origin_y"]floatValue]);;
+            view.userInteractionEnabled = YES;
+            
+            
+            UIImageView *thumbnailImage;
+            thumbnailImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, 120, 20)];
+            thumbnailImage.image = [UIImage imageNamed:@"arrow-2.png"];
+            [thumbnailImage setContentMode:UIViewContentModeScaleAspectFill];
+            thumbnailImage.clipsToBounds = YES;
+            
+            UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,120,20)]; //or whatever size you need
+            // myLabel.center = self.tabPosition;
             [myLabel setFont:[UIFont systemFontOfSize:12]];
             myLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
             myLabel.textColor = [UIColor whiteColor];
             myLabel.textAlignment = NSTextAlignmentCenter;
             myLabel.text = [NSString stringWithFormat:@"%@  %@",data.user.firstName,data.user.lastName] ;
             
-            myLabel.userInteractionEnabled = YES;
-            
             UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc]
                                                initWithTarget:self
                                                action:@selector(labelDragged:)] ;
-            [myLabel addGestureRecognizer:gesture];
+            [view addGestureRecognizer:gesture];
             
+            //            [self.picture addSubview:thumbnailImage];
+            //            [self.picture addSubview:myLabel];
+            [view addSubview:thumbnailImage];
+            [view addSubview:myLabel];
+            [self.picture addSubview:view];
             
-            [self.picture addSubview:myLabel];
+//            
+//            
+//            
+//            
+//            
+//            
+//            UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(50,50,120,20)]; //or whatever size you need
+//            myLabel.center =  CGPointMake([[self.tagPostions[i] valueForKey:@"origin_x"]floatValue], [[self.tagPostions[i] valueForKey:@"origin_y"]floatValue]);
+//            [myLabel setFont:[UIFont systemFontOfSize:12]];
+//            myLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
+//            myLabel.textColor = [UIColor whiteColor];
+//            myLabel.textAlignment = NSTextAlignmentCenter;
+//            myLabel.text = [NSString stringWithFormat:@"%@  %@",data.user.firstName,data.user.lastName] ;
+//            
+//            myLabel.userInteractionEnabled = YES;
+//            
+//            UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc]
+//                                               initWithTarget:self
+//                                               action:@selector(labelDragged:)] ;
+//            [myLabel addGestureRecognizer:gesture];
+//            
+//            
+//            [self.picture addSubview:myLabel];
         }
         
     }
@@ -306,7 +358,8 @@
     
 }
 -(void) labelDragged :(UIPanGestureRecognizer *)gesture {
-    UILabel *label = (UILabel *)gesture.view;
+  //  UILabel *label = (UILabel *)gesture.view;
+    UIView *label = (UIView *)gesture.view;
     CGPoint translation = [gesture translationInView:label];
     
     if(CGRectContainsPoint(self.picture.bounds,CGPointMake(label.center.x + translation.x, label.center.y + translation.y))){
@@ -347,28 +400,39 @@
         
         if(shouoldAdd)
         {
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(self.tabPosition.x, self.tabPosition.y, 120, 20)];
+            view.center = CGPointMake(self.tabPosition.x, self.tabPosition.y-20);
+            view.userInteractionEnabled = YES;
+
             
-            UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.tabPosition.x,self.tabPosition.y,120,20)]; //or whatever size you need
-            myLabel.center = self.tabPosition;
+            UIImageView *thumbnailImage;
+            thumbnailImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, 120, 20)];
+            thumbnailImage.image = [UIImage imageNamed:@"arrow-2.png"];
+            [thumbnailImage setContentMode:UIViewContentModeScaleAspectFill];
+            thumbnailImage.clipsToBounds = YES;
+          
+            UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,120,20)]; //or whatever size you need
+           // myLabel.center = self.tabPosition;
             [myLabel setFont:[UIFont systemFontOfSize:12]];
             myLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
             myLabel.textColor = [UIColor whiteColor];
             myLabel.textAlignment = NSTextAlignmentCenter;
             myLabel.text = [NSString stringWithFormat:@"%@  %@",data.user.firstName,data.user.lastName] ;
             myLabel.tag = indexPath.row;
-            myLabel.userInteractionEnabled = YES;
             
             UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc]
                                                initWithTarget:self
                                                action:@selector(labelDragged:)] ;
-            [myLabel addGestureRecognizer:gesture];
+            [view addGestureRecognizer:gesture];
             
-            
-            [self.picture addSubview:myLabel];
-            
+//            [self.picture addSubview:thumbnailImage];
+//            [self.picture addSubview:myLabel];
+            [view addSubview:thumbnailImage];
+            [view addSubview:myLabel];
+            [self.picture addSubview:view];
             
             [self.myObjectSelection addObject:self.myObject[indexPath.row]];
-            [self.tagPostions addObject:@{@"origin_x": [NSNumber numberWithFloat: self.tabPosition.x] ,@"origin_y":[NSNumber numberWithFloat: self.tabPosition.y],@"owner":self.myObject[indexPath.row] }];
+            [self.tagPostions addObject:@{@"origin_x": [NSNumber numberWithFloat: self.tabPosition.x] ,@"origin_y":[NSNumber numberWithFloat: self.tabPosition.y-20],@"owner":self.myObject[indexPath.row] }];
                    }
         else
         {
@@ -406,6 +470,7 @@
 }
 
 
+
 -(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
@@ -415,8 +480,8 @@
         UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Delete Tag" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
             NSObject *tagItem =[self.tagPostions  objectAtIndex:indexPath.row];
             for (UIView *i in self.picture.subviews){
-                if([i isKindOfClass:[UILabel class]]){
-                    UILabel *newLbl = (UILabel *)i;
+                if([i isKindOfClass:[UIView class]]){
+                    UIView *newLbl = (UILabel *)i;
                     if(newLbl.center.x == [[tagItem valueForKey:@"origin_x"] floatValue] && newLbl.center.y == [[tagItem valueForKey:@"origin_y"] floatValue]){
                         [newLbl setHidden:YES];
                         [self.picture willRemoveSubview:newLbl];
