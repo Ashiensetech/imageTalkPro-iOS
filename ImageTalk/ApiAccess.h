@@ -39,7 +39,7 @@
 - (void) postRequestWithUrl:(NSString*) url params:(NSDictionary*) params tag:(NSString*) tag index:(int) index;
 - (void) getRequestWithUrl:(NSString*) url params:(NSDictionary*) params tag:(NSString*) tag;
 - (void) getRequestForGoogleWithParams:(NSDictionary*) params tag:(NSString*) tag;
--(void) mapKitServiceWithCLLocationCoordinate2D:(CLLocationCoordinate2D)start Keyboard :(NSString *) keyboard andTag : (NSString *) tag;
-
+- (void) mapKitServiceWithCLLocationCoordinate2D:(CLLocationCoordinate2D)start Keyboard :(NSString *) keyboard andTag : (NSString *) tag;
+- (void)FBLocationWithCenter: (CLLocationCoordinate2D)start Keyboard :(NSString *) keyboard andTag : (NSString *) tag andOffset:(NSString *) offset;
 
 @end

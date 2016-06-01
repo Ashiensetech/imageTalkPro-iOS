@@ -37,7 +37,11 @@
     [self.locationManager requestWhenInUseAuthorization];
     [self.locationManager startUpdatingLocation];
     
-
+    
+    NSLog(@"Place :%@",self.place);
+    
+   
+    
     
     
     CLLocationCoordinate2D noLocation;
@@ -55,16 +59,19 @@
         }
         if(placemarks && placemarks.count){
             CLPlacemark *placemark2 = placemarks[0];
-            
             MKPlacemark *placemark = [[MKPlacemark alloc] initWithPlacemark:placemark2];
-            
-            [self.appleMapView addAnnotation:placemark];
+            MKPointAnnotation *point = [[MKPointAnnotation alloc] init];
+            point.coordinate = placemark.coordinate;
+            point.title = self.place.name;
+            point.subtitle = [NSString stringWithFormat:@"%@",self.place.formattedAddress];
+            [self.appleMapView addAnnotation:point];
+       
         }
     }];
     
     
     self.myObject = [[NSMutableArray alloc]init];
-
+    
     
     
     [[ApiAccess getSharedInstance] setDelegate:self];
@@ -86,20 +93,20 @@
 }
 
 -(void) getData{
-//    NSDictionary *inventory = @{@"offset" : [NSString stringWithFormat:@"%d",0],
-//                                @"other_app_credential_id" : [NSString stringWithFormat:@"%d",137],
-//                                @"limit":@"20"
-//                                };
-//    [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/get/others" params:inventory tag:@"getData"];
+    //    NSDictionary *inventory = @{@"offset" : [NSString stringWithFormat:@"%d",0],
+    //                                @"other_app_credential_id" : [NSString stringWithFormat:@"%d",137],
+    //                                @"limit":@"20"
+    //                                };
+    //    [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/get/others" params:inventory tag:@"getData"];
     
     NSDictionary *inventory = @{@"lat" : [NSString stringWithFormat:@"%f",self.place.lat],
                                 @"lng" : [NSString stringWithFormat:@"%f",self.place.lng]
                                 };
     [[ApiAccess getSharedInstance]postRequestWithUrl:@"app/wallpost/get/nearby" params:inventory tag:@"getNearbyPost"];
-
-
     
-
+    
+    
+    
 }
 
 
@@ -169,7 +176,7 @@
     cell.image.contentMode = UIViewContentModeScaleAspectFill;
     [cell.image sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.picPath]]
                   placeholderImage:nil];
-
+    
     
     
     return cell;
@@ -191,7 +198,7 @@
             }
             [self.collectionView reloadData];
         }
-      
+        
     }
 }
 
@@ -222,7 +229,7 @@
         data.data = self.post;
         
     }
-   
+    
 }
 
 

@@ -50,5 +50,5 @@
 @property(strong,nonatomic) NSString *tagCustomMessage;
 @property (strong,nonatomic) NSMutableArray *tagList;
 @property (nonatomic, strong) UIDocumentInteractionController *documentController;
-@property (nonatomic,strong) MKMapItem *postLocation;
+@property (nonatomic,strong) Places *postLocation;
 @end

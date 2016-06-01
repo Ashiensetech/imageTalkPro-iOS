@@ -9,7 +9,12 @@
 #import "ApiAccess.h"
 #import "JSONHTTPClient.h"
 #import "MYHTTPRequestOperationManager.h"
+
+#import <Accounts/Accounts.h>
+#import <Social/Social.h>
 @import MapKit;
+
+@import Social;
 static ApiAccess *sharedInstance = nil;
 
 @implementation ApiAccess
@@ -17,9 +22,9 @@ static ApiAccess *sharedInstance = nil;
 +(ApiAccess*)getSharedInstance{
     
     if (!sharedInstance) {
-     
-       [sharedInstance initUrls];
-       sharedInstance = [[super allocWithZone:NULL]init];
+        
+        [sharedInstance initUrls];
+        sharedInstance = [[super allocWithZone:NULL]init];
         
     }
     
@@ -42,13 +47,13 @@ static ApiAccess *sharedInstance = nil;
 
 - (void) postRequestWithUrl:(NSString*) url params:(NSDictionary*) params tag:(NSString*) tag index:(int) index
 {
-  
+    
     [JSONHTTPClient postJSONFromURLWithString:[NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"baseurl"],url] params:params
                                    completion:^(NSDictionary *json, JSONModelError *err)
      {
          
-       //  NSLog(@"%@",params);
-        
+         //  NSLog(@"%@",params);
+         
          if(err)
          {
              NSLog(@"HGFHGF %@",err);
@@ -72,7 +77,7 @@ static ApiAccess *sharedInstance = nil;
                       
                       NSError* error = nil;
                       AccessTokenResponse *response = [[AccessTokenResponse alloc] initWithDictionary:json error:&error];
-                    
+                      
                       if(response.responseStat.status)
                       {
                           NSLog(@"LOgin");
@@ -85,17 +90,17 @@ static ApiAccess *sharedInstance = nil;
                           
                           [[SocektAccess getSharedInstance]initSocket];
                           [[SocektAccess getSharedInstance]authentication];
-                        
+                          
                           
                           [self postRequestWithUrl:url params:params tag:tag index:index];
                       }
-                     
+                      
                   }];
-
+                 
              }
              
              
-            
+             
          }
          
          
@@ -106,7 +111,7 @@ static ApiAccess *sharedInstance = nil;
 
 - (void) getRequestWithUrl:(NSString*) url params:(NSDictionary*) params tag:(NSString*) tag
 {
-     MYHTTPRequestOperationManager *manager = [MYHTTPRequestOperationManager manager];
+    MYHTTPRequestOperationManager *manager = [MYHTTPRequestOperationManager manager];
     [manager.requestSerializer setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     [manager GET:[NSString stringWithFormat:@"%@%@",baseurl,url] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
@@ -134,7 +139,7 @@ static ApiAccess *sharedInstance = nil;
              }];
             
         }
-
+        
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -144,51 +149,51 @@ static ApiAccess *sharedInstance = nil;
     }];
     
     
-//    [JSONHTTPClient getJSONFromURLWithString:[NSString stringWithFormat:@"%@%@",baseurl,url] params:params completion:^(id json, JSONModelError *err)
-//    {
-//      
-//         if(err)
-//         {
-//             [self.delegate receivedError:err tag:tag];
-//         }
-//         else
-//         {
-//             NSError* error = nil;
-//             Response *response = [[Response alloc] initWithDictionary:json error:&error];
-//             
-//             if (response.responseStat.isLogin) {
-//                 [self.delegate receivedResponse:json tag:tag index:0];
-//             }
-//             else
-//             {
-//                 [JSONHTTPClient postJSONFromURLWithString:[NSString stringWithFormat:@"%@app/login/authenticate/accesstoken",baseurl] bodyString:[NSString stringWithFormat:@"access_token=%@",accessToken]
-//                                                completion:^(NSDictionary *json, JSONModelError *err)
-//                  {
-//                      
-//                      NSError* error = nil;
-//                      AccessTokenResponse *response = [[AccessTokenResponse alloc] initWithDictionary:json error:&error];
-//                      
-//                      if(response.responseStat.status)
-//                      {
-//                          [self postRequestWithUrl:url params:params tag:tag];
-//                      }
-//                      
-//                  }];
-//                 
-//             }
-//             
-//             
-//             
-//         }
-//
-//        
-//     }];
+    //    [JSONHTTPClient getJSONFromURLWithString:[NSString stringWithFormat:@"%@%@",baseurl,url] params:params completion:^(id json, JSONModelError *err)
+    //    {
+    //
+    //         if(err)
+    //         {
+    //             [self.delegate receivedError:err tag:tag];
+    //         }
+    //         else
+    //         {
+    //             NSError* error = nil;
+    //             Response *response = [[Response alloc] initWithDictionary:json error:&error];
+    //
+    //             if (response.responseStat.isLogin) {
+    //                 [self.delegate receivedResponse:json tag:tag index:0];
+    //             }
+    //             else
+    //             {
+    //                 [JSONHTTPClient postJSONFromURLWithString:[NSString stringWithFormat:@"%@app/login/authenticate/accesstoken",baseurl] bodyString:[NSString stringWithFormat:@"access_token=%@",accessToken]
+    //                                                completion:^(NSDictionary *json, JSONModelError *err)
+    //                  {
+    //
+    //                      NSError* error = nil;
+    //                      AccessTokenResponse *response = [[AccessTokenResponse alloc] initWithDictionary:json error:&error];
+    //
+    //                      if(response.responseStat.status)
+    //                      {
+    //                          [self postRequestWithUrl:url params:params tag:tag];
+    //                      }
+    //
+    //                  }];
+    //
+    //             }
+    //
+    //
+    //
+    //         }
+    //
+    //
+    //     }];
     
 }
 
 - (void) getRequestForGoogleWithParams:(NSDictionary*) params tag:(NSString*) tag
 {
-   
+    
     NSLog(@"%@",params);
     
     NSDictionary * newParam = @{@"key":@"29362df98623085a9b086b0979fa79c00ac0ee62" ,@"location" : [params valueForKey:@"location"],@"name":[params valueForKey:@"name"],@"pagetoken":[params valueForKey:@"pagetoken"],@"radius":[params valueForKey:@"radius"],@"sensor":@false};
@@ -202,14 +207,14 @@ static ApiAccess *sharedInstance = nil;
          }
          else
          {
-    
+             
              NSLog(@"%@",json);
-            [self.delegate receivedResponse:json tag:tag index:0];
+             [self.delegate receivedResponse:json tag:tag index:0];
          }
          
          
      }];
-
+    
 }
 
 
@@ -272,10 +277,87 @@ static ApiAccess *sharedInstance = nil;
          else
          {
              
-            // NSLog(@"%@",json);
+             // NSLog(@"%@",json);
              [self.delegate receivedResponse:@{@"response": response.mapItems} tag:tag index:0];
          }
      }];
+}
+
+-(void)FBLocationWithCenter: (CLLocationCoordinate2D)start Keyboard :(NSString *) keyboard andTag : (NSString *) tag andOffset:(NSString *) offset {
+    NSLog(@"Offset :%@",offset);
+    ACAccountStore *accountStore = [[ACAccountStore alloc] init];
+    ACAccountType *accountType =  [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook];
+    NSDictionary *FBOptions = [NSDictionary dictionaryWithObjectsAndKeys:@"267236836947716", ACFacebookAppIdKey,@[@"email",@"user_location"],ACFacebookPermissionsKey, nil];
+    
+    [accountStore requestAccessToAccountsWithType:accountType options:FBOptions completion:
+     ^(BOOL granted, NSError *error) {
+         if (granted) {
+             NSArray *facebookAccounts = [accountStore accountsWithAccountType:accountType];
+             ACAccount *FBAccount = [facebookAccounts firstObject];
+             
+             
+             //  NSURL *url = https://graph.facebook.com/search?q=&type=place&center=37.77493,-122.419415&distance=5000&access_token=ACCESS-TOKEN&expires_in=5184000
+             
+             
+             if([offset isEqualToString:@""]){
+                 NSDictionary * newParam = @{@"q":keyboard,
+                                             @"type":@"place",
+                                             @"center": [NSString stringWithFormat:@"%f,%f",start.latitude,start.longitude]   ,
+                                             @"distance" :@"5000",
+                                             @"access_token": [[FBAccount credential] oauthToken],
+                                             @"limit" :@"100",
+                                             @"expires_in": @"5184000"
+                                             };
+                 [JSONHTTPClient getJSONFromURLWithString:@"https://graph.facebook.com/search" params:newParam completion:^(id json, JSONModelError *err)
+                  {
+                      
+                      if(err)
+                      {
+                          // NSLog(@"error : %@",err );
+                          [self.delegate receivedError:err tag:tag];
+                      }
+                      else
+                      {
+                          
+                          //NSLog(@"Json :%@",json);
+                          [self.delegate receivedResponse:json tag:tag index:0];
+                      }
+                      
+                      
+                  }];
+             }else{
+                 [JSONHTTPClient getJSONFromURLWithString:offset params:nil completion:^(id json, JSONModelError *err)
+                  {
+                      
+                      if(err)
+                      {
+                          // NSLog(@"error : %@",err );
+                          [self.delegate receivedError:err tag:tag];
+                      }
+                      else
+                      {
+                          
+                          NSLog(@"Json :%@",json);
+                          [self.delegate receivedResponse:json tag:tag index:0];
+                      }
+                      
+                      
+                  }];
+             }
+             
+             
+         } else {
+             NSLog(@"error getting permission %@",error);
+             if([error code]== ACErrorAccountNotFound){
+                 NSLog(@"Account not found. Please setup your account in settings app");
+             }
+             else {
+                 NSLog(@"Account access denied");
+             }
+             
+         }
+     }];
+    
 }
 
 @end

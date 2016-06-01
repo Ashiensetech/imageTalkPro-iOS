@@ -430,32 +430,21 @@
     NSString *taglist= @"";
     NSString *location =@"";
     
-    if(self.postLocation){
-        
-        CLLocation * loc = self.postLocation.placemark.location;
-        NSDictionary *dict = @{
-                               @"placeId":@"",
-                               @"icon":@"",
-                               @"name":self.postLocation.name,
-                               @"googlePlaceId":@"",
-                               @"lat":[[NSNumber alloc] initWithDouble:loc.coordinate.latitude],
-                               @"lng":[[NSNumber alloc] initWithDouble:loc.coordinate.longitude],
-                               @"formattedAddress":[NSString stringWithFormat:@"%@",[[self.postLocation.placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@"," ]],
-                               @"countryName":self.postLocation.placemark.country
-                               };
-        
-        NSError *error;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject: dict
-                                                           options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
-                                                             error:&error];
-        
-        if (! jsonData) {
-            NSLog(@"Got an error: %@", error);
-        } else {
-            location = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-            
-        }
-    }
+//    if(self.postLocation){
+//    
+//        
+//        NSError *error;
+//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject: self.postLocation
+//                                                           options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+//                                                             error:&error];
+//        
+//        if (! jsonData) {
+//            NSLog(@"Got an error: %@", error);
+//        } else {
+//            location = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//            
+//        }
+//    }
     
     NSMutableArray *tags = [[NSMutableArray alloc] init];
     if(self.tagList.count>0){
@@ -506,7 +495,7 @@
                                 @"photo" : [self imageToString:self.image],
                                 @"type" : @"0",
                                 @"tagged_list" : taglist,
-                                @"places" : location,
+                                @"places" : (self.postLocation)?self.postLocation.toJSONString:@"",
                                 @"wall_post_mood":[self.wallPostMood length ]!=0 ?self.wallPostMood:@"",
                                 @"Content-Type" : @"charset=utf-8",
                                 };

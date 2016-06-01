@@ -57,6 +57,7 @@
     self.keyword = @"";
     
      self.selectedLocations = [[NSMutableArray alloc]init];
+
     
     [self getData:@""];
     [self.view endEditing:YES];
@@ -95,16 +96,13 @@
 }
 
 -(void) getData:(NSString*) keyboard{
-    
-    [self.loading startAnimating];
-    if([keyboard isEqualToString:@""]){
-      keyboard = @"restaurants";
+    if(self.locations ==NULL){
+     self.locations =[[NSMutableArray alloc] init];
     }
-    self.locations =[[NSMutableArray alloc] init];
+    
     start.latitude =currentLocation.coordinate.latitude;
     start.longitude = currentLocation.coordinate.longitude;
-    [[ApiAccess getSharedInstance] mapKitServiceWithCLLocationCoordinate2D :start  Keyboard:keyboard andTag : @"getLocationData"];
-    
+    [[ApiAccess getSharedInstance] FBLocationWithCenter:start Keyboard:(NSString *)keyboard andTag:@"getFBLocation" andOffset: self.offset];
     
     
 }
@@ -112,6 +110,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    
     CGPoint offset = scrollView.contentOffset;
     CGRect bounds = scrollView.bounds;
     CGSize size = scrollView.contentSize;
@@ -120,7 +119,7 @@
     float h = size.height;
     float reload_distance = 10;
     if(y > h + reload_distance) {
-        
+       
         
         if(self.isData && self.loaded)
         {
@@ -158,10 +157,11 @@
     LocationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     
-    MKMapItem * data = self.locations[indexPath.row];
     
-    cell.address.text =[NSString stringWithFormat:@"%@",data.name];
-    cell.duration.text = [NSString stringWithFormat:@"%@",[[data.placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@"," ]];
+    
+    Places *data = self.locations[indexPath.row];
+    cell.address.text = [NSString stringWithFormat:@"%@",data.name];
+    cell.duration.text = [NSString stringWithFormat:@"%@",data.formattedAddress];
     cell.image.image = [UIImage imageNamed:@"loc"];
     
     return cell;
@@ -176,13 +176,17 @@
 {
        // Places *data =self.myObject[indexPath.row];
     
-    MKMapItem *data  = self.locations[indexPath.row];
+    Places *data  = self.locations[indexPath.row];
         NSInteger numberOfViewControllers = self.navigationController.viewControllers.count;
     
         if([[self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2] isKindOfClass:[SharePhotoViewController class]])
         {
             SharePhotoViewController *data1 = [self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2];
             //data1.place = data;
+           
+           
+            
+            
             data1.postLocation = data;
         }
         else
@@ -219,7 +223,7 @@
 
 -(void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    //self.locations =[[NSMutableArray alloc] init];
+    self.locations =[[NSMutableArray alloc] init];
     //self.myObject = [[NSMutableArray alloc] init];
     self.loaded = false;
     self.offset = @"";
@@ -255,6 +259,45 @@
         
         [self.tableData reloadData];
     }
+    if([tag isEqualToString:@"getFBLocation"]){
+        
+        NSMutableArray *result = [data valueForKey:@"data"];
+        NSDictionary  *paging  = [data valueForKey:@"paging"];
+        
+        NSLog(@"page :%@",paging);
+        if(result.count>0){
+            _isData = true;
+            for (int i=0; i<result.count;i++ ) {
+                
+                NSLog(@"we are here");
+                NSObject *pl = result[i];
+                 NSLog(@"we are here 1");
+                Places *send = [[Places alloc]init];
+                send.placeId = [pl valueForKey:@"id"];
+                send.lat = [[[pl valueForKey:@"location"]valueForKey:@"latitude"]floatValue];
+                send.lng = [[[pl valueForKey:@"location"]valueForKey:@"longitude"]floatValue];
+                send.name = [pl valueForKey:@"name"];
+                send.formattedAddress = [NSString stringWithFormat:@"%@,%@,%@,%@",[pl valueForKey:@"category"],[[pl valueForKey:@"location"]valueForKey:@"street"],[[pl valueForKey:@"location"]valueForKey:@"city"],[[pl valueForKey:@"location"]valueForKey:@"country"]];
+                send.rating =0.0;
+                send.icon = @"";
+              //  send.id = pl.id;
+                [self.locations addObject:send];
+            }
+        }
+
+       
+        else
+        {
+            self.isData = false;
+        }
+        if(paging !=NULL){
+            self.offset = [paging valueForKey:@"next"];
+        }
+        
+        self.loaded = true;
+        [self.tableData reloadData];
+        
+    }
     
 }
 
@@ -265,6 +308,10 @@
     [self.loading stopAnimating];
     
     if ([tag isEqualToString:@"getLocationData"])
+    {
+        [self.tableData reloadData];
+    }
+    if ([tag isEqualToString:@"getFBLocation"])
     {
         [self.tableData reloadData];
     }
