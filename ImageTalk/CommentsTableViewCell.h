@@ -15,7 +15,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *date;
 @property (strong, nonatomic) IBOutlet UILabel *comment;
 @property (strong, nonatomic) IBOutlet UIButton *click;
-@property (strong, nonatomic) IBOutlet UITextView *commentTextView;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *commentHeight;
 
 

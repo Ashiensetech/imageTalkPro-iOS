@@ -14,6 +14,7 @@
 #import "SocketResponse.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "VKSdk.h"
+#import "NotificationViewController.h"
 
 //#import <GoogleMaps/GoogleMaps.h>
 @import GoogleMaps;
@@ -26,6 +27,21 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  
+    
+   //This code will work in iOS 8.0 xcode 6.0 or later
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+    {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }
+    else
+    {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeNewsstandContentAvailability| UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    }
+
+    
     
     [SoundManager sharedManager].allowsBackgroundMusic = YES;
     [[SoundManager sharedManager] prepareToPlay];
@@ -230,6 +246,18 @@
    [[SoundManager sharedManager] playSound:@"sound2" looping:NO];
     NSLog(@"REceived local");
     
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    NotificationViewController *notificationViewController = [[NotificationViewController alloc] init];
+    [navController.visibleViewController.navigationController pushViewController:notificationViewController animated:YES];
+    
+}
+
+
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"token content---%@", token);
 }
 
 #pragma mark - tcpSocketDelegate

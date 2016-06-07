@@ -300,7 +300,10 @@
     
     if(![data.description isEqual:@""])
     {
-        CGSize size = [data.description sizeWithFont:[UIFont fontWithName:@"Helvetica" size:14] constrainedToSize:CGSizeMake(280, MAXFLOAT) ];
+        NSData *strData = [data.description dataUsingEncoding:NSUTF8StringEncoding];
+       NSString *descriptionTxt = [[NSString alloc] initWithData:strData encoding:NSNonLossyASCIIStringEncoding];
+        
+        CGSize size = [descriptionTxt sizeWithFont:[UIFont fontWithName:@"Helvetica" size:14] constrainedToSize:CGSizeMake(280, MAXFLOAT) ];
         
         height = height + ((size.height < 40)? 40 : size.height);
     }
@@ -423,7 +426,7 @@
     
     UIFont *cellFont = cell.textLabel.font;
     CGSize constraintSize = CGSizeMake(280.0f, MAXFLOAT);
-    CGSize labelSize = [data.description sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
+    CGSize labelSize = [descriptionTxt sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
    
     
     if([data.description isEqual:@""])

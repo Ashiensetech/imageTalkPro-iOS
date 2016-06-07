@@ -124,9 +124,13 @@
     }
     else
     {
+        NSData *data = [self.comment.text dataUsingEncoding:NSNonLossyASCIIStringEncoding];
+     NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+        
         NSDictionary *inventory = @{
                                     @"post_id" : [NSString stringWithFormat:@"%d",self.postId],
-                                    @"comment" : self.comment.text
+                                    @"comment" : str
                                     };
         
         [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/create/comment" params:inventory tag:@"createComment"];
@@ -163,19 +167,22 @@
 //}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-
-    CGFloat height ;
-    height = 60 ;
-
-     PostComment *data = self.myObject[indexPath.row];
     
-    CGSize size = [data.comment sizeWithFont:[UIFont fontWithName:@"Helvetica" size:12] constrainedToSize:CGSizeMake(280, MAXFLOAT) ];
+    
+    CGFloat height ;
+    height = 40;
+    
+    PostComment *data = self.myObject[indexPath.row];
+    
+    NSData *strData = [data.comment dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *descriptionTxt = [[NSString alloc] initWithData:strData encoding:NSNonLossyASCIIStringEncoding];
+    
+    CGSize size = [descriptionTxt sizeWithFont:[UIFont fontWithName:@"Helvetica" size:14] constrainedToSize:CGSizeMake(280, MAXFLOAT) ];
     height = height + ((size.height < 20)? 20 : size.height);
     NSLog(@"nslog :%f",height);
     return height;
-
-   // return UITableViewAutomaticDimension;
+    
+    // return UITableViewAutomaticDimension;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -193,27 +200,35 @@
     
     [df setDateFormat:@"MMMM dd, HH:mm:ss a"];
     
-  
     
-    //CGRect frame = cell.commentTextView.frame;
+    NSLog(@"comment text : %@",data.comment);
+    NSData *strData = [data.comment dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *descriptionTxt = [[NSString alloc] initWithData:strData encoding:NSNonLossyASCIIStringEncoding];
+    if(!descriptionTxt){
+        descriptionTxt = [[NSString alloc] initWithData:strData encoding:NSUTF8StringEncoding];
+    }
     
-    CGSize size = [data.comment sizeWithFont:[UIFont fontWithName:@"Helvetica" size:14] constrainedToSize:CGSizeMake(280, MAXFLOAT)];
     
+    cell.comment.lineBreakMode = NSLineBreakByWordWrapping;
+    CGSize size = [descriptionTxt sizeWithFont:[UIFont fontWithName:@"Helvetica" size:14] constrainedToSize:CGSizeMake(280, MAXFLOAT) ];
     NSLog(@"comment height:%f ",size.height);
-    
+    NSLog(@"descriptionTxt  : %@",descriptionTxt);
     
     
     if(size.height<20)
     {
         cell.commentHeight.constant = 20;
+        [self.view layoutIfNeeded];
         
     }
     else
     {
-         cell.commentHeight.constant = size.height-10;
+        cell.commentHeight.constant = size.height;
+        [self.view layoutIfNeeded];
     }
     cell.date.text = [NSString stringWithFormat:@"%@",[df stringFromDate:theDate]];
-    cell.commentTextView.text = [NSString stringWithFormat:@"%@",data.comment];
+    cell.comment.adjustsFontSizeToFitWidth = YES;
+    cell.comment.text = [NSString stringWithFormat:@"%@",descriptionTxt];
     [cell.profilePic sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.commenter.user.picPath.original.path]]
                        placeholderImage:nil];
     return cell;
