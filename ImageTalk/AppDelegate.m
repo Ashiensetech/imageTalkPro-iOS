@@ -117,7 +117,7 @@
     if([defaults objectForKey:@"access_token"])
     {
         
-        NSLog(@"%@app/login/authenticate/accesstoken?%@",[defaults objectForKey:@"baseurl"],[NSString stringWithFormat:@"access_token=%@",[defaults objectForKey:@"access_token"]]);
+       // NSLog(@"%@app/login/authenticate/accesstoken?%@",[defaults objectForKey:@"baseurl"],[NSString stringWithFormat:@"access_token=%@",[defaults objectForKey:@"access_token"]]);
         
         [JSONHTTPClient postJSONFromURLWithString:[NSString stringWithFormat:@"%@app/login/authenticate/accesstoken",[defaults objectForKey:@"baseurl"]] bodyString:[NSString stringWithFormat:@"access_token=%@",[defaults objectForKey:@"access_token"]]
                                        completion:^(NSDictionary *json, JSONModelError *err) {
@@ -148,8 +148,11 @@
                                                }
                                               
                                                
+                                               NSDictionary *userDic = @{@"userId" : self.response.responseData.authCredential.user.id ,
+                                                   @"deviceId" :self.response.responseData.authCredential.user.deviceId};
                                                
                                                
+                                               [[NSUserDefaults standardUserDefaults] setObject:userDic forKey:@"appUser"];
                                                
                                                self.authCredential = self.response.responseData.authCredential;
                                                self.userPic = self.response.responseData.authCredential.user.picPath.original.path;
@@ -257,7 +260,7 @@
 {
     NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSLog(@"token content---%@", token);
+    [[NSUserDefaults standardUserDefaults] setValue:token forKey:@"deviceToken"];
 }
 
 #pragma mark - tcpSocketDelegate

@@ -18,6 +18,7 @@
 @property (strong, nonatomic) Location  *address;
 @property (strong, nonatomic) Picture <Optional> *picPath;
 @property (strong, nonatomic) NSString  *createdDate;
+@property (strong, nonatomic) NSString <Optional>*deviceId;
 
 +(BOOL)propertyIsOptional:(NSString*)propertyName;
 +(BOOL)propertyIsIgnored:(NSString*)propertyName;

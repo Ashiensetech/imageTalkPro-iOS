@@ -26,7 +26,7 @@
     
     defaults = [NSUserDefaults standardUserDefaults];
     baseurl = [defaults objectForKey:@"baseurl"];
-    
+    deviceToken =[defaults objectForKey:@"deviceToken"];
     // [self.keyboardBorder removeFromSuperview];
     
     self.keyboardBorder=[[UIView alloc]initWithFrame:CGRectMake(0,0,self.view.frame.size.width,10)];
@@ -128,11 +128,6 @@
     
     if(self.name.text && self.name.text.length > 0)
     {
-        
-        
-        
-        
-        
         [self.loading startAnimating];
         
         
@@ -158,7 +153,7 @@
             
         }
         
-        
+        NSLog(@"device token %@", deviceToken);
         
         NSDictionary *inventory = @{
                                     @"phone_number" : self.phone,
@@ -166,6 +161,7 @@
                                     @"first_name" : first_name,
                                     @"last_name" : last_name,
                                     @"photo" : [self imageToString:self.pic.image],
+                                    @"device_id" : deviceToken,
                                     };
         NSLog(@"%@",inventory);
         
@@ -196,9 +192,11 @@
                                                NSLog(@"%@",self.response);
                                                [defaults removeObjectForKey:@"access_token"];
                                                [defaults setValue:self.response.responseData.accessToken forKey:@"access_token"];
+                                               NSDictionary *userDic = @{@"userId" : self.response.responseData.user.id ,
+                                                                         @"deviceId" :self.response.responseData.user.deviceId};
                                                
-                                               
-                                               
+                                               [defaults setObject:userDic forKey:@"appUser"];
+                                              
                                                self.app.authCredential = self.response.responseData;
                                                self.app.userPic = self.response.responseData.user.picPath.original.path;
                                                self.app.wallpost = 0;
@@ -212,9 +210,11 @@
                                                
                                                
                                                
+//                                               TimelineViewController *timeline = [[TimelineViewController alloc]initWithNibName:nil bundle:nil];
+//                                               [self presentViewController:timeline animated:YES completion:nil];
+                                               [[self navigationController] setNavigationBarHidden:YES animated:YES];
                                                
-                                               
-                                               [self performSegueWithIdentifier:@"next" sender:self];
+                                               [self performSegueWithIdentifier:@"hodor" sender:self.next];
                                            }
                                            
                                        }];
@@ -397,8 +397,10 @@
     if ([segue.identifier isEqualToString:@"next"])
     {
         
-        // TimelineViewController *data= segue.destinationViewController;
+         TimelineViewController *data=  (TimelineViewController *)[segue destinationViewController];
+       
         
+     //   [data.tabBarController setDelegate:self];
     }
 }
 

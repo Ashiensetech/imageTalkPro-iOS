@@ -42,8 +42,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+  
+    
     self.counter = 0;
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    
     self.tabBarController.tabBar.hidden= NO;
     
     CGRect headerTitleSubtitleFrame = CGRectMake(0, 0, 200, 44);
@@ -69,9 +72,9 @@
     baseurl = [defaults objectForKey:@"baseurl"];
     socketurl = [defaults objectForKey:@"socketurl"];
     port = [defaults objectForKey:@"port"];
-    
+    deviceToken =[defaults objectForKey:@"deviceToken"];
+  
     self.app =(AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.backgroundColor = [UIColor whiteColor];
     self.refreshControl.tintColor = [UIColor grayColor];
@@ -89,9 +92,9 @@
     
     [[SocektAccess getSharedInstance]setItem:[self.tabBarController.tabBar.items objectAtIndex:1]];
     
-    UITabBarController *tabBarController = (UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController ;
+     self.tabBarController = (UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController ;
     
-    [tabBarController setDelegate:self];
+   // [self.tabBarController setDelegate:self];
    
     self.topView = [[UILabel alloc] init];
     self.topView.frame = CGRectMake( 0, 0,self.view.frame.size.width, 20);
@@ -100,7 +103,21 @@
 
     self.view.backgroundColor = [UIColor whiteColor];
     
+ 
+    
+   
+    appUser = [defaults  dictionaryForKey:@"appUser"];
+    NSLog(@"app User : %@",appUser);
+    NSLog(@"device token : %@",deviceToken);
+
    // self.topView.hidden = YES;
+    if([[appUser valueForKey:@"deviceId"] isEqualToString:@"" ]|| ![[appUser valueForKey:@"deviceId"] isEqualToString:deviceToken]){
+         NSString *url = @"app/profile/update/deviceid";
+        NSDictionary *dic = @{@"user_id" : [appUser valueForKey:@"userId"],@"device_id" : deviceToken};
+       // NSLog(@"dic %@",dic);
+        [[ApiAccess getSharedInstance] postRequestWithUrl:url params:dic tag:@"updateDeviceId"];
+    }
+    
     
 }
 
@@ -1321,6 +1338,10 @@
         
         
     }
+    if ([tag isEqualToString:@"updateDeviceId"])
+    {
+        NSLog(@" updateDeviceId response :%@",data);
+    }
     
     
     
@@ -1338,6 +1359,10 @@
         self.tableData.hidden = true;
         self.emptyView.hidden = false;
         [self.tableData reloadData];
+    }
+    if ([tag isEqualToString:@"updateDeviceId"])
+    {
+        NSLog(@"device id update fail");
     }
     
     

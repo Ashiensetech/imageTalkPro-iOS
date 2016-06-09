@@ -64,7 +64,7 @@ static ApiAccess *sharedInstance = nil;
              NSError* error = nil;
              Response *response = [[Response alloc] initWithDictionary:json error:&error];
              
-             NSLog(@"%@",response);
+             NSLog(@"response :%@",response);
              
              if (response.responseStat.isLogin) {
                  [self.delegate receivedResponse:json tag:tag index:index];
@@ -284,17 +284,17 @@ static ApiAccess *sharedInstance = nil;
 }
 
 -(void)FBLocationWithCenter: (CLLocationCoordinate2D)start Keyboard :(NSString *) keyboard andTag : (NSString *) tag andOffset:(NSString *) offset {
-    NSLog(@"Offset :%@",offset);
-    ACAccountStore *accountStore = [[ACAccountStore alloc] init];
-    ACAccountType *accountType =  [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook];
-    NSDictionary *FBOptions = [NSDictionary dictionaryWithObjectsAndKeys:@"267236836947716", ACFacebookAppIdKey,@[@"email",@"user_location"],ACFacebookPermissionsKey, nil];
+//    NSLog(@"Offset :%@",offset);
+//    ACAccountStore *accountStore = [[ACAccountStore alloc] init];
+//    ACAccountType *accountType =  [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook];
+//    NSDictionary *FBOptions = [NSDictionary dictionaryWithObjectsAndKeys:@"267236836947716", ACFacebookAppIdKey,@[@"email",@"user_location"],ACFacebookPermissionsKey, nil];
+//    
+//    [accountStore requestAccessToAccountsWithType:accountType options:FBOptions completion:
+//     ^(BOOL granted, NSError *error) {
+//         if (granted) {
+//             NSArray *facebookAccounts = [accountStore accountsWithAccountType:accountType];
+//             ACAccount *FBAccount = [facebookAccounts firstObject];
     
-    [accountStore requestAccessToAccountsWithType:accountType options:FBOptions completion:
-     ^(BOOL granted, NSError *error) {
-         if (granted) {
-             NSArray *facebookAccounts = [accountStore accountsWithAccountType:accountType];
-             ACAccount *FBAccount = [facebookAccounts firstObject];
-             
              
              //  NSURL *url = https://graph.facebook.com/search?q=&type=place&center=37.77493,-122.419415&distance=5000&access_token=ACCESS-TOKEN&expires_in=5184000
              
@@ -303,8 +303,8 @@ static ApiAccess *sharedInstance = nil;
                  NSDictionary * newParam = @{@"q":keyboard,
                                              @"type":@"place",
                                              @"center": [NSString stringWithFormat:@"%f,%f",start.latitude,start.longitude]   ,
-                                             @"distance" :@"5000",
-                                             @"access_token": [[FBAccount credential] oauthToken],
+                                             @"distance" :([keyboard isEqualToString:@""])?@"5000":@"",
+                                             @"access_token":@"267236836947716|ADnaNFg_6zuKfSlU0ryyNzyqM-s",//[[FBAccount credential] oauthToken],
                                              @"limit" :@"100",
                                              @"expires_in": @"5184000"
                                              };
@@ -313,13 +313,13 @@ static ApiAccess *sharedInstance = nil;
                       
                       if(err)
                       {
-                          // NSLog(@"error : %@",err );
+                        NSLog(@"error : %@",err );
                           [self.delegate receivedError:err tag:tag];
                       }
                       else
                       {
                           
-                          //NSLog(@"Json :%@",json);
+                          NSLog(@"Json :%@",json);
                           [self.delegate receivedResponse:json tag:tag index:0];
                       }
                       
@@ -345,19 +345,21 @@ static ApiAccess *sharedInstance = nil;
                   }];
              }
              
-             
-         } else {
-             NSLog(@"error getting permission %@",error);
-             if([error code]== ACErrorAccountNotFound){
-                 NSLog(@"Account not found. Please setup your account in settings app");
-             }
-             else {
-                 NSLog(@"Account access denied");
-             }
-             
-         }
-     }];
+//             
+//         } else {
+//             NSLog(@"error getting permission %@",error);
+//             if([error code]== ACErrorAccountNotFound){
+//                 NSLog(@"Account not found. Please setup your account in settings app");
+//             }
+//             else {
+//                 NSLog(@"Account access denied");
+//             }
+//             
+//         }
+//     }];
     
 }
+
+
 
 @end

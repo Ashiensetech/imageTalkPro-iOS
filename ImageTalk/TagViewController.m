@@ -92,26 +92,26 @@
         
         
         
-         self.lblOne = [[UIView alloc] initWithFrame:CGRectMake(50, 50, 120, 20)];
-         self.lblOne.center = CGPointMake(self.picture.bounds.size.height/2, self.picture.bounds.size.height/2);
-        
-        UIImageView *thumbnailImage;
-        thumbnailImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, 120, 20)];
-        thumbnailImage.image = [UIImage imageNamed:@"arrow-2.png"];
-        [thumbnailImage setContentMode:UIViewContentModeScaleAspectFill];
-        thumbnailImage.clipsToBounds = YES;
-        
-        UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,120,20)]; //or whatever size you need
-        // myLabel.center = self.tabPosition;
-        [myLabel setFont:[UIFont systemFontOfSize:12]];
-        myLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
-        myLabel.textColor = [UIColor whiteColor];
-        myLabel.textAlignment = NSTextAlignmentCenter;
-        myLabel.text = [NSString stringWithFormat:@"whos's this?"] ;
-        [self.lblOne addSubview:thumbnailImage];
-        [self.lblOne addSubview:myLabel];
-        
-        [self.picture addSubview:self.lblOne];
+//         self.lblOne = [[UIView alloc] initWithFrame:CGRectMake(50, 50, 120, 20)];
+//         self.lblOne.center = CGPointMake(self.picture.bounds.size.height/2, self.picture.bounds.size.height/2);
+//        
+//        UIImageView *thumbnailImage;
+//        thumbnailImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, 120, 20)];
+//        thumbnailImage.image = [UIImage imageNamed:@"arrow-2.png"];
+//        [thumbnailImage setContentMode:UIViewContentModeScaleAspectFill];
+//        thumbnailImage.clipsToBounds = YES;
+//        
+//        UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,120,20)]; //or whatever size you need
+//        // myLabel.center = self.tabPosition;
+//        [myLabel setFont:[UIFont systemFontOfSize:12]];
+//        myLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6f];
+//        myLabel.textColor = [UIColor whiteColor];
+//        myLabel.textAlignment = NSTextAlignmentCenter;
+//        myLabel.text = [NSString stringWithFormat:@"whos's this?"] ;
+//        [self.lblOne addSubview:thumbnailImage];
+//        [self.lblOne addSubview:myLabel];
+//        
+//        [self.picture addSubview:self.lblOne];
     }else{
       
         for(int i=0;i<self.tagPostions.count;i++){
@@ -440,7 +440,7 @@
         }
 //        [self changeHeight:0];
 //        [self.serachView setHidden:YES];
-        [self.lblOne removeFromSuperview];
+     //   [self.lblOne removeFromSuperview];
 
         self.selected = false;
         [self.view endEditing:YES];

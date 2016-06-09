@@ -83,6 +83,41 @@
     [self.view addGestureRecognizer:tap];
     tap.cancelsTouchesInView = NO;
     
+   
+    
+    AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSLog(@"%@",app.userPic);
+    defaults = [NSUserDefaults standardUserDefaults];
+    baseurl = [defaults objectForKey:@"baseurl"];
+    NSURL *filePath = [NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,app.userPic]];
+    NSLog(@"%@",filePath);
+    NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:filePath];
+    UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:key];
+    
+    if(image != NULL)
+    {
+        NSLog(@"image :%@" ,image);
+        self.profilePic = image;
+    }
+    else
+    {
+        SDWebImageDownloader *downloader = [SDWebImageDownloader sharedDownloader];
+        [downloader downloadImageWithURL:filePath
+                                 options:0
+                                progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                    // progression tracking code
+                                }
+                               completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+                                   if (image && finished) {
+                                       // do something with image
+                                       NSLog(@"data %@",data);
+                                       self.profilePic = [[UIImage alloc]initWithData:data];
+                                       
+                                   }
+                               }];
+        
+    }
+    
 }
 -(void)dismissKeyboard {
     
@@ -267,43 +302,12 @@
         self.tagLabel.text = @"Tag Friends";
     }
     
-    AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    NSLog(@"%@",app.userPic);
-    defaults = [NSUserDefaults standardUserDefaults];
-    baseurl = [defaults objectForKey:@"baseurl"];
-    NSURL *filePath = [NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,app.userPic]];
-    NSLog(@"%@",filePath);
-    NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:filePath];
-    UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:key];
     
-    if(image != NULL)
-    {
-        self.profilePic = image;
-    }
-    else
-    {
-        SDWebImageDownloader *downloader = [SDWebImageDownloader sharedDownloader];
-        [downloader downloadImageWithURL:filePath
-                                 options:0
-                                progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                                    // progression tracking code
-                                }
-                               completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-                                   if (image && finished) {
-                                       // do something with image
-                                       
-                                       self.profilePic = image;
-                                       
-                                   }
-                               }];
-        
-    }
-    
-    
+
     
     
     self.smilyObject =[[NSMutableArray alloc]initWithObjects:
-                       [NSDictionary dictionaryWithObjectsAndKeys:@"None",@"title", self.profilePic ,@"image", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"None",@"title", self.profilePic ,@"image", nil],
                        [NSDictionary dictionaryWithObjectsAndKeys:@"Happy",@"title",[[UIImage imageNamed:@"happyL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
                        [NSDictionary dictionaryWithObjectsAndKeys:@"In Love",@"title",[[UIImage imageNamed:@"inloveL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],
                        [NSDictionary dictionaryWithObjectsAndKeys:@"Confused",@"title",[[UIImage imageNamed:@"confusedL.png"] scaleToSize:CGSizeMake(40.0, 40.0)],@"image", nil],

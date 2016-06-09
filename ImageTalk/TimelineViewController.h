@@ -24,6 +24,9 @@
     NSString *baseurl;
     NSString *socketurl;
     NSString *port;
+    NSString *deviceToken;
+   
+    NSDictionary *appUser;
     
 }
 @property (strong, nonatomic) UIAlertController *alertDownload;
@@ -50,6 +53,7 @@
 @property (weak, nonatomic) IBOutlet UIView *parentOfPhotoview;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topOfTableData;
+@property (strong,nonatomic) UITabBarController *tabBarController;
 
 
 

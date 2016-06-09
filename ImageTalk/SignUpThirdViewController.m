@@ -60,10 +60,11 @@
     [JSONHTTPClient postJSONFromURLWithString:[NSString stringWithFormat:@"%@app/register/verifytoken",baseurl] bodyString:[NSString stringWithFormat:@"phone_number=%@&token=%@",self.phone,self.phoneNo.text]
                                    completion:^(NSDictionary *json, JSONModelError *err) {
                                        
-                                       NSLog(@"%@",err);
+                                       NSLog(@"error :%@",err);
                                        
                                        NSError* error = nil;
                                        self.response = [[Response alloc] initWithDictionary:json error:&error];
+                                       
                                        
                                        
                                        if(error)

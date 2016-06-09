@@ -17,6 +17,7 @@
 {
     NSUserDefaults *defaults;
     NSString *baseurl;
+    NSString *deviceToken;
 }
 
 @property (strong, nonatomic) AppDelegate *app;

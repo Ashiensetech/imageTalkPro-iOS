@@ -40,7 +40,7 @@
 @property (strong, nonatomic) AppCredential  *owner;
 @property (strong, nonatomic) IBOutlet UIScrollView *containerScroller;
 @property (strong, nonatomic) IBOutlet UIView *tagFview;
-@property (nonatomic, assign) UIImage *profilePic;
+@property (nonatomic, strong) UIImage *profilePic;
 @property (nonatomic, assign) UIImageView *blackView;
 @property (strong, nonatomic) IBOutlet UIView *instagramShare;
 @property (strong, nonatomic) IBOutlet UIView *VKShare;
