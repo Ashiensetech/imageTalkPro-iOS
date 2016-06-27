@@ -111,7 +111,7 @@
     NSLog(@"device token : %@",deviceToken);
 
    // self.topView.hidden = YES;
-    if([[appUser valueForKey:@"deviceId"] isEqualToString:@"" ]|| ![[appUser valueForKey:@"deviceId"] isEqualToString:deviceToken]){
+    if(([[appUser valueForKey:@"deviceId"] isEqualToString:@"" ]|| ![[appUser valueForKey:@"deviceId"] isEqualToString:deviceToken]) && deviceToken != NULL){
          NSString *url = @"app/profile/update/deviceid";
         NSDictionary *dic = @{@"user_id" : [appUser valueForKey:@"userId"],@"device_id" : deviceToken};
        // NSLog(@"dic %@",dic);

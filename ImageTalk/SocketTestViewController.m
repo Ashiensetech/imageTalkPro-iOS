@@ -29,7 +29,8 @@
     [[[SocektAccess getSharedInstance]getSocket] reconnect];
     _chatSocket =[[SocektAccess getSharedInstance]getSocket];
     
-    TSocketClient *transport = [[TSocketClient alloc] initWithHostname:@"27.147.149.178" port:9028];
+    //TSocketClient *transport = [[TSocketClient alloc] initWithHostname:@"27.147.149.178" port:9028];
+    TSocketClient *transport = [[TSocketClient alloc] initWithHostname:@"192.168.1.27" port:1337];
     TBinaryProtocol *protocol = [[TBinaryProtocol alloc] initWithTransport:transport strictRead:YES strictWrite:YES];
     server = [[thriftServiceChatTransportClient alloc] initWithProtocol:protocol];
     self.app =(AppDelegate *)[[UIApplication sharedApplication] delegate];

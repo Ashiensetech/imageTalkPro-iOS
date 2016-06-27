@@ -117,7 +117,9 @@
     
     if (chat.type == 0)
     {
-        cell.sub.text = [NSString stringWithFormat:@"%@",chat.chatText];
+        NSData *strData = [chat.chatText dataUsingEncoding:NSUTF8StringEncoding];
+        cell.sub.text = [[NSString alloc] initWithData:strData encoding:NSNonLossyASCIIStringEncoding];
+       // cell.sub.text = [NSString stringWithFormat:@"%@",chat.chatText];
     }
     else if (chat.type == 3)
     {

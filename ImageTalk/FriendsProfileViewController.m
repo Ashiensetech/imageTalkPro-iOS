@@ -29,6 +29,7 @@
     [super viewDidLoad];
     
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
+    [[ApiAccess getSharedInstance] setDelegate:self];
     self.title = [NSString stringWithFormat:@"%@ %@",self.owner.user.firstName,self.owner.user.lastName];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.tabBarController.tabBar.hidden= YES;
@@ -64,15 +65,15 @@
 
 -(void) viewDidAppear:(BOOL)animated
 {
-    [[ApiAccess getSharedInstance] setDelegate:self];
+    
     self.tabBarController.tabBar.hidden= YES;
 }
 
 - (void)refresh{
     self.offset = 0;
     self.loaded = false;
-    self.myObject = nil;
-    self.myObject = [[NSMutableArray alloc] init];
+//    self.myObject = nil;
+//    self.myObject = [[NSMutableArray alloc] init];
     [self getData:self.offset];
     [self.refreshControl endRefreshing];
 }
@@ -83,13 +84,14 @@
                                 @"other_app_credential_id" : [NSString stringWithFormat:@"%d",self.owner.id],
                                 @"limit":@"20"
                                 };
+    NSLog(@"frinds profile inventory : %@",inventory);
     [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/wallpost/get/others" params:inventory tag:@"getData"];
     
-    [JSONHTTPClient postJSONFromURLWithString:[NSString stringWithFormat:@"%@app/wallpost/get/others",baseurl] bodyString:[NSString stringWithFormat:@"limit=20&offset=%d&other_app_credential_id=%d",offset,self.owner.id]
-                                   completion:^(NSDictionary *json, JSONModelError *err) {
-                                       
-                                       
-                                   }];
+//    [JSONHTTPClient postJSONFromURLWithString:[NSString stringWithFormat:@"%@app/wallpost/get/others",baseurl] bodyString:[NSString stringWithFormat:@"limit=20&offset=%d&other_app_credential_id=%d",offset,self.owner.id]
+//                                   completion:^(NSDictionary *json, JSONModelError *err) {
+//                                       
+//                                       
+//                                   }];
 }
 
 
@@ -106,8 +108,7 @@
         self.collectionHeight.constant =self.collectionData.frame.size.width/3*ceil(self.myObject.count/3);
     }
     
-    
-    
+      
     return self.myObject.count;
 }
 
@@ -196,9 +197,11 @@
     
     if ([tag isEqualToString:@"getData"])
     {
+        
         NSError* error = nil;
         self.data = [[TimelineResponse alloc] initWithDictionary:data error:&error];
-        NSLog(@"%@",self.data);
+        NSLog(@"error :%@",error);
+        
         
         if(self.data.responseStat.status){
             
@@ -208,8 +211,6 @@
             }
           
         }
-        
-        
         self.isData = self.data.responseStat.status;
         self.loaded = self.data.responseStat.status;
         self.offset = (self.data.responseStat.status) ? self.offset+1 : self.offset;
@@ -225,6 +226,8 @@
     
     if ([tag isEqualToString:@"getData"])
     {
+      
+        [self.collectionData reloadData];
         [self.tableData reloadData];
     }
     

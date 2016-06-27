@@ -239,20 +239,17 @@
 }
 
 -(void) application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification{
+    
     UIApplicationState state = [application applicationState];
     
     if (state == UIApplicationStateActive) {
         
         
-
+        
     }
-   [[SoundManager sharedManager] playSound:@"sound2" looping:NO];
+    [[SoundManager sharedManager] playSound:@"sound2" looping:NO];
     NSLog(@"REceived local");
-    
-    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-    NotificationViewController *notificationViewController = [[NotificationViewController alloc] init];
-    [navController.visibleViewController.navigationController pushViewController:notificationViewController animated:YES];
-    
+
 }
 
 
@@ -262,7 +259,24 @@
     token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
     [[NSUserDefaults standardUserDefaults] setValue:token forKey:@"deviceToken"];
 }
-
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSLog(@"didReceiveRemoteNotification");
+    NSLog(@"app state :%ld", (long)application.applicationState);
+    if( application.applicationState == UIApplicationStateBackground || application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateActive )
+    {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UITabBarController *rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"timeline"];
+        
+        [rootViewController setSelectedIndex:3];
+        self.window.rootViewController = rootViewController;
+        [self.window makeKeyAndVisible];
+    }else{
+        
+    
+    
+    }
+}
 #pragma mark - tcpSocketDelegate
 -(void)receivedMessage:(NSString *)data
 {

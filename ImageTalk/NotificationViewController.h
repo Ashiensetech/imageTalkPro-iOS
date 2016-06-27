@@ -7,7 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Response.h"
+#import "ApiAccess.h"
+#import "NotificationResponse.h"
 
-@interface NotificationViewController : UIViewController
+@interface NotificationViewController : UIViewController<ApiAccessDelegate,UITableViewDelegate,UITableViewDataSource>
+{
+    NSUserDefaults *defaults;
+    NSString *baseurl;
+    NSString *socketurl;
+    NSString *port;
+ 
 
+    
+}
+@property (strong,nonatomic) NotificationResponse * data;
+@property (strong,nonatomic) NSMutableArray *notificationsList;
+@property (strong, nonatomic) IBOutlet UITableView *notificationTable;
+@property (assign,nonatomic) int offset;
 @end

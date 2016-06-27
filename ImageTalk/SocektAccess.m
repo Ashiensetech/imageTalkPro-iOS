@@ -51,7 +51,7 @@ static SocektAccess *sharedInstance = nil;
 
 -(void) sendVideoWithContactId:(int) id jsonString:(NSString*) json byteData:(NSData*) data filename:(NSString*) name
 {
-    TSocketClient *transport = [[TSocketClient alloc] initWithHostname:@"27.147.149.178" port:9028];
+    TSocketClient *transport = [[TSocketClient alloc] initWithHostname:@"163.53.151.2" port:9028];
     TBinaryProtocol *protocol  = [[TBinaryProtocol alloc] initWithTransport:transport strictRead:YES strictWrite:YES];
     thriftServiceChatTransportClient *server = [[thriftServiceChatTransportClient alloc] initWithProtocol:protocol];
     NSString *token = [server getToken:self.app.authCredential.accessToken];
@@ -63,7 +63,7 @@ static SocektAccess *sharedInstance = nil;
 -(void) sendPhotoWithContactId:(int) id jsonString:(NSString*) json byteData:(NSData*) data filename:(NSString*) name
 {
     
-    TSocketClient *transport = [[TSocketClient alloc] initWithHostname:@"27.147.149.178" port:9028];
+    TSocketClient *transport = [[TSocketClient alloc] initWithHostname:@"163.53.151.2" port:9028];
     TBinaryProtocol *protocol  = [[TBinaryProtocol alloc] initWithTransport:transport strictRead:YES strictWrite:YES];
     thriftServiceChatTransportClient *server = [[thriftServiceChatTransportClient alloc] initWithProtocol:protocol];
     NSString *token = [server getToken:self.app.authCredential.accessToken];
@@ -73,7 +73,7 @@ static SocektAccess *sharedInstance = nil;
 
 -(void) sendPrivatePhotoWithContactId:(int) id jsonString:(NSString*) json byteData:(NSData*) data filename:(NSString*) name
 {
-    TSocketClient *transport = [[TSocketClient alloc] initWithHostname:@"27.147.149.178" port:9028];
+    TSocketClient *transport = [[TSocketClient alloc] initWithHostname:@"163.53.151.2" port:9028];
     TBinaryProtocol *protocol  = [[TBinaryProtocol alloc] initWithTransport:transport strictRead:YES strictWrite:YES];
     thriftServiceChatTransportClient *server = [[thriftServiceChatTransportClient alloc] initWithProtocol:protocol];
     NSString *token = [server getToken:self.app.authCredential.accessToken];
@@ -83,7 +83,7 @@ static SocektAccess *sharedInstance = nil;
 
 -(void) sendVoiceWithContactId:(int) id jsonString:(NSString*) json byteData:(NSData*) data filename:(NSString*) name
 {
-    TSocketClient *transport = [[TSocketClient alloc] initWithHostname:@"27.147.149.178" port:9028];
+    TSocketClient *transport = [[TSocketClient alloc] initWithHostname:@"163.53.151.2" port:9028];
     TBinaryProtocol *protocol  = [[TBinaryProtocol alloc] initWithTransport:transport strictRead:YES strictWrite:YES];
     thriftServiceChatTransportClient *server = [[thriftServiceChatTransportClient alloc] initWithProtocol:protocol];
     NSString *token = [server getToken:self.app.authCredential.accessToken];

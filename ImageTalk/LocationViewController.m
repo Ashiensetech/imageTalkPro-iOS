@@ -192,7 +192,7 @@
         else
         {
             ChatViewController *data1 = [self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2];
-          //  data1.placeToSend = data;
+           data1.placeToSend = data;
         }
     
         [self.navigationController popViewControllerAnimated:YES];

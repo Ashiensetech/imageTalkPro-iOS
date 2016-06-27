@@ -540,7 +540,8 @@
         NSError* error = nil;
         self.response = [[CreatePostResponse alloc] initWithDictionary:data error:&error];
         [self.upload setEnabled:true];
-        
+        NSLog(@"response :%@",data);
+        NSLog(@"error %@",error);
         if(self.response.responseStat.status){
             
             [self performSegueWithIdentifier:@"timeline" sender:self];

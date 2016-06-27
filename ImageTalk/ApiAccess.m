@@ -64,7 +64,7 @@ static ApiAccess *sharedInstance = nil;
              NSError* error = nil;
              Response *response = [[Response alloc] initWithDictionary:json error:&error];
              
-             NSLog(@"response :%@",response);
+            
              
              if (response.responseStat.isLogin) {
                  [self.delegate receivedResponse:json tag:tag index:index];

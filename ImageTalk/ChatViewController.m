@@ -51,7 +51,7 @@
 
 
 @interface ChatViewController ()
-
+@property (assign,nonatomic) BOOL checkecdFirst;
 @end
 
 @implementation ChatViewController
@@ -169,7 +169,7 @@
     
     self.cImages = [[NSMutableDictionary alloc]init];
     
-
+    
     self.isSend = false;
     
     
@@ -188,7 +188,8 @@
     self.loaded = false;
     [self getData:self.offset];
     
-
+    
+    
 }
 
 - (void)refresh{
@@ -199,7 +200,7 @@
         self.loaded = false;
         [self getData:self.offset];
         
-
+        
     }
     
     [self.refreshControl endRefreshing];
@@ -222,7 +223,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [self.view setNeedsDisplay];
-
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -237,11 +238,11 @@
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
     
-     self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBarHidden = NO;
     
     [self.actionPicker setHidden:YES];
     
-   
+    
     [[ApiAccess getSharedInstance] setDelegate:self];
     [[TimerAccess getSharedInstance] setDelegate:self];
     
@@ -249,7 +250,7 @@
     [[[SocektAccess getSharedInstance]getSocket] reconnect];
     _chatSocket =[[SocektAccess getSharedInstance]getSocket];
     
-     [self online];
+    [self online];
     
     
     if (self.isPrivateDestroyed)
@@ -265,6 +266,7 @@
     
     if(self.imageToSend && self.isPrivate)
     {
+        
         
         
         ChatPhoto *data = [[ChatPhoto alloc]init];
@@ -293,8 +295,8 @@
         
         response.responseStat = responseStat;
         response.responseData = data;
-
-       // NSData *byteData = UIImagePNGRepresentation(self.imageToSend);
+        
+        // NSData *byteData = UIImagePNGRepresentation(self.imageToSend);
         
         
         NSData *dataR = [NSJSONSerialization dataWithJSONObject:[response toDictionary] options:NSJSONWritingPrettyPrinted error:&error];
@@ -304,7 +306,7 @@
         jsonString = [NSString stringWithFormat:@"%@\n",jsonString];
         
         
-       // [[SocektAccess getSharedInstance] sendPrivatePhotoWithContactId:self.contact.id jsonString:jsonString byteData:byteData filename:self.imageName];
+        // [[SocektAccess getSharedInstance] sendPrivatePhotoWithContactId:self.contact.id jsonString:jsonString byteData:byteData filename:self.imageName];
         
         [self.chatSocket sendMessage:jsonString];
         
@@ -331,7 +333,7 @@
         data.createdDate = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
         
         self.type.text = @"";
-
+        
         
         [self.myObject addObject:data];
         
@@ -348,7 +350,7 @@
         response.responseStat = responseStat;
         response.responseData = data;
         
-    
+        
         
         
         
@@ -360,7 +362,7 @@
         
         [self.chatSocket sendMessage:jsonString];
         
-
+        
         
         
         self.history = false;
@@ -368,13 +370,13 @@
         
         NSIndexPath* ipath = [NSIndexPath indexPathForRow:self.myObject.count-1 inSection:0];
         [self.tableData scrollToRowAtIndexPath: ipath atScrollPosition: UITableViewScrollPositionBottom animated: YES];
-    
+        
         
         self.placeToSend = nil;
     }
     
     if (self.contactToSend) {
-       
+        
         
         ChatContact *data = [[ChatContact alloc]init];
         data.tmpChatId = [self uuid];
@@ -402,7 +404,7 @@
         response.responseStat = responseStat;
         response.responseData = data;
         
-    
+        
         
         
         
@@ -436,9 +438,9 @@
 
 -(void)textViewDidChange:(UITextView *)textView
 {
-     [self.actionPicker setHidden:YES];
-     [self.send setImage:[UIImage imageNamed:@"comment-add"] forState:UIControlStateNormal];
-     self.isSend = true;
+    [self.actionPicker setHidden:YES];
+    [self.send setImage:[UIImage imageNamed:@"comment-add"] forState:UIControlStateNormal];
+    self.isSend = true;
 }
 
 -(void)textViewDidBeginEditing:(UITextView *)textView
@@ -471,55 +473,67 @@
 {
     if(self.isSend && ![self.type.text isEqual:@""])
     {
-    TextChat *data = [[TextChat alloc]init];
-    data.tmpChatId = [self uuid];
+        TextChat *data = [[TextChat alloc]init];
+        data.tmpChatId = [self uuid];
         
-    NSData *textFieldUTF8Data = [self.type.text dataUsingEncoding: NSUTF8StringEncoding];
-    data.text =  [[NSString alloc] initWithData:textFieldUTF8Data encoding:NSUTF8StringEncoding];
-    data.appCredential = self.contact;
-    data.send = true;
-    data.recevice = false;
-    data.createdDate = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
-    
-    self.type.text = @"";
-    
-    [self.myObject addObject:data];
-    
-    NSError* error;
-    
-    SocketResponse *response = [[SocketResponse alloc]init];
-    
-    SocketResponseStat *responseStat = [[SocketResponseStat alloc]init];
-    
-    responseStat.status = true;
-    responseStat.tag = @"textchat";
-    
-    
-    response.responseStat = responseStat;
-    response.responseData = data;
-    
-    
-    
-    
-    NSData *dataR = [NSJSONSerialization dataWithJSONObject:[response toDictionary] options:NSJSONWritingPrettyPrinted error:&error];
-    NSString* jsonString = [[NSString alloc] initWithData:dataR encoding:NSUTF8StringEncoding];
-    
-    jsonString=  [[jsonString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@""];
-    jsonString = [NSString stringWithFormat:@"%@\n",jsonString];
-    
-    [self.chatSocket sendMessage:jsonString];
-    
-    
-    
-    self.history = false;
-    [self.tableData reloadData];
-    
-    NSIndexPath* ipath = [NSIndexPath indexPathForRow:self.myObject.count-1 inSection:0];
-    [self.tableData scrollToRowAtIndexPath: ipath atScrollPosition: UITableViewScrollPositionBottom animated: YES];
+        NSData *textFieldUTF8Data = [self.type.text dataUsingEncoding: NSNonLossyASCIIStringEncoding];
+        data.text =  [[NSString alloc] initWithData:textFieldUTF8Data encoding:NSUTF8StringEncoding];
+        data.appCredential = self.contact;
+        data.send = true;
+        data.recevice = false;
+        data.createdDate = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
+        
+        
+        
+        
+        TextChat *dataY = [[TextChat alloc]init];
+        dataY.tmpChatId = [self uuid];
+        
+        
+        dataY.text = self.type.text ;
+        dataY.appCredential = self.contact;
+        dataY.send = true;
+        dataY.recevice = false;
+        dataY.createdDate = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
+        
+        self.type.text = @"";
+        
+        [self.myObject addObject:dataY];
+        
+        NSError* error;
+        
+        SocketResponse *response = [[SocketResponse alloc]init];
+        
+        SocketResponseStat *responseStat = [[SocketResponseStat alloc]init];
+        
+        responseStat.status = true;
+        responseStat.tag = @"textchat";
+        
+        
+        response.responseStat = responseStat;
+        response.responseData = data;
+        
+        
+        
+        
+        NSData *dataR = [NSJSONSerialization dataWithJSONObject:[response toDictionary] options:NSJSONWritingPrettyPrinted error:&error];
+        NSString* jsonString = [[NSString alloc] initWithData:dataR encoding:NSUTF8StringEncoding];
+        
+        jsonString=  [[jsonString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@""];
+        jsonString = [NSString stringWithFormat:@"%@\n",jsonString];
+        [self.chatSocket sendMessage:jsonString];
+        
+        
+        
+        self.history = false;
+        [self.tableData reloadData];
+        
+        NSIndexPath* ipath = [NSIndexPath indexPathForRow:self.myObject.count-1 inSection:0];
+        [self.tableData scrollToRowAtIndexPath: ipath atScrollPosition: UITableViewScrollPositionBottom animated: YES];
     }
     
     [self.view endEditing:YES];
-
+    
 }
 
 
@@ -540,7 +554,7 @@
     
     NSDictionary *inventory = @{@"offset" : [NSString stringWithFormat:@"%d",offset],
                                 @"to" : [NSString stringWithFormat:@"%d",self.contact.id],
-                                @"limit" : @"15"
+                                @"limit" : @"56"
                                 };
     [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/user/chat/show" params:inventory tag:@"getChatData"];
     
@@ -710,8 +724,8 @@
         
         
     }
-
-
+    
+    
     if (!isExist)
     {
         User *user = [[User alloc]init];
@@ -726,7 +740,7 @@
         contact.user = user;
         contact.phoneNumber = phone;
     }
- 
+    
     
     
     ChatContact *data = [[ChatContact alloc]init];
@@ -783,13 +797,13 @@
 
 - (void)hideLoginView{
     
-     self.actionPicker.hidden = YES;
+    self.actionPicker.hidden = YES;
 }
 - (IBAction)privatePhoto:(id)sender
 {
-     [self hideLoginView];
-      self.isPrivate = true;
-     [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    [self hideLoginView];
+    self.isPrivate = true;
+    [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
 }
 
 - (IBAction)video:(id)sender {
@@ -801,8 +815,9 @@
 }
 
 - (IBAction)photoVideo:(id)sender {
-     [self hideLoginView];
-     [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    
+    [self hideLoginView];
+    [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     
 }
 
@@ -860,27 +875,35 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-  
+     
     if([self.myObject[indexPath.row] isKindOfClass:[Chat class]])
     {
+        
         Chat *data = self.myObject[indexPath.row];
+        
         CGSize stringSize = [data.chatText sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:17.0f]}];
+        
+        if (data.from == self.app.authCredential.id) //sender
+        {
             
-        if (data.from == self.app.authCredential.id) {
-            
-            if(data.type == 0)
+            if(data.type == 0) // Text
             {
                 if (stringSize.width + 100 > self.view.frame.size.width) {
-                    
                     
                     SenderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Sender" forIndexPath:indexPath];
                     
                     if (cell == nil) {
                         cell=[[SenderTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"Sender"];
+                    }else{
+                        cell.text.text =nil;
+                        cell.time.text = nil;
+                        cell.check.image = nil;
                     }
                     
-                    cell.text.text = data.chatText;
+                    NSData *strData = [data.chatText dataUsingEncoding:NSUTF8StringEncoding];
+                    cell.text.text = [[NSString alloc] initWithData:strData encoding:NSNonLossyASCIIStringEncoding];
+                    
+                    
                     
                     NSTimeInterval timestamp = [data.createdDate longLongValue];
                     NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
@@ -897,9 +920,16 @@
                     
                     if (cell == nil) {
                         cell=[[SenderSingleTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"Sender"];
+                    }else{
+                        cell.text.text =nil;
+                        cell.time.text = nil;
+                        cell.check.image = nil;
                     }
                     
-                    cell.text.text = data.chatText;
+                    NSData *strData = [data.chatText dataUsingEncoding:NSUTF8StringEncoding];
+                    cell.text.text = [[NSString alloc] initWithData:strData encoding:NSNonLossyASCIIStringEncoding];
+                    
+                    //cell.text.text = data.chatText;
                     
                     
                     NSTimeInterval timestamp = [data.createdDate longLongValue];
@@ -910,14 +940,20 @@
                     
                     return cell;
                 }
-               
+                
             }
-            else if (data.type == 3)
+            else if (data.type == 3) //Location
             {
                 SenderLocationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SenderLocation" forIndexPath:indexPath];
                 
                 if (cell == nil) {
                     cell=[[SenderLocationTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"SenderLocation"];
+                }else{
+                    cell.title.text = nil;
+                    cell.subtitle.text = nil;
+                    cell.check.image = nil;
+                    cell.click.tag = 0;
+                    cell.time.text = nil;
                 }
                 
                 
@@ -928,9 +964,9 @@
                 cell.check.image = (data.readStatus) ? [UIImage imageNamed:@"seen"]:[UIImage imageNamed:@"unseen"];
                 
                 NSString *staticMapUrl = [NSMutableString stringWithFormat:@"https://api.mapbox.com/v4/mapbox.streets/pin-m-marker+482(%f,%f)/%f,%f,14/%dx%d.png?access_token=pk.eyJ1Ijoic2lhbWJpc3dhcyIsImEiOiJjaWhvZGgyZjcwYmVvdTJqN3NqOWk4OTRhIn0.XM1iQVkiGP3KtSdESq0ErQ",places.lng,places.lat,places.lng,places.lat,(int)cell.image.frame.size.width,(int)cell.image.frame.size.height];
-               
+                
                 NSURL *mapUrl = [NSURL URLWithString:[staticMapUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-               // [cell.image sd_setImageWithURL:mapUrl placeholderImage:nil];
+                // [cell.image sd_setImageWithURL:mapUrl placeholderImage:nil];
                 
                 NSData *imageData = [NSData dataWithContentsOfURL:mapUrl];
                 cell.image.image = [UIImage imageWithData:imageData];
@@ -943,12 +979,20 @@
                 
                 return cell;
             }
-            else if (data.type == 4)
+            else if (data.type == 4) //Contact
             {
                 SenderContactsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SenderContact" forIndexPath:indexPath];
                 
                 if (cell == nil) {
                     cell=[[SenderContactsTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"SenderContact"];
+                }else{
+                    
+                    cell.title.text = nil;
+                    cell.check.image = nil;
+                    cell.click.tag = 0;
+                    cell.messageClick.tag = 0;
+                    cell.time.text = nil;
+                    
                 }
                 
                 
@@ -969,12 +1013,15 @@
                 
                 return cell;
             }
-            else if (data.type == 6)
+            else if (data.type == 6)// Copied private photo
             {
                 NotificationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Notification" forIndexPath:indexPath];
                 
                 if (cell == nil) {
                     cell=[[NotificationTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"Notification"];
+                }else{
+                    cell.time.text = nil;
+                    cell.text.text = nil;
                 }
                 
                 cell.text.text = [NSString stringWithFormat:@"%@ copied your photo",self.contact.user.firstName];
@@ -987,7 +1034,7 @@
                 
                 return cell;
             }
-            else if (data.type == 2)
+            else if (data.type == 2)//VideoFile
             {
                 SenderVideoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SenderVideo" forIndexPath:indexPath];
                 
@@ -995,22 +1042,27 @@
                     
                     cell=[[SenderVideoTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"SenderVideo"];
                 }
-                
+                else{
+                    cell.check.image =nil;
+                    cell.time.text = nil;
+                    cell.click.tag = 0;
+                    cell.image.image = nil;
+                }
                 
                 cell.check.image = (data.readStatus) ? [UIImage imageNamed:@"seen"]:[UIImage imageNamed:@"unseen"];
                 
-               
+                
                 NSTimeInterval timestamp = [data.createdDate longLongValue];
                 NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
                 
                 
                 cell.click.tag = indexPath.row;
                 [cell.click addTarget:self action:@selector(playVideoFromHistory:) forControlEvents:UIControlEventTouchUpInside];
-
+                
                 cell.time.text = [NSString stringWithFormat:@"%@",[self AgoStringFromTime:date]];
                 
-               // NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@app/transfer/file?v=%@",baseurl,data.mediaPath.path]];
-               // cell.image.image = [self thumbnailImageForVideo:url atTime:0];
+                // NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@app/transfer/file?v=%@",baseurl,data.mediaPath.path]];
+                // cell.image.image = [self thumbnailImageForVideo:url atTime:0];
                 
                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                     [cell.image startLoaderWithTintColor:[UIColor orangeColor]];
@@ -1034,6 +1086,12 @@
                     
                     cell=[[SenderImageTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"SenderImage"];
                 }
+                else{
+                    cell.check.image =nil;
+                    cell.time.text = nil;
+                    cell.click.tag = 0;
+                    cell.image.image = nil;
+                }
                 
                 NSTimeInterval timestamp = [data.createdDate longLongValue];
                 NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
@@ -1044,76 +1102,79 @@
                 cell.click.tag = indexPath.row;
                 cell.time.text = [NSString stringWithFormat:@"%@",[self AgoStringFromTime:date]];
                 
-             /*   [cell.image sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,picture.original.path]] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-
-                    cell.imageValue = cell.image.image;
-                    ChatPhoto *photo = (ChatPhoto*) data.extra;
-                    
-                    if (data.type==5) {
+                /*   [cell.image sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,picture.original.path]] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                 
+                 cell.imageValue = cell.image.image;
+                 ChatPhoto *photo = (ChatPhoto*) data.extra;
+                 
+                 if (data.type==5) {
+                 
+                 
+                 cell.timerValue = photo.timer;
+                 [cell.click setImage:[UIImage imageNamed:@"key-1"] forState:UIControlStateNormal];
+                 [cell.image setImage:[cell.image.image applyLightEffectAtFrame:CGRectMake(0,0,cell.image.image.size.width,cell.image.image.size.height)]];
+                 
+                 }
+                 else
+                 {
+                 [cell.click setImage:nil forState:UIControlStateNormal];
+                 }
+                 }];*/
+                
+                /* */
+                
+                
+                
+                
+                
+                
+                
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    [cell.image startLoaderWithTintColor:[UIColor orangeColor]];
+                    __weak typeof(cell)weakSelf = cell;
+                    [cell.image sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,picture.original.path]] placeholderImage:nil options:SDWebImageCacheMemoryOnly | SDWebImageRefreshCached progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                        [weakSelf.image updateImageDownloadProgress:(CGFloat)receivedSize/expectedSize];
+                    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                        [weakSelf.image reveal];
                         
+                        cell.imageValue = cell.image.image;
+                        ChatPhoto *photo = (ChatPhoto*) data.extra;
                         
-                        cell.timerValue = photo.timer;
-                        [cell.click setImage:[UIImage imageNamed:@"key-1"] forState:UIControlStateNormal];
-                        [cell.image setImage:[cell.image.image applyLightEffectAtFrame:CGRectMake(0,0,cell.image.image.size.width,cell.image.image.size.height)]];
-                        
-                    }
-                    else
-                    {
-                        [cell.click setImage:nil forState:UIControlStateNormal];
-                    }
-                }];*/
-                
-               /* */
-                
-                
-               
-                
-                
-                
-                
-                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                        [cell.image startLoaderWithTintColor:[UIColor orangeColor]];
-                        __weak typeof(cell)weakSelf = cell;
-                        [cell.image sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,picture.original.path]] placeholderImage:nil options:SDWebImageCacheMemoryOnly | SDWebImageRefreshCached progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                            [weakSelf.image updateImageDownloadProgress:(CGFloat)receivedSize/expectedSize];
-                        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                            [weakSelf.image reveal];
+                        if (data.type==5) //Private photo
+                        {
                             
-                            cell.imageValue = cell.image.image;
-                            ChatPhoto *photo = (ChatPhoto*) data.extra;
                             
-                            if (data.type==5) {
-                                
-                                
-                                cell.timerValue = photo.timer;
-                                [cell.click setImage:[UIImage imageNamed:@"key-1"] forState:UIControlStateNormal];
-                                cell.effect.hidden = false;
-                                
-                            }
-                            else
-                            {
-                                 cell.effect.hidden = true;
-                                [cell.click setImage:nil forState:UIControlStateNormal];
-                            }
-
+                            cell.timerValue = photo.timer;
+                            [cell.click setImage:[UIImage imageNamed:@"key-1"] forState:UIControlStateNormal];
+                            cell.effect.hidden = false;
                             
-                        }];
+                        }
+                        else
+                        {
+                            cell.effect.hidden = true;
+                            [cell.click setImage:nil forState:UIControlStateNormal];
+                        }
                         
                         
                     }];
                     
-                   
                     
-                    
+                }];
                 
-
-               
+                
+                
+                
+                
+                
+                
                 
                 return cell;
             }
         }
-        else
+        else //receiver
         {
+            //textChat = 0 , PhotoChat = 1,  VideoFile = 2 , Location = 3, Contact = 4 , Private photo = 5
+            
             if(data.type == 0)
             {
                 if (stringSize.width + 100 > self.view.frame.size.width) {
@@ -1122,9 +1183,14 @@
                     
                     if (cell == nil) {
                         cell=[[ReceiverTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"Receiver"];
+                    }else{
+                        cell.text.text = nil;
+                        cell.time.text = nil;
                     }
+                    NSData *strData = [data.chatText dataUsingEncoding:NSUTF8StringEncoding];
+                    cell.text.text = [[NSString alloc] initWithData:strData encoding:NSNonLossyASCIIStringEncoding];
                     
-                    cell.text.text = data.chatText;
+                    //cell.text.text = data.chatText;
                     
                     
                     NSTimeInterval timestamp = [data.createdDate longLongValue];
@@ -1135,7 +1201,7 @@
                     if (!data.readStatus) {
                         [self acknowledgementWithChatid:data.chatId appCredential:self.contact];
                     }
-                   
+                    
                     return cell;
                 }
                 else
@@ -1145,8 +1211,13 @@
                     if (cell == nil) {
                         cell=[[ReceiverSingleTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"Receiver"];
                     }
-                    
-                    cell.text.text = data.chatText;
+                    else{
+                        cell.text.text = nil;
+                        cell.time.text = nil;
+                    }
+                    NSData *strData = [data.chatText dataUsingEncoding:NSUTF8StringEncoding];
+                    cell.text.text = [[NSString alloc] initWithData:strData encoding:NSNonLossyASCIIStringEncoding];
+                    //cell.text.text = data.chatText;
                     
                     
                     NSTimeInterval timestamp = [data.createdDate longLongValue];
@@ -1161,7 +1232,7 @@
                     return cell;
                 }
                 
-               
+                
             }
             else if(data.type == 3)
             {
@@ -1169,6 +1240,12 @@
                 
                 if (cell == nil) {
                     cell=[[ReceiverLocationTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"ReceiverLocation"];
+                }else{
+                    cell.title.text = nil;
+                    cell.subtitle.text = nil;
+                    cell.time.text = nil;
+                    cell.image.image = nil;
+                    cell.click.tag = 0;
                 }
                 
                 ChatExtra *places = (ChatExtra*) data.extra;
@@ -1176,11 +1253,11 @@
                 cell.title.text = places.name;
                 cell.subtitle.text = places.formattedAddress;
                 
-                 NSString *staticMapUrl = [NSMutableString stringWithFormat:@"https://api.mapbox.com/v4/mapbox.streets/pin-m-marker+482(%f,%f)/%f,%f,14/%dx%d.png?access_token=pk.eyJ1Ijoic2lhbWJpc3dhcyIsImEiOiJjaWhvZGgyZjcwYmVvdTJqN3NqOWk4OTRhIn0.XM1iQVkiGP3KtSdESq0ErQ",places.lng,places.lat,places.lng,places.lat,(int)cell.image.frame.size.width,(int)cell.image.frame.size.height];
-               
+                NSString *staticMapUrl = [NSMutableString stringWithFormat:@"https://api.mapbox.com/v4/mapbox.streets/pin-m-marker+482(%f,%f)/%f,%f,14/%dx%d.png?access_token=pk.eyJ1Ijoic2lhbWJpc3dhcyIsImEiOiJjaWhvZGgyZjcwYmVvdTJqN3NqOWk4OTRhIn0.XM1iQVkiGP3KtSdESq0ErQ",places.lng,places.lat,places.lng,places.lat,(int)cell.image.frame.size.width,(int)cell.image.frame.size.height];
+                
                 NSURL *mapUrl = [NSURL URLWithString:[staticMapUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
                 //[cell.image sd_setImageWithURL:mapUrl placeholderImage:nil];
-
+                
                 NSData *imageData = [NSData dataWithContentsOfURL:mapUrl];
                 cell.image.image = [UIImage imageWithData:imageData];
                 
@@ -1203,6 +1280,12 @@
                 
                 if (cell == nil) {
                     cell=[[ReceiverContactsTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"ReceiverContact"];
+                }else{
+                    cell.title.text = nil;
+                    
+                    cell.time.text = nil;
+                    cell.image.image = nil;
+                    cell.click.tag = 0;
                 }
                 
                 cell.title.text = [NSString stringWithFormat:@"%@ %@",data.extra.user.firstName,data.extra.user.lastName];
@@ -1218,7 +1301,7 @@
                 cell.click.tag = indexPath.row;
                 cell.messageClick.tag = indexPath.row;
                 cell.time.text = [NSString stringWithFormat:@"%@",[self AgoStringFromTime:date]];
-
+                
                 
                 if (!data.readStatus) {
                     [self acknowledgementWithChatid:data.chatId appCredential:self.contact];
@@ -1232,6 +1315,9 @@
                 
                 if (cell == nil) {
                     cell=[[NotificationTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"Notification"];
+                }else{
+                    cell.text.text = nil;
+                    cell.time.text = nil;
                 }
                 
                 cell.text.text = @"Notified user about your action";
@@ -1251,7 +1337,12 @@
                 if (cell == nil) {
                     
                     cell=[[ReceiverVideoTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"ReceiverVideo"];
+                }else{
+                    cell.click.tag =0;
+                    cell.image.image = nil;
+                    cell.time.text = nil;
                 }
+                
                 
                 
                 NSTimeInterval timestamp = [data.createdDate longLongValue];
@@ -1286,16 +1377,21 @@
                 if (cell == nil) {
                     
                     cell=[[ReceiverImageTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"ReceiverImage"];
+                }else{
+                    cell.click.tag =0;
+                    cell.image.image = nil;
+                    cell.time.text = nil;
                 }
+                
                 
                 Picture *picture = (Picture*) data.mediaPath;
                 
                 
-              
                 
                 
                 
-              
+                
+                
                 
                 NSTimeInterval timestamp = [data.createdDate longLongValue];
                 NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
@@ -1303,39 +1399,39 @@
                 cell.click.tag = indexPath.row;
                 cell.time.text = [NSString stringWithFormat:@"%@",[self AgoStringFromTime:date]];
                 
-               
+                
                 
                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                        [cell.image startLoaderWithTintColor:[UIColor orangeColor]];
-                        __weak typeof(cell)weakSelf = cell;
-                        [cell.image sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,picture.original.path]] placeholderImage:nil options:SDWebImageCacheMemoryOnly | SDWebImageRefreshCached progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                            [weakSelf.image updateImageDownloadProgress:(CGFloat)receivedSize/expectedSize];
-                        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                            [weakSelf.image reveal];
-                            cell.imageValue = cell.image.image;
-                            ChatPhoto *photo = (ChatPhoto*) data.extra;
-
-                            if (data.type==5) {
-                                
-                                cell.timerValue = photo.timer;
-                                [cell.click setImage:[UIImage imageNamed:@"key-1"] forState:UIControlStateNormal];
-                                cell.effect.hidden = false;
-                                
-                            }
-                            else
-                            {
-                                [cell.click setImage:nil forState:UIControlStateNormal];
-                                cell.effect.hidden = true;
-                            }
-
+                    [cell.image startLoaderWithTintColor:[UIColor orangeColor]];
+                    __weak typeof(cell)weakSelf = cell;
+                    [cell.image sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,picture.original.path]] placeholderImage:nil options:SDWebImageCacheMemoryOnly | SDWebImageRefreshCached progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                        [weakSelf.image updateImageDownloadProgress:(CGFloat)receivedSize/expectedSize];
+                    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                        [weakSelf.image reveal];
+                        cell.imageValue = cell.image.image;
+                        ChatPhoto *photo = (ChatPhoto*) data.extra;
+                        
+                        if (data.type==5) {
                             
+                            cell.timerValue = photo.timer;
+                            [cell.click setImage:[UIImage imageNamed:@"key-1"] forState:UIControlStateNormal];
+                            cell.effect.hidden = false;
                             
-                        }];
+                        }
+                        else
+                        {
+                            [cell.click setImage:nil forState:UIControlStateNormal];
+                            cell.effect.hidden = true;
+                        }
+                        
                         
                         
                     }];
-
-                 
+                    
+                    
+                }];
+                
+                
                 
                 if (!data.readStatus) {
                     [self acknowledgementWithChatid:data.chatId appCredential:self.contact];
@@ -1343,7 +1439,7 @@
                 
                 return cell;
             }
-
+            
         }
     }
     else if([self.myObject[indexPath.row] isKindOfClass:[ChatPhoto class]])
@@ -1360,6 +1456,10 @@
                 if (cell == nil) {
                     cell=[[NotificationTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"Notification"];
                 }
+                else{
+                    cell.text.text = nil;
+                    cell.time.text = nil;
+                }
                 
                 cell.text.text = @"Notified user about your action";
                 
@@ -1370,7 +1470,7 @@
                 cell.time.text = [NSString stringWithFormat:@"%@",[self AgoStringFromTime:date]];
                 
                 return cell;
-              
+                
             }
             
             if (dataT.recevice)
@@ -1379,6 +1479,9 @@
                 
                 if (cell == nil) {
                     cell=[[NotificationTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"Notification"];
+                }else{
+                    cell.text.text = nil;
+                    cell.time.text = nil;
                 }
                 
                 cell.text.text = [NSString stringWithFormat:@"%@ copied your photo",self.contact.user.firstName];
@@ -1401,6 +1504,14 @@
                 
                 if (cell == nil) {
                     cell=[[SenderImageTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"SenderImage"];
+                }else{
+                    cell.click.tag = 0;
+                    
+                    cell.time.text = nil;
+                    cell.check.image = nil;
+                    cell.image.image = nil;
+                    cell.imageValue = nil;
+                    
                 }
                 
                 NSTimeInterval timestamp = [dataT.createdDate longLongValue];
@@ -1414,7 +1525,7 @@
                 
                 if (dataT.timer)
                 {
-                     cell.timerValue = dataT.timer;
+                    cell.timerValue = dataT.timer;
                     [cell.click setImage:[UIImage imageNamed:@"key-1"] forState:UIControlStateNormal];
                     //[cell.image setImage:[cell.image.image applyLightEffectAtFrame:cell.image.frame]];
                     cell.effect.hidden = false;
@@ -1435,6 +1546,14 @@
                 
                 if (cell == nil) {
                     cell=[[ReceiverImageTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"ReceiverImage"];
+                }else{
+                    cell.click.tag = 0;
+                    
+                    cell.time.text = nil;
+                   
+                    cell.image.image = nil;
+                    cell.imageValue = nil;
+                    
                 }
                 
                 Picture *picture = dataT.pictures;
@@ -1459,7 +1578,7 @@
                         if (dataT.timer) {
                             cell.timerValue = dataT.timer;
                             [cell.click setImage:[UIImage imageNamed:@"key-1"] forState:UIControlStateNormal];
-                           // [cell.image setImage:[cell.image.image applyLightEffectAtFrame:cell.image.frame]];
+                            // [cell.image setImage:[cell.image.image applyLightEffectAtFrame:cell.image.frame]];
                             cell.effect.hidden = false;
                         }
                         else
@@ -1484,62 +1603,70 @@
         
         ChatVideo *dataT = self.myObject[indexPath.row];
         
-      
-            if (dataT.send)
-            {
-                SenderVideoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SenderVideo" forIndexPath:indexPath];
+        
+        if (dataT.send)
+        {
+            SenderVideoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SenderVideo" forIndexPath:indexPath];
+            
+            if (cell == nil) {
+                cell=[[SenderVideoTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"SenderVideo"];
+            }else{
+                cell.click.tag = 0;
                 
-                if (cell == nil) {
-                    cell=[[SenderVideoTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"SenderVideo"];
-                }
+                cell.time.text = nil;
                 
-                NSTimeInterval timestamp = [dataT.createdDate longLongValue];
-                NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
+                cell.image.image = nil;
+                cell.check.image = nil;
                 
-                cell.click.tag = indexPath.row;
-                cell.time.text = [NSString stringWithFormat:@"%@",[self AgoStringFromTime:date]];
-                cell.check.image =[UIImage imageNamed:@"unseen"];
-                
-                [cell.click addTarget:self action:@selector(playVideoSelf:) forControlEvents:UIControlEventTouchUpInside];
-                
-                NSURL *url = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@",dataT.video.path]];
-                cell.image.image = [self thumbnailImageForVideo:url atTime:0];
-                
-                return cell;
             }
             
+            NSTimeInterval timestamp = [dataT.createdDate longLongValue];
+            NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
             
-            if (dataT.recevice) {
-                ReceiverVideoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ReceiverVideo" forIndexPath:indexPath];
-                
-                if (cell == nil) {
-                    cell=[[ReceiverVideoTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"ReceiverVideo"];
-                }
-                
-                NSTimeInterval timestamp = [dataT.createdDate longLongValue];
-                NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
-                
-                cell.click.tag = indexPath.row;
-                cell.time.text = [NSString stringWithFormat:@"%@",[self AgoStringFromTime:date]];
-                [cell.click addTarget:self action:@selector(playVideo:) forControlEvents:UIControlEventTouchUpInside];
-                
-               // NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@app/transfer/file?v=%@",baseurl,dataT.video.path]];
-                //cell.image.image = [self thumbnailImageForVideo:url atTime:0];
-                
-                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                    [cell.image startLoaderWithTintColor:[UIColor orangeColor]];
-                    __weak typeof(cell)weakSelf = cell;
-                    [cell.image sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,dataT.video.coverPic]] placeholderImage:nil options:SDWebImageCacheMemoryOnly | SDWebImageRefreshCached progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                        [weakSelf.image updateImageDownloadProgress:(CGFloat)receivedSize/expectedSize];
-                    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                        [weakSelf.image reveal];
-                    }];
-                    
-                    
+            cell.click.tag = indexPath.row;
+            cell.time.text = [NSString stringWithFormat:@"%@",[self AgoStringFromTime:date]];
+            cell.check.image =[UIImage imageNamed:@"unseen"];
+            
+            [cell.click addTarget:self action:@selector(playVideoSelf:) forControlEvents:UIControlEventTouchUpInside];
+            
+            NSURL *url = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@",dataT.video.path]];
+            cell.image.image = [self thumbnailImageForVideo:url atTime:0];
+            
+            return cell;
+        }
+        
+        
+        if (dataT.recevice) {
+            ReceiverVideoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ReceiverVideo" forIndexPath:indexPath];
+            
+            if (cell == nil) {
+                cell=[[ReceiverVideoTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"ReceiverVideo"];
+            }
+            
+            NSTimeInterval timestamp = [dataT.createdDate longLongValue];
+            NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
+            
+            cell.click.tag = indexPath.row;
+            cell.time.text = [NSString stringWithFormat:@"%@",[self AgoStringFromTime:date]];
+            [cell.click addTarget:self action:@selector(playVideo:) forControlEvents:UIControlEventTouchUpInside];
+            
+            // NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@app/transfer/file?v=%@",baseurl,dataT.video.path]];
+            //cell.image.image = [self thumbnailImageForVideo:url atTime:0];
+            
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                [cell.image startLoaderWithTintColor:[UIColor orangeColor]];
+                __weak typeof(cell)weakSelf = cell;
+                [cell.image sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,dataT.video.coverPic]] placeholderImage:nil options:SDWebImageCacheMemoryOnly | SDWebImageRefreshCached progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                    [weakSelf.image updateImageDownloadProgress:(CGFloat)receivedSize/expectedSize];
+                } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                    [weakSelf.image reveal];
                 }];
                 
-                return cell;
-            }
+                
+            }];
+            
+            return cell;
+        }
         
     }
     else if([self.myObject[indexPath.row] isKindOfClass:[ChatLocation class]])
@@ -1561,13 +1688,13 @@
             
             
             NSString *staticMapUrl = [NSMutableString stringWithFormat:@"https://api.mapbox.com/v4/mapbox.streets/pin-m-marker+482(%f,%f)/%f,%f,14/%dx%d.png?access_token=pk.eyJ1Ijoic2lhbWJpc3dhcyIsImEiOiJjaWhvZGgyZjcwYmVvdTJqN3NqOWk4OTRhIn0.XM1iQVkiGP3KtSdESq0ErQ",dataT.places.lng,dataT.places.lat,dataT.places.lng,dataT.places.lat,(int)cell.image.frame.size.width,(int)cell.image.frame.size.height];
-       
+            
             NSURL *mapUrl = [NSURL URLWithString:[staticMapUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-       
+            
             NSData *imageData = [NSData dataWithContentsOfURL:mapUrl];
             cell.image.image = [UIImage imageWithData:imageData];
-        
-        
+            
+            
             NSTimeInterval timestamp = [dataT.createdDate longLongValue];
             NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
             
@@ -1588,13 +1715,13 @@
             cell.title.text = dataT.places.name;
             cell.subtitle.text = dataT.places.formattedAddress;
             
-              NSString *staticMapUrl = [NSMutableString stringWithFormat:@"https://api.mapbox.com/v4/mapbox.streets/pin-m-marker+482(%f,%f)/%f,%f,14/%dx%d.png?access_token=pk.eyJ1Ijoic2lhbWJpc3dhcyIsImEiOiJjaWhvZGgyZjcwYmVvdTJqN3NqOWk4OTRhIn0.XM1iQVkiGP3KtSdESq0ErQ",dataT.places.lng,dataT.places.lat,dataT.places.lng,dataT.places.lat,(int)cell.image.frame.size.width,(int)cell.image.frame.size.height];
-        
+            NSString *staticMapUrl = [NSMutableString stringWithFormat:@"https://api.mapbox.com/v4/mapbox.streets/pin-m-marker+482(%f,%f)/%f,%f,14/%dx%d.png?access_token=pk.eyJ1Ijoic2lhbWJpc3dhcyIsImEiOiJjaWhvZGgyZjcwYmVvdTJqN3NqOWk4OTRhIn0.XM1iQVkiGP3KtSdESq0ErQ",dataT.places.lng,dataT.places.lat,dataT.places.lng,dataT.places.lat,(int)cell.image.frame.size.width,(int)cell.image.frame.size.height];
+            
             NSURL *mapUrl = [NSURL URLWithString:[staticMapUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-          
+            
             NSData *imageData = [NSData dataWithContentsOfURL:mapUrl];
             cell.image.image = [UIImage imageWithData:imageData];
-
+            
             
             NSTimeInterval timestamp = [dataT.createdDate longLongValue];
             NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
@@ -1679,7 +1806,7 @@
     }
     else
     {
-    
+        
         TextChat *dataT = self.myObject[indexPath.row];
         CGSize stringSize = [dataT.text sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:17.0f]}];
         
@@ -1727,14 +1854,14 @@
                 return cell;
             }
             
-           
+            
         }
         
         
         if (dataT.recevice) {
             
             if (stringSize.width + 100 > self.view.frame.size.width) {
-            
+                
                 ReceiverTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Receiver" forIndexPath:indexPath];
                 
                 if (cell == nil) {
@@ -1747,8 +1874,8 @@
                 NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
                 
                 cell.time.text = [NSString stringWithFormat:@"%@",[self AgoStringFromTime:date]];
-
-
+                
+                
                 
                 return cell;
             }
@@ -1770,13 +1897,13 @@
                 
                 
                 return cell;
-
+                
             }
         }
         
     }
     
-
+    
     
     return nil;
     
@@ -1786,7 +1913,7 @@
                              atTime:(NSTimeInterval)time
 {
     
-   
+    
     if (![self.cImages objectForKey:videoURL])
     {
         
@@ -1818,14 +1945,14 @@
         }
         
         return thumbnailImage;
-
+        
     }
     else
     {
         return [self.cImages objectForKey:videoURL];
     }
-
-   
+    
+    
 }
 
 
@@ -1853,33 +1980,33 @@
     }
     else
     {
-    Chat *data = self.myObject[sender.tag];
-    
-    NSLog(@"VIDEO DATA : %@",data);
-    
-    VideoDetails *dataT = (VideoDetails*) data.mediaPath;
-    
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@app/transfer/file?v=%@",baseurl,dataT.path]];
-    
-    MPMoviePlayerViewController *mpvc = [[MPMoviePlayerViewController alloc] init];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(moviePlaybackDidFinish:)
-                                                 name:MPMoviePlayerPlaybackDidFinishNotification
-                                               object:nil];
-    
-    mpvc.moviePlayer.movieSourceType = MPMovieSourceTypeStreaming;
-    
-    [mpvc.moviePlayer setContentURL:url];
-    
-    [self presentMoviePlayerViewControllerAnimated:mpvc];
+        Chat *data = self.myObject[sender.tag];
+        
+        NSLog(@"VIDEO DATA : %@",data);
+        
+        VideoDetails *dataT = (VideoDetails*) data.mediaPath;
+        
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@app/transfer/file?v=%@",baseurl,dataT.path]];
+        
+        MPMoviePlayerViewController *mpvc = [[MPMoviePlayerViewController alloc] init];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(moviePlaybackDidFinish:)
+                                                     name:MPMoviePlayerPlaybackDidFinishNotification
+                                                   object:nil];
+        
+        mpvc.moviePlayer.movieSourceType = MPMovieSourceTypeStreaming;
+        
+        [mpvc.moviePlayer setContentURL:url];
+        
+        [self presentMoviePlayerViewControllerAnimated:mpvc];
     }
 }
 
 -(void)playVideo:(UIButton*)sender
 {
     ChatVideo *dataT = self.myObject[sender.tag];
-
+    
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@app/transfer/file?v=%@",baseurl,dataT.video.path]];
     
     MPMoviePlayerViewController *mpvc = [[MPMoviePlayerViewController alloc] init];
@@ -1961,31 +2088,37 @@
 #pragma mark - tcpSocketDelegate
 -(void)receivedMessage:(NSString *)data
 {
-   
-   
+    
+    
     NSError* err = nil;
     SocketResponse *response = [[SocketResponse alloc] initWithString:data error:&err];
     
-    NSLog(@"Received %@ %@",response,err);
-   
+    // NSLog(@"Received %@ %@",response,err);
+    
     if([response.responseStat.tag isEqualToString:@"textchat"])
     {
         
+        NSLog(@"Here");
+        
         SocketTextResponse *responseT = [[SocketTextResponse alloc] initWithString:data error:&err];
         
-    
+        
         
         if(responseT.responseData.appCredential.id == self.contact.id )
         {
-
-        [self acknowledgementWithChatid:responseT.responseData.chatId appCredential:responseT.responseData.appCredential];
-        
-        [self.myObject addObject:responseT.responseData];
-        self.history = false;
-        [self.tableData reloadData];
-        
-        NSIndexPath* ipath = [NSIndexPath indexPathForRow:self.myObject.count-1 inSection:0];
-        [self.tableData scrollToRowAtIndexPath: ipath atScrollPosition: UITableViewScrollPositionBottom animated: YES];
+            
+            [self acknowledgementWithChatid:responseT.responseData.chatId appCredential:responseT.responseData.appCredential];
+            NSData *strData = [responseT.responseData.text dataUsingEncoding:NSUTF8StringEncoding];
+            responseT.responseData.text  = [[NSString alloc] initWithData:strData encoding:NSNonLossyASCIIStringEncoding];
+            
+            
+            
+            [self.myObject addObject:responseT.responseData];
+            self.history = false;
+            [self.tableData reloadData];
+            
+            NSIndexPath* ipath = [NSIndexPath indexPathForRow:self.myObject.count-1 inSection:0];
+            [self.tableData scrollToRowAtIndexPath: ipath atScrollPosition: UITableViewScrollPositionBottom animated: YES];
         }
     }
     
@@ -1999,17 +2132,17 @@
         if(responseT.responseData.appCredential.id == self.contact.id )
         {
             
-          
-        
-        [self acknowledgementWithChatid:responseT.responseData.chatId appCredential:responseT.responseData.appCredential];
-        
-        [self.myObject addObject:responseT.responseData];
-        self.history = false;
-        [self.tableData reloadData];
             
-        
-        NSIndexPath* ipath = [NSIndexPath indexPathForRow:self.myObject.count-1 inSection:0];
-        [self.tableData scrollToRowAtIndexPath: ipath atScrollPosition: UITableViewScrollPositionBottom animated: YES];
+            
+            [self acknowledgementWithChatid:responseT.responseData.chatId appCredential:responseT.responseData.appCredential];
+            
+            [self.myObject addObject:responseT.responseData];
+            self.history = false;
+            [self.tableData reloadData];
+            
+            
+            NSIndexPath* ipath = [NSIndexPath indexPathForRow:self.myObject.count-1 inSection:0];
+            [self.tableData scrollToRowAtIndexPath: ipath atScrollPosition: UITableViewScrollPositionBottom animated: YES];
         }
     }
     
@@ -2095,16 +2228,16 @@
             [self.tableData scrollToRowAtIndexPath: ipath atScrollPosition: UITableViewScrollPositionTop animated: YES];
         }
     }
-
-
-
+    
+    
+    
     
     if([response.responseStat.tag isEqualToString:@"user_online"])
     {
         
         AcknowledgementResponse *responseT = [[AcknowledgementResponse alloc] initWithString:data error:&err];
         
-    
+        
         
         
         NSTimeInterval timestamp = [responseT.responseData.lastSeen longLongValue];
@@ -2112,8 +2245,8 @@
         
         if(responseT.responseData.appCredential.id == self.contact.id )
         {
-        
-        _subtitleView.text = (responseT.responseData.appCredential.id == self.contact.id && responseT.responseData.isOnline ) ? @"Online" : [NSString stringWithFormat:@"last seen %@",[self AgoStringFromTime2:date]];
+            NSLog(@"seen date ;%@",  date);
+            _subtitleView.text = (responseT.responseData.appCredential.id == self.contact.id && responseT.responseData.isOnline ) ? @"Online" : [NSString stringWithFormat:@"last seen %@",[self AgoStringFromTime2:date]];
             
         }
         
@@ -2133,16 +2266,17 @@
         
         if(responseT.responseData.appCredential.id == self.contact.id )
         {
-        
-        _subtitleView.text = (responseT.responseData.appCredential.id == self.contact.id && responseT.responseData.isOnline ) ? @"Online" : [NSString stringWithFormat:@"last seen %@",[self AgoStringFromTime2:date]];
-        
+            NSLog(@"seen date ;%@",  date);
+            
+            _subtitleView.text = (responseT.responseData.appCredential.id == self.contact.id && responseT.responseData.isOnline ) ? @"Online" : [NSString stringWithFormat:@"last seen %@",[self AgoStringFromTime2:date]];
+            
         }
     }
     
     if([response.responseStat.tag isEqualToString:@"chat_received"])
     {
         
-       AcknowledgementResponse *responseT = [[AcknowledgementResponse alloc] initWithString:data error:&err];
+        AcknowledgementResponse *responseT = [[AcknowledgementResponse alloc] initWithString:data error:&err];
         
         for (int i=0; i<self.myObject.count;i++) {
             
@@ -2175,11 +2309,11 @@
             
         }
     }
-
+    
     if([response.responseStat.tag isEqualToString:@"chat_private_photo_took_snapshot"])
     {
-       // AcknowledgementResponse *responseT = [[AcknowledgementResponse alloc] initWithString:data error:&err];
-       // [ToastView showToastInParentView:self.view withText:responseT.responseStat.msg withDuaration:2.0];
+        // AcknowledgementResponse *responseT = [[AcknowledgementResponse alloc] initWithString:data error:&err];
+        // [ToastView showToastInParentView:self.view withText:responseT.responseStat.msg withDuaration:2.0];
         
         SocketPhotoResponse *responseT = [[SocketPhotoResponse alloc] initWithString:data error:&err];
         
@@ -2195,19 +2329,19 @@
             NSIndexPath* ipath = [NSIndexPath indexPathForRow:self.myObject.count-1 inSection:0];
             [self.tableData scrollToRowAtIndexPath: ipath atScrollPosition: UITableViewScrollPositionBottom animated: YES];
         }
-
+        
     }
     
     if([response.responseStat.tag isEqualToString:@"chat_private_photo_destroy_acknowledgement"])
     {
         
-
+        
         self.myObject = nil;
         self.myObject = [[NSMutableArray alloc] init];
         self.offset = 0;
         self.loaded = false;
         [self getData:self.offset];
-
+        
     }
     
     if([response.responseStat.tag isEqualToString:@"chat_acknowledgement"])
@@ -2238,7 +2372,7 @@
                         else
                         {
                             SenderImageTableViewCell *cell = (SenderImageTableViewCell *)[self.tableData cellForRowAtIndexPath:indexPath];
-                             cell.check.image = [UIImage imageNamed:@"seen"];
+                            cell.check.image = [UIImage imageNamed:@"seen"];
                         }
                     }
                     
@@ -2247,7 +2381,7 @@
                     
                     break;
                 }
-
+                
             }
             else if([self.myObject[i] isKindOfClass:[ChatPhoto class]])
             {
@@ -2260,12 +2394,12 @@
                     {
                         SenderImageTableViewCell *cell = (SenderImageTableViewCell *)[self.tableData cellForRowAtIndexPath:indexPath];
                         cell.check.image = [UIImage imageNamed:@"seen"];
-
+                        
                     }
                     
                     [self.tableData reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
                     [self.tableData reloadData];
-                  
+                    
                     break;
                 }
             }
@@ -2288,7 +2422,7 @@
                     
                     [self.tableData reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
                     [self.tableData reloadData];
-                  
+                    
                     break;
                 }
                 
@@ -2297,10 +2431,10 @@
             }
             
         }
-       
+        
         
     }
-
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -2353,6 +2487,7 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    
     if (self.isVideo)
     {
         NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
@@ -2365,7 +2500,7 @@
             NSLog(@"VIDEO : %@",moviePath);
             
             if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum (moviePath)) {
-               // UISaveVideoAtPathToSavedPhotosAlbum (moviePath, nil, nil, nil);
+                // UISaveVideoAtPathToSavedPhotosAlbum (moviePath, nil, nil, nil);
                 
                 NSData *byteData = [NSData dataWithContentsOfFile:moviePath];
                 
@@ -2387,7 +2522,7 @@
                 
                 [self.myObject addObject:dataChat];
                 
-        
+                
                 
                 NSError* error;
                 
@@ -2401,7 +2536,7 @@
                 response.responseStat = responseStat;
                 response.responseData = dataChat;
                 
-            
+                
                 
                 
                 NSData *dataR = [NSJSONSerialization dataWithJSONObject:[response toDictionary] options:NSJSONWritingPrettyPrinted error:&error];
@@ -2431,92 +2566,96 @@
     }
     else
     {
-    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    [self dismissViewControllerAnimated:YES completion:NULL];
-    
-    NSURL *refURL = [info valueForKey:UIImagePickerControllerReferenceURL];
-    
-    ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *imageAsset)
-    {
-        ALAssetRepresentation *imageRep = [imageAsset defaultRepresentation];
-        self.imageName = [imageRep filename];
+        UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+        [self dismissViewControllerAnimated:YES completion:NULL];
         
-        if (self.isPrivate)
-        {
-            self.imageToSend = image;
-            self.isPrivate = false;
-            self.timer = 0;
-            [self performSegueWithIdentifier:@"showPrivate" sender:self];
-        }
-        else
-        {
-            ChatPhoto *dataO = [[ChatPhoto alloc]init];
-            dataO.tmpChatId = [self uuid];
-            dataO.caption = @"";
-            dataO.appCredential = (AppCredential*)self.contact;
-            dataO.send = true;
-            dataO.recevice = false;
-            dataO.createdDate = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
-            dataO.base64Img = [self imageToString:image];
-            
-            self.type.text = @"";
-            
-            
-            [self.myObject addObject:dataO];
-            
-            ChatPhoto *data = [[ChatPhoto alloc]init];
-            data.tmpChatId = [self uuid];
-            data.caption = @"";
-            data.appCredential = (AppCredential*)self.contact;
-            data.send = true;
-            data.recevice = false;
-            data.createdDate = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
-            data.base64Img = @"";
-            
-            NSError* error;
-            
-            SocketResponse *response = [[SocketResponse alloc]init];
-            
-            SocketResponseStat *responseStat = [[SocketResponseStat alloc]init];
-            
-            responseStat.status = true;
-            responseStat.tag = @"chatphoto_transfer";
-            
-            response.responseStat = responseStat;
-            response.responseData = data;
-            
-            
-            
-            
-            NSData *byteData = UIImagePNGRepresentation(image);
-            
-            
-            NSData *dataR = [NSJSONSerialization dataWithJSONObject:[response toDictionary] options:NSJSONWritingPrettyPrinted error:&error];
-            NSString* jsonString = [[NSString alloc] initWithData:dataR encoding:NSUTF8StringEncoding];
-            
-            jsonString=  [[jsonString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@""];
-            jsonString = [NSString stringWithFormat:@"%@\n",jsonString];
-            
-            
-            [[SocektAccess getSharedInstance] sendPhotoWithContactId:self.app.authCredential.id jsonString:jsonString byteData:byteData filename:self.imageName];
-    
-          //  [self.chatSocket sendMessage:jsonString];
-            
-            
-            
-            
-            self.history = false;
-            [self.tableData reloadData];
-            
-            NSIndexPath* ipath = [NSIndexPath indexPathForRow:self.myObject.count-1 inSection:0];
-            [self.tableData scrollToRowAtIndexPath: ipath atScrollPosition: UITableViewScrollPositionBottom animated: YES];
-        }
-
+        NSURL *refURL = [info valueForKey:UIImagePickerControllerReferenceURL];
         
-    };
-    
-    ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
-    [assetslibrary assetForURL:refURL resultBlock:resultblock failureBlock:nil];
+        ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *imageAsset)
+        {
+            ALAssetRepresentation *imageRep = [imageAsset defaultRepresentation];
+            self.imageName = [imageRep filename];
+            
+            if (self.isPrivate)
+            {
+                self.imageToSend = image;
+                self.isPrivate = false;
+                self.timer = 0;
+                [self performSegueWithIdentifier:@"showPrivate" sender:self];
+            }
+            else
+            {
+                UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc]
+                                                              initWithFrame:CGRectMake(0.0f, 0.0f, 20.0f, 20.0f)];
+                [activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
+                
+                [self.view addSubview:activityIndicator];
+                [activityIndicator startAnimating];
+                ChatPhoto *dataO = [[ChatPhoto alloc]init];
+                dataO.tmpChatId = [self uuid];
+                dataO.caption = @"";
+                dataO.appCredential = (AppCredential*)self.contact;
+                dataO.send = true;
+                dataO.recevice = false;
+                dataO.createdDate = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
+                dataO.base64Img = [self imageToString:image];
+                
+                self.type.text = @"";
+                
+                
+                [self.myObject addObject:dataO];
+                
+                ChatPhoto *data = [[ChatPhoto alloc]init];
+                data.tmpChatId = [self uuid];
+                data.caption = @"";
+                data.appCredential = (AppCredential*)self.contact;
+                data.send = true;
+                data.recevice = false;
+                data.createdDate = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
+                data.base64Img = @"";
+                
+                NSError* error;
+                
+                SocketResponse *response = [[SocketResponse alloc]init];
+                
+                SocketResponseStat *responseStat = [[SocketResponseStat alloc]init];
+                
+                responseStat.status = true;
+                responseStat.tag = @"chatphoto_transfer";
+                
+                response.responseStat = responseStat;
+                response.responseData = data;
+                
+                NSData *byteData = UIImagePNGRepresentation(image);
+                
+                
+                NSData *dataR = [NSJSONSerialization dataWithJSONObject:[response toDictionary] options:NSJSONWritingPrettyPrinted error:&error];
+                NSString* jsonString = [[NSString alloc] initWithData:dataR encoding:NSUTF8StringEncoding];
+                
+                jsonString=  [[jsonString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@""];
+                jsonString = [NSString stringWithFormat:@"%@\n",jsonString];
+                
+                NSLog(@"photo data : %@",jsonString);
+                
+                [[SocektAccess getSharedInstance] sendPhotoWithContactId:self.app.authCredential.id jsonString:jsonString byteData:byteData filename:self.imageName];
+                
+                // [self.chatSocket sendMessage:jsonString];
+                
+                
+                
+                
+                self.history = false;
+                [self.tableData reloadData];
+                
+                NSIndexPath* ipath = [NSIndexPath indexPathForRow:self.myObject.count-1 inSection:0];
+                [self.tableData scrollToRowAtIndexPath: ipath atScrollPosition: UITableViewScrollPositionBottom animated: YES];
+            }
+            
+            
+        };
+        
+        ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
+        [assetslibrary assetForURL:refURL resultBlock:resultblock failureBlock:nil];
     }
     
 }
@@ -2587,7 +2726,7 @@
         
         
     }
-
+    
     if ([segue.identifier isEqualToString:@"friendsProfileContact"])
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
@@ -2598,7 +2737,7 @@
             FriendsProfileViewController *data = [segue destinationViewController];;
             data.hidesBottomBarWhenPushed = YES;
             data.owner = (AppCredential*) post.extra;
-
+            
             
         }
         else
@@ -2609,7 +2748,7 @@
             data.owner = (AppCredential*) post.contact;
         }
         
-       
+        
         
     }
     
@@ -2634,7 +2773,7 @@
             ChatViewController *data = [segue destinationViewController];;
             data.hidesBottomBarWhenPushed = YES;
             data.contact =  (Contact*) post.extra;
-
+            
             
             
         }
@@ -2644,9 +2783,9 @@
             ChatViewController *data = [segue destinationViewController];;
             data.hidesBottomBarWhenPushed = YES;
             data.contact = post.contact;
-
+            
         }
-
+        
         
     }
     
@@ -2663,17 +2802,17 @@
         if([self.myObject[indexPath.row] isKindOfClass:[Chat class]])
         {
             Chat *data = self.myObject[indexPath.row];
-             if (data.to == self.app.authCredential.id)
-             {
-                  SenderImageTableViewCell *cell = (SenderImageTableViewCell*)[self.tableData cellForRowAtIndexPath:indexPath];
-                  image = cell.imageValue;
-                 
-             }
-             else
-             {
-                 ReceiverImageTableViewCell *cell = (ReceiverImageTableViewCell*)[self.tableData cellForRowAtIndexPath:indexPath];
-                 image = cell.imageValue;
-             }
+            if (data.to == self.app.authCredential.id)
+            {
+                SenderImageTableViewCell *cell = (SenderImageTableViewCell*)[self.tableData cellForRowAtIndexPath:indexPath];
+                image = cell.imageValue;
+                
+            }
+            else
+            {
+                ReceiverImageTableViewCell *cell = (ReceiverImageTableViewCell*)[self.tableData cellForRowAtIndexPath:indexPath];
+                image = cell.imageValue;
+            }
             
             if (data.type == 5) {
                 
@@ -2695,7 +2834,7 @@
             if (dataT.send)
             {
                 SenderImageTableViewCell *cell = (SenderImageTableViewCell*)[self.tableData cellForRowAtIndexPath:indexPath];
-                 image = cell.imageValue;
+                image = cell.imageValue;
             }
             else
             {
@@ -2707,14 +2846,14 @@
                 
                 NSTimeInterval timestamp = [dataT.createdDate longLongValue];
                 NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
-
+                
                 timer=dataT.timer;
                 createdDate = date;
                 isPrivate = true;
                 photoData = dataT;
                 
             }
-
+            
         }
         
         
@@ -2727,13 +2866,14 @@
         data.timerValue = timer;
         
     }
-
+    
 }
 
 #pragma mark - ApiAccessDelegate
 
 -(void) receivedResponse:(NSDictionary *)data tag:(NSString *)tag index:(int)index
 {
+    
     
     if ([tag isEqualToString:@"getChatData"])
     {
@@ -2758,9 +2898,11 @@
                     [dateFormatter setDateFormat:@"MMMM dd"];
                     [dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
                     
-                    if ([self isSameDayWithDate1:currentDate date2:date] ) {
+                    
+                    
+                    if ([self isSameDayWithDate1:currentDate date2:date]) {
                         
-                        [self.myObject removeObjectAtIndex:i];
+                        [self.myObject removeObject:data] ;
                     }
                     
                     Date *dateO = [[Date alloc] init];
@@ -2797,12 +2939,12 @@
                         isDate = true;
                     }
                     
-                   
+                    
                 }
                 
-               
                 
-               // [self.myObject addObject:self.response.responseData[i]];
+                
+                // [self.myObject addObject:self.response.responseData[i]];
                 [self.myObject insertObject:self.response.responseData[i] atIndex:(isDate)?i+1:i];
                 
             }
@@ -2822,8 +2964,8 @@
                 [self.tableData scrollToRowAtIndexPath: ipath atScrollPosition:UITableViewScrollPositionBottom animated: YES];
             }
         }
-       
-
+        
+        
         
     }
     
