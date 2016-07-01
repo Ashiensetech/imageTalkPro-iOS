@@ -22,7 +22,7 @@
 
 @property (strong, nonatomic) AppDelegate *app;
 @property (strong, nonatomic) UIAlertView *alertDownload;
-@property (strong, nonatomic) UIAlertView *alertDelete;
+@property (strong, nonatomic) UIAlertController *alertDelete;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *imageHeight;
 @property (strong,nonatomic) LikeResponse *dataLike;
 @property (strong,nonatomic) FavResponse *dataFav;

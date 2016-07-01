@@ -28,6 +28,6 @@
 @property (nonatomic,strong) AVAudioPlayer *player;
 @property (nonatomic,strong) NSMutableDictionary* timers;
 @property (assign,nonatomic) NSString *deviceId;
-
+@property (strong,nonatomic) UITabBarController *tabBarController;
 @end
 

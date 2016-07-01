@@ -34,7 +34,7 @@
      self.myObjectCategory = [[NSMutableArray alloc] init];
     
      self.tableData.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    
+    [ self.tableData setAllowsSelection:YES];
     [self getCategoryData];
 }
 
@@ -76,8 +76,12 @@
     return cell;
     
 }
-
-
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    NSLog(@"from ");
+    HorizontalTableViewCell *cell = [self.tableData cellForRowAtIndexPath:indexPath];
+   [self performSegueWithIdentifier:@"shopDetails" sender:cell.downloadBtn];
+}
 #pragma mark - ApiAccessDelegate
 
 -(void) receivedResponse:(NSDictionary *)data tag:(NSString *)tag index:(int)index

@@ -41,7 +41,7 @@
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeNewsstandContentAvailability| UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     }
 
-    
+
     
     [SoundManager sharedManager].allowsBackgroundMusic = YES;
     [[SoundManager sharedManager] prepareToPlay];
@@ -61,7 +61,7 @@
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:238.00/255.00 green:117.00/255.00 blue:13.00/255.00 alpha:1]];
     [[UITabBar appearance] setTranslucent:NO];
     
-
+    
     
     
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:238.00/255.00 green:117.00/255.00 blue:13.00/255.00 alpha:1]];
@@ -110,6 +110,7 @@
     
     self.timers = [[NSMutableDictionary alloc]init];
     
+
 
     
     NSLog(@"%@",[defaults objectForKey:@"access_token"]);
@@ -201,7 +202,9 @@
         [self.window makeKeyAndVisible];
        
     }
+
     
+  
     
     [[FBSDKApplicationDelegate sharedInstance] application:application
                              didFinishLaunchingWithOptions:launchOptions];

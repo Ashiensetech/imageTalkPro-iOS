@@ -117,7 +117,7 @@
 
 
 - (IBAction)add:(id)sender {
-    
+   [self.comment resignFirstResponder];
     if([self.comment.text isEqualToString:@"write your comment here..."] || [self.comment.text isEqualToString:@""])
     {
         [ToastView showErrorToastInParentView:self.view withText:@"please write your comment first" withDuaration:2.0];
@@ -125,7 +125,7 @@
     else
     {
         NSData *data = [self.comment.text dataUsingEncoding:NSNonLossyASCIIStringEncoding];
-     NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         
         
         NSDictionary *inventory = @{
@@ -437,6 +437,12 @@
     }
     [textView resignFirstResponder];
     
+}
+- (BOOL)textFieldShouldReturn:(UITextView*)aTextField
+{
+   
+    [aTextField resignFirstResponder];
+    return YES;
 }
 
 

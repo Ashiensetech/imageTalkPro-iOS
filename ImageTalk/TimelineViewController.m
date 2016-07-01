@@ -49,6 +49,8 @@
     
     self.tabBarController.tabBar.hidden= NO;
     
+
+    
     CGRect headerTitleSubtitleFrame = CGRectMake(0, 0, 200, 44);
     UIView* _headerTitleSubtitleView = [[UILabel alloc] initWithFrame:headerTitleSubtitleFrame];
     _headerTitleSubtitleView.backgroundColor = [UIColor clearColor];
@@ -525,9 +527,14 @@
         cell.favImg.image = [UIImage imageNamed:@"star-1"];
     }
     
+    NSString *likeTxt = @"";
+    if(data.likeCount>1){
+        likeTxt =[NSString stringWithFormat:@"%d likes",data.likeCount];
+    }else{
+     likeTxt =[NSString stringWithFormat:@"%d like",data.likeCount];
+    }
     
-    
-    cell.likeLabel.text = [NSString stringWithFormat:@"%d likes",data.likeCount];
+    cell.likeLabel.text = likeTxt;
     
     cell.date.text = [NSString stringWithFormat:@"%@",[self AgoStringFromTime:old]];
     
@@ -699,15 +706,22 @@
     
     
     if (data.places) {
-        
-        [cell.loc setTitle:data.places.name forState:UIControlStateNormal];
+        NSData *locData = [data.places.name dataUsingEncoding:NSUTF8StringEncoding];
+        NSString *locStr = [[NSString alloc] initWithData:locData encoding:NSNonLossyASCIIStringEncoding];
+        [cell.loc setTitle:locStr forState:UIControlStateNormal];
     }
     
     cell.likesBtn.tag = indexPath.row;
     
     cell.commentBtn.tag = indexPath.row;
+    NSString *CommentTxt = @"";
+    if(data.commentCount>1){
+        CommentTxt =[NSString stringWithFormat:@"%d comments",data.commentCount];
+    }else{
+        CommentTxt =[NSString stringWithFormat:@"%d comment",data.commentCount];
+    }
     
-    cell.commentLabel.text = [NSString stringWithFormat:@"%d comments",data.commentCount];
+    cell.commentLabel.text =CommentTxt;
     
     cell.profileBtn.tag = indexPath.row;
     cell.loc.tag = indexPath.row;

@@ -362,7 +362,56 @@
     else
     {
         [self.loading startAnimating];
-        NSDictionary *inventory = @{@"photo" : [self imageToString:[self.cropperImage processedImage]]};
+        if(stickerArray.count>0){
+            UIImage *stickeredImage =(!self.isAspect) ? [self.cropperImage processedImage] : self.image;
+            for(int i=0 ; i<stickerArray.count ;i++){
+                ZDStickerView *sticker = stickerArray[i];
+                CGFloat radians = atan2f(sticker.transform.b, sticker.transform.a);
+                [sticker setHidden:YES];
+                [((UIImageView*)sticker.contentView) becomeFirstResponder];
+                UIImage *bottomImage =  stickeredImage;//background image
+                UIImage *image       = NULL;
+                
+                if(sticker.tag ==0){
+                    image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"glass"]];
+                }else if(sticker.tag ==1){
+                    image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"sleepy"]];
+                }else if(sticker.tag ==2){
+                    image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"WINK"]];
+                }else if(sticker.tag ==3){
+                    image =[self imageRotatedByDegrees:radians Image:[UIImage imageNamed:@"wink2"]];
+                }
+                
+                
+                CGSize newSize = CGSizeMake(bottomImage.size.width, bottomImage.size.height);
+                
+                UIGraphicsBeginImageContext( newSize );
+                
+                [bottomImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+                
+                [image drawInRect:CGRectMake(sticker.frame.origin.x+5, sticker.frame.origin.y+5, sticker.frame.size.width-20, sticker.frame.size.height-20)
+                        blendMode:kCGBlendModeNormal alpha:1.0];
+                
+                UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+                
+                UIGraphicsEndImageContext();
+                stickeredImage= newImage;
+                
+            }
+            self.image = stickeredImage;
+            
+        }
+        UIImage *img =  [[UIImage alloc]init ];
+        if(self.type==1){
+           img = [[self.imageCropper getCroppedImage] scaleImageToSize:CGSizeMake(self.image.size.width,self.image.size.width)];
+        }else if(stickerArray.count>0){
+         img  = self.image;
+            
+        }
+        else{
+            img = (!self.isAspect) ? [self.cropperImage processedImage] : self.image;
+        }
+        NSDictionary *inventory = @{@"photo" : [self imageToString:img]};
         //        NSLog(@"%@",[self imageToString:[self.cropperImage processedImage]]);
         [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/profile/change/picture" params:inventory tag:@"changePicture"];
     }
@@ -647,7 +696,7 @@
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
+    NSLog(@"count : %ld",stickerArray.count);
     if(stickerArray.count>0){
         UIImage *stickeredImage =(!self.isAspect) ? [self.cropperImage processedImage] : self.image;
         for(int i=0 ; i<stickerArray.count ;i++){
@@ -708,6 +757,7 @@
     
     if ([segue.identifier isEqualToString:@"profileShow"])
     {
+        NSLog(@"called");
         UINavigationController *navController = [segue destinationViewController];
         ProfileViewController *data = (ProfileViewController *)([navController viewControllers][0]);
         
@@ -786,6 +836,7 @@
     [self.view sendSubviewToBack:self.cropView];
     [self.cropperImage removeFromSuperview];
     [self.cropView addSubview:self.imageCropper];
+   
     
     
 }
