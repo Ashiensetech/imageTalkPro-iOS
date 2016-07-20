@@ -20,6 +20,7 @@
 
 
 @interface ChatHomeViewController ()
+@property (strong, nonatomic) IBOutlet UILabel *tabLabel;
 
 @end
 
@@ -38,9 +39,17 @@
     port = [defaults objectForKey:@"port"];
     
     self.tableData.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    
+   
+    UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tabLabelTouchedAction:)];
+    tapped.numberOfTapsRequired = 1;
+    [self.tabLabel addGestureRecognizer:tapped];
     
     self.app =(AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+
+}
+-(void)tabLabelTouchedAction :(id) sender{
+    [self performSegueWithIdentifier:@"showSelect" sender:(id)sender];
 }
 
 -(void) timerTickWithChatId:(NSString *)chatId interval:(int)interval
@@ -93,8 +102,8 @@
 -(NSString*) AgoStringFromTime : (NSDate*) dateTime
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"hh:mm a"];
-    
+   // [dateFormatter setDateFormat:@"hh:mm a"];
+     [dateFormatter setDateFormat:@"d.MM.yy"];
     [dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
     
     return  [dateFormatter stringFromDate:dateTime];
@@ -105,10 +114,11 @@
 {
     ChatHistoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     ChatHistory *data=[self.response.responseData objectAtIndex:indexPath.row];
+   
     cell.name.text = [NSString stringWithFormat:@"%@ %@",data.contact.user.firstName,data.contact.user.lastName];
  
     Chat *chat = data.chat[0];
-    
+     NSLog(@"recent : %@", chat);
     NSTimeInterval timestamp = [chat.createdDate longLongValue];
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
     
@@ -145,10 +155,10 @@
     
     cell.time.textColor = (!chat.readStatus && chat.from!=self.app.authCredential.id) ? [UIColor redColor]:[UIColor lightGrayColor];
     cell.sub.textColor = (!chat.readStatus && chat.from!=self.app.authCredential.id) ? [UIColor redColor]:[UIColor lightGrayColor];
-    cell.notification.text = [NSString stringWithFormat:@"%d",data.unRead];
-    cell.notification.hidden = (!chat.readStatus && chat.from!=self.app.authCredential.id) ? false:true;
-  
-    
+//    cell.notification.text = [NSString stringWithFormat:@"%d",data.unRead];
+//    cell.notification.hidden = (!chat.readStatus && chat.from!=self.app.authCredential.id) ? false:true;
+    cell.readStatus.image =  (chat.readStatus) ? [UIImage imageNamed:@"seen"]:[UIImage imageNamed:@"unseen"];
+    cell.notification.hidden =YES;
     return cell;
     
 }

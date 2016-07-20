@@ -15,5 +15,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *sub;
 @property (strong, nonatomic) IBOutlet UILabel *time;
 @property (strong, nonatomic) IBOutlet UILabel *notification;
+@property (strong, nonatomic) IBOutlet UIImageView *readStatus;
 
 @end

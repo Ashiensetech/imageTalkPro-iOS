@@ -234,6 +234,7 @@
 		FDB3716A1BFAE58400A9D99B /* ChatDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB371691BFAE58400A9D99B /* ChatDetailsViewController.m */; };
 		FDB3716D1BFAEB9100A9D99B /* ChatHistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3716C1BFAEB9100A9D99B /* ChatHistoryTableViewCell.m */; };
 		FDB371701BFB2E4500A9D99B /* ShopDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3716F1BFB2E4500A9D99B /* ShopDetailsViewController.m */; };
+		FDBF0BAC1D38C3F200BA266E /* InviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBF0BAB1D38C3F200BA266E /* InviteFriendsViewController.m */; };
 		FDC711451BF1E4A600FBC374 /* StickerCategoryResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC711441BF1E4A600FBC374 /* StickerCategoryResponse.m */; };
 		FDC711481BF2041800FBC374 /* StickerShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC711471BF2041800FBC374 /* StickerShopViewController.m */; };
 		FDC7114B1BF2048C00FBC374 /* UploadMoodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC7114A1BF2048C00FBC374 /* UploadMoodViewController.m */; };
@@ -741,6 +742,8 @@
 		FDB3716C1BFAEB9100A9D99B /* ChatHistoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatHistoryTableViewCell.m; sourceTree = "<group>"; };
 		FDB3716E1BFB2E4500A9D99B /* ShopDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopDetailsViewController.h; sourceTree = "<group>"; };
 		FDB3716F1BFB2E4500A9D99B /* ShopDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopDetailsViewController.m; sourceTree = "<group>"; };
+		FDBF0BAA1D38C3F200BA266E /* InviteFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteFriendsViewController.h; sourceTree = "<group>"; };
+		FDBF0BAB1D38C3F200BA266E /* InviteFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteFriendsViewController.m; sourceTree = "<group>"; };
 		FDC711431BF1E4A600FBC374 /* StickerCategoryResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StickerCategoryResponse.h; sourceTree = "<group>"; };
 		FDC711441BF1E4A600FBC374 /* StickerCategoryResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StickerCategoryResponse.m; sourceTree = "<group>"; };
 		FDC711461BF2041800FBC374 /* StickerShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StickerShopViewController.h; sourceTree = "<group>"; };
@@ -1520,6 +1523,8 @@
 			children = (
 				FDEECE611B9DA5AC00887F4A /* ContactsViewController.h */,
 				FDEECE621B9DA5AC00887F4A /* ContactsViewController.m */,
+				FDBF0BAA1D38C3F200BA266E /* InviteFriendsViewController.h */,
+				FDBF0BAB1D38C3F200BA266E /* InviteFriendsViewController.m */,
 			);
 			name = Contact;
 			sourceTree = "<group>";
@@ -2446,6 +2451,7 @@
 				FD1537601D17F041005CFCF6 /* LocationArrayModel.m in Sources */,
 				FD98292E1BD0B88600B3C647 /* CommentsTableViewCell.m in Sources */,
 				FD4449B21C4908AE00B87D33 /* SenderVideoTableViewCell.m in Sources */,
+				FDBF0BAC1D38C3F200BA266E /* InviteFriendsViewController.m in Sources */,
 				FD4449B51C4908C100B87D33 /* ReceiverVideoTableViewCell.m in Sources */,
 				FDFC70BA1BE37C91001782F0 /* LocationViewController.m in Sources */,
 				FDFC90811BEB27190019B9CB /* BaseChat.m in Sources */,
