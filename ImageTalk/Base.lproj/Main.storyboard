@@ -12,6 +12,119 @@
         <mutableArray key="Arcitectura_Regular.otf">
             <string>Arcitectura</string>
         </mutableArray>
+        <mutableArray key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+        </mutableArray>
     </customFonts>
     <scenes>
         <!--ImageTalk-->
@@ -4520,6 +4633,9 @@
                                     <color key="titleColor" red="0.43529411759999997" green="0.43529411759999997" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="InviteFriendsAction:" destination="g4C-zF-liW" eventType="touchUpInside" id="hq3-Gd-SAJ"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="drf-Sp-3vX">
@@ -4544,11 +4660,12 @@
                         <outlet property="searchBar" destination="vjt-Tf-Kne" id="EVu-Nh-bJF"/>
                         <outlet property="tableData" destination="QNc-SI-SYk" id="OOM-Oc-cZo"/>
                         <outlet property="tableMainData" destination="o9u-7L-B7u" id="imi-6Z-26N"/>
+                        <segue destination="Yc9-A0-y5n" kind="show" identifier="InviteFriends" id="QaF-8E-01R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sdx-fZ-alO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1549" y="4878"/>
+            <point key="canvasLocation" x="2040" y="4891"/>
         </scene>
         <!--All Photos-->
         <scene sceneID="due-7n-NIl">
@@ -6896,7 +7013,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sJj-UX-KwR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3684" y="4849"/>
+            <point key="canvasLocation" x="4496" y="4849"/>
         </scene>
         <!--Photo Details-->
         <scene sceneID="a0F-69-yS1">
@@ -6984,8 +7101,8 @@
                                         <color key="textColor" red="0.92549019607843142" green="0.40784313725490196" blue="0.054901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jy4-IO-4PZ">
-                                        <rect key="frame" x="183" y="212" width="234" height="42"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jy4-IO-4PZ">
+                                        <rect key="frame" x="98" y="212" width="404" height="42"/>
                                         <string key="text">How about starting your first
                                             chat with your friends?</string>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
@@ -7044,6 +7161,12 @@
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="seen" translatesAutoresizingMaskIntoConstraints="NO" id="89W-fh-lpC">
+                                                            <rect key="frame" x="506" y="30" width="15" height="16"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="15" id="z3F-7k-GO4"/>
+                                                            </constraints>
+                                                        </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFT-f6-RrB">
                                                             <rect key="frame" x="80" y="30" width="451" height="16"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
@@ -7070,14 +7193,19 @@
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstAttribute="centerY" secondItem="KgR-EW-naj" secondAttribute="centerY" constant="6" id="1w6-iG-n9t"/>
+                                                        <constraint firstItem="89W-fh-lpC" firstAttribute="bottom" secondItem="NZD-fD-vCY" secondAttribute="bottom" constant="-6" id="3LP-F3-vLW"/>
                                                         <constraint firstAttribute="centerY" secondItem="NZD-fD-vCY" secondAttribute="centerY" id="45X-JX-Rns"/>
                                                         <constraint firstItem="mFT-f6-RrB" firstAttribute="top" secondItem="KgR-EW-naj" secondAttribute="bottom" id="49P-kZ-i3P"/>
                                                         <constraint firstAttribute="trailing" secondItem="mFT-f6-RrB" secondAttribute="trailing" constant="20" id="DUg-Q8-5RD"/>
                                                         <constraint firstItem="KgR-EW-naj" firstAttribute="leading" secondItem="NZD-fD-vCY" secondAttribute="trailing" constant="20" id="KBa-Ug-CBO"/>
+                                                        <constraint firstItem="89W-fh-lpC" firstAttribute="top" secondItem="bHz-4b-zpg" secondAttribute="top" constant="-1" id="RDf-IM-fgx"/>
                                                         <constraint firstItem="S2C-Ac-qQC" firstAttribute="top" secondItem="TgH-xf-i5g" secondAttribute="top" constant="5" id="aWC-Zk-Me1"/>
+                                                        <constraint firstItem="bHz-4b-zpg" firstAttribute="leading" secondItem="89W-fh-lpC" secondAttribute="trailing" constant="8" symbolic="YES" id="m0f-lZ-dkr"/>
+                                                        <constraint firstAttribute="bottom" secondItem="89W-fh-lpC" secondAttribute="bottom" constant="7" id="mCM-n5-w7D"/>
                                                         <constraint firstItem="mFT-f6-RrB" firstAttribute="leading" secondItem="NZD-fD-vCY" secondAttribute="trailing" constant="20" id="nCy-NO-7kQ"/>
                                                         <constraint firstAttribute="trailing" secondItem="bHz-4b-zpg" secondAttribute="trailing" id="olo-an-jXQ"/>
                                                         <constraint firstAttribute="trailing" secondItem="S2C-Ac-qQC" secondAttribute="trailing" id="qXr-bQ-wDg"/>
+                                                        <constraint firstItem="89W-fh-lpC" firstAttribute="top" secondItem="TgH-xf-i5g" secondAttribute="top" constant="30" id="vaj-ny-gMv"/>
                                                         <constraint firstItem="NZD-fD-vCY" firstAttribute="leading" secondItem="TgH-xf-i5g" secondAttribute="leading" constant="10" id="x5P-DQ-fkj"/>
                                                         <constraint firstAttribute="bottom" secondItem="bHz-4b-zpg" secondAttribute="bottom" id="xPO-SZ-jIg"/>
                                                     </constraints>
@@ -7094,6 +7222,7 @@
                                             <outlet property="name" destination="KgR-EW-naj" id="gpr-nJ-VRz"/>
                                             <outlet property="notification" destination="bHz-4b-zpg" id="t4b-Ii-ugf"/>
                                             <outlet property="profilePic" destination="NZD-fD-vCY" id="AOb-wY-Rt7"/>
+                                            <outlet property="readStatus" destination="89W-fh-lpC" id="nMW-TM-Rfp"/>
                                             <outlet property="sub" destination="mFT-f6-RrB" id="7Gq-3c-x2V"/>
                                             <outlet property="time" destination="S2C-Ac-qQC" id="bNd-1h-qUs"/>
                                             <segue destination="U0n-Ye-FzV" kind="show" identifier="showChat" id="SO6-tj-XTp"/>
@@ -7141,6 +7270,7 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="emptyView" destination="Z0J-w1-mt9" id="8iS-XK-mKO"/>
+                        <outlet property="tabLabel" destination="qjO-PG-dpP" id="mMf-o3-Q2B"/>
                         <outlet property="tableData" destination="DFg-Zr-Xpe" id="XRF-eg-6Qg"/>
                     </connections>
                 </viewController>
@@ -7279,6 +7409,41 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="59c-7Y-Z4a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2257" y="4159"/>
+        </scene>
+        <!--Invite Friends View Controller-->
+        <scene sceneID="3T4-Nt-Vbe">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="Yc9-A0-y5n" customClass="InviteFriendsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XD0-Rd-ub8"/>
+                        <viewControllerLayoutGuide type="bottom" id="vWX-vC-n5I"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Lde-Cv-3oM">
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Hre-0T-cj2">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="563"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Hre-0T-cj2" firstAttribute="top" secondItem="XD0-Rd-ub8" secondAttribute="bottom" id="1YB-fE-EDP"/>
+                            <constraint firstItem="Hre-0T-cj2" firstAttribute="leading" secondItem="Lde-Cv-3oM" secondAttribute="leading" id="92Z-tg-jGQ"/>
+                            <constraint firstAttribute="trailing" secondItem="Hre-0T-cj2" secondAttribute="trailing" id="nAG-jj-1TL"/>
+                            <constraint firstItem="Hre-0T-cj2" firstAttribute="bottom" secondItem="vWX-vC-n5I" secondAttribute="top" constant="76" id="sNt-d4-z88"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="tableData" destination="Hre-0T-cj2" id="7IA-rC-t1u"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bwj-m9-rYW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2811" y="4891"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="q1L-tE-DFw">
@@ -8458,18 +8623,18 @@
         <image name="web" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tBQ-Tn-MBN"/>
         <segue reference="WCu-FZ-FMp"/>
+        <segue reference="tBQ-Tn-MBN"/>
         <segue reference="JvH-LZ-azZ"/>
         <segue reference="SwU-sA-rJ9"/>
         <segue reference="jOb-ZT-cu4"/>
-        <segue reference="SO6-tj-XTp"/>
-        <segue reference="XpC-VB-DQn"/>
-        <segue reference="uHW-24-y3y"/>
-        <segue reference="0Ay-17-uwa"/>
-        <segue reference="hwa-Rq-OMl"/>
         <segue reference="MBt-ZP-MfS"/>
         <segue reference="C9D-kT-xaQ"/>
         <segue reference="y4Q-Xs-wje"/>
+        <segue reference="SO6-tj-XTp"/>
+        <segue reference="XpC-VB-DQn"/>
+        <segue reference="0Ay-17-uwa"/>
+        <segue reference="uHW-24-y3y"/>
+        <segue reference="XXc-yb-gQH"/>
     </inferredMetricsTieBreakers>
 </document>

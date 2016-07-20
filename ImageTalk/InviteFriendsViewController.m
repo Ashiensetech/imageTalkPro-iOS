@@ -1,29 +1,14 @@
 //
-//  ContactsViewController.m
+//  InviteFriendsViewController.m
 //  ImageTalk
 //
-//  Created by Workspace Infotech on 9/7/15.
-//  Copyright (c) 2015 Workspace Infotech. All rights reserved.
+//  Created by Workspace Infotech on 7/15/16.
+//  Copyright © 2016 Workspace Infotech. All rights reserved.
 //
 
-#import "ContactsViewController.h"
-#import "CustomTableViewCell.h"
-#import "ContactsTableViewCell.h"
-#import "AppCredential.h"
-#import "JSONHTTPClient.h"
-#import "AppDelegate.h"
-#import "ToastView.h"
-#import "ApiAccess.h"
-#import "FriendsProfileViewController.h"
-#import <math.h>
+#import "InviteFriendsViewController.h"
 
-
-@interface ContactsViewController ()
-
-@end
-
-@implementation ContactsViewController
-
+@implementation InviteFriendsViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -32,14 +17,19 @@
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.tabBarController.tabBar.hidden= NO;
-    
+    self.navigationItem.title = @"Invite Friends";
+    UIBarButtonItem *sendButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:@"Send"
+                                   style:UIBarButtonItemStylePlain
+                                   target:self
+                                   action:@selector(sendSms:)];
+    self.navigationItem.rightBarButtonItem = sendButton;
 }
-
 -(void)viewDidAppear:(BOOL)animated
 {
     self.tabBarController.tabBar.hidden=NO;
     [[ApiAccess getSharedInstance] setDelegate:self];
-
+    
     self.contactStringArray = [[NSMutableArray alloc] init];
     self.contactCount = 0;
     
@@ -68,7 +58,7 @@
     self.offset = 0;
     self.loaded = false;
     self.keyword = @"";
-    [self getData:self.offset keyword:self.keyword];
+   // [self getData:self.offset keyword:self.keyword];
     
     
     self.app =(AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -78,18 +68,6 @@
     
     [self.tableData reloadData];
 }
-
--(void) getData:(int) offset keyword:(NSString*) keyword{
-    
-    NSDictionary *inventory = @{
-                                @"offset" :[NSString stringWithFormat:@"%d",offset],
-                                @"keyword" : keyword
-                                };
-    [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/search/contact/by/keyword" params:inventory tag:@"getData"];
-
-}
-
-
 -(void) importContacts{
     
     if(self.contactStringArray.count > 0)
@@ -109,56 +87,48 @@
     }
     
 }
-
--(void) addContacts{
-    
-    NSDictionary *inventory = @{@"app_login_credential_id" :self.contactAddString};
-    [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/contact/add" params:inventory tag:@"getData"];
-    
-}
-
 - (NSMutableDictionary *)getAllContacts {
     
-        CFErrorRef *error = nil;
-        ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, error);
-        ABRecordRef source = ABAddressBookCopyDefaultSource(addressBook);
-        CFArrayRef allPeople = (ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, source, kABPersonSortByFirstName));
-         //CFIndex nPeople = ABAddressBookGetPersonCount(addressBook);
-         CFIndex nPeople = CFArrayGetCount(allPeople); // bugfix who synced contacts with facebook
-         NSMutableDictionary* items = [[NSMutableDictionary alloc] init];
-         NSMutableArray* itemA=[[NSMutableArray alloc] init];
-         NSMutableArray* itemB=[[NSMutableArray alloc] init];
-         NSMutableArray* itemC=[[NSMutableArray alloc] init];
-         NSMutableArray* itemD=[[NSMutableArray alloc] init];
-         NSMutableArray* itemE=[[NSMutableArray alloc] init];
-         NSMutableArray* itemF=[[NSMutableArray alloc] init];
-         NSMutableArray* itemG=[[NSMutableArray alloc] init];
-         NSMutableArray* itemH=[[NSMutableArray alloc] init];
-         NSMutableArray* itemI=[[NSMutableArray alloc] init];
-         NSMutableArray* itemJ=[[NSMutableArray alloc] init];
-         NSMutableArray* itemK=[[NSMutableArray alloc] init];
-         NSMutableArray* itemL=[[NSMutableArray alloc] init];
-         NSMutableArray* itemM=[[NSMutableArray alloc] init];
-         NSMutableArray* itemN=[[NSMutableArray alloc] init];
-         NSMutableArray* itemO=[[NSMutableArray alloc] init];
-         NSMutableArray* itemP=[[NSMutableArray alloc] init];
-         NSMutableArray* itemQ=[[NSMutableArray alloc] init];
-         NSMutableArray* itemR=[[NSMutableArray alloc] init];
-         NSMutableArray* itemS=[[NSMutableArray alloc] init];
-         NSMutableArray* itemT=[[NSMutableArray alloc] init];
-         NSMutableArray* itemU=[[NSMutableArray alloc] init];
-         NSMutableArray* itemV=[[NSMutableArray alloc] init];
-         NSMutableArray* itemW=[[NSMutableArray alloc] init];
-         NSMutableArray* itemX=[[NSMutableArray alloc] init];
-         NSMutableArray* itemY=[[NSMutableArray alloc] init];
-         NSMutableArray* itemZ=[[NSMutableArray alloc] init];
+    CFErrorRef *error = nil;
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, error);
+    ABRecordRef source = ABAddressBookCopyDefaultSource(addressBook);
+    CFArrayRef allPeople = (ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, source, kABPersonSortByFirstName));
+    //CFIndex nPeople = ABAddressBookGetPersonCount(addressBook);
+    CFIndex nPeople = CFArrayGetCount(allPeople); // bugfix who synced contacts with facebook
+    NSMutableDictionary* items = [[NSMutableDictionary alloc] init];
+    NSMutableArray* itemA=[[NSMutableArray alloc] init];
+    NSMutableArray* itemB=[[NSMutableArray alloc] init];
+    NSMutableArray* itemC=[[NSMutableArray alloc] init];
+    NSMutableArray* itemD=[[NSMutableArray alloc] init];
+    NSMutableArray* itemE=[[NSMutableArray alloc] init];
+    NSMutableArray* itemF=[[NSMutableArray alloc] init];
+    NSMutableArray* itemG=[[NSMutableArray alloc] init];
+    NSMutableArray* itemH=[[NSMutableArray alloc] init];
+    NSMutableArray* itemI=[[NSMutableArray alloc] init];
+    NSMutableArray* itemJ=[[NSMutableArray alloc] init];
+    NSMutableArray* itemK=[[NSMutableArray alloc] init];
+    NSMutableArray* itemL=[[NSMutableArray alloc] init];
+    NSMutableArray* itemM=[[NSMutableArray alloc] init];
+    NSMutableArray* itemN=[[NSMutableArray alloc] init];
+    NSMutableArray* itemO=[[NSMutableArray alloc] init];
+    NSMutableArray* itemP=[[NSMutableArray alloc] init];
+    NSMutableArray* itemQ=[[NSMutableArray alloc] init];
+    NSMutableArray* itemR=[[NSMutableArray alloc] init];
+    NSMutableArray* itemS=[[NSMutableArray alloc] init];
+    NSMutableArray* itemT=[[NSMutableArray alloc] init];
+    NSMutableArray* itemU=[[NSMutableArray alloc] init];
+    NSMutableArray* itemV=[[NSMutableArray alloc] init];
+    NSMutableArray* itemW=[[NSMutableArray alloc] init];
+    NSMutableArray* itemX=[[NSMutableArray alloc] init];
+    NSMutableArray* itemY=[[NSMutableArray alloc] init];
+    NSMutableArray* itemZ=[[NSMutableArray alloc] init];
     
-        if (!allPeople || !nPeople) {
-            NSLog(@"people nil");
-        }
-
-
-        for (int i = 0; i < nPeople; i++) {
+    if (!allPeople || !nPeople) {
+        NSLog(@"people nil");
+    }
+    
+    
+    for (int i = 0; i < nPeople; i++) {
         
         @autoreleasepool {
             
@@ -232,11 +202,11 @@
                 [self.contactStringArray addObject:self.contactString];
                 self.contactString = @"";
             }
-
+            
             
             self.contactString = (fmod(i, 50)==0) ?[NSString stringWithFormat:@"[\"%@\"",contacts.phone]:[NSString stringWithFormat:@"%@,\"%@\"",self.contactString,contacts.phone];
             
-             NSLog(@"Person is: %@", self.contactString);
+            NSLog(@"Person is: %@", self.contactString);
             
             NSLog(@"MOD RESULT : %f",fmod(i, 50));
             
@@ -248,7 +218,7 @@
                 [itemB addObject:contacts];
             }
             if ([contacts.firstNames hasPrefix:@"C"] || [contacts.firstNames hasPrefix:@"c"]) {
-               [itemC addObject:contacts];
+                [itemC addObject:contacts];
             }
             if ([contacts.firstNames hasPrefix:@"D"] || [contacts.firstNames hasPrefix:@"d"]) {
                 [itemD addObject:contacts];
@@ -260,39 +230,39 @@
                 [itemF addObject:contacts];
             }
             if ([contacts.firstNames hasPrefix:@"G"] || [contacts.firstNames hasPrefix:@"g"]) {
-               [itemG addObject:contacts];
+                [itemG addObject:contacts];
             }
             if ([contacts.firstNames hasPrefix:@"H"] || [contacts.firstNames hasPrefix:@"h"]) {
-               [itemH addObject:contacts];
+                [itemH addObject:contacts];
             }
             if ([contacts.firstNames hasPrefix:@"I"] || [contacts.firstNames hasPrefix:@"i"]) {
-               [itemI addObject:contacts];
+                [itemI addObject:contacts];
             }
             if ([contacts.firstNames hasPrefix:@"J"] || [contacts.firstNames hasPrefix:@"j"]) {
-             [itemJ addObject:contacts];
+                [itemJ addObject:contacts];
             }
             if ([contacts.firstNames hasPrefix:@"K"] || [contacts.firstNames hasPrefix:@"k"]) {
-               [itemK addObject:contacts];
+                [itemK addObject:contacts];
             }
             if ([contacts.firstNames hasPrefix:@"L"] || [contacts.firstNames hasPrefix:@"l"]) {
                 [itemL addObject:contacts];
             }
             if ([contacts.firstNames hasPrefix:@"M"] || [contacts.firstNames hasPrefix:@"m"]) {
-               [itemM addObject:contacts];
+                [itemM addObject:contacts];
             }
             if ([contacts.firstNames hasPrefix:@"N"] || [contacts.firstNames hasPrefix:@"n"]) {
                 [itemN addObject:contacts];
             }
             if ([contacts.firstNames hasPrefix:@"O"] || [contacts.firstNames hasPrefix:@"o"]) {
-               [itemO addObject:contacts];
+                [itemO addObject:contacts];
             }
             if ([contacts.firstNames hasPrefix:@"P"] || [contacts.firstNames hasPrefix:@"p"]) {
-               [itemP addObject:contacts];
+                [itemP addObject:contacts];
             }if ([contacts.firstNames hasPrefix:@"Q"] || [contacts.firstNames hasPrefix:@"q"]) {
                 [itemQ addObject:contacts];
             }
             if ([contacts.firstNames hasPrefix:@"R"] || [contacts.firstNames hasPrefix:@"r"]) {
-               [itemR addObject:contacts];
+                [itemR addObject:contacts];
             }
             if ([contacts.firstNames hasPrefix:@"S"] || [contacts.firstNames hasPrefix:@"s"]) {
                 [itemS addObject:contacts];
@@ -301,13 +271,13 @@
                 [itemT addObject:contacts];
             }
             if ([contacts.firstNames hasPrefix:@"U"] || [contacts.firstNames hasPrefix:@"u"]) {
-               [itemU addObject:contacts];
+                [itemU addObject:contacts];
             }
             if ([contacts.firstNames hasPrefix:@"V"] || [contacts.firstNames hasPrefix:@"v"]) {
                 [itemV addObject:contacts];
             }
             if ([contacts.firstNames hasPrefix:@"W"] || [contacts.firstNames hasPrefix:@"w"]) {
-               [itemW addObject:contacts];
+                [itemW addObject:contacts];
             }
             if ([contacts.firstNames hasPrefix:@"X"] || [contacts.firstNames hasPrefix:@"x"]) {
                 [itemX addObject:contacts];
@@ -321,11 +291,11 @@
             
             
             
-          
+            
             
             
 #ifdef DEBUG
-           
+            
 #endif
             
             
@@ -374,15 +344,9 @@
 }
 
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(IBAction) sendSms:(id)sender{
 }
-- (IBAction)InviteFriendsAction:(id)sender {
-    //InviteFriends
-    [self performSegueWithIdentifier:@"InviteFriends" sender:nil];
-}
+#pragma marks - UITableviewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -418,8 +382,9 @@
     }
     else
     {
-        self.mainHeight.constant = self.myObject.count * 50;
-        return self.myObject.count;
+        return 1;
+//        self.mainHeight.constant = self.myObject.count * 50;
+//        return self.myObject.count;
     }
 }
 
@@ -433,164 +398,6 @@
     
 }
 
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if(tableView == self.tableData)
-    {
-        CustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-
-
-        NSString *sectionTitle = [self.contactsTitles objectAtIndex:indexPath.section];
-        NSArray *sectionContacts = [self.contactsData objectForKey:sectionTitle];
-        ContactsData *data=[sectionContacts objectAtIndex:indexPath.row];
-        NSString *contactsTitle= [NSString stringWithFormat:@"%@ %@",data.firstNames,data.lastNames];
-        cell.label.text = contactsTitle;
-
-        return cell;
-    }
-    else
-    {
-        ContactsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-        Contact *data=[self.myObject objectAtIndex:indexPath.row];
-        cell.name.text = [NSString stringWithFormat:@"%@ %@",data.user.firstName,data.user.lastName];
-        cell.sub.text = [NSString stringWithFormat:@"%@",data.textStatus];
-        [cell.profilePic sd_setImageWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"%@app/media/access/pictures?p=%@",baseurl,data.user.picPath.original.path]]
-                           placeholderImage:nil];
-        
-        return cell;
-    }
-}
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
-    if(tableView == self.tableData)
-    {
-        NSString *sectionTitle = [self.contactsTitles objectAtIndex:indexPath.section];
-        NSArray *sectionContacts = [self.contactsData objectForKey:sectionTitle];
-        ContactsData *data=[sectionContacts objectAtIndex:indexPath.row];
-        NSLog(@"contacts :%@",data.numbers);
-        
-        MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init] ;
-        if([MFMessageComposeViewController canSendText])
-        {
-            controller.body = @"Hello World";
-            controller.recipients = data.numbers;
-            controller.messageComposeDelegate = self;
-            [self presentViewController:controller animated:YES completion:nil];
-           // [self presentModalViewController:controller animated:YES];
-        }
-    }
-}
-- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
-{
-   // [self dismissModalViewControllerAnimated:YES];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    if (result == MessageComposeResultCancelled)
-        NSLog(@"Message cancelled");
-    else if (result == MessageComposeResultSent)
-        NSLog(@"Message sent");
-    else
-        NSLog(@"Message failed")  ;
-}
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    
-    [self.view endEditing:YES];
-    
-}
-
-
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
-{
-    return YES;
-}
-
--(void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
-    self.myObject = [[NSMutableArray alloc] init];
-    self.offset = 0;
-    self.loaded = false;
-    self.keyword = searchText;
-    [self getData:self.offset keyword:self.keyword];
-}
-
-#pragma mark - ApiAccessDelegate
-
--(void) receivedResponse:(NSDictionary *)data tag:(NSString *)tag index:(int)index
-{
-    NSLog(@"%@",tag);
-    
-    if ([tag isEqualToString:@"getData"])
-    {
-        NSError* error = nil;
-        self.responseC = [[ContactResponse alloc] initWithDictionary:data error:&error];
-        
-        if(self.responseC.responseStat.status)
-        {
-            for(int i=0;i<self.responseC.responseData.count;i++)
-            {
-                [self.myObject addObject:self.responseC.responseData[i]];
-            }
-          
-        }
-        
-        self.isData = self.responseC.responseStat.status;
-        self.loaded = self.responseC.responseStat.status;
-        self.offset = (self.responseC.responseStat.status)? self.offset+1:self.offset;
-        [self.tableMainData reloadData];
-        
-    }
-    
-    if ([tag isEqualToString:@"findmatch"])
-    {
-        NSError* error = nil;
-        self.response = [[ContactsResponse alloc] initWithDictionary:data error:&error];
-        
-        
-        if(self.response.responseData.count>0)
-        {
-            for(int i=0;i<self.response.responseData.count;i++)
-            {
-                [self.app.contacts addObject:self.response.responseData[i]];
-                AppCredential *data = self.response.responseData[i];
-                self.contactAddString = (i==0) ?[NSString stringWithFormat:@"[%d",data.id]:[NSString stringWithFormat:@"%@,%d",self.contactAddString,data.id];
-                
-            }
-            self.contactAddString = [NSString stringWithFormat:@"%@]",self.contactAddString];
-            
-            [self addContacts];
-            
-        }
-
-        
-    }
-    
-   
-    
-    
-}
-
--(void) receivedError:(JSONModelError *)error tag:(NSString *)tag
-{
-    [ToastView showErrorToastInParentView:self.view withText:@"Internet connection error" withDuaration:2.0];
-    
-    
-}
-
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
-    if ([segue.identifier isEqualToString:@"friendsProfile"])
-    {
-        NSIndexPath *indexPath = [self.tableMainData indexPathForSelectedRow];
-        FriendsProfileViewController *data = [segue destinationViewController];
-        Contact *post = self.myObject[indexPath.row];
-        data.hidesBottomBarWhenPushed = YES;
-        data.owner = (AppCredential*) post;
-        
-    }
-}
 
 
 @end
