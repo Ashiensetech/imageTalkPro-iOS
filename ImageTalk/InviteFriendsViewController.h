@@ -43,4 +43,5 @@
 @property (assign,nonatomic) int contactCount;
 @property (assign,nonatomic) BOOL isData;
 @property (assign,nonatomic) BOOL loaded;
+@property (strong,nonatomic) NSMutableArray *selectedContactss;
 @end

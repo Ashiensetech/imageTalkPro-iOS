@@ -7,6 +7,7 @@
 //
 
 #import "InviteFriendsViewController.h"
+#import "InviteFriendsTableViewCell.h"
 
 @implementation InviteFriendsViewController
 - (void)viewDidLoad {
@@ -24,10 +25,13 @@
                                    target:self
                                    action:@selector(sendSms:)];
     self.navigationItem.rightBarButtonItem = sendButton;
+    self.tableData.delegate = self;
+    self.tableData.dataSource = self;
 }
--(void)viewDidAppear:(BOOL)animated
+
+-(void) viewDidAppear:(BOOL)animated
 {
-    self.tabBarController.tabBar.hidden=NO;
+    self.selectedContactss = [[NSMutableArray alloc]init];
     [[ApiAccess getSharedInstance] setDelegate:self];
     
     self.contactStringArray = [[NSMutableArray alloc] init];
@@ -51,42 +55,122 @@
     }
     else {
     }
-    
-    
-    self.myObject = [[NSMutableArray alloc] init];
-    
-    self.offset = 0;
-    self.loaded = false;
-    self.keyword = @"";
-   // [self getData:self.offset keyword:self.keyword];
-    
-    
-    self.app =(AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    
-    [self importContacts];
-    
     [self.tableData reloadData];
 }
--(void) importContacts{
-    
-    if(self.contactStringArray.count > 0)
-    {
-        for (int i=0; i<self.contactStringArray.count; i++)
-        {
-            NSString *conString = self.contactStringArray[i];
-            NSDictionary *inventory = @{@"contacts" :conString};
-            [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/contact/findmatch" params:inventory tag:@"findmatch"];
-        }
-    }
-    else
-    {
+
+#pragma marks - send Invitations 
+
+-(IBAction)sendSms:(id)sender
+{
+    NSLog(@"selected contacts :%@",self.selectedContactss);
+    if(self.selectedContactss.count>0){
         
-        NSDictionary *inventory = @{@"contacts" :self.contactString};
-        [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/contact/findmatch" params:inventory tag:@"findmatch"];
+        NSMutableArray *numbers = [[NSMutableArray alloc]init];
+        for(int i=0; i<self.selectedContactss.count;i++){
+            ContactsData *data=[self.selectedContactss objectAtIndex:i];
+            NSLog(@"contacts :%@",data.numbers);
+            [numbers addObject:data.numbers[0]];
+        }
+        
+        MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init] ;
+        if([MFMessageComposeViewController canSendText])
+        {
+            controller.body = @"Hello World";
+            controller.recipients = numbers;
+            controller.messageComposeDelegate = self;
+            [self presentViewController:controller animated:YES completion:nil];
+            
+        }
+        
     }
     
 }
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+
+    // [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    if (result == MessageComposeResultCancelled)
+        NSLog(@"Message cancelled");
+    else if (result == MessageComposeResultSent)
+        NSLog(@"Message sent");
+    else
+        NSLog(@"Message failed")  ;
+}
+
+#pragma Marks - UITableViewDelegate
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    
+    return [self.contactsTitles count];
+    
+}
+
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return [self.contactsTitles objectAtIndex:section];
+    
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    NSString *sectionTitle = [self.contactsTitles objectAtIndex:section];
+    NSArray *sectionContacts = [self.contactsData objectForKey:sectionTitle];
+    
+    return [sectionContacts count];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+{
+    
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    [header.textLabel setTextColor:[UIColor orangeColor]];
+    
+    
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    InviteFriendsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    NSLog(@"cellForRowAtIndexPath");
+    
+    NSString *sectionTitle = [self.contactsTitles objectAtIndex:indexPath.section];
+    NSArray *sectionContacts = [self.contactsData objectForKey:sectionTitle];
+    ContactsData *data=[sectionContacts objectAtIndex:indexPath.row];
+    NSString *contactsTitle= [NSString stringWithFormat:@"%@ %@",data.firstNames,data.lastNames];
+    cell.contactName.text = contactsTitle;
+    cell.checked.image = [UIImage imageNamed:@"unseen"];
+    cell.isChecked = false;
+    return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
+    InviteFriendsTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    NSString *sectionTitle = [self.contactsTitles objectAtIndex:indexPath.section];
+    NSArray *sectionContacts = [self.contactsData objectForKey:sectionTitle];
+    ContactsData *data=[sectionContacts objectAtIndex:indexPath.row];
+    
+    if(cell.isChecked){
+        [self.selectedContactss removeObject:data];
+        cell.isChecked = false;
+        cell.checked.image = [UIImage imageNamed:@"unseen"];
+    }else{
+        [self.selectedContactss addObject:data];
+        cell.isChecked = true;
+        cell.checked.image = [UIImage imageNamed:@"seen"];
+        
+    }
+    
+    
+}
+
+
+#pragma mark - contact Data sorting
+
 - (NSMutableDictionary *)getAllContacts {
     
     CFErrorRef *error = nil;
@@ -342,62 +426,5 @@
     return items;
     
 }
-
-
--(IBAction) sendSms:(id)sender{
-}
-#pragma marks - UITableviewDelegate
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    if(tableView == self.tableData)
-    {
-        return [self.contactsTitles count];
-    }
-    else
-    {
-        return 1;
-    }
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    if(tableView == self.tableData)
-    {
-        return [self.contactsTitles objectAtIndex:section];
-    }
-    else
-    {
-        return nil;
-    }
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    if(tableView == self.tableData)
-    {
-        NSString *sectionTitle = [self.contactsTitles objectAtIndex:section];
-        NSArray *sectionContacts = [self.contactsData objectForKey:sectionTitle];
-        return [sectionContacts count];
-    }
-    else
-    {
-        return 1;
-//        self.mainHeight.constant = self.myObject.count * 50;
-//        return self.myObject.count;
-    }
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
-{
-    if(tableView == self.tableData)
-    {
-        UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
-        [header.textLabel setTextColor:[UIColor orangeColor]];
-    }
-    
-}
-
-
 
 @end
