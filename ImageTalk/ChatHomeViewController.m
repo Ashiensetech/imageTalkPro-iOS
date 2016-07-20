@@ -113,8 +113,11 @@
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ChatHistoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    
+    
     ChatHistory *data=[self.response.responseData objectAtIndex:indexPath.row];
-   
+    NSLog(@"data: %@",data);
+    
     cell.name.text = [NSString stringWithFormat:@"%@ %@",data.contact.user.firstName,data.contact.user.lastName];
  
     Chat *chat = data.chat[0];
