@@ -880,6 +880,7 @@
     {
         
         Chat *data = self.myObject[indexPath.row];
+        NSLog(@"chatdata: %@",data);
         
         CGSize stringSize = [data.chatText sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:17.0f]}];
         
@@ -2879,7 +2880,7 @@
     {
         NSError* error = nil;
         self.response = [[ChatResponse alloc] initWithDictionary:data error:&error];
-        
+       // NSLog(@"chathistoryResponse: %@",self.response);
         
         
         if(self.response.responseStat.status){
@@ -2914,7 +2915,6 @@
                     isDate = true;
                     
                     
-                    
                 }
                 else
                 {
@@ -2937,6 +2937,8 @@
                         //[self.myObject addObject:dateO];
                         [self.myObject insertObject:dateO atIndex:i];
                         isDate = true;
+                        
+                        
                     }
                     
                     
@@ -2945,7 +2947,10 @@
                 
                 
                 // [self.myObject addObject:self.response.responseData[i]];
-                [self.myObject insertObject:self.response.responseData[i] atIndex:(isDate)?i+1:i];
+               
+                
+                [self.myObject insertObject:self.response.responseData[i] atIndex:i+1];
+                
                 
             }
         }
