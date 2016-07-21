@@ -77,6 +77,12 @@
 		FD26C4301C50B3DE00122383 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = FD26C42E1C50B3DE00122383 /* UIImage+ImageEffects.m */; };
 		FD26C4331C50E1FA00122383 /* DateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD26C4321C50E1FA00122383 /* DateTableViewCell.m */; };
 		FD26C4361C50E2E300122383 /* Date.m in Sources */ = {isa = PBXBuildFile; fileRef = FD26C4351C50E2E300122383 /* Date.m */; };
+		FD29DE4D1D40C76F001587D9 /* QBPlasticPopupMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = FD29DE421D40C76F001587D9 /* QBPlasticPopupMenu.m */; };
+		FD29DE4E1D40C76F001587D9 /* QBPopupMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = FD29DE441D40C76F001587D9 /* QBPopupMenu.m */; };
+		FD29DE4F1D40C76F001587D9 /* QBPopupMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FD29DE461D40C76F001587D9 /* QBPopupMenuItem.m */; };
+		FD29DE501D40C76F001587D9 /* QBPopupMenuItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD29DE481D40C76F001587D9 /* QBPopupMenuItemView.m */; };
+		FD29DE511D40C76F001587D9 /* QBPopupMenuOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD29DE4A1D40C76F001587D9 /* QBPopupMenuOverlayView.m */; };
+		FD29DE521D40C76F001587D9 /* QBPopupMenuPagenatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD29DE4C1D40C76F001587D9 /* QBPopupMenuPagenatorView.m */; };
 		FD29E3321D3F4BE3003C6202 /* InviteFriendsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD29E3311D3F4BE3003C6202 /* InviteFriendsTableViewCell.m */; };
 		FD303A831BD4EB76009A43D0 /* ChangePhotoResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = FD303A821BD4EB76009A43D0 /* ChangePhotoResponse.m */; };
 		FD303A861BD4F735009A43D0 /* Status.m in Sources */ = {isa = PBXBuildFile; fileRef = FD303A851BD4F735009A43D0 /* Status.m */; };
@@ -483,6 +489,18 @@
 		FD26C4321C50E1FA00122383 /* DateTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateTableViewCell.m; sourceTree = "<group>"; };
 		FD26C4341C50E2E300122383 /* Date.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Date.h; sourceTree = "<group>"; };
 		FD26C4351C50E2E300122383 /* Date.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Date.m; sourceTree = "<group>"; };
+		FD29DE411D40C76F001587D9 /* QBPlasticPopupMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBPlasticPopupMenu.h; sourceTree = "<group>"; };
+		FD29DE421D40C76F001587D9 /* QBPlasticPopupMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBPlasticPopupMenu.m; sourceTree = "<group>"; };
+		FD29DE431D40C76F001587D9 /* QBPopupMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBPopupMenu.h; sourceTree = "<group>"; };
+		FD29DE441D40C76F001587D9 /* QBPopupMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBPopupMenu.m; sourceTree = "<group>"; };
+		FD29DE451D40C76F001587D9 /* QBPopupMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBPopupMenuItem.h; sourceTree = "<group>"; };
+		FD29DE461D40C76F001587D9 /* QBPopupMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBPopupMenuItem.m; sourceTree = "<group>"; };
+		FD29DE471D40C76F001587D9 /* QBPopupMenuItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBPopupMenuItemView.h; sourceTree = "<group>"; };
+		FD29DE481D40C76F001587D9 /* QBPopupMenuItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBPopupMenuItemView.m; sourceTree = "<group>"; };
+		FD29DE491D40C76F001587D9 /* QBPopupMenuOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBPopupMenuOverlayView.h; sourceTree = "<group>"; };
+		FD29DE4A1D40C76F001587D9 /* QBPopupMenuOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBPopupMenuOverlayView.m; sourceTree = "<group>"; };
+		FD29DE4B1D40C76F001587D9 /* QBPopupMenuPagenatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBPopupMenuPagenatorView.h; sourceTree = "<group>"; };
+		FD29DE4C1D40C76F001587D9 /* QBPopupMenuPagenatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBPopupMenuPagenatorView.m; sourceTree = "<group>"; };
 		FD29E3301D3F4BE3003C6202 /* InviteFriendsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteFriendsTableViewCell.h; sourceTree = "<group>"; };
 		FD29E3311D3F4BE3003C6202 /* InviteFriendsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteFriendsTableViewCell.m; sourceTree = "<group>"; };
 		FD303A811BD4EB76009A43D0 /* ChangePhotoResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePhotoResponse.h; sourceTree = "<group>"; };
@@ -1159,6 +1177,25 @@
 				FD217E731C1014B300C04E5A /* ZoomRotatePanImageView.m */,
 			);
 			name = ZoomRotatePanImageView;
+			sourceTree = "<group>";
+		};
+		FD29DE401D40C76F001587D9 /* QBPopupMenu */ = {
+			isa = PBXGroup;
+			children = (
+				FD29DE411D40C76F001587D9 /* QBPlasticPopupMenu.h */,
+				FD29DE421D40C76F001587D9 /* QBPlasticPopupMenu.m */,
+				FD29DE431D40C76F001587D9 /* QBPopupMenu.h */,
+				FD29DE441D40C76F001587D9 /* QBPopupMenu.m */,
+				FD29DE451D40C76F001587D9 /* QBPopupMenuItem.h */,
+				FD29DE461D40C76F001587D9 /* QBPopupMenuItem.m */,
+				FD29DE471D40C76F001587D9 /* QBPopupMenuItemView.h */,
+				FD29DE481D40C76F001587D9 /* QBPopupMenuItemView.m */,
+				FD29DE491D40C76F001587D9 /* QBPopupMenuOverlayView.h */,
+				FD29DE4A1D40C76F001587D9 /* QBPopupMenuOverlayView.m */,
+				FD29DE4B1D40C76F001587D9 /* QBPopupMenuPagenatorView.h */,
+				FD29DE4C1D40C76F001587D9 /* QBPopupMenuPagenatorView.m */,
+			);
+			path = QBPopupMenu;
 			sourceTree = "<group>";
 		};
 		FD31DDA21C117C4D009AB681 /* TL */ = {
@@ -1851,6 +1888,7 @@
 		FDE9181E1BBE5B77001FBCB1 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				FD29DE401D40C76F001587D9 /* QBPopupMenu */,
 				DA9CE3531D34D59900AAFDAB /* JSONModel */,
 				FD62BA071CC5F2BB00A531AB /* BFCropperInterface */,
 				FD9303AE1CACF93400EF1B71 /* BJImageCropper */,
@@ -2269,6 +2307,7 @@
 				FD94586E1D101F220003E6A2 /* NewNotificationTableViewCell.m in Sources */,
 				FDD320D91C450B130048A43D /* black.mp4 in Sources */,
 				FDEECE271B9D69BF00887F4A /* ViewController.m in Sources */,
+				FD29DE4D1D40C76F001587D9 /* QBPlasticPopupMenu.m in Sources */,
 				FD98293D1BD108E300B3C647 /* StickerCategory.m in Sources */,
 				FDB3716A1BFAE58400A9D99B /* ChatDetailsViewController.m in Sources */,
 				FD6BCE281BBD14AD00F595E8 /* UIPhotoButton.m in Sources */,
@@ -2279,6 +2318,7 @@
 				FD26C4361C50E2E300122383 /* Date.m in Sources */,
 				FD9829371BD100B900B3C647 /* LocationTableViewCell.m in Sources */,
 				FD57F49D1C0467E500430FF6 /* HIPImageCropperView.m in Sources */,
+				FD29DE521D40C76F001587D9 /* QBPopupMenuPagenatorView.m in Sources */,
 				DA187B861CB51E13002D42F1 /* UIImage+WebP.m in Sources */,
 				FD58E0531BC274DC00F5D98C /* User.m in Sources */,
 				FDD3208B1C44DE3F0048A43D /* SocketTestViewController.m in Sources */,
@@ -2353,6 +2393,7 @@
 				DA9CE39C1D34D59900AAFDAB /* JSONKeyMapper.m in Sources */,
 				FD953AEB1BC687B3009538AA /* Liker.m in Sources */,
 				FDFC70B71BE351DE001782F0 /* TagTableViewCell.m in Sources */,
+				FD29DE511D40C76F001587D9 /* QBPopupMenuOverlayView.m in Sources */,
 				FD57F47C1C04287400430FF6 /* AFURLRequestSerialization.m in Sources */,
 				FD57F4961C0428F000430FF6 /* UIImageView+AFNetworking.m in Sources */,
 				FD48164A1C0D6BB5000C52B0 /* ReceiverLocationTableViewCell.m in Sources */,
@@ -2384,6 +2425,7 @@
 				DA9CE3A81D34D59900AAFDAB /* PostCommentsModel.m in Sources */,
 				FD01EBDC1BE777EC0083249B /* Job.m in Sources */,
 				FD29E3321D3F4BE3003C6202 /* InviteFriendsTableViewCell.m in Sources */,
+				FD29DE4F1D40C76F001587D9 /* QBPopupMenuItem.m in Sources */,
 				FD58E05C1BC2750B00F5D98C /* WallPost.m in Sources */,
 				FD4816531C0D7B0C000C52B0 /* ChatLocation.m in Sources */,
 				DA9CE3A51D34D59900AAFDAB /* LoginUserModel.m in Sources */,
@@ -2483,6 +2525,7 @@
 				FDD320B61C44E3CC0048A43D /* TNSStreamTransport.m in Sources */,
 				DA187B7B1CB51E13002D42F1 /* NSData+ImageContentType.m in Sources */,
 				DA9CE39B1D34D59900AAFDAB /* JSONModel+networking.m in Sources */,
+				FD29DE501D40C76F001587D9 /* QBPopupMenuItemView.m in Sources */,
 				FD57F4601C04241500430FF6 /* UIImageView+XLNetworking.m in Sources */,
 				DA187B881CB51E13002D42F1 /* UIImageView+WebCache.m in Sources */,
 				FD953AE51BC6423C009538AA /* TimelineTableViewCell.m in Sources */,
@@ -2517,6 +2560,7 @@
 				FD57F4A01C048C6F00430FF6 /* EffectsCollectionViewCell.m in Sources */,
 				DA9CE3A61D34D59900AAFDAB /* NotificationModel.m in Sources */,
 				FDFC90A31BEB43230019B9CB /* GCDAsyncSocket.m in Sources */,
+				FD29DE4E1D40C76F001587D9 /* QBPopupMenu.m in Sources */,
 				FD1B26D71C02C169007162ED /* RJCircularLoaderView.m in Sources */,
 				DA9CE3A91D34D59900AAFDAB /* PostCreateModel.m in Sources */,
 			);

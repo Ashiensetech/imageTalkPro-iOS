@@ -48,10 +48,12 @@
 #import "UIImage+BlurredFrame.h"
 #import "Date.h"
 #import "DateTableViewCell.h"
-
+#import "QBPlasticPopupMenu.h"
 
 @interface ChatViewController ()
 @property (assign,nonatomic) BOOL checkecdFirst;
+@property (nonatomic, strong) QBPlasticPopupMenu *plasticPopupMenu;
+@property (nonatomic,strong) Chat *selectedChat;
 @end
 
 @implementation ChatViewController
@@ -63,7 +65,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    self.selectedChat = [[Chat alloc] init];
     self.title = [NSString stringWithFormat:@"%@ %@",self.contact.user.firstName,self.contact.user.lastName];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.tabBarController.tabBar.hidden=YES;
@@ -188,9 +190,45 @@
     self.loaded = false;
     [self getData:self.offset];
     
-    
-    
+    QBPopupMenuItem *item5 =  [QBPopupMenuItem itemWithTitle:@"Copy" target:self action:@selector(copyMessageAction )];
+    QBPopupMenuItem *item6 = [QBPopupMenuItem itemWithTitle:@"Delete"  target:self action:@selector(deleteMessageAction)];
+    NSArray *items = @[item5, item6];
+    QBPlasticPopupMenu *plasticPopupMenu = [[QBPlasticPopupMenu alloc] initWithItems:items];
+    plasticPopupMenu.height = 40;
+    self.plasticPopupMenu = plasticPopupMenu;
 }
+-(void) copyMessageAction{
+    
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = self.selectedChat.chatText;
+}
+-(void) deleteMessageAction{
+    NSDictionary *inventory = @{
+                                @"chat_id" : self.selectedChat.chatId
+                                };
+    [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/user/chat/delete" params:inventory tag:@"deleteChatData"];
+}
+
+-(void)onLongPress:(UILongPressGestureRecognizer*)pGesture
+{
+    if (pGesture.state == UIGestureRecognizerStateRecognized)
+    {
+        //Do something to tell the user!
+    }
+    if (pGesture.state == UIGestureRecognizerStateEnded)
+    {
+        //UITableView* tableView = (UITableView*)self.view;
+        CGPoint touchPoint = [pGesture locationInView:self.view];
+        NSIndexPath* row = [self.tableData indexPathForRowAtPoint:touchPoint];
+        if (row != nil) {
+            Chat *data = self.myObject[row.row];
+            self.selectedChat = data;
+            CGRect rect = CGRectMake(touchPoint.x-10,touchPoint.y-5,5.0, 5.0 );
+            [self.plasticPopupMenu showInView:self.view targetRect:rect animated:YES];
+        }
+    }
+}
+
 
 - (void)refresh{
     
@@ -904,6 +942,8 @@
         
         CGSize stringSize = [data.chatText sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:17.0f]}];
         
+        
+        
         if (data.from == self.app.authCredential.id) //sender
         {
             
@@ -932,6 +972,8 @@
                     cell.time.text = [NSString stringWithFormat:@"%@",[self AgoStringFromTime:date]];
                     cell.check.image = (data.readStatus) ? [UIImage imageNamed:@"seen"]:[UIImage imageNamed:@"unseen"];
                     
+                    UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
+                    [cell addGestureRecognizer:longPressRecognizer];
                     
                     return cell;
                 }
@@ -958,6 +1000,9 @@
                     
                     cell.time.text = [NSString stringWithFormat:@"%@",[self AgoStringFromTime:date]];
                     cell.check.image = (data.readStatus) ? [UIImage imageNamed:@"seen"]:[UIImage imageNamed:@"unseen"];
+                    
+                    UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
+                    [cell addGestureRecognizer:longPressRecognizer];
                     
                     return cell;
                 }
@@ -2993,6 +3038,11 @@
         
         
     }
+    if([tag isEqualToString:@"deleteChatData"]){
+        [ToastView showErrorToastInParentView:self.view withText:@"message deleted " withDuaration:2.0];
+        [self getData:self.offset];
+       // [self.tableData reloadData];
+    }
     
     
     
@@ -3006,7 +3056,9 @@
     {
         [self.tableData reloadData];
     }
-    
+    if([tag isEqualToString:@"deleteChatData"]){
+        NSLog(@"chat delete error :%@",error);
+    }
     
 }
 
