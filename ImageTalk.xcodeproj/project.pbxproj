@@ -77,6 +77,7 @@
 		FD26C4301C50B3DE00122383 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = FD26C42E1C50B3DE00122383 /* UIImage+ImageEffects.m */; };
 		FD26C4331C50E1FA00122383 /* DateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD26C4321C50E1FA00122383 /* DateTableViewCell.m */; };
 		FD26C4361C50E2E300122383 /* Date.m in Sources */ = {isa = PBXBuildFile; fileRef = FD26C4351C50E2E300122383 /* Date.m */; };
+		FD29E3321D3F4BE3003C6202 /* InviteFriendsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD29E3311D3F4BE3003C6202 /* InviteFriendsTableViewCell.m */; };
 		FD303A831BD4EB76009A43D0 /* ChangePhotoResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = FD303A821BD4EB76009A43D0 /* ChangePhotoResponse.m */; };
 		FD303A861BD4F735009A43D0 /* Status.m in Sources */ = {isa = PBXBuildFile; fileRef = FD303A851BD4F735009A43D0 /* Status.m */; };
 		FD303A891BD4F782009A43D0 /* StatusResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = FD303A881BD4F782009A43D0 /* StatusResponse.m */; };
@@ -482,6 +483,8 @@
 		FD26C4321C50E1FA00122383 /* DateTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateTableViewCell.m; sourceTree = "<group>"; };
 		FD26C4341C50E2E300122383 /* Date.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Date.h; sourceTree = "<group>"; };
 		FD26C4351C50E2E300122383 /* Date.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Date.m; sourceTree = "<group>"; };
+		FD29E3301D3F4BE3003C6202 /* InviteFriendsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteFriendsTableViewCell.h; sourceTree = "<group>"; };
+		FD29E3311D3F4BE3003C6202 /* InviteFriendsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteFriendsTableViewCell.m; sourceTree = "<group>"; };
 		FD303A811BD4EB76009A43D0 /* ChangePhotoResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePhotoResponse.h; sourceTree = "<group>"; };
 		FD303A821BD4EB76009A43D0 /* ChangePhotoResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePhotoResponse.m; sourceTree = "<group>"; };
 		FD303A841BD4F735009A43D0 /* Status.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Status.h; sourceTree = "<group>"; };
@@ -1999,6 +2002,8 @@
 				FD26C4321C50E1FA00122383 /* DateTableViewCell.m */,
 				FD94586C1D101F220003E6A2 /* NewNotificationTableViewCell.h */,
 				FD94586D1D101F220003E6A2 /* NewNotificationTableViewCell.m */,
+				FD29E3301D3F4BE3003C6202 /* InviteFriendsTableViewCell.h */,
+				FD29E3311D3F4BE3003C6202 /* InviteFriendsTableViewCell.m */,
 			);
 			name = UITableViewCell;
 			sourceTree = "<group>";
@@ -2378,6 +2383,7 @@
 				FD08B7051BF9D06900000D98 /* SenderImageTableViewCell.m in Sources */,
 				DA9CE3A81D34D59900AAFDAB /* PostCommentsModel.m in Sources */,
 				FD01EBDC1BE777EC0083249B /* Job.m in Sources */,
+				FD29E3321D3F4BE3003C6202 /* InviteFriendsTableViewCell.m in Sources */,
 				FD58E05C1BC2750B00F5D98C /* WallPost.m in Sources */,
 				FD4816531C0D7B0C000C52B0 /* ChatLocation.m in Sources */,
 				DA9CE3A51D34D59900AAFDAB /* LoginUserModel.m in Sources */,

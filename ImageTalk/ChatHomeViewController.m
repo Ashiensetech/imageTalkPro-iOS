@@ -166,6 +166,26 @@
     
 }
 
+-(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Delete" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+        
+      
+        ChatHistory *data=[self.response.responseData objectAtIndex:indexPath.row];
+      //  NSLog(@"chat data :%d",data.contact.id);
+        NSDictionary *inventory = @{@"to" : [NSString stringWithFormat:@"%d",data.contact.id]};
+        [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/user/chat/delete/conversation" params:inventory tag:@"deleteConversation"];
+    
+    }];
+    
+    deleteAction.backgroundColor = [UIColor redColor];
+    
+    
+    
+    return @[deleteAction];
+    
+}
+
+
 
 #pragma mark - ApiAccessDelegate
 
@@ -185,6 +205,11 @@
        
     }
     
+    if([tag isEqualToString:@"deleteConversation"]){
+        NSLog(@"response data : %@",data);
+        [self.tableData reloadData];
+    }
+    
     
     
 }
@@ -200,7 +225,10 @@
         [self.tableData reloadData];
     }
     
-    
+    if([tag isEqualToString:@"deleteConversation"]){
+        NSLog(@"error data : %@",error);
+         [self.tableData reloadData];
+    }
 }
 
 
