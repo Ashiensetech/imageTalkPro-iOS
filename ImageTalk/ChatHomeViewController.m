@@ -171,7 +171,7 @@
         
       
         ChatHistory *data=[self.response.responseData objectAtIndex:indexPath.row];
-      //  NSLog(@"chat data :%d",data.contact.id);
+        conversationIndex =indexPath;
         NSDictionary *inventory = @{@"to" : [NSString stringWithFormat:@"%d",data.contact.id]};
         [[ApiAccess getSharedInstance] postRequestWithUrl:@"app/user/chat/delete/conversation" params:inventory tag:@"deleteConversation"];
     
@@ -206,8 +206,9 @@
     }
     
     if([tag isEqualToString:@"deleteConversation"]){
-        NSLog(@"response data : %@",data);
-        [self.tableData reloadData];
+       [ToastView showErrorToastInParentView:self.view withText:@"conversation deleted successfully" withDuaration:2.0];
+        [self getData];
+       // [self.tableData reloadData];
     }
     
     

@@ -19,6 +19,7 @@
     NSString *baseurl;
     NSString *socketurl;
     NSString *port;
+    NSIndexPath *conversationIndex;
 }
 
 @property (assign,nonatomic) int offset;
