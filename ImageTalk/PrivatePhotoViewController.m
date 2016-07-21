@@ -132,43 +132,43 @@ CGFloat const kInitialZoomScaleI = 0.5f;
 }
 
 
-
-- (IBAction)noTimer:(id)sender {
+//
+//- (IBAction)noTimer:(id)sender {
+//    self.timerLabel.text = @"No Timer";
+//    self.timer = 0;
+//    self.popUp.hidden = YES;
+//    self.popUpImage.hidden = YES;
+//    
+//}
+//- (IBAction)tenS:(id)sender {
+//    self.timerLabel.text = @"10 Seconds";
+//    self.timer = 10;
+//    self.popUp.hidden = YES;
+//    self.popUpImage.hidden = YES;
+//    
+//}
+- (IBAction)thirtyS:(id)sender {
     self.timerLabel.text = @"No Timer";
     self.timer = 0;
     self.popUp.hidden = YES;
     self.popUpImage.hidden = YES;
     
 }
-- (IBAction)tenS:(id)sender {
-    self.timerLabel.text = @"10 Seconds";
-    self.timer = 10;
-    self.popUp.hidden = YES;
-    self.popUpImage.hidden = YES;
-    
-}
-- (IBAction)thirtyS:(id)sender {
-    self.timerLabel.text = @"30 Seconds";
-    self.timer = 30;
-    self.popUp.hidden = YES;
-    self.popUpImage.hidden = YES;
-    
-}
 - (IBAction)oneM:(id)sender {
-     self.timerLabel.text = @"1 Minutes";
-    self.timer = 60;
+     self.timerLabel.text = @"15 Seconds";
+    self.timer = 15;
     self.popUp.hidden = YES;
     self.popUpImage.hidden = YES;
 }
 - (IBAction)twoM:(id)sender {
-    self.timerLabel.text = @"2 Minutes";
-    self.timer = 120;
+    self.timerLabel.text = @"10 Seconds";
+    self.timer = 10;
     self.popUp.hidden = YES;
     self.popUpImage.hidden = YES;
 }
 - (IBAction)fiveM:(id)sender {
-    self.timerLabel.text = @"5 Minutes";
-    self.timer = 300;
+    self.timerLabel.text = @"5 Seconds";
+    self.timer = 5;
     self.popUp.hidden = YES;
     self.popUpImage.hidden = YES;
 }
