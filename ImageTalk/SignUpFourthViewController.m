@@ -161,7 +161,7 @@
                                     @"first_name" : first_name,
                                     @"last_name" : last_name,
                                     @"photo" : [self imageToString:self.pic.image],
-                                    @"device_id" : deviceToken,
+                                    @"device_id" : (deviceToken!=NULL)?deviceToken:@"",
                                     };
         NSLog(@"%@",inventory);
         
