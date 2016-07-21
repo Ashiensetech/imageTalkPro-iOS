@@ -224,6 +224,26 @@
 {
     [self.view setNeedsDisplay];
     
+    for (int i = 0; i < self.myObject.count; i++)
+    {
+        NSLog(@"inside");
+        Chat *data = self.myObject[i];
+        if([self.myObject[i] isKindOfClass:[Chat class]])
+        {
+        if (data.from == self.app.authCredential.id) //sender
+        {
+        if(data.type == 5)
+        {
+            NSLog(@"inside typo");
+            self.privatePhoto.userInteractionEnabled = NO;
+            
+        }
+        }
+            
+        }
+    }
+    
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
